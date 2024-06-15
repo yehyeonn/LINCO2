@@ -25,7 +25,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public int write(Reservation reservation) {
-        User user = U.getLoggedUser();
+//        User user = U.getLoggedUser();
+        User user = new User();
 
         userRepository.findById(user.getId());
         reservation.setUser(user);
@@ -37,7 +38,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> list() {
-        User user = U.getLoggedUser();
+//        User user = U.getLoggedUser();
+        User user = new User();
+
         return reservationRepository.findById(user.getId());
     }
 
