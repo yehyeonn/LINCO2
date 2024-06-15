@@ -64,6 +64,10 @@ where v.id = r.venue_id;
 select s.id, u.socializing_id, u.user_id, u.role, s.meeting_date, s.meeting_time
     from SOCIALIZING s,
          USER_SOCIALIZING u
-where u.socializing_id = s.id
+where u.socializing_id = s.id;
+
+
+
+
 
 
