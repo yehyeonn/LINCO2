@@ -143,11 +143,11 @@ values ('코리아IT아카데미', '서울시 강남구 역삼동 테헤란로 2
 
 # select * from VENUE;
 
-insert into RESERVATION (user_id, venue_id, status, reservate_date, reservate_start_time, reservate_end_time, total_price, paydate)
-values (1, 1, 'PAYED', '2024-06-14', '09:00:00',  '18:00:00', 1000, null),
-       (1, 2, 'CANCELED', '2024-06-15', '09:00:00',  '22:00:00', 1000, null),
-       (1, 3, 'PAYED', '2024-06-13', '00:00:00',  '23:59:59', 0, null),
-       (2, 1, 'DONE', '2024-06-16', '09:00:00',  '18:00:00', 1000, null);
+insert into RESERVATION (user_id, reservation_name, email, tel, venue_id, venue_name, status, reserve_date, reserve_start_time, reserve_end_time, total_price, paydate)
+values (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 1, '코리아IT아카데미', 'PAYED', '2024-06-14', '09:00:00',  '18:00:00', 1000, null),
+       (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 2, '코리아IT아카데미', 'CANCELED', '2024-06-15', '09:00:00',  '22:00:00', 1000, null),
+       (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 3, '해성이집', 'PAYED', '2024-06-13', '00:00:00',  '23:59:59', 0, null),
+       (2, '김세현', 'sehyun_jjang@naver.com', '010-1111-1111', 2, '코리아IT아카데미', 'DONE', '2024-06-16', '09:00:00',  '18:00:00', 1000, null);
 
 # select * from RESERVATION;
 
@@ -168,4 +168,4 @@ values (1, 1, 'MASTER'),
        (3, 2, 'MASTER'),
        (4, 2, 'MEMBER');
 
-# select * from USER_SOCIALIZING;
+select * from USER_SOCIALIZING;

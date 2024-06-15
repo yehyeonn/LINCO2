@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.ReservationRepository">
+
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Reservation"
+            keyColumn="id" keyProperty="id">
+insert into RESERVATION
+(reservation_name, email, tel, total_price, reserve_date, reserve_start_time, reserve_end_time)
+values (#{reservation_name}, #{email}, #{tel}, #{total_price}, #{reserve_date}, #{reserve_start_time}, #{reserve_end_time})
+    </insert>
+
+    <select id="findById" resultMap="mapUser">
+select id,
+       venue_name,
+       reserve_date,
+       paydate,
+       total_price,
+       status
+    from RESERVATION
+where 1 = 1
+    </select>
+
+    <update id="updeate" flushCache="true" parameterType="com.lec.spring.domain.Reservation">
+        update RESERVATION
+        set status=#{status}
+        where id = #{id}
+    </update>
+</mapper>

@@ -56,7 +56,7 @@ from BOARD b,
      COMMENT c
 where b.id = c.board_id;
 
-select r.user_id, r.venue_id, v.id, v.address, v.open_time, v.close_time, v.limit_num, v.price, r.reservate_date, r.reservate_start_time, r.reservate_end_time
+select r.user_id, r.venue_id, v.id, v.address, v.open_time, v.close_time, v.limit_num, v.price, r.reserve_date, r.reserve_start_time, r.reserve_end_time
 from VENUE v,
      RESERVATION r
 where v.id = r.venue_id;
