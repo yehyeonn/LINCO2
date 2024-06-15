@@ -1,28 +1,28 @@
-//package com.lec.spring.service;
-//
-//import com.lec.spring.domain.Socializing;
-//import com.lec.spring.repository.SocializingRepository;
-//import com.lec.spring.repository.UserRepository;
-//import org.apache.ibatis.session.SqlSession;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//import java.util.List;
-//
-//@Service
-//public class SocializingServiceImpl implements SocializingService {
-//
-//    private UserRepository userRepository;
-//    private SocializingRepository socializingRepository;
-//
-//    @Autowired
-//    public SocializingServiceImpl(SqlSession sqlSession){
-//        userRepository = sqlSession.getMapper(UserRepository.class);
-//        socializingRepository = sqlSession.getMapper(SocializingRepository.class);
-//    }
-//
-//    // 여기도 첨부파일 필요
+package com.lec.spring.service;
+
+import com.lec.spring.domain.Socializing;
+import com.lec.spring.repository.SocializingRepository;
+import com.lec.spring.repository.UserRepository;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class SocializingServiceImpl implements SocializingService {
+
+    private UserRepository userRepository;
+    private SocializingRepository socializingRepository;
+
+    @Autowired
+    public SocializingServiceImpl(SqlSession sqlSession){
+        userRepository = sqlSession.getMapper(UserRepository.class);
+        socializingRepository = sqlSession.getMapper(SocializingRepository.class);
+    }
+
+    // 여기도 첨부파일 필요
 //    @Override
 //    public int write(Socializing socializing) {
 //        return socializingRepository.save(socializing);
@@ -35,12 +35,12 @@
 //        Socializing socializing = socializingRepository.findById(id);
 //        return socializing;
 //    }
-//
-//    @Override
-//    public List<Socializing> list() {
-//        return socializingRepository.findAll();
-//    }
-//
+
+    @Override
+    public List<Socializing> list() {
+        return socializingRepository.findAll();
+    }
+
 //    // 수정용
 //    @Override
 //    public Socializing selectById(Long id) {
@@ -66,4 +66,4 @@
 //        }
 //        return result;
 //    }
-//}
+}
