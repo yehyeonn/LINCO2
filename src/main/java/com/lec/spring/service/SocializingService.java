@@ -1,7 +1,9 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Socializing;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ public interface SocializingService {
     Socializing detail(Long id);
 
     List<Socializing> list();
+    List<Socializing> list(Integer page, Model model);
 
     // 수정
     Socializing selectById(Long id);

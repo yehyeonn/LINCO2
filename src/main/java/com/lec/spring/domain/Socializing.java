@@ -24,6 +24,5 @@ public class Socializing {
     private String img;
     private LocalDateTime regdate;
 
-    @ToString.Exclude
     private User author;
 }
