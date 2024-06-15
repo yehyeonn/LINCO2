@@ -59,20 +59,9 @@ body {
     position: relative;
 }
 
-.post h2 {
-    margin-top: 0;
-}
-
-.post p {
-    margin: 0;
-}
-
-.date {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    color: #888;
-    font-size: 0.9em;
+.title-center {
+    display: flex;
+    text-align: center;
 }
 
 /* 글쓰기 버튼 스타일 */
