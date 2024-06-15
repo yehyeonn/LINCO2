@@ -147,10 +147,10 @@ footer p {
 footer .wave {
     position: absolute;
     top: -60px;
-    left: 0px;
+    left: 0;
     width: 100%;
     height: 60px;
-    background: url(/static/img/waves.png);
+    background: url("/img/waves.png");
     background-size: 1000px 100px;
 }
 
