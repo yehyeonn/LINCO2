@@ -1,43 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/board_detail.css">
-    <title>board_detail</title>
-</head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- 로그인한 유저의 글이 없을 수도 있기 때문에 만듬 -->
+<!--<script th:unless="${board}">-->
+<!--    alert("해당 정보가 삭제되거나 없습니다. ")-->
+<!--    history.back();-->
+<!--</script>-->
+
+<!-- board 값이 있는 경우에만 렌더링 -->
+<th:block th:if="${board}" th:with="logged_user=${#authentication.principal.user}">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" th:href="@{/css/board_detail.css}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+        <script th:inline="javascript">
+            const logged_id = [[${logged_user.id}]]
+        </script>
+
+        <script th:src="@{/js/detail.js}"></script>
+        <title>board_detail</title>
+    </head>
+
+    <body th:with="logged_user = ${#authentication.principal.user}">    <!-- 현재 로그인한 유저의 정보 -->
+
+    <th:block th:insert="/common/header :: header"></th:block>
+
     <div class="body">
-        <div class="title">
+        <section>
+            <!--삭제 기능을 위해 만든 폼-->
+            <form name="frmDelete" th:action="@{/board/delete}" method="post">
+                <input type="hidden" name="id" th:value="${board.id}">
+            </form>
+
+            <div class="title">
+                <div class="form-group">
+                    <label>게시글 제목:</label>
+                    <span th:text="${board.title}"></span>
+                </div>
+            </div>
+            <hr>
+
             <div class="form-group">
-                <label for="subject">게시글 제목:</label>
-                <form action="#">
-                    <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" th:value="${subject}">
-                </form>
-            </div>
-        </div>
-        <hr>
-
-        <div class="form-group">
-            <label for="content">내용:</label>
-            <textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
-        </div>
-
-        <div class="button">
-            <div class="left-buttons">
-                <a class="btn" href="../board.html">
-                    목록
-                </a>
-
-                <button class="btn">
-                    첨부파일
-                </button>
+                <label>내용:</label>
+                <span th:utext="${board.content}"></span>
             </div>
 
-            <button type="submit" class="btn">
-                저장하기
-            </button>
-        </div>
+            <!-- 첨부파일 -->
+            <div>
+                <label>첨부파일 : </label>
+                <ul>
+                    <li th:each="attachment : ${board.fileList}">
+                        <span th:text="${attachment.sourceName}"></span>      <!-- 원본이름 -->
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 버튼 -->
+            <div class="button">
+                <div class="left-buttons">
+                    <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
+                    <a class="btn" th:href="@{'/board/update/' + ${board.id}}" th:if="${logged_user.id == board.id}">수정</a>
+                    <a th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER')">글쓰기</a>
+                </div>
+
+                <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기</button>
+            </div>
+
+            <!-- 댓글 -->
+            <div class="container">
+                <label>댓글: <span id="cmt_cnt"></span> 개</label>
+
+                <div sec:authorize="hasAnyRole('MEMBER')">  <!-- 회원만 댓글 작성 가능도록 설정 -->
+                    <input type="text" id="input_comment">
+                    <button type="button" class="btn" id="btn_comment">등록</button>
+                </div>
+
+                <table class="table" id="cmt_table">
+                    <thead>
+                        <tr>
+                            <th th:width="16.66%">작성자</th>
+                            <th>댓글</th>
+                            <th th:width="16.66%">작성일</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="cmt_list">
+
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
     </div>
 
-</body>
+
+    <th:block th:insert="/common/footer :: footer"></th:block>
+
+    </body>
+</th:block>
 </html>
