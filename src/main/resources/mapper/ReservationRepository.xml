@@ -12,7 +12,7 @@ insert into RESERVATION
 values (#{reservation_name}, #{email}, #{tel}, #{total_price}, #{reserve_date}, #{reserve_start_time}, #{reserve_end_time})
     </insert>
 
-    <select id="findById" resultMap="mapUser">
+    <select id="findById" resultType="com.lec.spring.domain.Reservation">
 select id,
        venue_name,
        reserve_date,

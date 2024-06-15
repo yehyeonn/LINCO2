@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Venue List</title>
+</head>
+<body>
+<h1>Venue List</h1>
+<ul>
+    <li th:each="venue : ${venue}">
+        <span th:text="${venue.venue_name}">Venue Name</span>
+    </li>
+</ul>
+</body>
+</html>
