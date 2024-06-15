@@ -83,17 +83,16 @@ body {
     background-color: #EDEBDA;
 }
 
-.container {
-    flex: 1;
-}
+/*.container {*/
+/*    flex: 1;*/
+/*}*/
 
-main {
-    flex: 1;
-}
-
+/*main {*/
+/*    flex: 1;*/
+/*}*/
 
 footer {
-    position: relative;
+    position: fixed;
     width: 100%;
     bottom: 0;
     background-color: #3A4D72;
