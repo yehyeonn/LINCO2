@@ -78,27 +78,35 @@
 
 body {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    flex-direction: column;
     min-height: 100vh;
     background-color: #EDEBDA;
 }
 
+.container {
+    flex: 1;
+}
+
+main {
+    flex: 1;
+}
+
+
 footer {
     position: relative;
     width: 100%;
-    min-height: 60px;
-    background-color: #3A4D72 ;
+    bottom: 0;
+    background-color: #3A4D72;
     padding: 10px 25px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    z-index: 1000;
 }
 
 footer .icon,
 footer .menu {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
