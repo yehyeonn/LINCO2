@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/board_write.css">
+    <title>게시글 작성</title>
+</head>
+<body>
+<div class="write">
+    <div class="title">
+        <div class="form-group">
+            <label for="subject">게시글 제목:</label>
+                <select name="" id="lang" class="select-right">
+                    <option value="club">클럽홍보</option>
+                    <option value="notices">공지사항</option>
+                </select>
+                <form action="#">
+                    <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" th:value="${subject}">
+                </form>
+        </div>
+    </div>
+    <hr>
+
+    <div class="form-group">
+        <label for="content">내용:</label>
+        <textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
+    </div>
+
+    <div class="button">
+        <div class="left-buttons">
+            <a class="btn" href="../board.html">
+                목록
+            </a>
+
+            <button class="btn">
+                첨부파일
+            </button>
+        </div>
+
+        <button type="submit" class="btn">
+            저장하기
+        </button>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>      <!-- 상단에는 xml 규격이 들어가야함 -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.BoardRepository">
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Board" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO BOARD
+            (title, content, user_id, board_type_id)
+        VALUES
+            (#{title}, #{content}, #{user_id}, #{board_type_id})
+    </insert>
+
+    <update id="incViewCnt" flushCache="true">
+        UPDATE BOARD
+        SET viewcnt = viewcnt + 1
+        WHERE id =#{id}
+    </update>
+
+    <sql id="SELECT_BASE">
+        SELECT
+            b.id "b_id",
+            b.title "b_title",
+            b.content "b_content",
+            b.viewcnt "b_viewCnt",
+            b.regdate "b_regdate",
+            u.id "u_id",
+            u.tel "u_tel",
+            u.username "u_username",
+            u.password "u_password",
+            u.address "u_address",
+            u.gender "u_gender",
+            u.birthday "u_birthday",
+            u.profile_picture "u_profile_picture",
+            u.regdate "u_regdate",
+            bt.id "bt_id",
+            bt.name "bt_name"
+        From
+            BOARD b, USER u, BOARD_TYPE bt
+        WHERE
+            b.user_id = u.id;
+    </sql>
+
+    <resultMap id="mapBoardType" type="com.lec.spring.domain.BoardType">
+        <result column="bt_id" property="id"/>
+        <result column="bt_name" property="name"/>
+    </resultMap>
+    
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_tel" property="tel"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_name" property="name"/>
+        <result column="u_address" property="address"/>
+        <result column="u_gender" property="gender"/>
+        <result column="u_birthday" property="birthday"/>
+        <result column="u_profile_picture" property="profile_picture"/>
+        <result column="u_regdate" property="regdate"/>
+    </resultMap>
+
+    <resultMap id="mapBoard" type="com.lec.spring.domain.Board">
+        <result column="b_id" property="id"/>
+        <result column="b_title" property="title"/>
+        <result column="b_content" property="content"/>
+        <result column="b_viewcnt" property="viewcnt"/>
+        <result column="b_regdate" property="regdate"/>
+        <collection property="user" resultMap="mapUser"/>
+        <collection property="boardType" resultMap="mapBoarType"/>
+    </resultMap>
+
+    <select id="findById" resultMap="mapBoard">
+        <include refid="SELECT_BASE"/>
+        AND b.id = #{id}
+    </select>
+
+    <select id="findByBoardTypeId" resultMap="mapBoard">
+        <include refid="SELECT_BASE"/>
+        AND b.board_type_id = #{boardTypeId}
+        ORDER BY b.id DESC
+    </select>
+
+    <select id="findAll" resultMap="mapBoard">
+        <include refid="SELECT_BASE"/>
+        ORDER BY b.id DESC
+    </select>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Board">
+        UPDATE BOARD
+        SET title = #{title}, content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.Board">
+        DELETE FROM BOARD WHERE id = #{id}
+    </delete>
+
+    <!--페이지용 쿼리-->
+    <select id="selectFromRow" resultMap="mapBoard">
+        <include refid="SELECT_BASE"/>
+        ORDER BY b.id DESC
+            <!--param1 : int from, param2: itn row-->
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM BOARD
+    </select>
+
+</mapper>

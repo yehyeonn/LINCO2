@@ -1,0 +1,199 @@
+/* start navbar css */
+.login {
+    background-color: #B3B49E;
+    color: white;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+}
+
+.login:hover {
+    background-color: #D3374A;
+}
+
+.navbar {
+    background-color: #EDEBDA;
+    margin: 20px;
+    border-radius: 20px;
+    padding: 0.5rem;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.25em;
+}
+
+.navbar-toggler:focus,.btn-close:focus {
+    box-shadow: none;
+    outline: none;
+}
+.offcanvas-body, .offcanvas-header {
+    background-color: #EDEBDA;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid black;
+}
+
+.nav-link {
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #D3374A;
+}
+
+@media (min-width: 768px) {
+    .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: #D3374A;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+    }
+
+    .nav-link:hover:before {
+        width: 100%;
+        visibility: visible;
+    }
+}
+/* end navbar css */
+
+/* footer css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    min-height: 100vh;
+    background-color: #EDEBDA;
+}
+
+footer {
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    background-color: #3A4D72 ;
+    padding: 10px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+footer .icon,
+footer .menu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+    flex-wrap: wrap;
+}
+
+footer .icon li,
+footer .menu li {
+    list-style: none;
+}
+
+footer .icon li a {
+    font-size: 1.4em;
+    color: #EDEBDA;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+
+footer .menu li a {
+    font-size: 0.9em;
+    color: #EDEBDA;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+    text-decoration: none;
+}
+
+footer .menu li a:hover {
+    color: #D3374A;
+}
+
+footer .icon li a:hover {
+    transform: translateY(-10px);
+}
+
+footer p {
+    color: #EDEBDA;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    font-size: 0.9em;
+}
+
+footer .wave {
+    position: absolute;
+    top: -60px;
+    left: 0px;
+    width: 100%;
+    height: 60px;
+    background: url(/static/img/waves.png);
+    background-size: 1000px 100px;
+}
+
+footer .wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateWave 4s linear infinite;
+}
+
+footer .wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animateWave_02 4s linear infinite;
+}
+footer .wave#wave3 {
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 15px;
+    animation: animateWave 3s linear infinite;
+}
+footer .wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animateWave_02 3s linear infinite;
+}
+
+@keyframes animateWave {
+    0% {
+        background-position-x: 1000px;
+    }
+    100% {
+        background-position-x: 0;
+    }
+}
+@keyframes animateWave_02 {
+    0% {
+        background-position-x: 1000px;
+    }
+    100% {
+        background-position-x: 0;
+    }
+}
+/* footer css end */

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socializing 페이지</title>
+    <link rel="stylesheet" href="/static/css/socializing_list.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="/static/js/socializing_list.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <h1>Linco Socializing</h1>
+        </div>
+        <div class="nav">
+            <a href="#">Club</a>
+            <a href="#" class="active">Socializing</a>
+            <a href="#">Board</a>
+            <a href="#">Venue</a>
+            <a href="#">Culture & Art</a>
+        </div>
+        <a href="#" class="button">로그인</a>
+    </div>
+    <div class="search-bar">
+        <button class="filter">필터</button>
+        <input type="text" placeholder="지역검색">
+        <button id="btn">검색</button>
+    </div>
+
+    <div class="category-area">
+        <ul class="category-list">
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="category" value="스포츠">
+                    <span>스포츠</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox" >
+                    <input type="checkbox" name="category" value="공연">
+                    <span>공연</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="category" value="관광">
+                    <span>관광</span>
+                </label>
+
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="detail-category-area">
+        <ul class="detail-category-list category1-list">
+            <li class="detail-search-category">
+                <label class="detail-category-checkbox">
+                    <input type="checkbox" name="detail-category" value="축구">
+                    <span>축구</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="detail-category" value="야구">
+                    <span>야구</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="detail-category" value="농구">
+                    <span>농구</span>
+                </label>
+
+            </li>
+
+        </ul>
+        <ul class="detail-category-list category2-list">
+            <li class="detail-search-category">
+                <label class="detail-category-checkbox">
+                    <input type="checkbox" name="detail-category" value="전시">
+                    <span>전시</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="detail-category" value="공연">
+                    <span>공연</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="detail-category" value="농구">
+                    <span>영화</span>
+                </label>
+
+            </li>
+
+        </ul>
+        <ul class="detail-category-list category3-list">
+            <li class="detail-search-category">
+                <label class="detail-category-checkbox">
+                    <input type="checkbox" name="detail-category" value="축구">
+                    <span>홍대</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="detail-category" value="야구">
+                    <span>잠실</span>
+                </label>
+
+            </li>
+            <li class="search-category">
+                <label class="category-checkbox">
+                    <input type="checkbox" name="detail-category" value="농구">
+                    <span>강남</span>
+                </label>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="main-content">
+        <div class="socializing-item">
+            <img src="socializing1.png" alt="Socializing Image">
+            <p>[[${소셜라이징 이름}]]<br>스포츠 | 서초구</p>
+        </div>
+        <div class="socializing-item">
+            <img src="socializing2.png" alt="Socializing Image">
+            <div>[[${소셜라이징 이름}]]</div><p>여행</p> <p>경기도</p>
+        </div>
+        <div class="socializing-item">
+            <img src="socializing3.png" alt="Socializing Image">
+            <p>[[${소셜라이징 이름}]]<br>문화예술 | 종로구</p>
+        </div>
+        <div class="socializing-item">
+            <img src="socializing4.png" alt="Socializing Image">
+            <p>[[${소셜라이징 이름}]]<br>외국어 | 동대문구</p>
+        </div>
+        <div class="socializing-item">
+            <img src="socializing5.png" alt="Socializing Image">
+            <p>[[${소셜라이징 이름}]]<br>스포츠 | 광진구</p>
+        </div>
+        <div class="socializing-item">
+            <img src="socializing6.png" alt="Socializing Image">
+            <p>[[${소셜라이징 이름}]]<br>푸드 | 강남구</p>
+        </div>
+    </div>
+    <div class="pagination">
+        <a href="#">＜</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">＞</a>
+    </div>
+    <a href="#" class="create-button">늘사람구함</a>
+</div>
+</body>
+</html>

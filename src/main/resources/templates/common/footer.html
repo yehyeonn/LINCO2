@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animate footer</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+<footer th:fragment="footer">
+    <div class="waves">
+        <div class="wave" id="wave1"></div>
+        <div class="wave" id="wave2"></div>
+        <div class="wave" id="wave3"></div>
+        <div class="wave" id="wave4"></div>
+    </div>
+    <ul class="icon">
+        <li><a href="#"><ion-icon name="logo-google"></ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-youtube"></ion-icon></a></li>
+    </ul>
+    <ul class="menu">
+        <li><a href="#">Club</a></li>
+        <li><a href="#">Socializing</a></li>
+        <li><a href="#">Board</a></li>
+        <li><a href="#">Venue</a></li>
+        <li><a href="#">Culture & Art</a></li>
+    </ul>
+    <p>© 2024 Company, LINCO</p>
+</footer>
+
+<!-- footer social icon -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

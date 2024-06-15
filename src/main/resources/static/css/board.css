@@ -1,0 +1,94 @@
+/* 전체 페이지 스타일 */
+body {
+    background-color: #EDEBDA;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 링크 박스 스타일 */
+.menu {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px auto 50px auto;
+    padding: 20px;
+}
+
+.title {
+    flex: 1;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.menu a:hover {
+    background-color: #D3374A;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #B3B49E;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+/* 메인 콘텐츠 스타일 */
+.post-list {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    position: relative;
+}
+
+.post {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.post h2 {
+    margin-top: 0;
+}
+
+.post p {
+    margin: 0;
+}
+
+.date {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* 글쓰기 버튼 스타일 */
+.write {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0 0 0;
+}
+
+.write .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3A4D72;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}

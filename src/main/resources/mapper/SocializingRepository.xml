@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 추가 -->
+<!--        /* insert 를 태그로 생성 , 아이디 필수, 아이디는 정확하게 매소드 이름과 1:1 대응되어야 함!*/-->
+<mapper namespace="com.lec.spring.repository.SocializingRepository">
+    <insert id="save" flushCache="true"
+            parameterType="com.lec.spring.domain.Socializing"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    INSERT INTO socializing
+        (venue_id, socializing_title, category, detail_category, address, meeting_date, meeting_time, limit_num, content, total_price, img)
+    VALUES
+        (#{venue_id}, #{socializing_title}, #{category}, #{detail_category}, #{address}, #{meeting_date}, #{meeting_time}, #{limit_num}, #{content}, #{total_price},
+        #{img})
+    </insert>
+
+    <sql id="SELECT_BASE">
+        SELECT
+            u.id
+            , u.tel
+            , u.username
+            , u.name
+            , u.profile_picture
+            , s.venue_id
+            , s.socializing_title
+            , s.category
+            , s.detail_category
+            , s.address
+            , s.meeting_date
+            , s.meeting_time
+            , s.limit_num
+            , s.content
+            , s.total_price
+            , s.img
+            , s.regdate
+        FROM
+            user u, socializing s
+        WHERE
+            1 = 1
+    </sql>
+
+    <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
+    <select id="findById" resultType="com.lec.spring.domain.Socializing">
+        <include refid="SELECT_BASE"/>
+        AND id = #{id};
+    </select>
+
+
+    <select id="findAll" resultType="com.lec.spring.domain.Socializing">
+        <include refid="SELECT_BASE"/>
+        ORDER BY id DESC;
+    </select>
+
+
+
+    <!-- 수정 -->
+    <update id="update" flushCache="true"
+            parameterType="com.lec.spring.domain.Socializing">
+    UPDATE socializing
+    SET socializing_title = #{socializing_title}, content = #{content}
+    WHERE id = #{id}
+    </update>
+
+    <delete id="delete" flushCache="true"
+            parameterType="com.lec.spring.domain.Socializing">
+        DELETE FROM socializing
+        WHERE id = #{id}
+    </delete>
+
+
+</mapper>
+
+

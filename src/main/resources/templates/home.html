@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Layout</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+<div class="container">
+    <header th:replace="~{common/header::header}"></header>
+    <!--    <main>-->
+<!--        <section id="club">-->
+<!--            <h2>Club</h2>-->
+<!--            <div class="item">-->
+<!--                <a href="club_detail.html">-->
+<!--                    <img src="club.jpg" alt="클럽 사진">-->
+<!--                    <p>클럽 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="club_detail.html">-->
+<!--                    <img src="club.jpg" alt="클럽 사진">-->
+<!--                    <p>클럽 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="club_detail.html">-->
+<!--                    <img src="club.jpg" alt="클럽 사진">-->
+<!--                    <p>클럽 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--        <section id="socializing">-->
+<!--            <h2>Socializing</h2>-->
+<!--            <div class="item">-->
+<!--                <a href="socializing_detail.html">-->
+<!--                    <img src="socializing.jpg" alt="소셜라이징 사진">-->
+<!--                    <p>소셜링 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="socializing_detail.html">-->
+<!--                    <img src="socializing.jpg" alt="소셜라이징 사진">-->
+<!--                    <p>소셜링 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="socializing_detail.html">-->
+<!--                    <img src="socializing.jpg" alt="소셜라이징 사진">-->
+<!--                    <p>소셜링 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--        <section id="venue">-->
+<!--            <h2>Venue</h2>-->
+<!--            <div class="item">-->
+<!--                <a href="venue_detail.html">-->
+<!--                    <img src="venue.jpg" alt="대관장소 사진">-->
+<!--                    <p>대관장소 이름</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="venue_detail.html">-->
+<!--                    <img src="venue.jpg" alt="대관장소 사진">-->
+<!--                    <p>대관장소 이름</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="venue_detail.html">-->
+<!--                    <img src="venue.jpg" alt="대관장소 사진">-->
+<!--                    <p>대관장소 이름</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--        <section id="culture-art">-->
+<!--            <h2>Culture & Art</h2>-->
+<!--            <div class="item">-->
+<!--                <a href="culture_detail.html">-->
+<!--                    <img src="culture.jpg" alt="전시회, 공연 등 사진">-->
+<!--                    <p>전시회, 공연 등 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="culture_detail.html">-->
+<!--                    <img src="culture.jpg" alt="전시회, 공연 등 사진">-->
+<!--                    <p>전시회, 공연 등 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <a href="culture_detail.html">-->
+<!--                    <img src="culture.jpg" alt="전시회, 공연 등 사진">-->
+<!--                    <p>전시회, 공연 등 제목</p>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--    </main>-->
+    <footer th:replace="~{common/footer :: footer}"></footer>
+</div>
+</body>
+</html>
