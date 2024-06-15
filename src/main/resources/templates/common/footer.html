@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="footer-head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>animate footer</title>
     <link rel="stylesheet" th:href="@{/css/common.css}">
+<!--    <link rel="stylesheet" href="/static/css/common.css">-->
 </head>
 <body>
-<footer th:fragment="footer">
+<footer th:fragment="footer-body">
     <div class="waves">
         <div class="wave" id="wave1"></div>
         <div class="wave" id="wave2"></div>
@@ -28,9 +28,9 @@
     </ul>
     <p>© 2024 Company, LINCO</p>
 </footer>
-
-<!-- footer social icon -->
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
+<th:block th:fragment="footer-scripts">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</th:block>
 </html>
