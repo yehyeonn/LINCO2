@@ -29,4 +29,11 @@
         <include refid="select_venue"/>
         and venue_category=#{venue_category}
     </select>
+
+    <insert id="insertVenue" parameterType="com.lec.spring.domain.Venue">
+        INSERT INTO VENUE (venue_name, address, limit_num, venue_category, info_tel, price, posible_start_date,
+                           posible_end_date, open_time, close_time, img)
+        VALUES (#{venue_name}, #{address}, #{limit_num}, #{venue_category}, #{info_tel}, #{price},
+                #{posible_start_date}, #{posible_end_date}, #{open_time}, #{close_time}, #{img})
+    </insert>
 </mapper>

@@ -9,4 +9,7 @@ public interface VenueService {
     List<Venue> findByCategory(String venue_category);
 
     List<Venue> findAll();
+
+    void saveVenue(Venue venue);
+
 }
