@@ -23,7 +23,6 @@
 
     <select id="findAll" resultType="com.lec.spring.domain.Venue">
         <include refid="select_venue"/>
-        order by id desc
     </select>
 
     <select id="findByCategory" resultType="com.lec.spring.domain.Venue">

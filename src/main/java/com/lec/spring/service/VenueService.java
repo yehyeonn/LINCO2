@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VenueService {
 
-    Venue findByCategory(String venue_category);
+    List<Venue> findByCategory(String venue_category);
 
     List<Venue> findAll();
 }

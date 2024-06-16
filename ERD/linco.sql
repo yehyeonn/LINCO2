@@ -125,10 +125,10 @@ CREATE TABLE VENUE
     venue_category     VARCHAR(20)  NOT NULL,
     info_tel           VARCHAR(20)  NULL,
     price              INT          NOT NULL,
-    posible_start_date DATE         NOT NULL COMMENT '이용가능시작',
-    posible_end_date   DATE         NOT NULL COMMENT '이용가능끝',
-    open_time          TIME         NOT NULL COMMENT '영업시작',
-    close_time         TIME         NOT NULL COMMENT '영업끝',
+    posible_start_date VARCHAR(20)         NOT NULL COMMENT '이용가능시작',
+    posible_end_date   VARCHAR(20)         NOT NULL COMMENT '이용가능끝',
+    open_time          VARCHAR(20)         NOT NULL COMMENT '영업시작',
+    close_time         VARCHAR(20)         NOT NULL COMMENT '영업끝',
     img                VARCHAR(255) NULL,
     PRIMARY KEY (id)
 );

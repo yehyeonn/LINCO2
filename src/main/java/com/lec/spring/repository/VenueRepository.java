@@ -8,5 +8,5 @@ public interface VenueRepository {
 
     List<Venue> findAll();
 
-    Venue findByCategory(String venueCategory);
+    List<Venue> findByCategory(String venueCategory);
 }

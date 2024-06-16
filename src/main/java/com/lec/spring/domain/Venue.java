@@ -16,18 +16,15 @@ import java.time.LocalTime;
 @Builder
 public class Venue {
     private Long id;
-    private String venu_name;
+    private String venue_name;
     private String address;
     private Integer limit_num;
-    private String venu_category;
+    private String venue_category;
     private String info_tel;
     private Long price;
-    private Long total_price;
-    private LocalTime open_time;
-    private LocalTime close_time;
-    private LocalDate reservate_date;
-    private LocalTime reservate_start_time;
-    private LocalTime reservate_end_time;
+    private String posible_start_date;
+    private String posible_end_date;
+    private String open_time;
+    private String close_time;
     private String img;
-    private LocalDateTime paydate;
 }
