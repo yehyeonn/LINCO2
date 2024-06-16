@@ -49,22 +49,22 @@
 
 
     <select id="findAll" resultType="com.lec.spring.domain.Socializing">
-        SELECT
-            id,
-            venue_id,
-            socializing_title,
-            category,
-            detail_category,
-            address,
-            meeting_date,
-            meeting_time,
-            limit_num,
-            content,
-            total_price,
-            img,
-            regdate
-
-        FROM socializing
+--         SELECT
+--             id,
+--             venue_id,
+--             socializing_title,
+--             category,
+--             detail_category,
+--             address,
+--             meeting_date,
+--             meeting_time,
+--             limit_num,
+--             content,
+--             total_price,
+--             img,
+--             regdate
+--         FROM socializing
+        <include refid="SELECT_BASE"/>
         ORDER BY id DESC;
     </select>
 
