@@ -10,7 +10,7 @@
 </head>
 <body>
 <th:block th:insert="/common/header :: header-body"></th:block>
-<div class="form-container">
+<div class="container form-container">
     <form th:action="@{/club/create}" method="post" enctype="multipart/form-data">
         <div class="row g-3">
             <div class="col-md-6">
@@ -20,7 +20,7 @@
                         <input type="text" class="form-control" id="club-name" placeholder="클럽 이름을 입력하세요" name="club-name" th:value="${name}">
                         <button type="submit" class="btn btn-outline-dark">중복확인</button>
                     </div>
-                    <p class="text-danger">이미 사용 중인 이름입니다.</p>
+                    <div><span class="text-danger" th:if="${error_name}" th:utext="${error_name}"></span></div>
                 </div>
                 <div class="form-group mt-3">
                     <label for="club-category" class="form-label">카테고리:</label>
@@ -31,12 +31,14 @@
                         <option value="technology">기술</option>
                         <option value="others">기타</option>
                     </select>
+                    <div><span class="text-danger" th:if="${error_category}" th:utext="${error_category}"></span></div>
                 </div>
                 <div class="form-group mt-3">
                     <label for="club-detail-category" class="form-label">상세 종목:</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="club-detail-category" placeholder="상세 종목을 입력하세요" name="club-detail-category" th:value="${detail_category}">
                     </div>
+                    <div><span class="text-danger" th:if="${error_detail_category}" th:utext="${error_detail_category}"></span></div>
                 </div>
             </div>
             <div class="col-md-6 text-center">
@@ -52,10 +54,12 @@
         <div class="form-group mt-3">
             <label for="club-intro" class="form-label">클럽 소개:</label>
             <textarea class="form-control" rows="1" id="club-intro" placeholder="클럽을 소개하세요" name="club-intro" th:utext="${intro}"></textarea>
+            <div><span class="text-danger" th:if="${error_intro}" th:utext="${error_intro}"></span></div>
         </div>
         <div class="form-group mt-3">
             <label for="club-content" class="form-label">클럽 상세내용:</label>
             <textarea class="form-control" rows="5" id="club-content" placeholder="클럽 상세내용을 입력하세요" name="club-content" th:utext="${content}"></textarea>
+            <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
         </div>
         <div class="d-flex justify-content-between mt-4">
             <button type="button" class="btn btn-secondary" onclick="history.back()">이전으로</button>
@@ -64,7 +68,7 @@
     </form>
 </div>
 </body>
-<footer th:replace="~{common/footer :: footer-body}"></footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
+    <footer th:replace="~{common/footer :: footer-body}"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 </html>
