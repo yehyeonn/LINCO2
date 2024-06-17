@@ -61,7 +61,15 @@
         <!-- 클럽홍보 부분 -->
         <div class="board-type-3" style="display: none"> <!--th:if="${board.boardType.id == 3}"-->
             <h2 class="title-center">클럽홍보</h2>
-
+            <div class="club-list">
+                <div class="club-item" th:each="club : ${clubs}">
+                    <img th:src="@{'/img/' + ${club.representative_picture}}" alt="대표사진" class="club-img">
+                    <div class="club-info">
+                        <p class="club-name" th:text="${club.name}"></p>
+                        <p class="club-category" th:text="${club.detail_category}"></p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- 공지사항 부분 -->

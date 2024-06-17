@@ -75,6 +75,46 @@ body {
     font-size: 25px;
 }
 
+.club-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.club-item {
+    width: 30%;
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.club-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.club-img {
+    width: 100%; /* 이미지 너비를 클럽 항목 너비에 맞춤 */
+    height: auto; /* 이미지 높이를 자동으로 조정 */
+    border-radius: 8px; /* 이미지 모서리 둥글게 */
+}
+
+.club-info {
+    margin: 10px 0 0;
+}
+
+.club-name {
+    font-weight: bold; /* 클럽 이름을 굵게 */
+    font-size: 1.2em; /* 클럽 이름 폰트 크기 조정 */
+}
+
+.club-category {
+    color: #555; /* 카테고리 텍스트 색상 조정 */
+}
+
 /* 글쓰기 버튼 스타일 */
 .write {
     display: flex;
