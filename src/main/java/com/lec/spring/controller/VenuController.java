@@ -1,16 +1,9 @@
 package com.lec.spring.controller;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.domain.PublicReservationDTO;
 import com.lec.spring.domain.Venue;
-import com.lec.spring.repository.VenueRepository;
-import com.lec.spring.service.ApiService;
 import com.lec.spring.service.VenueService;
-import com.nimbusds.jose.shaded.gson.JsonArray;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,11 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 @Controller
@@ -31,11 +19,10 @@ import java.util.List;
 public class VenuController {
 
     private VenueService venueService;
-    private ApiService apiService;
+
     @Autowired
-    public VenuController(VenueService venueService, ApiService apiService) {
+    public VenuController(VenueService venueService) {
         this.venueService = venueService;
-        this.apiService = apiService;
     }
 
 
@@ -55,11 +42,37 @@ public class VenuController {
 
     @GetMapping("/api2")
     @ResponseBody
-    public ResponseEntity<?> 우솝(){
+    public ResponseEntity<?> responseEntity() {
         RestTemplate rt = new RestTemplate();
         String url = "http://openapi.seoul.go.kr:8088/476753474c73777338374b73494b4b/json/ListPublicReservationInstitution/1/520/";
         ResponseEntity<PublicReservationDTO> response = rt.getForEntity(url, PublicReservationDTO.class);
+
+        if (response.getBody() != null) {
+            saveData(response.getBody());
+        }
         return response;
+    }
+
+    @Transactional
+    public void saveData(PublicReservationDTO publicReservationDTO) {
+        List<PublicReservationDTO.Reservation> reservations = publicReservationDTO.getListPublicReservationInstitution().getRow();
+
+        for (PublicReservationDTO.Reservation reservation : reservations) {
+            Venue venue = new Venue();
+            venue.setVenue_name(reservation.getVenue_name());
+            venue.setAddress(reservation.getAddress());
+            venue.setLimit_num(30);
+            venue.setVenue_category(reservation.getVenue_category());
+            venue.setInfo_tel(reservation.getInfo_tel());
+            venue.setPrice(1000L);
+            venue.setPosible_start_date("2024-07-09");
+            venue.setPosible_end_date("2025-07-09");
+            venue.setOpen_time("09:00:00");
+            venue.setClose_time("18:00:00");
+            venue.setImg(reservation.getImg());
+
+            venueService.saveVenue(venue);
+        }
     }
 
 }

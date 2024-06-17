@@ -12,4 +12,8 @@ public interface VenueRepository {
     List<Venue> findByCategory(String venueCategory);
 
     void insertVenue(Venue venue);
+
+    List<Venue> selectFromRow(int from, int rows);
+
+    int countAll();
 }

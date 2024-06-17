@@ -11,5 +11,4 @@ public interface VenueService {
     List<Venue> findAll();
 
     void saveVenue(Venue venue);
-
 }

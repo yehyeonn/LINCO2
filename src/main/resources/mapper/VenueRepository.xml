@@ -36,4 +36,12 @@
         VALUES (#{venue_name}, #{address}, #{limit_num}, #{venue_category}, #{info_tel}, #{price},
                 #{posible_start_date}, #{posible_end_date}, #{open_time}, #{close_time}, #{img})
     </insert>
+
+    <resultMap id="mapVenue" type="com.lec.spring.domain.Venue">
+        <result column=""
+    </resultMap>
+
+    <select id="seelectFromRow" resultMap="mapVenue">
+
+    </select>
 </mapper>

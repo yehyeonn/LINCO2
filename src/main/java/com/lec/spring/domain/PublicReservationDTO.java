@@ -23,11 +23,20 @@ public class PublicReservationDTO {
 
     @Data
     public static class Reservation{
-        @JsonProperty("GUBUN")
-        public String gubun;
+        @JsonProperty("SVCNM")
+        public String venue_name;
 
-        @JsonProperty("SVCID")
-        public String svcId;
+        @JsonProperty("AREANM")
+        public String address;
+
+        @JsonProperty("MINCLASSNM")
+        public String venue_category;
+
+        @JsonProperty("TELNO")
+        public String info_tel;
+
+        @JsonProperty("IMGURL")
+        public String img;
 
 
     }

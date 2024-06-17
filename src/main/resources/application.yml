@@ -34,3 +34,6 @@ app:
 
   upload:
     path: upload
+
+openapi:
+  url: http://openapi.seoul.go.kr:8088/476753474c73777338374b73494b4b/json/ListPublicReservationInstitution/1/520/

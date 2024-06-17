@@ -37,7 +37,6 @@ public class VenueServiceImpl implements VenueService {
     }
 
     @Override
-    @Transactional
     public void saveVenue(Venue venue) {
         venueRepository.insertVenue(venue);
     }
