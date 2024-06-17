@@ -19,14 +19,14 @@
         <script th:inline="javascript">
             const logged_id = [[${logged_user.id}]]
         </script>
-
+        <th:block th:insert="/common/header :: header-head"></th:block>
         <script th:src="@{/js/detail.js}"></script>
         <title>board_detail</title>
     </head>
 
     <body th:with="logged_user = ${#authentication.principal.user}">    <!-- 현재 로그인한 유저의 정보 -->
 
-    <th:block th:insert="/common/header :: header"></th:block>
+    <th:block th:insert="/common/header :: header-body"></th:block>
 
     <div class="body">
         <section>
@@ -98,7 +98,7 @@
     </div>
 
 
-    <th:block th:insert="/common/footer :: footer"></th:block>
+    <th:block th:insert="/common/footer :: footer-body"></th:block>
 
     </body>
 </th:block>

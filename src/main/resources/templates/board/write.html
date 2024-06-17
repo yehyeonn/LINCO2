@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/board_write.css}">
     <title>게시글 작성</title>
+    <th:block th:insert="/common/header :: header-head"></th:block>
 </head>
 <body>
 
-<th:block th:insert="/common/header :: header"></th:block>
+<th:block th:insert="/common/header :: header-body"></th:block>
 
 <div class="write">
     <div class="title">
@@ -45,8 +46,10 @@
         </button>
     </div>
 
-    <th:block th:insert="/common/footer :: footer"></th:block>
 
 </div>
 </body>
+    <footer th:replace="~{common/footer :: footer-body}"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 </html>

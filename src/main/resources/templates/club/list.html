@@ -2,26 +2,15 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/board_write.css}">
     <link rel="stylesheet" href="/css/club_list.css">
-    <title>Club 페이지</title>
+    <title>Club 목록페이지</title>
+    <th:block th:insert="/common/header :: header-head"></th:block>
 </head>
 <body>
+<th:block th:insert="/common/header :: header-body"></th:block>
+
 <div class="container">
-    <div class="header">
-        <div class="logo">
-            <img src="logo.png" alt="Logo">
-            <h1>Linco Club</h1>
-        </div>
-        <div class="nav">
-            <a href="#">Club</a>
-            <a href="#">Socializing</a>
-            <a href="#">Board</a>
-            <a href="#">Venue</a>
-            <a href="#">Culture & Art</a>
-        </div>
-        <a href="#" class="button">로그인</a>
-    </div>
     <div class="search-bar">
         <input type="text" placeholder="상세종목 검색">
         <button>검색</button>
@@ -59,4 +48,7 @@
     </div>
 </div>
 </body>
+    <footer th:replace="~{common/footer :: footer-body}"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 </html>

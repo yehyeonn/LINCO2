@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.repository.ClubRepository">
+
+    <!-- 클럽 생성 -->
+    <insert id="save" parameterType="com.lec.spring.domain.Club">
+        INSERT INTO club (name, category, detail_category, intro, content, representative_picture)
+        VALUES (#{name}, #{category}, #{detail_category}, #{intro}, #{content}, #{representative_picture})
+    </insert>
+
+    <!-- 특정 id 클럽 찾기 -->
+    <select id="findById" parameterType="long" resultType="com.lec.spring.domain.Club">
+        SELECT *
+        FROM club
+        WHERE id = #{id}
+    </select>
+
+    <!-- 전체 클럽 목록 -->
+    <select id="findAll" resultType="com.lec.spring.domain.Club">
+        SELECT *
+        FROM club
+        ORDER BY id DESC
+    </select>
+
+    <!-- 특정 id 클럽의 상세 내용 수정 -->
+    <update id="update" parameterType="com.lec.spring.domain.Club">
+        UPDATE club
+        SET intro = #{intro},
+            content = #{content},
+            representative_picture = #{representative_picture}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 특정 id 클럽 삭제 -->
+    <delete id="deleteById" parameterType="com.lec.spring.domain.Club">
+        DELETE FROM club WHERE id = #{id}
+    </delete>
+
+    <!-- 페이징 -->
+    <select id="selectFromRow" parameterType="map" resultType="com.lec.spring.domain.Club">
+        SELECT * FROM club
+        ORDER BY id
+        LIMIT #{rows} OFFSET #{from}
+    </select>
+
+    <!-- 전체 클럽의 개수 -->
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM club
+    </select>
+
+</mapper>

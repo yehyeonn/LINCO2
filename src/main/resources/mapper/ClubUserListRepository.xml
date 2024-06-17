@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.ClubUserListRepository">
+
+    <!-- 새로운 클럽 사용자 추가 -->
+    <insert id="save" parameterType="com.lec.spring.domain.ClubUserList">
+        INSERT INTO club_user_list (user_id, club_id, role)
+        VALUES (#{userId}, #{clubId}, #{role})
+    </insert>
+
+    <!-- 특정 클럽의 사용자 목록 조회 -->
+    <select id="findByClubId" parameterType="long" resultType="com.lec.spring.domain.ClubUserList">
+        SELECT user_id, club_id, role
+        FROM club_user_list
+        WHERE club_id = #{clubId}
+    </select>
+
+    <!-- 특정 사용자가 가입한 클럽 목록 조회 -->
+    <select id="findByUserId" parameterType="long" resultType="com.lec.spring.domain.ClubUserList">
+        SELECT user_id, club_id, role
+        FROM club_user_list
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 특정 클럽의 특정 사용자 조회 -->
+    <select id="findByUserIdAndClubId" parameterType="map" resultType="com.lec.spring.domain.ClubUserList">
+        SELECT user_id, club_id, role
+        FROM club_user_list
+        WHERE user_id = #{userId} AND club_id = #{clubId}
+    </select>
+
+
+    <!-- 특정 클럽의 특정 사용자 삭제 -->
+    <delete id="deleteByUserIdAndClubId" parameterType="map">
+        DELETE FROM club_user_list
+        WHERE user_id = #{userId} AND club_id = #{clubId}
+    </delete>
+
+</mapper>
