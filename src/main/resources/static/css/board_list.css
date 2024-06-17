@@ -8,7 +8,7 @@ body {
 }
 
 /* 링크 박스 스타일 */
-.menu {
+.menu-1 {
     display: flex;
     justify-content: space-between;
     margin: 30px auto 50px auto;
@@ -25,11 +25,11 @@ body {
     font-size: 18px;
 }
 
-.menu a:hover {
+.menu-1 div:hover {
     background-color: #D3374A;
 }
 
-.menu a {
+.menu-1 div {
     text-decoration: none;
     color: #fff;
     background-color: #B3B49E;
@@ -42,26 +42,37 @@ body {
 .post-list {
     width: 90%;
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 80px auto;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    position: relative;
+    /*position: relative;*/
+}
+
+.title-center {
+    text-align: center;
+    margin: 0 auto;
+    font-weight: bolder;
 }
 
 .post {
+    width: 100%;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
     position: relative;
+    font-size: 15px;
+}
+.post a{
+    text-decoration-line: none;
+    color: black;
 }
 
-.title-center {
-    display: flex;
-    text-align: center;
+.post thead{
+    font-size: 25px;
 }
 
 /* 글쓰기 버튼 스타일 */
