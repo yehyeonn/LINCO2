@@ -10,6 +10,7 @@ public interface SocializingRepository {
     List<Socializing> findAll();
     int update(Socializing socializing);
     int delete(Socializing socializing);
+    
 
     List<Socializing> selectFromRow(int from, int rows);
     int countAll();

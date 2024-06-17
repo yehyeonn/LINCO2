@@ -46,7 +46,7 @@ button {
 
 .form-img {
     position: absolute;
-    top: 25%;
+    top: 10%;
     right: 15%; /* Adjust as necessary */
     display: flex;
     flex-direction: column;
