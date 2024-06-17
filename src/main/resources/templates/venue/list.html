@@ -3,14 +3,54 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Venue List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
+    <link rel="stylesheet" href="/css/venue_list.css">
+    <title>Venue 페이지</title>
 </head>
 <body>
-<h1>Venue List</h1>
-<ul>
-    <li th:each="venue : ${venue}">
-        <span th:text="${venue.venue_name}">Venue Name</span>
-    </li>
-</ul>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <h1>Linco Venue</h1>
+        </div>
+        <div class="nav">
+            <a href="#">Club</a>
+            <a href="#">Socializing</a>
+            <a href="#">Board</a>
+            <a href="#">Venue</a>
+            <a href="#">Culture & Art</a>
+        </div>
+        <a href="#" class="button">로그인</a>
+    </div>
+    <div class="category-area">
+        <button>회의실</button>
+        <button>캠핑장</button>
+        <button>청년공간</button>
+        <button>공유공간</button>
+        <button>전시실</button>
+        <button>다목적실</button>
+        <button>녹화장소</button>
+        <button>광장</button>
+        <button>공연장</button>
+        <button>강의실</button>
+        <button>강당</button>
+        <button>기타</button>
+    </div>
+    <div class="main-content">
+        <div class="venue-item" th:each="venue : ${list}">
+            <img src="club2.png" alt="Venue Image">
+            <p th:text="${venue.venue_name}"></p>
+            <p th:text="${venue.address}"></p>
+            <p th:text="${venue.venue_category}"></p>
+            <p>이용시간</p>
+            <p th:text="${venue.price}"></p>
+        </div>
+    </div>
+
+    <th:block th:insert="~{common/pagination::pagination}"></th:block>
+
+</div>
 </body>
 </html>

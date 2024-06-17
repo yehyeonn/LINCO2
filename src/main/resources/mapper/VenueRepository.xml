@@ -23,11 +23,27 @@
 
     <select id="findAll" resultType="com.lec.spring.domain.Venue">
         <include refid="select_venue"/>
-        order by id desc
     </select>
 
     <select id="findByCategory" resultType="com.lec.spring.domain.Venue">
         <include refid="select_venue"/>
         and venue_category=#{venue_category}
+    </select>
+
+    <insert id="insertVenue" parameterType="com.lec.spring.domain.Venue">
+        INSERT INTO VENUE (venue_name, address, limit_num, venue_category, info_tel, price, posible_start_date,
+                           posible_end_date, open_time, close_time, img)
+        VALUES (#{venue_name}, #{address}, #{limit_num}, #{venue_category}, #{info_tel}, #{price},
+                #{posible_start_date}, #{posible_end_date}, #{open_time}, #{close_time}, #{img})
+    </insert>
+
+
+    <select id="selectFromRow" resultType="com.lec.spring.domain.Venue">
+        <include refid="select_venue"/>
+        limit #{param1}, #{param2}
+    </select>
+
+    <select id="countAll" resultType="int">
+        select count(*) from VENUE
     </select>
 </mapper>

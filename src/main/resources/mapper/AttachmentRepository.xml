@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>      <!-- 상단에는 xml 규격이 들어가야함 -->
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -26,7 +26,7 @@
     <select id="findByBoard" resultType="com.lec.spring.domain.Attachment">
         <include refid="SELECTFILE"/>
         AND
-        board_id = #{param1}
+        board_id = #{board_id}
         ORDER BY id ASC
     </select>
 
@@ -35,7 +35,8 @@
         AND id = #{id}
     </select>
 
-    <select id="findByIds" parameterType="ArrayList">
+    <select id="findByIds" resultType="com.lec.spring.domain.Attachment"
+            parameterType="arraylist">
         <include refid="SELECTFILE"/>
         AND id in
         <foreach collection="array" item="e" separator="," open="(" close=")">
@@ -44,7 +45,7 @@
         ORDER BY id ASC
     </select>
 
-    <delete id="deleteByIds" flushCache="true" parameterType="ArrayList">
+    <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
         DELETE FROM ATTACHMENT
         WHERE id in (<foreach collection="array" item="e" separator=",">
         #{e}

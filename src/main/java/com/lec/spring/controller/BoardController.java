@@ -1,7 +1,9 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.Board;
+import com.lec.spring.domain.Club;
 import com.lec.spring.service.BoardService;
+import com.lec.spring.service.ClubService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private ClubService clubService;
 
     // 기본생성자
     public BoardController() {
@@ -64,8 +69,16 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public void list(Integer page, Model model){
+    public String list(@RequestParam(required = false, defaultValue = "1") Integer page, Model model){
         boardService.list(page, model);
+
+        List<Board> boards = boardService.list();
+        List<Club> clubs = clubService.getAllClubs();
+
+        model.addAttribute("boards", boards);
+        model.addAttribute("clubs", clubs);
+
+        return "board/list";
     }
 
     @GetMapping("/update/{id}")

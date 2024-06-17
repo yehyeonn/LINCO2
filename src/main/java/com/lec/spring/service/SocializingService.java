@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface SocializingService {
@@ -17,11 +18,14 @@ public interface SocializingService {
     List<Socializing> list();
     List<Socializing> list(Integer page, Model model);
 
-//    // 수정
+    // 수정
     Socializing selectById(Long id);
-//    // 제목, 내용
+    // 제목, 내용
     int update(Socializing socializing);
-//
-//    // 삭제
+
+    List<String> getAllCategories();
+
+
+    // 삭제
     int deleteById(Long id);
 }
