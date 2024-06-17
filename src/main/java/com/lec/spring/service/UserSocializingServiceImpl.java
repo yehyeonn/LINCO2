@@ -23,7 +23,7 @@
 //                .socialRole(role)
 //                .build();
 //        result = userSocializingRepository.save(userSocializing);
-//        return 0;
+//        return result;
 //    }
 //
 //    @Override
