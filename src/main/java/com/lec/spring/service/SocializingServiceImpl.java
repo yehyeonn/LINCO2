@@ -121,6 +121,8 @@ public class SocializingServiceImpl implements SocializingService {
         return list;
     }
 
+
+
     // 수정용
     @Override
     public Socializing selectById(Long id) {
