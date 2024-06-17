@@ -1,8 +1,10 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Socializing;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.SocializingRepository;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,21 +23,26 @@ public class SocializingServiceImpl implements SocializingService {
     public SocializingServiceImpl(SqlSession sqlSession){
         userRepository = sqlSession.getMapper(UserRepository.class);
         socializingRepository = sqlSession.getMapper(SocializingRepository.class);
+
+        System.out.println("SocializingService() 생성");
     }
 
-    // 여기도 첨부파일 필요
-//    @Override
-//    public int write(Socializing socializing) {
-//        return socializingRepository.save(socializing);
-//    }
-//
+    @Override
+    public int write(Socializing socializing) {
+        User user = U.getLoggedUser();
+        socializing.setUser(user);  // 글 작성자
+
+        int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
+        return cnt;
+    }
+
 //    // 세부사항
-//    @Override
-//    @Transactional
-//    public Socializing detail(Long id) {
-//        Socializing socializing = socializingRepository.findById(id);
-//        return socializing;
-//    }
+    @Override
+    @Transactional
+    public Socializing detail(Long id) {
+        Socializing socializing = socializingRepository.findById(id);
+        return socializing;
+    }
 
     @Override
     public List<Socializing> list() {
@@ -48,29 +55,28 @@ public class SocializingServiceImpl implements SocializingService {
         return null;
     }
 
-//    // 수정용
-//    @Override
-//    public Socializing selectById(Long id) {
-//        Socializing socializing = socializingRepository.findById(id);
-//
-//        return socializing;
-//    }
-//
-//    @Override
-//    public int update(Socializing socializing) {
-//        int result = 0;
-//        result = socializingRepository.update(socializing);
-//        return result;
-//    }
-//
-//
-//    @Override
-//    public int deleteById(Long id) {
-//        int result = 0;
-//        Socializing socializing = socializingRepository.findById(id);
-//        if(socializing != null){
-//            result = socializingRepository.delete(socializing);
-//        }
-//        return result;
-//    }
+    // 수정용
+    @Override
+    public Socializing selectById(Long id) {
+        Socializing socializing = socializingRepository.findById(id);
+
+        return socializing;
+    }
+
+    @Override
+    public int update(Socializing socializing) {
+        int result = 0;
+        result = socializingRepository.update(socializing);
+        return result;
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        int result = 0;
+        Socializing socializing = socializingRepository.findById(id);
+        if(socializing != null){
+            result = socializingRepository.delete(socializing);
+        }
+        return result;
+    }
 }
