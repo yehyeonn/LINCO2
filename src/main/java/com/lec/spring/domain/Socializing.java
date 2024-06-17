@@ -24,5 +24,5 @@ public class Socializing {
     private String img;
     private LocalDateTime regdate;
 
-    private User author;
+    private User user;
 }

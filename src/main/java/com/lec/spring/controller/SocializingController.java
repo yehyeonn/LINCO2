@@ -19,8 +19,6 @@ public class SocializingController {
 
     @Autowired
     private SocializingService socializingService;
-
-//    @Autowired
 //    private UserSocializingRepository userSocializingRepository;
 
 
