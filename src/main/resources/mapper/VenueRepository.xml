@@ -38,7 +38,7 @@
     </insert>
 
 
-    <select id="seelectFromRow" resultType="com.lec.spring.domain.Venue">
+    <select id="selectFromRow" resultType="com.lec.spring.domain.Venue">
         <include refid="select_venue"/>
         limit #{param1}, #{param2}
     </select>

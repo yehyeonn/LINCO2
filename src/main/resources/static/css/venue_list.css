@@ -44,7 +44,7 @@ body {
 .logo h1 {
     margin: 0;
     font-size: 24px;
-    color: #D3374A;
+    color: var(--red);
 }
 
 .nav {
@@ -62,11 +62,11 @@ body {
 }
 
 .nav a:hover {
-    background-color: #D3374A;
+    background-color: var(--red);
 }
 
 .button {
-    background-color: #D3374A;
+    background-color: var(--red);
     color: #ffffff;
     padding: 10px 20px;
     text-decoration: none;
@@ -75,7 +75,7 @@ body {
 }
 
 .button:hover {
-    background-color: #B3B49E;
+    background-color: var(--page-color);
 }
 
 .category-area {
@@ -98,7 +98,7 @@ body {
 }
 
 .category-area button:hover {
-    background-color: #B3B49E;
+    background-color: var(--page-color);
 }
 
 .main-content {
@@ -140,17 +140,15 @@ body {
     justify-content: center;
     margin-top: 20px;
 }
-
 .pagination a {
     text-decoration: none;
     color: #fff;
     padding: 10px;
     margin: 0 5px;
-    background-color: #B3B49E;
+    background-color: var(--page-color);
     border-radius: 5px;
     transition: background-color 0.3s;
 }
-
 .pagination a:hover {
     background-color: #D3374A;
 }

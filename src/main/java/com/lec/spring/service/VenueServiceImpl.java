@@ -22,10 +22,10 @@ import java.util.List;
 @Service
 public class VenueServiceImpl implements VenueService {
 
-    @Value("${app.pagenation.write_pages}")
+    @Value("${app.pagination.write_pages}")
     private int WRITE_PAGES;
 
-    @Value("${app.pagenation.page_rows}")
+    @Value("${app.pagination.page_rows}")
     private int PAGE_ROWS;
 
     private VenueRepository venueRepository;
@@ -88,6 +88,7 @@ public class VenueServiceImpl implements VenueService {
             if (endPage >= totalPage) endPage = totalPage;
 
             list = venueRepository.selectFromRow(fromRow, pageRows);
+
             model.addAttribute("list", list);
         } else {
             page = 0;
