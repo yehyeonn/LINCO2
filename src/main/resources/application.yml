@@ -30,7 +30,7 @@ mybatis:
 app:
   pagination:
     write_pages: 5
-    page_rows: 6
+    page_rows: 15
 
   upload:
     path: upload

@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.Socializing;
 //import com.lec.spring.repository.UserSocializingRepository;
 import com.lec.spring.service.SocializingService;
+import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,8 +29,9 @@ public class SocializingController {
     public void write(){}
 
     @GetMapping("/list")
-    public void list(Model model){
-         model.addAttribute("list",socializingService.list());
+    public void list(Integer page, Model model){
+
+        socializingService.list(page, model);
     }
 
 //    @PostMapping("/write")
@@ -79,6 +81,15 @@ public class SocializingController {
 //        model.addAttribute("result", socializingService.deleteById(id));
 //        return "socializing/deleteOk";
 //    }
+
+    //페이징
+    //pageRows 변경시 동작
+    @PostMapping("/pageRows")
+    public String pageRows(Integer page, Integer pageRows) {
+        U.getSession().setAttribute("pageRows",pageRows);
+        return "redirect:/socializing/list?page=" + page;
+
+    }
 
 
 }

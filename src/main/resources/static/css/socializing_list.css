@@ -198,3 +198,7 @@ body {
 .create-button:hover {
     background-color: #B3B49E;
 }
+
+.hidden{
+    display: none;
+}

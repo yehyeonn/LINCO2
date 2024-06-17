@@ -65,6 +65,7 @@
             regdate
 
         FROM socializing
+
         ORDER BY id DESC;
     </select>
 
@@ -83,6 +84,35 @@
         DELETE FROM socializing
         WHERE id = #{id}
     </delete>
+
+
+
+    <select id="selectFromRow" resultType="com.lec.spring.domain.Socializing">
+        SELECT
+            id,
+            venue_id,
+            socializing_title,
+            category,
+            detail_category,
+            address,
+            meeting_date,
+            meeting_time,
+            limit_num,
+            content,
+            total_price,
+            img,
+            regdate
+
+        FROM socializing
+        WHERE
+            1=1
+        ORDER BY id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM socializing
+    </select>
 
 
 </mapper>
