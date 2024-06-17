@@ -27,7 +27,7 @@ $(document).ready(function() {
             const reader = new FileReader();
             reader.onload = function(e) {
                 $('#previewImage').attr('src', e.target.result).show();
-                $("span").hide();
+                $('#img_txt').hide();
             };
             reader.readAsDataURL(file);
         } else {
@@ -35,23 +35,23 @@ $(document).ready(function() {
         }
     });
 
-    $('#socializingForm').on('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        $.ajax({
-            type: 'POST',
-            url: '/socializing/write',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                alert('소셜라이징이 성공적으로 생성되었습니다.');
-                // 성공 시 처리
-            },
-            error: function(error) {
-                alert('오류가 발생했습니다.');
-                console.error('Error:', error);
-            }
-        });
-    });
+    // $('#socializingForm').on('submit', function(e) {
+    //     e.preventDefault();
+    //     const formData = new FormData(this);
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/socializing/create',
+    //         data: formData,
+    //         processData: false,
+    //         contentType: false,
+    //         success: function(response) {
+    //             alert('소셜라이징이 성공적으로 생성되었습니다.');
+    //             // 성공 시 처리
+    //         },
+    //         error: function(error) {
+    //             alert('오류가 발생했습니다.');
+    //             console.error('Error:', error);
+    //         }
+    //     });
+    // });
 });
