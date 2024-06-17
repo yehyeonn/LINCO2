@@ -4,6 +4,7 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.PublicReservationDTO;
 import com.lec.spring.domain.Venue;
 import com.lec.spring.service.VenueService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,10 +28,8 @@ public class VenuController {
 
 
     @GetMapping("/list")
-    public String venueList(Model model) {
-        List<Venue> venueList = venueService.findAll();
-        model.addAttribute("venueList", venueList);
-        return "/venue/list";
+    public void venueList(Integer page, Model model) {
+        venueService.list(page, model);
     }
 
     @GetMapping("/list/{category}")
@@ -75,4 +74,9 @@ public class VenuController {
         }
     }
 
+//    @PostMapping("/pageRows")
+//    public String pageRows(Integer page, Integer pageRows) {
+//        U.getSession().setAttribute("pageRows", pageRows);
+//        return "redirect:/venue/list?page=" + page;
+//    }
 }

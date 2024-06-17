@@ -37,11 +37,13 @@
                 #{posible_start_date}, #{posible_end_date}, #{open_time}, #{close_time}, #{img})
     </insert>
 
-    <resultMap id="mapVenue" type="com.lec.spring.domain.Venue">
-        <result column=""
-    </resultMap>
 
-    <select id="seelectFromRow" resultMap="mapVenue">
+    <select id="seelectFromRow" resultType="com.lec.spring.domain.Venue">
+        <include refid="select_venue"/>
+        limit #{param1}, #{param2}
+    </select>
 
+    <select id="countAll" resultType="int">
+        select count(*) from VENUE
     </select>
 </mapper>
