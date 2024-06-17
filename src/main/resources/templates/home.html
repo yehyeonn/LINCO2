@@ -187,36 +187,7 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.category');
-            let currentSectionIndex = 0;
-
-            const showSection = (index) => {
-                sections.forEach((section, i) => {
-                    if (i === index) {
-                        section.classList.add('visible');
-                        section.style.display = 'flex';
-                    } else {
-                        section.classList.remove('visible');
-                        section.style.display = 'none';
-                    }
-                });
-            };
-
-            const scrollHandler = (event) => {
-                if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
-                    currentSectionIndex++;
-                } else if (event.deltaY < 0 && currentSectionIndex > 0) {
-                    currentSectionIndex--;
-                }
-                showSection(currentSectionIndex);
-            };
-
-            window.addEventListener('wheel', scrollHandler);
-            showSection(currentSectionIndex);  // Initial call to show the first visible section
-        });
-    </script>
+    <script th:src="@{/js/home.js}"></script>
 
 </div>
 <footer th:replace="~{common/footer :: footer-body}"></footer>

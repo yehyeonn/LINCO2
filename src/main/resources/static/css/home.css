@@ -33,10 +33,11 @@ body, html {
 }
 
 .box {
+    margin-bottom: 50px;
     background: #3A4D72;
     border-radius: 20px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    padding: 40px;
+    padding: 50px;
     width: 80%;
     max-width: 1200px;
     text-align: center;
@@ -79,12 +80,19 @@ body, html {
     width: 70px;
     height: 70px;
     margin-right: 10px;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     border-radius: 20px;
+    overflow: hidden;
 }
 
-.img-box img:hover {
+.img-box:hover img {
     transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.img-box:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .img-title {
@@ -94,17 +102,25 @@ body, html {
     flex-grow: 1;
 }
 
-@keyframes swirlIn {
+@keyframes lightSpeedIn {
     from {
+        transform: translateX(100%) skewX(-30deg);
         opacity: 0;
-        transform: scale(0) rotate(0deg);
+    }
+    60% {
+        transform: translateX(-20%) skewX(30deg);
+        opacity: 1;
+    }
+    80% {
+        transform: translateX(10%) skewX(-10deg);
+        opacity: 1;
     }
     to {
+        transform: translateX(0);
         opacity: 1;
-        transform: scale(1) rotate(360deg);
     }
 }
 
 .visible {
-    animation: swirlIn 1s forwards;
+    animation: lightSpeedIn 1s forwards;
 }

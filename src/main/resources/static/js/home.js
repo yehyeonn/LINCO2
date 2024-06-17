@@ -1,34 +1,37 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.category');
+    let currentSectionIndex = 0;
+    let isScrolling = false;
 
-    // Intersection Observer Options
-    const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.7 // 뷰포트의 70% 이상 보일 때 작동
-    };
-
-    // Intersection Observer Callback
-    const callback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+    const showSection = (index) => {
+        sections.forEach((section, i) => {
+            if (i === index) {
+                section.classList.add('visible');
+                section.style.display = 'flex';
             } else {
-                entry.target.classList.remove('visible');
+                section.classList.remove('visible');
+                section.style.display = 'none';
             }
         });
     };
 
-    // Create Intersection Observer
-    const observer = new IntersectionObserver(callback, options);
+    const scrollHandler = (event) => {
+        if (isScrolling) return;
 
-    // Observe each section
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+        if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
+            currentSectionIndex++;
+        } else if (event.deltaY < 0 && currentSectionIndex > 0) {
+            currentSectionIndex--;
+        }
 
-    // 초기 로드 시 첫 번째 섹션을 가시화
-    if (sections.length > 0) {
-        sections[0].classList.add('visible');
-    }
+        showSection(currentSectionIndex);
+        isScrolling = true;
+
+        setTimeout(() => {
+            isScrolling = false;
+        }, 500); // 스크롤 이벤트 사이의 딜레이를 1초로 설정
+    };
+
+    window.addEventListener('wheel', scrollHandler);
+    showSection(currentSectionIndex);  // 처음에 첫 번째 섹션을 표시
 });
