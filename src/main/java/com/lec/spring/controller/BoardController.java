@@ -49,18 +49,18 @@ public class BoardController {
             for (FieldError err : errList){
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
-            return "redirect:/common/board_write";
+            return "redirect:/board/write";
         }
         model.addAttribute("result", boardService.write(board, files));
 
-        return "common/board_writeOk";
+        return "board/writeOk";
     }
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
         model.addAttribute("board", boardService.detail(id));
 
-        return "common/board_detail";
+        return "board/detail";
     }
 
     @GetMapping("/list")
@@ -71,7 +71,7 @@ public class BoardController {
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model){
         model.addAttribute("board", boardService.selectById(id));
-        return "common/board_update";
+        return "board/update";
     }
 
     @PostMapping("/update")
@@ -95,14 +95,14 @@ public class BoardController {
         }
         model.addAttribute("result", boardService.update(board, files, delfile));
 
-        return "common/board_updateOk";
+        return "board/updateOk";
     }
 
     @PostMapping("/delete")
     public String deleteOk(Long id, Model model){
         model.addAttribute("result", boardService.deleteById(id));
 
-        return "common/board_deleteOk";
+        return "board/deleteOk";
     }
 
 //    @InitBinder
@@ -115,7 +115,7 @@ public class BoardController {
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows", pageRows);
 
-        return "redirect:/common/board_list?page=" + page;
+        return "redirect:/board/list?page=" + page;
     }
 
 }

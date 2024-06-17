@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/board_write.css">
+    <link rel="stylesheet" th:href="@{/css/board_write.css}">
     <title>게시글 작성</title>
 </head>
 <body>
+
+<th:block th:insert="/common/header :: header"></th:block>
+
 <div class="write">
     <div class="title">
         <div class="form-group">
-            <label for="subject">게시글 제목:</label>
-                <select name="" id="lang" class="select-right">
-                    <option value="club">클럽홍보</option>
-                    <option value="notices">공지사항</option>
-                </select>
-                <form action="#">
-                    <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" th:value="${subject}">
-                </form>
+            <label for="title">게시글 제목:</label>
+            <select name="" id="lang" class="select-right">
+                <option value="club">클럽홍보</option>
+                <option value="notices">공지사항</option>
+            </select>
+            <form action="#">
+                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title" th:value="${title}">
+            </form>
         </div>
     </div>
     <hr>
@@ -28,7 +31,7 @@
 
     <div class="button">
         <div class="left-buttons">
-            <a class="btn" href="../board.html">
+            <a class="btn" href="list.html">
                 목록
             </a>
 
@@ -41,6 +44,8 @@
             저장하기
         </button>
     </div>
+
+    <th:block th:insert="/common/footer :: footer"></th:block>
 
 </div>
 </body>

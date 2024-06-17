@@ -1,7 +1,7 @@
 /* start navbar css */
 .login {
     background-color: #B3B49E;
-    color: white;
+    color: #EDEBDA;
     font-size: 14px;
     padding: 8px 20px;
     border-radius: 50px;
@@ -14,9 +14,7 @@
 }
 
 .navbar {
-    background-color: #EDEBDA;
-    margin: 20px;
-    border-radius: 20px;
+    background-color: #3A4D72;
     padding: 0.5rem;
 }
 
@@ -25,20 +23,32 @@
     font-size: 1.25em;
 }
 
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28237, 235, 218, 100%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28255%2c255%2c102%2c100%29'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+}
+
+span, button {
+    color: #EDEBDA;
+}
+
 .navbar-toggler:focus,.btn-close:focus {
     box-shadow: none;
     outline: none;
 }
 .offcanvas-body, .offcanvas-header {
-    background-color: #EDEBDA;
+    background-color: #3A4D72;
 }
 
 .offcanvas-header {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #EDEBDA;
 }
 
 .nav-link {
-    color: #333;
+    color: #EDEBDA;
     font-weight: bold;
     font-size: 18px;
     position: relative;
@@ -78,27 +88,34 @@
 
 body {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    flex-direction: column;
     min-height: 100vh;
     background-color: #EDEBDA;
 }
 
+/*.container {*/
+/*    flex: 1;*/
+/*}*/
+
+/*main {*/
+/*    flex: 1;*/
+/*}*/
+
 footer {
-    position: relative;
+    position: fixed;
     width: 100%;
-    min-height: 60px;
-    background-color: #3A4D72 ;
+    bottom: 0;
+    background-color: #3A4D72;
     padding: 10px 25px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    z-index: 1000;
 }
 
 footer .icon,
 footer .menu {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -147,10 +164,10 @@ footer p {
 footer .wave {
     position: absolute;
     top: -60px;
-    left: 0px;
+    left: 0;
     width: 100%;
     height: 60px;
-    background: url(/static/img/waves.png);
+    background: url("/img/waves.png");
     background-size: 1000px 100px;
 }
 
