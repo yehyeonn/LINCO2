@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Venue;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -8,5 +9,11 @@ public interface VenueRepository {
 
     List<Venue> findAll();
 
-    Venue findByCategory(String venueCategory);
+    List<Venue> findByCategory(String venueCategory);
+
+    void insertVenue(Venue venue);
+
+    List<Venue> selectFromRow(int from, int rows);
+
+    int countAll();
 }

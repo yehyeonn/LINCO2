@@ -1,12 +1,18 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Venue;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
 public interface VenueService {
 
-    Venue findByCategory(String venue_category);
+    List<Venue> findByCategory(String venue_category);
 
     List<Venue> findAll();
+
+    void saveVenue(Venue venue);
+
+    List<Venue> list(Integer page, Model model);
+
 }
