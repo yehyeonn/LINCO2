@@ -104,10 +104,10 @@ values ('공지사항'),
 
 # select * from BOARD_TYPE;
 
-insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt, regdate)
-values (1, null, 1, '벌레마시쪙', '벌레마시쪙????', 3, null),
-       (2, 2, 2, '아니', '아니 맛없쪙', 2, null),
-       (3, 2, 2, '야 나두!', '야 너두? 맛없쪙? 나두 맛없쪙', 2, null);
+insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
+values (1, null, 1, '벌레마시쪙', '벌레마시쪙????', 3),
+       (2, 2, 2, '아니', '아니 맛없쪙', 2),
+       (3, 2, 2, '야 나두!', '야 너두? 맛없쪙? 나두 맛없쪙', 2);
 
 # select * from BOARD;
 
