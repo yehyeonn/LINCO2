@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
     <link rel="stylesheet" href="/css/venue_list.css">
-    <title>Club 페이지</title>
+    <title>Venue 페이지</title>
 </head>
 <body>
 <div class="container">
@@ -38,7 +39,7 @@
         <button>기타</button>
     </div>
     <div class="main-content">
-        <div class="venue-item" th:each="venue : ${venueList}">
+        <div class="venue-item" th:each="venue : ${list}">
             <img src="club2.png" alt="Venue Image">
             <p th:text="${venue.venue_name}"></p>
             <p th:text="${venue.address}"></p>
@@ -46,56 +47,10 @@
             <p>이용시간</p>
             <p th:text="${venue.price}"></p>
         </div>
-<!--        <div class="venue-item">-->
-<!--            <img src="club2.png" alt="Venue Image">-->
-<!--            <p>Venue 장소명 2</p>-->
-<!--            <p>지역</p>-->
-<!--            <p>카테고리</p>-->
-<!--            <p>이용시간</p>-->
-<!--            <p>가격</p>-->
-<!--        </div>-->
-<!--        <div class="venue-item">-->
-<!--            <img src="club2.png" alt="Venue Image">-->
-<!--            <p>Venue 장소명 3</p>-->
-<!--            <p>지역</p>-->
-<!--            <p>카테고리</p>-->
-<!--            <p>이용시간</p>-->
-<!--            <p>가격</p>-->
-<!--        </div>-->
-<!--        <div class="venue-item">-->
-<!--            <img src="club2.png" alt="Venue Image">-->
-<!--            <p>Venue 장소명 4</p>-->
-<!--            <p>지역</p>-->
-<!--            <p>카테고리</p>-->
-<!--            <p>이용시간</p>-->
-<!--            <p>가격</p>-->
-<!--        </div>-->
-<!--        <div class="venue-item">-->
-<!--            <img src="club2.png" alt="Venue Image">-->
-<!--            <p>Venue 장소명 5</p>-->
-<!--            <p>지역</p>-->
-<!--            <p>카테고리</p>-->
-<!--            <p>이용시간</p>-->
-<!--            <p>가격</p>-->
-<!--        </div>-->
-<!--        <div class="venue-item">-->
-<!--            <img src="club2.png" alt="Venue Image">-->
-<!--            <p>Venue 장소명 6</p>-->
-<!--            <p>지역</p>-->
-<!--            <p>카테고리</p>-->
-<!--            <p>이용시간</p>-->
-<!--            <p>가격</p>-->
-<!--        </div>-->
     </div>
-    <div class="pagination">
-        <a href="#">＜</a>
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">＞</a>
-    </div>
+
+    <th:block th:insert="~{common/pagination::pagination}"></th:block>
+
 </div>
 </body>
 </html>
