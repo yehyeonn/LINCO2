@@ -39,15 +39,6 @@ function sample4_execDaumPostcode() {
                     guideTextBox.style.display = 'none';
                 }
             }
-
-            // 팝업을 닫는다. (이 경우 window.close() 사용)
-            if (window.self !== window.top) {
-                // iframe 내부에서 실행되는 경우
-                window.parent.postMessage({ action: 'closePostcodePopup' }, '*');
-            } else {
-                // 팝업 창에서 실행되는 경우
-                window.close();
-            }
         }
     }).open();
 }
