@@ -10,5 +10,6 @@ public interface UserSocializingRepository {
     List<UserSocializing> findBySocializingId(Long socializing_id);
 
     // 참가 버튼 눌렀을 때 저장되는 유저
-    int save(UserSocializing userSocializing);
+    int addUserToSocializing(Long userId, Long socializingId, String role);
+
 }

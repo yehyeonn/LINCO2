@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -147,4 +148,10 @@ public class SocializingServiceImpl implements SocializingService {
         }
         return result;
     }
+
+    public List<String> getAllCategories(){
+        return Arrays.asList("운동", "공연", "공부");
+    }
+    
+
 }
