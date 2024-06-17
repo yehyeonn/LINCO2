@@ -17,8 +17,6 @@ public interface SocializingService {
     List<Socializing> list();
     List<Socializing> list(Integer page, Model model);
 
-    List<Socializing> list(Integer page, Model model);
-
 //    // 수정
     Socializing selectById(Long id);
 //    // 제목, 내용
