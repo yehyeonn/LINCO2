@@ -191,46 +191,37 @@ public class BoardServiceImpl implements BoardService{
         long cnt = boardRepository.countAll();
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);
 
-        // 하단에 표현될 [페이징] 의 '시작페이지'와 '마지막페이지'
         int startPage = 0;
         int endPage = 0;
 
-        // 해당 페이지의 글 목록을 리스트로 준비
         List<Board> list = null;
 
-        if (cnt > 0) {       // 데이터가 최소 1개 이상인 경우만 페이징
-
-            // page 값 보정 (존재하지 않는 페이지에 대한 설정)
+        if (cnt > 0) {
             if (page > totalPage) page = totalPage;
-
-            // 쿼리문에 보내줄 fromRow 계산  (몇번째 데이터부터 select 할지)
             int fromRow = (page - 1) * pageRows;
 
-            // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지' 계산
             startPage = (((page - 1) / writePages) * writePages) + 1;
             endPage = startPage + writePages - 1;
             if (endPage >= totalPage) endPage = totalPage;
 
-            // 해당 페이지의 글 목록을 DB 에서 읽어오기
             list = boardRepository.selectFromRow(fromRow, pageRows);
-            model.addAttribute("list", list);       // model 에 페이지의 글 목록 담기
         } else {
-            page = 0;       // 글 목록이 없을 경우 페이징은 0으로 세팅
+            page = 0;
         }
-        // 현재 선언한 페이지들의 템플릿도 가져와야 한다. (startPage, endPage, page ...)
-        model.addAttribute("cnt", cnt);  // 전체 글 개수
-        model.addAttribute("page", page); // 현재 페이지
-        model.addAttribute("totalPage", totalPage);  // 총 '페이지' 수
-        model.addAttribute("pageRows", pageRows);  // 한 '페이지' 에 표시할 글 개수
 
-        // [페이징]
-        model.addAttribute("url", U.getRequest().getRequestURI());  // 목록 url
-        model.addAttribute("writePages", writePages); // [페이징] 에 표시할 숫자 개수
-        model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
-        model.addAttribute("endPage", endPage);   // [페이징] 에 표시할 마지막 페이지
+        model.addAttribute("list", list);
+        model.addAttribute("cnt", cnt);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("pageRows", pageRows);
+        model.addAttribute("url", U.getRequest().getRequestURI());
+        model.addAttribute("writePages", writePages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return list;
     }
+
 
     @Override
     public Board selectById(Long id) {

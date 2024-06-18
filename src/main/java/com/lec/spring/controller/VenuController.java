@@ -1,39 +1,82 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.PublicReservationDTO;
 import com.lec.spring.domain.Venue;
 import com.lec.spring.service.VenueService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/venue")
 public class VenuController {
 
-    @Autowired
     private VenueService venueService;
 
-    public VenuController() {
-        System.out.println("VenuController 호출");
+    @Autowired
+    public VenuController(VenueService venueService) {
+        this.venueService = venueService;
     }
 
+
     @GetMapping("/list")
-    public String venueList(Model model) {
-        List<Venue> venue = venueService.findAll();
-        model.addAttribute("venue", venue);
-        return "venue/list";
+    public void venueList(Integer page, Model model) {
+        venueService.list(page, model);
     }
 
     @GetMapping("/list/{category}")
     public String getVenueListByCategory(@PathVariable("category") String category, Model model) {
-        Venue venue = venueService.findByCategory(category);
-        model.addAttribute("venue", venue);
-        return "venue/list";
+        List<Venue> venueList = venueService.findByCategory(category);
+        model.addAttribute("venueList", venueList);
+        return "/venue/list";
     }
+
+    @GetMapping("/api2")
+    @ResponseBody
+    public ResponseEntity<?> responseEntity() {
+        RestTemplate rt = new RestTemplate();
+        String url = "http://openapi.seoul.go.kr:8088/476753474c73777338374b73494b4b/json/ListPublicReservationInstitution/1/520/";
+        ResponseEntity<PublicReservationDTO> response = rt.getForEntity(url, PublicReservationDTO.class);
+
+        if (response.getBody() != null) {
+            saveData(response.getBody());
+        }
+        return response;
+    }
+
+    @Transactional
+    public void saveData(PublicReservationDTO publicReservationDTO) {
+        List<PublicReservationDTO.Reservation> reservations = publicReservationDTO.getListPublicReservationInstitution().getRow();
+
+        for (PublicReservationDTO.Reservation reservation : reservations) {
+            Venue venue = new Venue();
+            venue.setVenue_name(reservation.getVenue_name());
+            venue.setAddress(reservation.getAddress());
+            venue.setLimit_num(30);
+            venue.setVenue_category(reservation.getVenue_category());
+            venue.setInfo_tel(reservation.getInfo_tel());
+            venue.setPrice(1000L);
+            venue.setPosible_start_date("2024-07-09");
+            venue.setPosible_end_date("2025-07-09");
+            venue.setOpen_time("09:00:00");
+            venue.setClose_time("18:00:00");
+            venue.setImg(reservation.getImg());
+
+            venueService.saveVenue(venue);
+        }
+    }
+
+//    @PostMapping("/pageRows")
+//    public String pageRows(Integer page, Integer pageRows) {
+//        U.getSession().setAttribute("pageRows", pageRows);
+//        return "redirect:/venue/list?page=" + page;
+//    }
 }
