@@ -20,19 +20,56 @@
 
 <div class="container-venue">
         <div class="category-area">
-            <button onclick="location.href='/venue/list/회의실'">회의실</button>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="회의실" th:value="회의실"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="캠핑장" th:value="캠핑장"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="청년공간" th:value="청년공간"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="공유공간" th:value="공유공간"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="전시실" th:value="전시실"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="다목적실" th:value="다목적실"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="녹화장소" th:value="녹화장소"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="광장" th:value="광장"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="공연장" th:value="공연장"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="강의실" th:value="강의실"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="강당" th:value="강당"></button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button type="submit" name="venue_category" th:text="기타" th:value="기타"></button>
+            </form>
+
+<!--            <button th:onclick="|javascript:location.href='/venue/list/회의실'|">회의실</button>-->
 <!--            <button th:href='@{"/venue/list"}' th:method="GET">회의실</button>-->
-            <button onclick="location.href='/venue/list/캠핑장'">캠핑장</button>
-            <button onclick="location.href='/venue/list/청년공간'">청년공간</button>
-            <button onclick="location.href='/venue/list/공유공간'">공유공간</button>
-            <button onclick="location.href='/venue/list/전시실'">전시실</button>
-            <button onclick="location.href='/venue/list/다목적실'">다목적실</button>
-            <button onclick="location.href='/venue/list/녹화장소'">녹화장소</button>
-            <button onclick="location.href='/venue/list/광장'">광장</button>
-            <button onclick="location.href='/venue/list/공연장'">공연장</button>
-            <button onclick="location.href='/venue/list/강의실'">강의실</button>
-            <button onclick="location.href='/venue/list/강당'">강당</button>
-            <button onclick="location.href='/venue/list/기타'">기타</button>
+<!--            <button th:onclick="|javascript:location.href='/venue/list/캠핑장'|">캠핑장</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/청년공간'|">청년공간</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/공유공간'|">공유공간</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/전시실'|">전시실</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/다목적실'|">다목적실</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/녹화장소'|">녹화장소</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/광장'|">광장</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/공연장'|">공연장</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/강의실'|">강의실</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/강당'|">강당</button>-->
+<!--            <button th:onclick="|javascript:location.href='/venue/list/기타'|">기타</button>-->
         </div>
     <div class="main-content" th:fragment="venue-list">
         <div class="venue-item card" th:each="venue : ${list}">
@@ -41,11 +78,11 @@
                 <p class="card-text" th:text="${venue.venue_name}"></p>
                 <p class="card-text" th:text="${venue.address}"></p>
                 <p class="card-text" th:text="${venue.venue_category}"></p>
-                <p class="card-text" th:text="${'이용시간: ' + venue.open_time + ' ~ ' + venue.close_time}">이용시간</p>
+                <p class="card-text" th:text="${'이용시간: ' + venue.open_time + ' ~ ' + venue.close_time}"></p>
                 <p class="card-text" th:text="${venue.price}"></p>
             </div>
         </div>
-        <th:block th:insert="~{common/pagination::pagination}"></th:block>
+        <th:block th:insert="~{venue/venuePagination::pagination}"></th:block>
     </div>
 
     <!--    <footer th:replace="~{common/footer :: footer-body}"></footer>-->

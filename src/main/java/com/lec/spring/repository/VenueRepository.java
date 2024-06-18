@@ -10,11 +10,13 @@ public interface VenueRepository {
 
     List<Venue> findAll();
 
-    List<Venue> findByCategory(Map<String, Object> params);
+//    List<Venue> findByCategory(Map<String, Object> params);
 
     void insertVenue(Venue venue);
 
-    List<Venue> selectFromRow(int from, int rows);
+    List<Venue> selectFromRow(int from, int rows, @Param("param3") String venue_category);
 
     int countAll();
+
+    int countByCategory(String category);
 }

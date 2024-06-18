@@ -88,7 +88,7 @@ body {
 }
 
 .category-area button {
-    flex: 1 1 calc(15% - 20px);
+    flex: 1 1 calc(20% - 20px);
     margin: 5px;
     padding: 10px 20px;
     border: none;

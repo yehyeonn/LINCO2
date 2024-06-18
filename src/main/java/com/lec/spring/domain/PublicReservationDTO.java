@@ -37,7 +37,5 @@ public class PublicReservationDTO {
 
         @JsonProperty("IMGURL")
         public String img;
-
-
     }
 }
