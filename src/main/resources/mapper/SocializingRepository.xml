@@ -41,14 +41,7 @@
             1 = 1
     </sql>
 
-    <!-- 특정 id 글 내용 읽기-->
-    <select id="findById" resultType="com.lec.spring.domain.Socializing">
-        <include refid="SELECT_BASE"/>
-        AND id = #{id};
-    </select>
-
-
-    <select id="findAll" resultType="com.lec.spring.domain.Socializing">
+    <sql id="SELECT_SOCIALIZING">
         SELECT
             id,
             venue_id,
@@ -65,7 +58,19 @@
             regdate
 
         FROM socializing
+        WHERE
+            1 = 1
+    </sql>
 
+    <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
+    <select id="findById" resultType="com.lec.spring.domain.Socializing">
+        <include refid="SELECT_BASE"/>
+        AND id = #{id};
+    </select>
+
+
+    <select id="findAll" resultType="com.lec.spring.domain.Socializing">
+        <include refid="SELECT_SOCIALIZING"/>
         ORDER BY id DESC;
     </select>
 
@@ -87,31 +92,33 @@
 
 
 
-    <select id="selectFromRow" resultType="com.lec.spring.domain.Socializing">
-        SELECT
-            id,
-            venue_id,
-            socializing_title,
-            category,
-            detail_category,
-            address,
-            meeting_date,
-            meeting_time,
-            limit_num,
-            content,
-            total_price,
-            img,
-            regdate
 
-        FROM socializing
-        WHERE
-            1=1
+    <select id="selectAllRow" resultType="com.lec.spring.domain.Socializing">
+        <include refid="SELECT_SOCIALIZING"/>
         ORDER BY id DESC
         LIMIT #{param1}, #{param2}
     </select>
 
     <select id="countAll" resultType="int">
         SELECT count(*) FROM socializing
+    </select>
+
+    <select id="selectFromRow" resultType="com.lec.spring.domain.Socializing">
+        <include refid="SELECT_SOCIALIZING"/>
+        AND (#{param3} IS NULL OR #{param3} = '' OR address LIKE CONCAT('%', #{param3}, '%'))
+        AND (#{param4} IS NULL OR #{param4} = '' OR category = #{param4})
+        AND (#{param5} IS NULL OR #{param5} = '' OR category = #{param5})
+
+        ORDER BY id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="countSelectAddress" resultType="int">
+        SELECT count(*) FROM socializing
+        where
+            (#{param1} IS NULL OR #{param1} = '' OR address LIKE CONCAT('%', #{param1}, '%'))
+            AND (#{param2} IS NULL OR #{param2} = '' OR category = #{param2})
+            AND (#{param3} IS NULL OR #{param3} = '' OR detail_category= #{param3})
     </select>
 
 

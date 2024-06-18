@@ -19,36 +19,43 @@
 <div class="container1">
     <div class="search-bar">
         <button class="filter">필터</button>
-        <input type="text" id="search" placeholder="지역(시,군,구)검색">
-        <button id="btn">검색</button>
+        <form action="/socializing/list" method="get">
+            <input type="text" name="address" id="search" placeholder="지역(시,군,구)검색" th:value="${address}">
+            <button type="submit" id="btn" >검색</button>
+        </form>
     </div>
 
-    <div class="category-area">
-        <ul class="category-list">
-            <li class="search-category">
-                <label class="category-checkbox">
-                    <input type="checkbox" name="category" value="운동">
-                    <span>운동</span>
-                </label>
+    <form id="checkboxForm" action="/socializing/list" method="get">
+        <div class="category-area">
+            <ul class="category-list">
+                <li class="search-category">
+                    <label class="category-checkbox">
+                        <input type="checkbox" name="category" th:value="운동">
+                        <span>운동</span>
+                    </label>
 
-            </li>
-            <li class="search-category">
-                <label class="category-checkbox" >
-                    <input type="checkbox" name="category" value="공연">
-                    <span>공연</span>
-                </label>
+                </li>
+                <li class="search-category">
+                    <label class="category-checkbox" >
+                        <input type="checkbox" name="category" th:value="공연">
+                        <span>공연</span>
+                    </label>
 
-            </li>
-            <li class="search-category">
-                <label class="category-checkbox">
-                    <input type="checkbox" name="category" value="공부">
-                    <span>공부</span>
-                </label>
+                </li>
+                <li class="search-category">
+                    <label class="category-checkbox">
+                        <input type="checkbox" name="category" th:value="공부">
+                        <span>공부</span>
+                    </label>
 
-            </li>
+                </li>
 
-        </ul>
-    </div>
+            </ul>
+        </div>
+
+    </form>
+
+
 
     <div class="detail-category-area">
         <ul class="detail-category-list category1-list">
@@ -136,8 +143,8 @@
             <p th:text="${social.address}" id="address"></p>
         </div>
     </div>
-    <th:block th:insert="~{common/pagination::pagination}"></th:block>
-    <a href="/socializing/write" class="create-button">놀사람구함</a>
+    <th:block th:insert="~{socializing/listPagination::pagination}"></th:block>
+    <a href="#" class="create-button">놀사람구함</a>
 </div>
 
 
