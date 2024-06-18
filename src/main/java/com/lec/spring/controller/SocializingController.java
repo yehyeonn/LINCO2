@@ -56,6 +56,10 @@ public class SocializingController {
         return "socializing/writeOk";
     }
 
+    @GetMapping("/detail")
+    public void detail(){
+    }
+
 //    @GetMapping("detail/{id}")
 //    public String detail(@PathVariable Long id, Model model){
 //

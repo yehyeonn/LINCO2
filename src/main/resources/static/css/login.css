@@ -13,6 +13,10 @@ body {
     /*height: 100vh;*/
 }
 
+a {
+    text-decoration: none;
+}
+
 .container-login {
     background-color: #B3B49E;
     border-radius: 30px;
@@ -22,10 +26,11 @@ body {
     width: 768px;
     max-width: 100%;
     min-height: 480px;
+    margin-bottom: 70px;
 }
 
 .container-login img {
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 
 .container-login button {
@@ -199,12 +204,12 @@ body {
 }
 
 .form-select {
-    background-color: #eee;
+    background-color: #eee !important;
     border: none;
     margin: 8px 0;
     padding: 5px 10px;
     font-size: 13px;
-    border-radius: 8px;
+    border-radius: 10px;
     width: 300px;
     outline: none;
 }
