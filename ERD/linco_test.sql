@@ -74,6 +74,10 @@ where
 select *
 from club;
 
+select *
+from VENUE
+where venue_category = '회의실';
+
 
 
 

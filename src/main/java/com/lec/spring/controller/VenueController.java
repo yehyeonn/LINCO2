@@ -4,7 +4,6 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.PublicReservationDTO;
 import com.lec.spring.domain.Venue;
 import com.lec.spring.service.VenueService;
-import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,12 +16,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/venue")
-public class VenuController {
+public class VenueController {
 
     private VenueService venueService;
 
     @Autowired
-    public VenuController(VenueService venueService) {
+    public VenueController(VenueService venueService) {
         this.venueService = venueService;
     }
 
@@ -32,11 +31,20 @@ public class VenuController {
         venueService.list(page, model);
     }
 
-    @GetMapping("/list/{category}")
-    public String getVenueListByCategory(@PathVariable("category") String category, Model model) {
-        List<Venue> venueList = venueService.findByCategory(category);
-        model.addAttribute("venueList", venueList);
-        return "/venue/list";
+    @GetMapping("/list/{venue_category}")
+    public String VenueListByCategory(@PathVariable("venue_category") String venue_category, @RequestParam(name = "page", required = false) Integer page, Model model) {
+        List<Venue> venueList = venueService.findByCategory(venue_category, page);
+
+        System.out.println(venue_category);
+        if (page == null || page <= 1) {
+            page = 1;
+        }
+        System.out.println(venueList);
+        int cnt = venueList.size();
+        System.out.println(cnt);
+        model.addAttribute("List", venueList);
+
+        return "venue/list";
     }
 
     @GetMapping("/api2")
@@ -73,10 +81,4 @@ public class VenuController {
             venueService.saveVenue(venue);
         }
     }
-
-//    @PostMapping("/pageRows")
-//    public String pageRows(Integer page, Integer pageRows) {
-//        U.getSession().setAttribute("pageRows", pageRows);
-//        return "redirect:/venue/list?page=" + page;
-//    }
 }

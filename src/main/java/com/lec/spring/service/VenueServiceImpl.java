@@ -17,16 +17,16 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VenueServiceImpl implements VenueService {
 
-    @Value("${app.pagination.write_pages}")
-    private int WRITE_PAGES;
+    private int WRITE_PAGES = 10;
 
-    @Value("${app.pagination.page_rows}")
-    private int PAGE_ROWS;
+    private int PAGE_ROWS = 12;
 
     private VenueRepository venueRepository;
 
@@ -37,8 +37,21 @@ public class VenueServiceImpl implements VenueService {
     }
 
     @Override
-    public List<Venue> findByCategory(String venue_category) {
-        return venueRepository.findByCategory(venue_category);
+    public List<Venue> findByCategory(String venue_category, Integer page) {
+
+        if (page == null || page <= 1) {
+            page = 1;
+        }
+
+        int pageRows = PAGE_ROWS;
+        int fromRow = (page - 1) * pageRows;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("venue_category", venue_category);
+        params.put("fromRow", fromRow);
+        params.put("pageRows", pageRows);
+
+        return venueRepository.findByCategory(params);
     }
 
     @Override
