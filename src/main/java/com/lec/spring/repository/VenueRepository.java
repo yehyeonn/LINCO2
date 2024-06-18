@@ -9,7 +9,7 @@ public interface VenueRepository {
 
     List<Venue> findAll();
 
-    List<Venue> findByCategory(String venueCategory);
+    List<Venue> findByCategory(@Param("category")String venue_category, @Param("fromRow") int fromRow, int pageRows);
 
     void insertVenue(Venue venue);
 

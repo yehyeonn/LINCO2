@@ -25,9 +25,10 @@
         <include refid="select_venue"/>
     </select>
 
-    <select id="findByCategory" resultType="com.lec.spring.domain.Venue">
+    <select id="findByCategory" resultType="com.lec.spring.domain.Venue" parameterType="map">
         <include refid="select_venue"/>
         and venue_category=#{venue_category}
+        limit #{fromRow}, #{pageRows}
     </select>
 
     <insert id="insertVenue" parameterType="com.lec.spring.domain.Venue">

@@ -22,11 +22,9 @@ import java.util.List;
 @Service
 public class VenueServiceImpl implements VenueService {
 
-    @Value("${app.pagination.write_pages}")
-    private int WRITE_PAGES;
+    private int WRITE_PAGES = 10;
 
-    @Value("${app.pagination.page_rows}")
-    private int PAGE_ROWS;
+    private int PAGE_ROWS = 12;
 
     private VenueRepository venueRepository;
 
@@ -37,8 +35,15 @@ public class VenueServiceImpl implements VenueService {
     }
 
     @Override
-    public List<Venue> findByCategory(String venue_category) {
-        return venueRepository.findByCategory(venue_category);
+    public List<Venue> findByCategory(String venue_category, Integer page) {
+
+        if (page == null || page <= 1) {
+            page = 1;
+        }
+
+        int pageRows = PAGE_ROWS;
+        int fromRow = (page - 1) * pageRows;
+        return venueRepository.findByCategory(venue_category, fromRow, pageRows);
     }
 
     @Override

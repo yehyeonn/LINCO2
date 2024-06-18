@@ -32,10 +32,15 @@ public class VenuController {
         venueService.list(page, model);
     }
 
-    @GetMapping("/list/{category}")
-    public String getVenueListByCategory(@PathVariable("category") String category, Model model) {
-        List<Venue> venueList = venueService.findByCategory(category);
+    @GetMapping("/list/{venue_category}")
+    public String VenueListByCategory(@PathVariable("venue_category") String venue_category, @RequestParam(name = "page", required = false) Integer page, Model model) {
+        List<Venue> venueList = venueService.findByCategory(venue_category, page);
+
+        if (page == null || page <= 1) {
+            page = 1;
+        }
         model.addAttribute("venueList", venueList);
+
         return "/venue/list";
     }
 
@@ -73,10 +78,4 @@ public class VenuController {
             venueService.saveVenue(venue);
         }
     }
-
-//    @PostMapping("/pageRows")
-//    public String pageRows(Integer page, Integer pageRows) {
-//        U.getSession().setAttribute("pageRows", pageRows);
-//        return "redirect:/venue/list?page=" + page;
-//    }
 }
