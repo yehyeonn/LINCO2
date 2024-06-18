@@ -17,7 +17,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VenueServiceImpl implements VenueService {
@@ -43,7 +45,13 @@ public class VenueServiceImpl implements VenueService {
 
         int pageRows = PAGE_ROWS;
         int fromRow = (page - 1) * pageRows;
-        return venueRepository.findByCategory(venue_category, fromRow, pageRows);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("venue_category", venue_category);
+        params.put("fromRow", fromRow);
+        params.put("pageRows", pageRows);
+
+        return venueRepository.findByCategory(params);
     }
 
     @Override

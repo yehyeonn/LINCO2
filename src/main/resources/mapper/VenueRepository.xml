@@ -41,10 +41,18 @@
 
     <select id="selectFromRow" resultType="com.lec.spring.domain.Venue">
         <include refid="select_venue"/>
-        limit #{param1}, #{param2}
+        <choose>
+            <when test="param3 != null">
+                limit #{param1}, #{param2}
+            </when>
+            <otherwise>
+                <include refid="select_venue"/>
+            </otherwise>
+        </choose>
     </select>
 
     <select id="countAll" resultType="int">
-        select count(*) from VENUE
+        select count(*)
+        from VENUE
     </select>
 </mapper>

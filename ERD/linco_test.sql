@@ -67,6 +67,9 @@ select s.id, u.socializing_id, u.user_id, u.role, s.meeting_date, s.meeting_time
 where u.socializing_id = s.id;
 
 
+select *
+from VENUE
+where venue_category = '회의실';
 
 
 

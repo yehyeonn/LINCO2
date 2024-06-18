@@ -17,5 +17,15 @@ $(document).ready(function () {
             }
         })
     })
+
+    function redirectToCategory(category) {
+        // 카테고리 값과 함께 URL 생성
+        var url = '/venue/list/' + encodeURIComponent(category);
+
+        // 페이지 이동
+        window.location.href = url;
+    }
+
+
 });
 

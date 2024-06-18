@@ -4,12 +4,13 @@ import com.lec.spring.domain.Venue;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface VenueRepository {
 
     List<Venue> findAll();
 
-    List<Venue> findByCategory(@Param("category")String venue_category, @Param("fromRow") int fromRow, int pageRows);
+    List<Venue> findByCategory(Map<String, Object> params);
 
     void insertVenue(Venue venue);
 
