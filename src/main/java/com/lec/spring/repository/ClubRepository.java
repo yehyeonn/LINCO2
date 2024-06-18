@@ -30,4 +30,5 @@ public interface ClubRepository {
     // 전체 클럽의 개수
     int countAll();
 
+
 }

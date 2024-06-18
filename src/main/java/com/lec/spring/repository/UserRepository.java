@@ -4,7 +4,7 @@ import com.lec.spring.domain.User;
 
 public interface UserRepository {
     User findById(Long id);
-    User findByUsername(String username);
+    User findByUsername(String username); // 이메일
     int save(User user);
     int update(User user);
 }

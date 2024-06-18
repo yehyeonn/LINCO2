@@ -33,10 +33,17 @@
     </select>
 
 
-    <!-- 특정 클럽의 특정 사용자 삭제 -->
-    <delete id="deleteByUserIdAndClubId" parameterType="map">
+    <!-- 클럽의 멤버 삭제 -->
+    <delete id="deleteByUserId" parameterType="map">
         DELETE FROM club_user_list
         WHERE user_id = #{userId} AND club_id = #{clubId}
     </delete>
+
+    <!--클럽 회원들의 인원수-->
+    <select id="getClubMemberCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM CLUB_USER_LIST
+        WHERE club_id = #{clubId}
+    </select>
 
 </mapper>

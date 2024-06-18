@@ -50,4 +50,5 @@
         SELECT COUNT(*) FROM club
     </select>
 
+
 </mapper>

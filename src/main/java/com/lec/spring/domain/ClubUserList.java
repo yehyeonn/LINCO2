@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClubUserList {
-    private Long userId;
-    private Long clubId;
+    private Long user_id;
+    private Long club_id;
     private String role;
 }

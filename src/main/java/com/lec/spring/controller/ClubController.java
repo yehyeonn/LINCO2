@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubValidator;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.ClubService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class ClubController {
 
     @Autowired
     private ClubService clubService;
+
 
     public ClubController() {
         System.out.println("ClubController() 생성");
@@ -65,7 +67,7 @@ public class ClubController {
         }
 
         // 클럽 생성 로직 실행
-//        model.addAttribute("result", clubService.create(club, ));
+        model.addAttribute("result", clubService.createClub(club));
         return "club/createOk";
     }
 
