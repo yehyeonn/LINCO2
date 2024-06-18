@@ -64,9 +64,9 @@ body {
     background-color: #B3B49E;
 }
 .search-bar {
-    width: 500px;
+    width: 400px;
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin: auto
 }
 .search-bar button {

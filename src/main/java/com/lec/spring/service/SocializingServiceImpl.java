@@ -60,7 +60,10 @@ public class SocializingServiceImpl implements SocializingService {
     }
 
     @Override
-    public List<Socializing> list(Integer page, Model model) {
+    public List<Socializing> list(Integer page, Model model, String selectaddress, String selectcategory, String selectdetailcategory) {
+        System.out.println(selectcategory);
+
+
         // 현재페이지
         if(page == null || page <1) page = 1; //디폴트 1page
         // 페이징
@@ -73,7 +76,8 @@ public class SocializingServiceImpl implements SocializingService {
         if (pageRows == null) pageRows = PAGE_ROWS;
         session.setAttribute("page",page); // 현재 페이지 번호 -> session 에 저장한다.
 
-        long cnt = socializingRepository.countAll();  //글 목록 전체의 개수
+        long cnt = socializingRepository.countSelectAddress(selectaddress, selectcategory, selectdetailcategory);  //글 목록 전체의 개수
+        System.out.println("개수:"+cnt);
         int totalPage = (int) Math.ceil(cnt/(double)pageRows);  // 총 몇 페이지인지 분량
 
         //[페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
@@ -98,8 +102,14 @@ public class SocializingServiceImpl implements SocializingService {
             if (endPage >= totalPage) endPage = totalPage;
 
             // 해당 페이지의 글 목록 읽어오기
-            list = socializingRepository.selectFromRow(fromRow, pageRows);
+            list = socializingRepository.selectFromRow(fromRow, pageRows, selectaddress, selectcategory, selectdetailcategory);
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println(list.toString());
+            }
             model.addAttribute("list", list);
+            model.addAttribute("address",selectaddress);
+            model.addAttribute("category",selectcategory);
+            model.addAttribute("detailcategory",selectdetailcategory);
         } else {
             page = 0;
         }
@@ -111,12 +121,12 @@ public class SocializingServiceImpl implements SocializingService {
 
 
         // [페이징]
-        model.addAttribute("url", U.getRequest().getRequestURI());  // 목록 url
+
+        System.out.println( U.getRequest().getRequestURI());
+        model.addAttribute("url",U.getRequest().getRequestURI());  // 목록 url
         model.addAttribute("writePages", writePages); // [페이징] 에 표시할 숫자 개수
         model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
         model.addAttribute("endPage", endPage);   // [페이징] 에 표시할 마지막 페이지
-
-
 
         return list;
     }

@@ -15,7 +15,13 @@ public interface SocializingService {
     Socializing detail(Long id);
 
     List<Socializing> list();
-    List<Socializing> list(Integer page, Model model);
+
+    List<Socializing> list(Integer page
+            , Model model
+            , String selectaddress
+            , String selectcategory
+            , String selectdetailcategory
+    );
 
 //    // 수정
     Socializing selectById(Long id);

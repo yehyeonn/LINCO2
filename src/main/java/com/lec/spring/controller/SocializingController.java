@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -27,10 +24,15 @@ public class SocializingController {
     public void write(){}
 
     @GetMapping("/list")
-    public void list(Integer page, Model model){
+    public void list(Integer page,
+                     @RequestParam(name = "address", required = false, defaultValue = "") String address,
+                     @RequestParam(name = "category", required = false, defaultValue = "") String category,
+                     @RequestParam(name = "detailcategory", required = false, defaultValue = "") String detailcategory,
+                     Model model){
 
-        socializingService.list(page, model);
+        socializingService.list(page, model, address, category, detailcategory);
     }
+
 
 //    @PostMapping("/write")
 //    public String writeOk(
@@ -82,12 +84,13 @@ public class SocializingController {
 
     //페이징
     //pageRows 변경시 동작
-    @PostMapping("/pageRows")
-    public String pageRows(Integer page, Integer pageRows) {
-        U.getSession().setAttribute("pageRows",pageRows);
-        return "redirect:/socializing/list?page=" + page;
-
-    }
+//    @PostMapping("/pageRows")
+//    public String pageRows(Integer page, Integer pageRows) {
+//        U.getSession().setAttribute("pageRows",pageRows);
+//        System.out.println("여기는 언제?");
+//        return "redirect:/socializing/list?page=" + page;
+//
+//    }
 
 
 }
