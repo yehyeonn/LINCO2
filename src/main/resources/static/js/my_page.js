@@ -67,7 +67,7 @@ $(document).ready(function() {
     // 취소버튼 결제완료일때만 생김
     $('td').each(function() {
         if ($(this).text().includes('결제완료')) {
-            $(this).find('.cancelbtn').css('display', 'inline-block');
+            $(this).find('.cancel-button').css('display', 'inline-block');
         }
     });
 });
