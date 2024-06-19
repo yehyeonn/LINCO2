@@ -24,7 +24,7 @@ public interface ClubUserListRepository {
     int deleteByUserId(@Param("club_id") Long club_id);
 
     // 클럽 회원들의 인원수 조회
-    int getClubMemberCount(int clubId);
+    int getClubMemberCount(Long clubId);
 
 }
 

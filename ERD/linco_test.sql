@@ -69,6 +69,9 @@ where u.socializing_id = s.id;
 select *
 from club;
 
+select *
+from club_user_list;
+
 
 
 

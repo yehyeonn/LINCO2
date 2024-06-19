@@ -1,5 +1,5 @@
 /* start navbar css */
-.login {
+.login-out {
     background-color: #B3B49E;
     color: #EDEBDA;
     font-size: 14px;
@@ -9,7 +9,7 @@
     transition: 0.3s background-color;
 }
 
-.login:hover {
+.login-out:hover {
     background-color: #D3374A;
 }
 

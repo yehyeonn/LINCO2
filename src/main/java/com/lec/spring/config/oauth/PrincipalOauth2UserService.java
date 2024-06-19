@@ -12,9 +12,13 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
-    @Autowired // 에러
+
+
+    @Autowired
     private UserService userService; // 회원조회, 가입
 
     @Value("1234")
@@ -35,9 +39,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         };
 
         String providerId = oAuth2UserInfo.getProviderId();
-        String username = provider + "_" + providerId;
         String password = oauth2Password;
-        String email = oAuth2UserInfo.getEmail();
+        String username = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
 
         // 회원가입 하기 전에
