@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAuthority {
+public class Authority {
     private Long id;
-    private String userRoll;    // admin, member
+    private String name;    // 권한명: admin, member
 }

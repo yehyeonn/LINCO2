@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.lec.spring.repository.UserAuthorityRepository">
+<mapper namespace="com.lec.spring.repository.AuthorityRepository">
     <!-- 특정 이름의 권한 정보 읽어오기 -->
-    <select id="findByName" resultType="com.lec.spring.domain.UserAuthority">
+    <select id="findByName" resultType="com.lec.spring.domain.Authority">
         SELECT
             id "id"
              , name "name"
@@ -14,7 +14,7 @@
     </select>
 
     <select id="findByUser" parameterType="com.lec.spring.domain.User"
-            resultType="com.lec.spring.domain.UserAuthority">
+            resultType="com.lec.spring.domain.Authority">
         SELECT a.id "id", a.name "name"
         FROM authority a, user_authority u
         WHERE a.id = u.authority_id AND u.user_id = #{id};
