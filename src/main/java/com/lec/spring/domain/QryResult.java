@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAuthority {
-    private Long id;
-    private String userRoll;    // admin, member
+public class QryResult {
+    Integer count;      // 결과 값
+    String status;      // 처리 결과 메시지 (오류가 생길 경우 적절한 메시지로 담을 예정)
 }

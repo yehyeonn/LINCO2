@@ -24,7 +24,7 @@ public interface BoardService {
     List<Board> list(Integer page, Model model);
 
     // 특정 id로 글 읽기
-    Board selectById(Long id);
+    Board findById(Long id);
 
     // boardType 으로 글 읽기
     List<Board> findByBoardTypeId(Long boardTypeId);
