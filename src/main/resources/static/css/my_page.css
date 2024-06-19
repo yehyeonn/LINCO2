@@ -1,0 +1,309 @@
+body {
+    background-color: #EDEBDA;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.container-my-page a {
+    text-decoration: none;
+}
+
+/* START 클럽 목록 & 소셜라이징 목록 */
+.container-my-page {
+    display: flex;
+    background-color: #B3B49E;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    max-width: 1000px;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #3A4D72;
+    padding: 20px;
+    color: #EDEBDA;
+    border-radius: 10px;
+    margin-right: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+.profile {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.profile-name {
+    margin-top: 10px;
+}
+.menu-item {
+    margin: 10px 0;
+    cursor: pointer;
+    background-color: #B3B49E;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: #EDEBDA;
+}
+
+.menu-item:hover, .menu-item.active {
+    background-color: #D3374A;
+    transform: scale(1.1);
+}
+
+.menu-item.active {
+    color: #EDEBDA;
+}
+
+.main-content {
+    flex-grow: 1;
+    background-color: #3A4D72;
+    padding: 20px;
+    border-radius: 10px;
+    color: #EDEBDA;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-left: 50px;
+}
+.tab {
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #B3B49E;
+    color: #EDEBDA;
+}
+
+.tab:hover, .tab.active {
+    background-color: #D3374A;
+    transform: scale(1.1);
+}
+
+.tab.active {
+    color: #EDEBDA;
+}
+
+.club-list, .socializing-list, .payment-history, .edit-container{
+    display: none;
+}
+
+.club-list.active, .socializing-list.active, .payment-history.active, .edit-container.active{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
+    gap: 10px; /* space between items */
+}
+
+.club-item, .socializing-item {
+    background-color: #ecf0f1;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.club-item:hover, .socializing-item:hover {
+    transform: scale(1.1);
+}
+
+.club-pic, .socializing-pic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: #bdc3c7;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 20px; /* Added margin to separate the image and text */
+}
+
+.club-pic img, .socializing-pic img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.club-title, .socializing-title {
+    font-size: 1em;
+    color: #2c3e50;
+    flex-grow: 1;
+    text-align: center;
+}
+/* END 클럽목록 & 소셜라이징 목록 */
+
+/* START 프로필 편집 */
+.edit-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-container.active {
+    display: flex;
+}
+
+.edit-profile {
+    max-width: 400px;
+}
+
+.profile-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-pic-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rounded-circle {
+    background-color: #ccc;
+}
+
+.profile-pic-edit img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.profile-edit-buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.profile-edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-edit-form .form-group {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-edit-form .form-group label {
+    margin-bottom: 5px;
+    align-self: flex-start;
+}
+
+.profile-edit-buttons button {
+    background-color: #B3B49E;
+    color: #EDEBDA;
+    width: 45%;
+    transition: transform 0.3s;
+}
+
+.profile-edit-buttons button:hover {
+    background-color: #D3374A;
+    transform: scale(1.1);
+}
+
+/* END 프로필 편집 */
+
+
+/* 결제내역 */
+.table-container {
+    width: 730px;
+    margin: auto;
+}
+
+table{
+    width:100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+}
+
+.tbl-content{
+    height:300px;
+    overflow-x:auto;
+    margin-top: 0;
+    border: 2px solid #EDEBDA;
+}
+
+th{
+    padding: 20px 15px;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #EDEBDA;
+}
+td{
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1em;
+    color: #EDEBDA;
+}
+
+tbody td {
+    border-bottom: solid 2px #EDEBDA;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+tbody button {
+    background-color: #B3B49E;
+    color: #EDEBDA;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s background-color;
+    display: none;
+    margin-top: 5px;
+    padding: 5px 10px;
+}
+
+tbody button:hover {
+    background-color: #D3374A;
+    transform: scale(1.1);
+}
+
+td.reservation-ellipsis {
+    white-space: nowrap;
+}
+
+td.reservation-number {
+    width: 105px;
+}
