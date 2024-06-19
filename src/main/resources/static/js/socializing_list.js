@@ -1,21 +1,18 @@
 $(function (){
+    $(".detail-category-area").hide();
+    $(".category-area").hide();
 
-    var nowParam = new URLSearchParams(window.location.search);
-    var selctedCategory = nowParam.get("category")
-    alert(selctedCategory);
-    if(selctedCategory!=null || selctedCategory!=""){
-        $(".category-area").show();
-    }else{
-        $(".detail-category-area").hide();
-        $(".category-area").hide();
-    }
-    // $(".detail-category-area").hide();
-    // $(".category-area").hide();
+
 
     $(".filter").click(function(){
+        $('input[type="checkbox"][name="detail-category"]').prop('checked',false);
+        $('input[type="checkbox"][name="category"]').prop('checked',false);
         $(".category-area").toggle();
         $(".socializing-item").show();
+        $(".detail-category-area").hide();
     });
+
+
 
 
 
@@ -31,69 +28,60 @@ $(function (){
                 $(this).prop('checked', false);
             }
         });
+        $(".category-area").show();
+        if(savedCategory == "운동"){
+            $(".detail-category-area").show();
+            $('.category2-list').hide();
+            $('.category3-list').hide();
+        }else if (savedCategory == "공연") {
+            $(".detail-category-area").show();
+            $('.category1-list').hide();
+            $('.category3-list').hide();
+        }else if (savedCategory == "공부") {
+            $(".detail-category-area").show();
+            $('.category1-list').hide();
+            $('.category2-list').hide();
+        }
     }
 
+    var urldetailParams = new URLSearchParams(window.location.search);
+    var saveddetailCategory = urldetailParams.get('detailcategory');
+    if (savedCategory) {
+        $('input[type="checkbox"][name="detail-category"]').each(function () {
+            if ($(this).val() === saveddetailCategory) {
+                $(this).prop('checked', true);
+            } else {
+                $(this).prop('checked', false);
+            }
+        });
+    }
 
     $('input[type="checkbox"][name="category"]').click(function(){
+        $('input[type="checkbox"][name="detail-category"]').prop('checked',false);
         $(".detail-category-area").show();
         if($(this).prop('checked')){
             $('input[type="checkbox"][name="category"]').prop('checked',false);
 
+
             $(this).prop('checked',true);
-           category =  $(this).val();
+
 
             $(".detail-category-list").hide();
             $(".socializing-item").hide();
 
             if($(this).val() == "운동"){
-                $(".category1-list").show();
-                // 선택된 값 가져오기
-                var selectedCategory = $(this).val();
-
-                // 현재 페이지의 URL 가져오기
-                var currentUrl = window.location.href;
-
-                // 쿼리 파라미터로 category 추가하기
-                var newUrl = new URL(currentUrl);
-                newUrl.searchParams.set('category', selectedCategory);
-                localStorage.setItem(category,selectedCategory);
-                alert(category);
-
-                //페이지 이동
-                window.location.href = newUrl.toString();
-
+                select(this);
             }else if($(this).val() == "공연"){
-                $(".category2-list").show();
-                // 선택된 값 가져오기
-                var selectedCategory = $(this).val();
-
-                // 현재 페이지의 URL 가져오기
-                var currentUrl = window.location.href;
-
-                // 쿼리 파라미터로 category 추가하기
-                var newUrl = new URL(currentUrl);
-                newUrl.searchParams.set('category', selectedCategory);
-
-                // 페이지 이동
-                window.location.href = newUrl.toString();
+                select(this);
             }else if($(this).val() == "공부"){
-                $(".category3-list").show();
-                // 선택된 값 가져오기
-                var selectedCategory = $(this).val();
-
-                // 현재 페이지의 URL 가져오기
-                var currentUrl = window.location.href;
-
-                // 쿼리 파라미터로 category 추가하기
-                var newUrl = new URL(currentUrl);
-                newUrl.searchParams.set('category', selectedCategory);
-
-                // 페이지 이동
-                window.location.href = newUrl.toString();
+                select(this);
             }
 
         }else{
             $(".detail-category-area").hide();
+
+            $('input[type="checkbox"][name="detail-category"]').prop('checked',false);
+            select("");
         }
     });
 
@@ -105,18 +93,59 @@ $(function (){
 
             $(this).prop('checked',true);
 
-            detail_category = $(this).val();
-            alert(detail_category);
-            $(".socializing-item").hide();
-
-        }else {
-            $('input[type="checkbox"][name="category"]').each(function () {
-                if($(this).is(':checked')){
-                    category = $(this).val();
-                }
-            });
+            if($(this).val() == "축구"){
+                detailselect(this);
+            }else if($(this).val() == "야구"){
+                detailselect(this);
+            }else if($(this).val() == "농구"){
+                detailselect(this);
+            }else if($(this).val() == "전시"){
+                detailselect(this);
+            }else if($(this).val() == "댄스"){
+                detailselect(this);
+            }else if($(this).val() == "영화"){
+                detailselect(this);
+            }else if($(this).val() == "컴퓨터"){
+                detailselect(this);
+            }else if($(this).val() == "영어"){
+                detailselect(this);
+            }else if($(this).val() == "수학"){
+                detailselect(this);
+            }
+        }else{
+            detailselect("");
         }
     });
+
+    $("#btn").click(function (e){
+
+        e.preventDefault();
+
+        var category = $('input[type="checkbox"][name="category"]:checked').val();
+        var detailCategory = $('input[type="checkbox"][name="detail-category"]:checked').val();
+        var searchAddress = $('#search').val();
+
+        var queryParams = new URLSearchParams(window.location.search);
+
+        if (category) {
+            queryParams.set('category', category);
+        } else {
+            queryParams.delete('category');
+        }
+
+        if (detailCategory) {
+            queryParams.set('detailcategory', detailCategory);
+        } else {
+            queryParams.delete('detailcategory');
+        }
+
+        queryParams.set('address', searchAddress);
+
+        window.location.search = queryParams.toString();
+
+
+    });
+
 
 
     // 주소에서 토큰을 활용하여 구,군 만 출력
@@ -141,6 +170,51 @@ $(function (){
         localStorage.setItem('searchAddress', this.value);
     });
 
+    //category의 데이터를 받아 파라미터로 넘김
+    function select(e){
+        var selectedCategory;
+        // 선택된 값 가져오기
+        if(e =="" || e == null || e == "undefined"){
+            selectedCategory = "";
+        }else{
+            selectedCategory = $(e).val();
+        }
+
+        // 현재 페이지의 URL 가져오기
+        var currentUrl = window.location.href;
+
+        // 쿼리 파라미터로 category 추가하기
+        var newUrl = new URL(currentUrl);
+        newUrl.searchParams.set('category', selectedCategory);
+        newUrl.searchParams.set('detailcategory',"")
+        newUrl.searchParams.set('page',1);
+
+        //페이지 이동
+        window.location.href = newUrl.toString();
+    }
+
+
+    //detailcategory의 데이터를 받아 파라미터로 넘김
+    function detailselect(e){
+        var selecteddetialCategory;
+        // 선택된 값 가져오기
+        if(e == null || e == "" || e == 'undefined'){
+            selecteddetialCategory = "";
+        }else{
+            selecteddetialCategory = $(e).val();
+        }
+
+        // 현재 페이지의 URL 가져오기
+        var currentUrl = window.location.href;
+
+        // 쿼리 파라미터로 category 추가하기
+        var newUrl = new URL(currentUrl);
+        newUrl.searchParams.set('detailcategory', selecteddetialCategory);
+        newUrl.searchParams.set('page',1);
+
+        //페이지 이동
+        window.location.href = newUrl.toString();
+    }
 
 
 })

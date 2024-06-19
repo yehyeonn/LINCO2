@@ -107,7 +107,7 @@
         <include refid="SELECT_SOCIALIZING"/>
         AND (#{param3} IS NULL OR #{param3} = '' OR address LIKE CONCAT('%', #{param3}, '%'))
         AND (#{param4} IS NULL OR #{param4} = '' OR category = #{param4})
-        AND (#{param5} IS NULL OR #{param5} = '' OR category = #{param5})
+        AND (#{param5} IS NULL OR #{param5} = '' OR detail_category = #{param5})
 
         ORDER BY id DESC
         LIMIT #{param1}, #{param2}
