@@ -27,24 +27,8 @@ public class VenueController {
 
 
     @GetMapping("/list")
-    public void venueList(Integer page, Model model) {
-        venueService.list(page, model);
-    }
-
-    @GetMapping("/list/{venue_category}")
-    public String VenueListByCategory(@PathVariable("venue_category") String venue_category, @RequestParam(name = "page", required = false) Integer page, Model model) {
-        List<Venue> venueList = venueService.findByCategory(venue_category, page);
-
-        System.out.println(venue_category);
-        if (page == null || page <= 1) {
-            page = 1;
-        }
-        System.out.println(venueList);
-        int cnt = venueList.size();
-        System.out.println(cnt);
-        model.addAttribute("List", venueList);
-
-        return "venue/list";
+    public void venueList(Integer page, Model model, @RequestParam(name = "venue_category", required = false, defaultValue = "") String venue_category) {
+        venueService.list(page, model, venue_category);
     }
 
     @GetMapping("/api2")
@@ -74,11 +58,19 @@ public class VenueController {
             venue.setPrice(1000L);
             venue.setPosible_start_date("2024-07-09");
             venue.setPosible_end_date("2025-07-09");
-            venue.setOpen_time("09:00:00");
-            venue.setClose_time("18:00:00");
+            venue.setOpen_time("09:00");
+            venue.setClose_time("18:00");
             venue.setImg(reservation.getImg());
 
             venueService.saveVenue(venue);
         }
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detiail(@PathVariable Long id, Model model) {
+        Venue venue = venueService.detail(id);
+        model.addAttribute("venue", venue);
+
+        return "venue/detail";
     }
 }

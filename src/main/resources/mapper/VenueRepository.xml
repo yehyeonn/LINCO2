@@ -25,10 +25,9 @@
         <include refid="select_venue"/>
     </select>
 
-    <select id="findByCategory" resultType="com.lec.spring.domain.Venue" parameterType="map">
+    <select id="findById" resultType="com.lec.spring.domain.Venue">
         <include refid="select_venue"/>
-        and venue_category=#{venue_category}
-        limit #{fromRow}, #{pageRows}
+        and id = #{id}
     </select>
 
     <insert id="insertVenue" parameterType="com.lec.spring.domain.Venue">
@@ -41,14 +40,14 @@
 
     <select id="selectFromRow" resultType="com.lec.spring.domain.Venue">
         <include refid="select_venue"/>
-        <choose>
-            <when test="param3 != null">
-                limit #{param1}, #{param2}
-            </when>
-            <otherwise>
-                <include refid="select_venue"/>
-            </otherwise>
-        </choose>
+        and (#{param3} is null or #{param3} = '' or venue_category like concat('%', #{param3}, '%'))
+        limit #{param1}, #{param2}
+    </select>
+
+    <select id="countByCategory" resultType="int">
+        select count(*) from VENUE
+        where
+            (#{param1} IS NULL OR #{param1} = '' OR venue_category LIKE CONCAT('%', #{param1}, '%'))
     </select>
 
     <select id="countAll" resultType="int">

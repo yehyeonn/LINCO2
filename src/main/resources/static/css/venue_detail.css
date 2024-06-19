@@ -1,0 +1,123 @@
+:root {
+    --navy: #3A4D72;
+    --red: #D3374A;
+    --background-color: #EDEBDA;
+    --page-color: #B3B49E;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container-venue {
+    /*outline: 3px solid blue;*/
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.img-area {
+    /*outline: 3px solid red;*/
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.venue_name {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--navy);
+    color: var(--navy);
+    text-align: center;
+}
+
+.main_img, .calendar {
+    width: 80%;
+    height: 230px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.info-area {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.info-area button {
+    margin-top: 20px;
+    align-self: flex-end;
+    justify-content: flex-end;
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 20px;
+    background-color: var(--navy);
+
+    font-size: 20px;
+    color: #ffffff;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.info-area button:hover{
+    background-color: var(--page-color);
+}
+
+.info_box {
+    /*outline: 3px solid lime;*/
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fafafa;
+
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.info_box ul {
+    padding: 0;
+    list-style: none;
+
+
+}
+
+.info_box ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.info_box ul li div {
+    color: var(--navy);
+    font-weight: bold;
+}
