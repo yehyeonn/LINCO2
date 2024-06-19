@@ -19,4 +19,6 @@ public interface VenueRepository {
     int countAll();
 
     int countByCategory(String category);
+
+    Venue findById(Long id);
 }

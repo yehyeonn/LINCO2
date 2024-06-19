@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface VenueService {
 
-//    List<Venue> findByCategory(String venue_category, Integer page);
 
     List<Venue> findAll();
+
+    Venue detail(Long id);
 
     void saveVenue(Venue venue);
 

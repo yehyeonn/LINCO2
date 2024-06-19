@@ -36,27 +36,16 @@ public class VenueServiceImpl implements VenueService {
         venueRepository = sqlSession.getMapper(VenueRepository.class);
     }
 
-//    @Override
-//    public List<Venue> findByCategory(String venue_category, Integer page) {
-//
-//        if (page == null || page <= 1) {
-//            page = 1;
-//        }
-//
-//        int pageRows = PAGE_ROWS;
-//        int fromRow = (page - 1) * pageRows;
-//
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("venue_category", venue_category);
-//        params.put("fromRow", fromRow);
-//        params.put("pageRows", pageRows);
-//
-//        return venueRepository.findByCategory(params);
-//    }
-
     @Override
     public List<Venue> findAll() {
         return venueRepository.findAll();
+    }
+
+    @Override
+    public Venue detail(Long id) {
+        Venue venue = venueRepository.findById(id);
+
+        return venue;
     }
 
     @Override
@@ -83,7 +72,6 @@ public class VenueServiceImpl implements VenueService {
         session.setAttribute("page", page);
 
         long cnt = venueRepository.countByCategory(venue_category);
-        System.out.println(cnt);
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);
 
         int startPage = 0;
@@ -102,7 +90,6 @@ public class VenueServiceImpl implements VenueService {
             if (endPage >= totalPage) endPage = totalPage;
 
             list = venueRepository.selectFromRow(fromRow, pageRows, venue_category);
-            System.out.println(list.toString()+"\n");
 
             model.addAttribute("list", list);
             model.addAttribute("venue_category", venue_category);
