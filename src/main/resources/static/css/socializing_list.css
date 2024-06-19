@@ -90,8 +90,8 @@ body {
 }
 .category-area{
     display: flex;
-    width: 276px;
-    height: 30px;
+    width: 400px;
+    height: 50px;
     margin: auto;
     margin-top: 10px;
     align-items: center;
@@ -114,8 +114,8 @@ body {
 
 .detail-category-area{
     display: flex;
-    width: 276px;
-    height: 30px;
+    width: 400px;
+    height: 50px;
     margin: auto;
     margin-top: 10px;
     align-items: center;
@@ -189,16 +189,22 @@ body {
     width: max-content;
     margin: 20px auto 0;
     text-decoration: none;
-    background-color: #D3374A;
+    background-color: #3A4D72 ;
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 .create-button:hover {
-    background-color: #B3B49E;
+    background-color: #2c3e50;
 }
 
 .hidden{
     display: none;
 }
+
+span {
+    font-size: 25px;
+}
+
+

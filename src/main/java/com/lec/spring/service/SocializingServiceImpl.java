@@ -62,7 +62,8 @@ public class SocializingServiceImpl implements SocializingService {
 
     @Override
     public List<Socializing> list(Integer page, Model model, String selectaddress, String selectcategory, String selectdetailcategory) {
-        System.out.println(selectcategory);
+        System.out.println("category : "+selectcategory);
+        System.out.println("detailcategory : " + selectdetailcategory);
 
 
         // 현재페이지
