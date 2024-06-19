@@ -8,7 +8,6 @@ const subCategories = {
 let sDate = new Date();
 
 
-
 sDate.setDate(sDate.getDate());
 
 let minStr = sDate.toISOString().split('T')[0]; // 날짜로 변환
@@ -50,70 +49,41 @@ $(document).ready(function() {
         }
     });
 
+
+    // 엔터키로 form 제출 막기, 하지만 #location 필드에서는 searchPlaces() 실행
     $(document).on('keydown', function(event) {
         if (event.keyCode === 13) {
-            event.preventDefault();
+            if ($(event.target).attr('id') === 'location') {
+                event.preventDefault();
+                searchPlaces();
+            } else {
+                event.preventDefault();
+            }
         }
     });
 
-    $('#socializingForm').on('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        $.ajax({
-            type: 'POST',
-            url: '/socializing/create',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                alert('소셜라이징이 성공적으로 생성되었습니다.');
-                // 성공 시 처리
-            },
-            error: function(error) {
-                alert('오류가 발생했습니다.');
-                console.error('Error:', error);
-            }
-        });
-    });
-});
 
-//
-// $(document).ready(function () {
-//     const subCategories = {
-//         "운동": ["축구", "야구", "농구"],
-//         "공연": ["전시", "댄스", "영화"],
-//         "공부": ["컴퓨터", "영어", "수학"]
-//     };
-//
-//     $('#category').on('change', function () {
-//         const category = $(this).val();
-//         const subCategory = $('#subCategory');
-//         subCategory.empty();
-//         subCategory.append('<option value="">소분류 선택</option>'); // Reset subcategories
-//         if (category && subCategories[category]) {
-//             $.each(subCategories[category], function (index, value) {
-//                 subCategory.append('<option value="' + value + '">' + value + '</option>');
-//             });
-//         }
-//     });
-//
-//     $('#fileSelect').on('click', function () {
-//         $('#fileInput').click();
-//     });
-//
-//     $('#fileInput').on('change', function () {
-//         const file = this.files[0];
-//         if (file) {
-//             const reader = new FileReader();
-//             reader.onload = function (e) {
-//                 $('#previewImage').attr('src', e.target.result).show();
-//                 $('#img_txt').hide();
-//             };
-//             reader.readAsDataURL(file);
-//         } else {
-//             $('#previewImage').hide();
-//         }
-//     });
+    // $('#socializingForm').on('submit', function(e) {
+    //     e.preventDefault();
+    //     const formData = new FormData(this);
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/socializing/write',
+    //         data: formData,
+    //         processData: false,
+    //         contentType: false,
+    //         success: function(response) {
+    //             alert('소셜라이징이 성공적으로 생성되었습니다.');
+    //             // 성공 시 처리
+    //         },
+    //         error: function(error) {
+    //             alert('오류가 발생했습니다.');
+    //             console.error('Error:', error);
+    //         }
+    //     });
+    // });
+
+});
 
 
     // 지도와 장소 검색을 위한 변수와 객체 초기화
@@ -121,30 +91,22 @@ $(document).ready(function() {
     var mapContainer = document.getElementById('map');
     var mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 3
+        level: 2
     };
     var map = new kakao.maps.Map(mapContainer, mapOption);
     var ps = new kakao.maps.services.Places();
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
-    var viewAddr = null;
 
 
-    $('#mapSearch').click(function () {
-        searchPlaces();
-        map.relayout();
-    });
-    $('#location').keypress(function (event) {
-        if (event.which === 13) { // Enter key is pressed
-            event.preventDefault();
-            $('#mapSearch').click();
-        }
-    });
+$('#mapSearch').click(function () {
+    searchPlaces();
+});
 
-    function searchPlaces() {
+
+function searchPlaces() {
         var keyword = $('#location').val();
 
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
-            alert('키워드를 입력해주세요!');
             return false;
         }
 
@@ -157,10 +119,15 @@ $(document).ready(function() {
             displayPlaces(data);
             displayPagination(pagination);
             $('#menu_wrap').show();
-
             // $('.map_wrap').show();
             map.relayout();
+            const bounds = new window.kakao.maps.LatLngBounds();
+            for (let i = 0; i < data.length; i++) {
+                displayMarker(data[i]);
+                bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+            }
 
+            map.setBounds(bounds);
 
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
             alert('검색 결과가 존재하지 않습니다.');
@@ -169,65 +136,76 @@ $(document).ready(function() {
         }
     }
 
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-    function displayPlaces(places) {
-
-        var listEl = document.getElementById('placesList'),
-            menuEl = document.getElementById('menu_wrap'),
-            fragment = document.createDocumentFragment(),
-            bounds = new kakao.maps.LatLngBounds(),
-            listStr = '';
-
-        // 검색 결과 목록에 추가된 항목들을 제거합니다
-        removeAllChildNods(listEl);
-
-        // 지도에 표시되고 있는 마커를 제거합니다
-        removeMarker();
-
-        for ( var i=0; i<places.length; i++ ) {
-
-            // 마커를 생성하고 지도에 표시합니다
-            var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-                marker = addMarker(placePosition, i),
-                itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-            // LatLngBounds 객체에 좌표를 추가합니다
-            bounds.extend(placePosition);
-
-            // 마커와 검색결과 항목에 mouseover 했을때
-            // 해당 장소에 인포윈도우에 장소명을 표시합니다
-            // mouseout 했을 때는 인포윈도우를 닫습니다
-            (function(marker, title) {
-                kakao.maps.event.addListener(marker, 'mouseover', function() {
-                    displayInfowindow(marker, title);
-                });
-
-                kakao.maps.event.addListener(marker, 'mouseout', function() {
-                    infowindow.close();
-                });
-
-                itemEl.onmouseover =  function () {
-                    displayInfowindow(marker, title);
-                };
-
-                itemEl.onmouseout =  function () {
-                    infowindow.close();
-                };
-            })(marker, places[i].place_name);
-
-            fragment.appendChild(itemEl);
+    // 검색 결과 목록과 마커표시
+function displayMarker(place) {
+    const marker = new window.kakao.maps.Marker({
+        map,
+        position: new window.kakao.maps.LatLng(place.y, place.x),
+    });
+    window.kakao.maps.event.addListener(marker, "click", function (mouseEvent) {
+            props.setAddress(place);
+            infowindow.setContent(`
+              <span>
+              ${place.place_name}
+              </span>
+              `);
+            infowindow.open(map, marker);
+            const moveLatLon = new window.kakao.maps.LatLng(place.y, place.x);
+            map.panTo(moveLatLon);
         }
+    );
+}
 
-        // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-        listEl.appendChild(fragment);
-        menuEl.scrollTop = 0;
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-        map.relayout();
+function displayPlaces(places) {
+    const listEl = document.getElementById("placesList");
+    const menuEl = document.getElementById("menu_wrap");
+    const fragment = document.createDocumentFragment();
+    // const bounds = new window.kakao.maps.LatLngBounds();
+    removeAllChildNods(listEl);
+    removeMarker();
+    for (let i = 0; i < places.length; i++) {
+        const placePosition = new window.kakao.maps.LatLng(
+            places[i].y,
+            places[i].x
+        );
+        const marker = addMarker(placePosition, i);
+        const itemEl = getListItem(i, places[i]);
+        // bounds.extend(placePosition);
+        (function (marker, title) {
+            window.kakao.maps.event.addListener(
+                marker,
+                "mouseover",
+                function () {
+                    displayInfowindow(marker, title);
+                }
+            );
 
+            window.kakao.maps.event.addListener(
+                marker,
+                "mouseout",
+                function () {
+                    infowindow.close();
+                }
+            );
+
+            itemEl.addEventListener("click", function (e) {
+                displayInfowindow(marker, title);
+                map.panTo(placePosition);
+                document.getElementById('address').value = places[i].road_address_name || places[i].address_name;
+                console.log(document.getElementById('address').value);
+            });
+        })(marker, places[i].place_name);
+
+        fragment.appendChild(itemEl);
     }
+
+    listEl?.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+    // map.panTo(bounds);
+}
+
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
     function getListItem(index, places) {
@@ -327,3 +305,6 @@ $(document).ready(function() {
             el.removeChild(el.lastChild);
         }
     }
+
+
+

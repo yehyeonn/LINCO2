@@ -11,21 +11,19 @@
     <th:block th:replace="~{common/header :: header-head}"></th:block>
     <link rel="stylesheet" href="/css/socializing_write.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-
     <link rel="stylesheet" href="/css/map.css">
-
-
 </head>
 
 <body>
 <header th:replace="~{common/header :: header-body}"></header>
 <div class="container1">
     <form id="socializingForm" th:action="@{/socializing/write}" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="socializingName">소셜라이징 이름</label>
-            <input type="text" id="socializingName" name="socializingName" placeholder="제목을 입력하세요" th:value="${socializing_title}"/>
+        <div class="form-group"><!--th:with="user=${#authentication.getPrincipal().getUser()}"-->
+            <label for="socializing_title">소셜라이징 이름</label>
+            <input type="text" id="socializing_title" name="socializing_title" placeholder="제목을 입력하세요" th:value="${socializing_title}"/>
         </div>
-        <div class="form-group">
+        <div><span class="text-danger" th:if="${error_socializing_title}" th:utext="${error_socializing_title}"></span></div>
+        <div class="form-group select-container">
             <label for="category">카테고리</label>
             <select id="category" name="category">
                 <option value="">카테고리 선택</option>
@@ -38,9 +36,10 @@
                 <option value="">소분류 선택</option>
             </select>
         </div>
+        <div><span class="text-danger" th:if="${error_detail_category}" th:utext="${error_detail_category}"></span></div>
         <div class="form-group">
-            <label for="content">내용</label>
-            <textarea id="content" name="content" rows="1" th:utext="${content}"></textarea>
+            <label for="content" class="content1">내용</label>
+            <textarea id="content" name="content" rows="5" th:utext="${content}"></textarea>
         </div>
         <div class="form-group">
             <label for="inputDate">날짜</label>
@@ -48,10 +47,12 @@
             <label for="time">시간</label>
             <input type="time" id="time" name="time" th:value="${meeting_time}"/>
         </div>
+        <div><span class="text-danger" th:if="${error_dateTime}" th:utext="${error_dateTime}"></span></div>
         <div class="form-group">
             <label for="participants">인원</label>
             <input type="number" id="participants" name="participants" th:value="${limit_num}"/>
         </div>
+        <div><span class="text-danger" th:if="${error_limit_num}" th:utext="${error_limit_num}"></span></div>
         <div class="form-group">
             <label for="total_price">가격</label>
             <input type="text" id="total_price" name="total_price" th:value="${total_price}"/>
@@ -63,14 +64,16 @@
             </div>
             <div class="form-group fileBtn">
                 <button type="button" id="fileSelect">파일선택</button>
-                <input type="file" id="fileInput" name="file" style="display:none;" />
+                <input type="file" id="fileInput" name="file" style="display:none;" th:value="${img}"/>
             </div>
         </div>
         <div class="form-group">
             <label for="location">위치</label>
-            <input type="text" id="location" name="location" th:value="${address}"/>
+            <input type="text" id="location" name="location"/>
             <button type="button" id="mapSearch">검색하기</button>
+            <input type="text" id="address" name="address" th:value="${address}">
         </div>
+        <div><span class="text-danger" th:if="${error_address}" th:utext="${error_address}"></span></div>
 
         <div class="map_wrap">
             <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -84,7 +87,7 @@
         </div>
 <hr>
         <div class="form-group btn-group">
-            <button type="button" id="prevButton">이전으로</button>
+            <button type="button" id="prevButton" th:href="@{/socializing/list(page=${session.page})}">이전으로</button>
             <button type="submit" id="createButton">만들기</button>
         </div>
     </form>

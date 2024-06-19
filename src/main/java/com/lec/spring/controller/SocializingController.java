@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,7 +51,23 @@ public class SocializingController {
             , RedirectAttributes redirectAttributes
             ){
         if(result.hasErrors()){
-            // TODO
+            System.out.println("에러났지롱~");
+            redirectAttributes.addFlashAttribute("socializing_title", socializing.getSocializing_title());
+            redirectAttributes.addFlashAttribute("category", socializing.getCategory());
+            redirectAttributes.addFlashAttribute("detail_category", socializing.getDetail_category());
+            redirectAttributes.addFlashAttribute("address", socializing.getAddress());
+            redirectAttributes.addFlashAttribute("meeting_date", socializing.getMeeting_date());
+            redirectAttributes.addFlashAttribute("meeting_time", socializing.getMeeting_time());
+            redirectAttributes.addFlashAttribute("limit_num", socializing.getLimit_num());
+            redirectAttributes.addFlashAttribute("content", socializing.getContent());
+            redirectAttributes.addFlashAttribute("total_price", socializing.getTotal_price());
+            redirectAttributes.addFlashAttribute("img", socializing.getImg());
+
+
+            List<FieldError> errList = result.getFieldErrors();
+            for(FieldError err : errList){
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
         return "redirect:/socializing/write";
         }
 

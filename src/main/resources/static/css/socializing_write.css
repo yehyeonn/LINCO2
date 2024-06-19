@@ -73,6 +73,14 @@ body {
     padding: 0;
 }
 
+.content1{
+    position: absolute;
+}
+
+#content {
+    margin-left: 50px;
+}
+
 .container1 {
     width: 90%;
     max-width: 1200px;
@@ -128,8 +136,8 @@ button:hover {
 }
 .form-img {
     position: absolute;
-    top: 25%;
-    right: 15%;
+    top: 300px;
+    right: 150px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -137,7 +145,7 @@ button:hover {
 }
 
 .image-placeholder {
-    outline: 2px solid #333;
+    outline: 1px solid #333;
     padding: 5px;
     margin-bottom: 10px;
     border-radius: 10px;
@@ -149,16 +157,24 @@ button:hover {
     align-items: center;
     justify-content: center;
     color: #aaa;
+
+}
+.select-container {
+    display: flex;
+    gap: 16px; /* 간격 조정 */
+    align-items: center;
 }
 
 .btn-group {
     text-align: right;
-    padding-left: 80%;
+    padding-left: 82%;
     /* outline: 2px solid greenyellow; */
 }
 
 .btn-group button {
     margin-left: 15px;
+    white-space: nowrap;
+
 }
 
 .map_wrap {

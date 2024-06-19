@@ -45,6 +45,11 @@ public class SocializingServiceImpl implements SocializingService {
         socializing.setUser(user);  // 글 작성자
 
         int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
+
+        if(socializing.getImg() == null) {
+            socializing.setImg("/img/DefaultImg.jpg");
+        }
+
         return cnt;
     }
 //    // 세부사항
