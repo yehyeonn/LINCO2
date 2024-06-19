@@ -105,9 +105,16 @@ values ('공지사항'),
 # select * from BOARD_TYPE;
 
 insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
-values (1, null, 1, '벌레마시쪙', '벌레마시쪙????', 3),
-       (2, 2, 2, '아니', '아니 맛없쪙', 2),
-       (3, 2, 2, '야 나두!', '야 너두? 맛없쪙? 나두 맛없쪙', 2);
+values
+       (1, null, 3, '벌레마시쪙', '벌레마시쪙????', 1),
+       (1, null, 2, '야 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+       (2, null, 1, '야 나두1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
+       (3, null, 1, '너두?!1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
+       (2, null, 2, '이거 되려나', '야 이거 뜨냐?', 1),
+       (3, null, 2, '게시글2', '게시글2',1),
+       (3, 1, 3, '이건?', '되려나?', 1),
+       (2, 2, 3, '과연', '두둥',1)
+       ;
 
 # select * from BOARD;
 
@@ -119,7 +126,12 @@ values (1, 1),
 
 insert into ATTACHMENT (board_id, club_id, sourcename, filename)
 values (1, 1, 'face01.png', 'face01.png'),
-       (1, 2, 'face02.png', 'face02.png');
+       (1, 2, 'face02.png', 'face02.png'),
+       (2, null, 'face03.png', 'face03.png'),
+       (1, null, 'face04.png', 'face04.png'),
+       (3, null, 'face06.png', 'face06.png'),
+       (4, null, 'face07.png', 'face07.png')
+       ;
 
 # select * from ATTACHMENT;
 
@@ -132,7 +144,13 @@ values (1, 1),
 insert into COMMENT(user_id, board_id, attachment_id, content, regdate)
 values (1, 1, 1, '재미없쪙', null),
        (2, 2, 1, '야 너도?', null),
-       (3, 3, 1, '야 나두', null);
+       (3, 3, 1, '야 나두', null),
+       (3, 1, null, '이거 출력되니?', null),
+       (3, 2, null, '이건 출력되니??', null),
+       (3, 3, null, '이것도 출력되니???', null),
+       (4, 3, null, '댓글1', null),
+       (2, 3, null, '댓글2', null)
+       ;
 
 # select * from COMMENT;
 

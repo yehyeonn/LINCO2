@@ -1,78 +1,182 @@
-body {
-    background-color: #EDEBDA;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-}
+/*body {*/
+/*    background-color: #EDEBDA;*/
+/*    font-family: 'Helvetica Neue', Arial, sans-serif;*/
+/*    color: #333;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.body {*/
+/*    width: 90%;*/
+/*    max-width: 1200px;*/
+/*    margin: 150px auto;*/
+/*    background-color: #fff;*/
+/*    padding: 20px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*    border-radius: 10px;*/
+/*    position: relative;*/
+/*}*/
+
+/*.title {*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*.form-group {*/
+/*    margin-bottom: 30px;*/
+/*}*/
+
+/*label {*/
+/*    display: inline-block;*/
+/*    margin-left: 20px;*/
+/*    margin-bottom: 8px;*/
+/*    font-weight: bold;*/
+/*    font-size: 25px;*/
+/*}*/
+
+/*input[type="text"] {*/
+/*    width: 98%; !* 부모 요소에 맞춤 *!*/
+/*    padding: 10px;*/
+/*    font-size: 16px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 5px;*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+/*    transition: border-color 0.3s, box-shadow 0.3s;*/
+/*    outline: none;*/
+/*    resize: vertical; !* 수직 크기 조정 가능 *!*/
+/*}*/
+
+/*input[type="text"]:focus{*/
+/*    border-color: #007BFF;*/
+/*    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);*/
+/*}*/
+
+/*textarea {*/
+/*    height: 150px; !* 고정 높이 설정 *!*/
+/*    line-height: 1.5; !* 줄 간격 설정 *!*/
+/*}*/
+
+/*hr {*/
+/*    margin: 20px 0;*/
+/*    border: 0;*/
+/*    border-top: 1px solid #ccc;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.button {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    margin-top: 20px;*/
+/*}*/
+
+/*.title .text{*/
+/*    margin-left: 20px;*/
+/*}*/
+
+/*div.text{*/
+/*    color: black;*/
+/*    font-size: 20px;*/
+/*}*/
+
+/*div.content{*/
+/*    width: 100%;*/
+/*    height: 200Px;*/
+/*    border-radius: 5px;*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+/*    padding: 20px;*/
+/*    margin-top: 20px;*/
+/*    margin-bottom: 20px;*/
+/*    position: relative;*/
+/*    font-size: 15px;*/
+/*}*/
+
+/*li{*/
+/*    list-style-type: none;*/
+/*}*/
+
+/*div.attachment{*/
+/*    margin: 40px auto;*/
+/*}*/
+
+/*.button{*/
+/*    margin-bottom: 40px;*/
+/*}*/
+
+/*.button .btn {*/
+/*    display: inline-block;*/
+/*    padding: 10px 20px;*/
+/*    background-color: #B3B49E;*/
+/*    color: #fff;*/
+/*    text-decoration: none;*/
+/*    border-radius: 5px;*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+/*    transition: background-color 0.3s;*/
+/*}*/
+
+
+/*.button .btn:hover{*/
+/*    background-color: #D3374A;*/
+/*}*/
+
+/*.comment{*/
+/*    margin: 50px auto;*/
+/*}*/
 
 .body {
     width: 90%;
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 150px auto;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    position: relative;
 }
 
 .title {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.title .form-group {
+    margin-bottom: 30px;
 }
 
 label {
-    display: inline-block;
+    display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
+    color: #3A4D72; /* 제목 및 레이블 색상 */
 }
 
-.select-right {
-    float: right;
-    padding: 10px 20px;
-    font-size: 16px;
+label #cmt_cnt{
+    color: #3A4D72;
+}
+
+.text {
+    font-size: 18px;
+    color: #333; /* 텍스트 색상 */
+}
+
+.content {
     border: 1px solid #ccc;
+    padding: 15px;
+    margin-top: 15px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    appearance: none;
-    cursor: pointer;
-    outline: none;
-    margin-bottom: 10px;
-}
-
-input[type="text"], textarea {
-    width: 98%; /* 부모 요소에 맞춤 */
-    padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    outline: none;
-    resize: vertical; /* 수직 크기 조정 가능 */
+    line-height: 1.6;
 }
 
-input[type="text"]:focus, textarea:focus {
-    border-color: #007BFF;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.attachment {
+    margin-top: 30px;
 }
 
-textarea {
-    height: 150px; /* 고정 높이 설정 */
-    line-height: 1.5; /* 줄 간격 설정 */
+.attachment label {
+    font-size: 20px;
 }
 
-hr {
-    margin: 20px 0;
-    border: 0;
-    border-top: 1px solid #ccc;
-    width: 100%;
+.attachment .text {
+    font-size: 16px;
+    color: #333; /* 첨부파일 텍스트 색상 */
 }
 
 .button {
@@ -86,7 +190,7 @@ hr {
     gap: 10px;
 }
 
-.btn {
+.button .btn {
     padding: 10px 20px;
     font-size: 16px;
     color: #fff;
@@ -94,7 +198,46 @@ hr {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-decoration: none;
-    text-align: center;
     transition: background-color 0.3s;
+}
+
+.button .btn:hover {
+    background-color: #D3374A; /* 버튼 호버 색상 */
+}
+
+.comment {
+    margin: 50px auto;
+}
+
+.comment label {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+    color: #3A4D72; /* 댓글 레이블 색상 */
+}
+
+.comment input[type="text"] {
+    width: calc(100% - 100px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+}
+
+.comment button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3A4D72;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.comment button:hover {
+    background-color: #D3374A; /* 댓글 등록 버튼 호버 색상 */
 }

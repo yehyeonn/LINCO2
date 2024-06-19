@@ -33,38 +33,19 @@
                u.profile_picture "u_profile_picture",
                u.regdate         "u_regdate",
                bt.id             "bt_id",
-               bt.name           "bt_name"
+               bt.name           "bt_name",
+               c.id              "c_id",
+               c.name            "c_name",
+               c.category        "c_category",
+               c.detail_category "c_detail_category",
+               c.intro           "c_intro",
+               c.content         "c_content",
+               c.representative_picture "c_representative_picture"
         FROM BOARD b
                  JOIN USER u ON b.user_id = u.id
                  JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
+                 LEFT JOIN CLUB c ON b.club_id = c.id
     </sql>
-
-    <resultMap id="mapBoardType" type="com.lec.spring.domain.BoardType">
-        <result column="bt_id" property="id"/>
-        <result column="bt_name" property="name"/>
-    </resultMap>
-
-    <resultMap id="mapUser" type="com.lec.spring.domain.User">
-        <result column="u_id" property="id"/>
-        <result column="u_tel" property="tel"/>
-        <result column="u_username" property="username"/>
-        <result column="u_password" property="password"/>
-        <result column="u_address" property="address"/>
-        <result column="u_gender" property="gender"/>
-        <result column="u_birthday" property="birthday"/>
-        <result column="u_profile_picture" property="profile_picture"/>
-        <result column="u_regdate" property="regdate"/>
-    </resultMap>
-
-    <resultMap id="mapBoard" type="com.lec.spring.domain.Board">
-        <result column="b_id" property="id"/>
-        <result column="b_title" property="title"/>
-        <result column="b_content" property="content"/>
-        <result column="b_viewcnt" property="viewcnt"/>
-        <result column="b_regdate" property="regdate"/>
-        <association property="user" resultMap="mapUser"/>
-        <association property="boardType" resultMap="mapBoardType"/>
-    </resultMap>
 
     <select id="findById" resultMap="mapBoard">
         <include refid="SELECT_BASE"/>
@@ -106,5 +87,43 @@
         SELECT count(*)
         FROM BOARD
     </select>
+
+    <resultMap id="mapClub" type="com.lec.spring.domain.Club">
+        <result column="c_id" property="id"/>
+        <result column="c_name" property="name"/>
+        <result column="c_category" property="category"/>
+        <result column="c_detail_category" property="detail_category"/>
+        <result column="c_intro" property="intro"/>
+        <result column="c_content" property="content"/>
+        <result column="c_representative_picture" property="representative_picture"/>
+    </resultMap>
+
+    <resultMap id="mapBoardType" type="com.lec.spring.domain.BoardType">
+        <result column="bt_id" property="id"/>
+        <result column="bt_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_tel" property="tel"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_address" property="address"/>
+        <result column="u_gender" property="gender"/>
+        <result column="u_birthday" property="birthday"/>
+        <result column="u_profile_picture" property="profile_picture"/>
+        <result column="u_regdate" property="regdate"/>
+    </resultMap>
+
+    <resultMap id="mapBoard" type="com.lec.spring.domain.Board">
+        <result column="b_id" property="id"/>
+        <result column="b_title" property="title"/>
+        <result column="b_content" property="content"/>
+        <result column="b_viewcnt" property="viewcnt"/>
+        <result column="b_regdate" property="regdate"/>
+        <association property="user" resultMap="mapUser"/>
+        <association property="boardType" resultMap="mapBoardType"/>
+        <association property="club" resultMap="mapClub"/>
+    </resultMap>
 
 </mapper>

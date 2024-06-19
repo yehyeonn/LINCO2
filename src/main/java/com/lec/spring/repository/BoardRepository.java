@@ -10,7 +10,7 @@ public interface BoardRepository {
 
     Board findById(Long id);
 
-    Board findByBoardTypeId(Long boardTypeId);
+    List<Board> findByBoardTypeId(Long boardTypeId);
 
     int incViewCnt(Long id);
 
