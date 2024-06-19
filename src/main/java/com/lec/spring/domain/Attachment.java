@@ -22,4 +22,8 @@ public class Attachment {
     public void setBoard(Board board){
         this.board = board;
     }
+
+    public void setClub(Club club){
+        this.club = club;
+    }
 }

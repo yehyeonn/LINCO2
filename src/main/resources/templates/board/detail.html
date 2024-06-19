@@ -8,7 +8,7 @@
 <!--</script>-->
 
 <!-- board 값이 있는 경우에만 렌더링 -->
-<th:block th:if="${board}" th:with="logged_user=${#authentication.principal.user}">
+<th:block th:if="${board}"> <!-- th:with="logged_user=${#authentication.principal.user}" -->
 
     <head>
         <meta charset="UTF-8">
@@ -16,15 +16,15 @@
         <link rel="stylesheet" th:href="@{/css/board_detail.css}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-        <script th:inline="javascript">
-            const logged_id = [[${logged_user.id}]]
-        </script>
+        <!--        <script th:inline="javascript">-->
+        <!--/*            const logged_id = [[${logged_user.id}]] */-->
+        <!--        </script>-->
         <th:block th:insert="/common/header :: header-head"></th:block>
         <script th:src="@{/js/detail.js}"></script>
         <title>board_detail</title>
     </head>
 
-    <body th:with="logged_user = ${#authentication.principal.user}">    <!-- 현재 로그인한 유저의 정보 -->
+    <!--    <body th:with="logged_user = ${#authentication.principal.user}">    &lt;!&ndash; 현재 로그인한 유저의 정보 &ndash;&gt;-->
 
     <th:block th:insert="/common/header :: header-body"></th:block>
 
@@ -37,69 +37,85 @@
 
             <div class="title">
                 <div class="form-group">
-                    <label>게시글 제목:</label>
-                    <span th:text="${board.title}"></span>
+                    <label>게시글 제목 : </label>
+                    <div th:text="${board.title}" class="text"></div>
                 </div>
             </div>
             <hr>
 
             <div class="form-group">
                 <label>내용:</label>
-                <span th:utext="${board.content}"></span>
+                <div class="content">
+                    <div th:utext="${board.content}" class="text"></div>
+                </div>
             </div>
 
             <!-- 첨부파일 -->
-            <div>
+            <div class="attachment">
                 <label>첨부파일 : </label>
-                <ul>
+                <ul th:if="${not #lists.isEmpty(board.fileList)}">
                     <li th:each="attachment : ${board.fileList}">
-                        <span th:text="${attachment.sourceName}"></span>      <!-- 원본이름 -->
+                        <div th:text="${attachment.sourceName}" class="text"></div>
+                        <!-- boardType에 따라 다른 처리 -->
+                        <div th:switch="${board.boardType.id}">
+                            <!-- 자유게시판인 경우 -->
+                            <span th:case="2"></span>
+                            <!-- 공지사항인 경우 -->
+                            <span th:case="1"></span>
+                        </div>
                     </li>
                 </ul>
-            </div>
 
-            <!-- 버튼 -->
-            <div class="button">
-                <div class="left-buttons">
-                    <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
-                    <a class="btn" th:href="@{'/board/update/' + ${board.id}}" th:if="${logged_user.id == board.id}">수정</a>
-                    <a th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER')">글쓰기</a>
+                <!-- 버튼 -->
+                <div class="button">
+                    <div class="left-buttons">
+                        <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
+                        <a class="btn" th:href="@{'/board/update/' + ${board.id}}">수정</a>
+                        <!-- th:if="${logged_user.id == board.id}" -->
+                        <a th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER')">글쓰기</a>
+                    </div>
+
+                    <button type="button" class="btn" id="btnDel">삭제하기</button>
+                    <!-- th:if="${logged_user.id == board.user.id}" -->
                 </div>
+                <hr>
 
-                <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기</button>
-            </div>
+                <!-- 댓글 -->
+                <div class="container comment">
+                    <label>댓글 : <span id="cmt_cnt" th:text="${cnt}" > 0 </span> 개</label>
 
-            <!-- 댓글 -->
-            <div class="container">
-                <label>댓글: <span id="cmt_cnt"></span> 개</label>
+                    <div sec:authorize="hasAnyRole('MEMBER')">  <!-- 회원만 댓글 작성 가능하도록 설정 -->
+                        <input type="text" id="input_comment">
+                        <button type="button" class="btn" id="btn_comment">등록</button>
+                    </div>
 
-                <div sec:authorize="hasAnyRole('MEMBER')">  <!-- 회원만 댓글 작성 가능도록 설정 -->
-                    <input type="text" id="input_comment">
-                    <button type="button" class="btn" id="btn_comment">등록</button>
-                </div>
-
-                <table class="table" id="cmt_table">
-                    <thead>
+                    <table class="table" id="cmt_table">
+                        <thead>
                         <tr>
-                            <th th:width="16.66%">작성자</th>
+                            <th>작성자</th>
                             <th>댓글</th>
-                            <th th:width="16.66%">작성일</th>
+                            <th>작성일</th>
                         </tr>
-                    </thead>
+                        </thead>
 
-                    <tbody id="cmt_list">
-
-                    </tbody>
-                </table>
+                        <tbody id="cmt_list" th:each="comments : ${comments}" th:if="${comments.board.id} == ${board.id} and ${comments.attachment.id} == null">
+                            <td th:text="${comments.user.username}"></td>
+                            <td th:text="${comments.content}"></td>
+                            <td th:text="${#temporals.format(comments.regdate, 'yyyy-MM-dd')}"></td>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
         </section>
-
     </div>
 
 
-    <th:block th:insert="/common/footer :: footer-body"></th:block>
+    <!--    <th:block th:insert="/common/footer :: footer-body"></th:block>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"-->
+    <!--            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"-->
+    <!--            crossorigin="anonymous"></script>-->
 
+    <!--    <th:block th:replace="/common/footer :: footer-scripts"></th:block>-->
     </body>
 </th:block>
 </html>

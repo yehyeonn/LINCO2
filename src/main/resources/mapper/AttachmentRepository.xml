@@ -18,7 +18,7 @@
     </insert>
 
     <sql id="SELECTFILE">
-        SELECT id, sourcename, filename, board_id
+        SELECT id, sourcename, filename, board_id, club_id
         FROM ATTACHMENT
         WHERE 1 = 1
     </sql>

@@ -1,11 +1,17 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.Board;
+import com.lec.spring.domain.BoardType;
 import com.lec.spring.domain.Club;
+import com.lec.spring.domain.Comment;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.ClubService;
+import com.lec.spring.service.CommentService;
+import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +33,12 @@ public class BoardController {
 
     @Autowired
     private ClubService clubService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     // 기본생성자
     public BoardController() {
@@ -63,7 +75,25 @@ public class BoardController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
-        model.addAttribute("board", boardService.detail(id));
+//        model.addAttribute("board", boardService.detail(id));
+//        model.addAttribute("club", clubService.getClubById(id));
+
+        Board board = boardService.detail(id);
+
+        model.addAttribute("board", board);
+        System.out.println("board : " +board.toString());
+
+        Club club = board.getClub() != null ? clubService.getClubById(board.getClub().getId()) : null;
+        model.addAttribute("club", club);
+
+        List<Comment> comments = commentService.list(id).getList();  // 게시물의 댓글 목록을 가져옴
+        int cnt = commentService.list(id).getCount();
+
+        model.addAttribute("cnt", cnt);
+        model.addAttribute("comments", comments);
+
+        System.out.println("comments 갯수: " + comments.size());
+        System.out.println("comments 정보 : " + comments.toString());
 
         return "board/detail";
     }
@@ -73,7 +103,13 @@ public class BoardController {
         boardService.list(page, model);
 
         List<Board> boards = boardService.list();
+//        List<Board> boards = (List<Board>) model.getAttribute("list");
         List<Club> clubs = clubService.getAllClubs();
+
+        // 디버깅 추가
+//        for (Board board : boards) {
+//            System.out.println("Board.toString : " + board.toString() + "\n");
+//        }
 
         model.addAttribute("boards", boards);
         model.addAttribute("clubs", clubs);
@@ -83,7 +119,7 @@ public class BoardController {
 
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model){
-        model.addAttribute("board", boardService.selectById(id));
+        model.addAttribute("board", boardService.findById(id));
         return "board/update";
     }
 
