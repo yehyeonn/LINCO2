@@ -20,7 +20,7 @@
 <body>
 <header th:replace="~{common/header :: header-body}"></header>
 <div class="container1">
-    <form th:action="@{/socializing/write}" method="post" enctype="multipart/form-data" onsubmit="return false">
+    <form id="socializingForm" th:action="@{/socializing/write}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="socializingName">소셜라이징 이름</label>
             <input type="text" id="socializingName" name="socializingName" placeholder="제목을 입력하세요" th:value="${socializing_title}"/>
@@ -61,7 +61,7 @@
                 <span id="img_txt">이미지 미리보기</span>
                 <img id="previewImage" src="" alt="이미지 미리보기" style="display:none; max-width: 180px; height: auto;">
             </div>
-            <div class="form-group">
+            <div class="form-group fileBtn">
                 <button type="button" id="fileSelect">파일선택</button>
                 <input type="file" id="fileInput" name="file" style="display:none;" />
             </div>
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-
+<hr>
         <div class="form-group btn-group">
             <button type="button" id="prevButton">이전으로</button>
             <button type="submit" id="createButton">만들기</button>

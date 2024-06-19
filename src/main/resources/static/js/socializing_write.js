@@ -50,25 +50,31 @@ $(document).ready(function() {
         }
     });
 
-    // $('#socializingForm').on('submit', function(e) {
-    //     e.preventDefault();
-    //     const formData = new FormData(this);
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/socializing/create',
-    //         data: formData,
-    //         processData: false,
-    //         contentType: false,
-    //         success: function(response) {
-    //             alert('소셜라이징이 성공적으로 생성되었습니다.');
-    //             // 성공 시 처리
-    //         },
-    //         error: function(error) {
-    //             alert('오류가 발생했습니다.');
-    //             console.error('Error:', error);
-    //         }
-    //     });
-    // });
+    $(document).on('keydown', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        }
+    });
+
+    $('#socializingForm').on('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: '/socializing/create',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                alert('소셜라이징이 성공적으로 생성되었습니다.');
+                // 성공 시 처리
+            },
+            error: function(error) {
+                alert('오류가 발생했습니다.');
+                console.error('Error:', error);
+            }
+        });
+    });
 });
 
 //
@@ -120,6 +126,7 @@ $(document).ready(function() {
     var map = new kakao.maps.Map(mapContainer, mapOption);
     var ps = new kakao.maps.services.Places();
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+    var viewAddr = null;
 
 
     $('#mapSearch').click(function () {
@@ -219,6 +226,7 @@ $(document).ready(function() {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
         map.relayout();
+
     }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
