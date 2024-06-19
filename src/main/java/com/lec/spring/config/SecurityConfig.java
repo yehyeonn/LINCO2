@@ -43,14 +43,13 @@ public class SecurityConfig {
                                 .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/")
+                                .loginPage("/user/login")
+                                .loginProcessingUrl("/user/login")
                                 .successHandler(new CustomLoginSuccess("/home")) // 로그인 성공
                                 .failureHandler(new CustomLoginFailure())    // 로그인 실패
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
-                                .logoutUrl("/logout")
+                                .logoutUrl("/user/logout")
                                 .logoutSuccessUrl("/home")
                                 .invalidateHttpSession(false)
                                 .logoutSuccessHandler(new CustomLogoutSuccess())
