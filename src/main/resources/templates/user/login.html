@@ -36,7 +36,7 @@
         </form>
     </div>
     <div class="form-container sign-in">
-        <form>
+        <form th:action="@{/user/login}" method="POST">
             <h1>Sign In</h1>
             <div class="social-img">
                 <a th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'},
@@ -45,9 +45,9 @@
                 <a th:href="@{/oauth2/authorization/naver}"><img th:src="@{/img/naver_login_button.png}" alt="naver-login"></a>
                 <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/img/google_login_button.png}" alt="google-login"></a>
             </div>
-            <input type="email" placeholder="이메일">
-            <input type="password" placeholder="비밀번호">
-            <button>Sign In</button>
+            <input type="text" name="username" id="username" th:value="${username}" placeholder="이메일" required>
+            <input type="password" name="password" id="password" value="" placeholder="비밀번호" required>
+            <button type="submit">Sign In</button>
         </form>
     </div>
     <div class="toggle-container">
