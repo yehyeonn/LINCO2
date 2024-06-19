@@ -67,6 +67,11 @@ select s.id, u.socializing_id, u.user_id, u.role, s.meeting_date, s.meeting_time
 where u.socializing_id = s.id;
 
 select *
+from SOCIALIZING
+where
+    address like '%강남구%';
+#     AND category='공부';
+select *
 from club;
 
 desc BOARD;
