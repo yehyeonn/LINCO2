@@ -10,4 +10,7 @@ public class UserController {
 
     @GetMapping("/login")
     public void login(){}
+
+    @GetMapping("/my_page")
+    public void my_page(){}
 }

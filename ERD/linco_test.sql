@@ -67,7 +67,29 @@ select s.id, u.socializing_id, u.user_id, u.role, s.meeting_date, s.meeting_time
 where u.socializing_id = s.id;
 
 select *
+from SOCIALIZING
+where
+    address like '%강남구%';
+#     AND category='공부';
+select *
 from club;
+
+select *
+from club_user_list;
+
+desc BOARD;
+
+SELECT
+    count(*)
+FROM COMMENT c
+         LEFT JOIN USER u ON c.user_id = u.id
+         LEFT JOIN ATTACHMENT a ON c.attachment_id = a.id
+         LEFT JOIN BOARD b ON c.board_id = b.id
+         LEFT JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
+WHERE c.board_id = 3
+      and a.id is null
+ORDER BY c.regdate DESC;
+
 
 select *
 from club_user_list;

@@ -29,9 +29,6 @@
             <div class="title" id="board-list">자유게시판</div>
             <div class="title" id="board-club">클럽홍보</div>
             <div class="title" id="board-notices">공지사항</div>
-            <!--            <a class="title" id="board-list" href="/board/list">자유게시판</a>-->
-            <!--            <a class="title" id="board-club" href="#">클럽홍보</a>-->
-            <!--            <a class="title" id="board-notices" href="/board/notices">공지사항</a>-->
         </div>
 
         <!-- 자유게시판 부분 -->
@@ -39,18 +36,23 @@
             <h2 class="title-center">자유게시판</h2>
 
             <table class="post">
+                <colgroup>
+                    <col style="width: 25%;">
+                    <col style="width: 50%;">
+                    <col style="width: 25%;">
+                </colgroup>
                 <thead>
                 <tr>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
+                    <th class="username">작성자</th>
+                    <th class="subject">제목</th>
+                    <th class="regdate">작성일</th>
                 </tr>
                 </thead>
 
                 <tbody class="tbody">
-                <tr th:each="board : ${list}" th:if="${board.boardType.id == 2}">
-                    <td><a th:href="@{'/board/detail/' + ${board.id}}" th:text="${board.title}"></a></td>
+                <tr th:each="board : ${boards}" th:if="${board.boardType != null and board.boardType.id == 2 and board.club == null}">
                     <td th:text="${board.user.username}"></td>
+                    <td><a th:href="@{'/board/detail/' + ${board.id}}" th:text="${board.title}"></a></td>
                     <td th:text="${#temporals.format(board.regdate, 'yyyy-MM-dd')}"></td>
                 </tr>
                 </tbody>
@@ -59,16 +61,23 @@
         </div>
 
         <!-- 클럽홍보 부분 -->
-        <div class="board-type-3" style="display: none"> <!--th:if="${board.boardType.id == 3}"-->
+        <div class="board-type-3" style="display: none">
             <h2 class="title-center">클럽홍보</h2>
             <div class="club-list">
-                <div class="club-item" th:each="club : ${clubs}">
-                    <img th:src="@{'/img/' + ${club.representative_picture}}" alt="대표사진" class="club-img">
+                <tr th:each="board : ${boards}" th:if="${board.boardType.id == 3 and board.club != null}">
                     <div class="club-info">
-                        <p class="club-name" th:text="${club.name}"></p>
-                        <p class="club-category" th:text="${club.detail_category}"></p>
+                        <img th:src="@{'/img/' + ${board.club.representative_picture}}" alt="대표사진" class="club-img">
+                        <p class="club-name" th:text="${board.club.name}"></p>
+                        <p class="club-category" th:text="${board.club.detail_category}"></p>
                     </div>
-                </div>
+                </tr>
+                <!--                <div class="club-item" th:each="club : ${clubs}">-->
+<!--                    <img th:src="@{'/img/' + ${club.representative_picture}}" alt="대표사진" class="club-img">-->
+<!--                    <div class="club-info">-->
+<!--                        <p class="club-name" th:text="${club.name}"></p>-->
+<!--                        <p class="club-category" th:text="${club.detail_category}"></p>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
 
@@ -77,18 +86,23 @@
             <h2 class="title-center">공지사항</h2>
 
             <table class="post">
+                <colgroup>
+                    <col style="width: 25%;">
+                    <col style="width: 50%;">
+                    <col style="width: 25%;">
+                </colgroup>
                 <thead>
                 <tr>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
+                    <th class="username">작성자</th>
+                    <th class="subject">제목</th>
+                    <th class="regdate">작성일</th>
                 </tr>
                 </thead>
 
                 <tbody class="tbody">
-                <tr th:each="board : ${list}" th:if="${board.boardType.id == 1}">
-                    <td><a th:href="@{'/board/detail/' + ${board.id}}" th:text="${board.title}"></a></td>
+                <tr th:each="board : ${boards}" th:if="${board.boardType.id == 1 and board.club == null}">
                     <td th:text="${board.user.username}"></td>
+                    <td><a th:href="@{'/board/detail/' + ${board.id}}" th:text="${board.title}"></a></td>
                     <td th:text="${#temporals.format(board.regdate, 'yyyy-MM-dd')}"></td>
                 </tr>
                 </tbody>
@@ -106,11 +120,11 @@
 </main>
 <script th:src="@{/js/board.js}"></script>
 
-<th:block th:replace="/common/footer :: footer-body"></th:block>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+<!--<th:block th:replace="/common/footer :: footer-body"></th:block>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"-->
+<!--        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"-->
+<!--        crossorigin="anonymous"></script>-->
 
-<th:block th:replace="/common/footer :: footer-scripts"></th:block>
+<!--<th:block th:replace="/common/footer :: footer-scripts"></th:block>-->
 </body>
 </html>

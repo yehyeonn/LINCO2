@@ -7,6 +7,10 @@ body, html {
     overflow: hidden;
 }
 
+.content-container a {
+    text-decoration: none;
+}
+
 .content-container {
     display: flex;
     flex-direction: column;
