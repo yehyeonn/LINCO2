@@ -87,7 +87,40 @@ WHERE c.board_id = 3
       and a.id is null
 ORDER BY c.regdate DESC;
 
+SELECT b.id              "b_id",
+       b.title           "b_title",
+       b.content         "b_content",
+       b.viewcnt         "b_viewcnt",
+       b.regdate         "b_regdate",
+       u.id              "u_id",
+       u.tel             "u_tel",
+       u.username        "u_username",
+       u.password        "u_password",
+       u.address         "u_address",
+       u.gender          "u_gender",
+       u.birthday        "u_birthday",
+       u.profile_picture "u_profile_picture",
+       u.regdate         "u_regdate",
+       bt.id             "bt_id",
+       bt.name           "bt_name",
+       c.id              "c_id",
+       c.name            "c_name",
+       c.category        "c_category",
+       c.detail_category "c_detail_category",
+       c.intro           "c_intro",
+       c.content         "c_content",
+       c.representative_picture "c_representative_picture"
+FROM BOARD b
+         JOIN USER u ON b.user_id = u.id
+         JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
+         LEFT JOIN CLUB c ON b.club_id = c.id
+WHERE bt.id = 3
+OR c.id IS NOT NULL
+    ORDER BY b.id DESC
+limit 0,10;
 
 
+select *
+from BOARD;
 
 
