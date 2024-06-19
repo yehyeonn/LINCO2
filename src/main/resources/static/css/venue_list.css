@@ -140,21 +140,3 @@ body {
 .venue-item p {
     margin: 10px 0 0;
 }
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-.pagination a {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px;
-    margin: 0 5px;
-    background-color: var(--page-color);
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-.pagination a:hover {
-    background-color: #D3374A;
-}
