@@ -45,6 +45,8 @@
                  JOIN USER u ON b.user_id = u.id
                  JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
                  LEFT JOIN CLUB c ON b.club_id = c.id
+        WHERE
+            1=1
     </sql>
 
     <select id="findById" resultMap="mapBoard">
@@ -79,13 +81,23 @@
     <!-- 페이지용 쿼리 -->
     <select id="selectFromRow" resultMap="mapBoard">
         <include refid="SELECT_BASE"/>
+        AND (#{param3} IS NULL OR #{param3} = '' OR bt.id = #{param3})
+        OR (#{param4} IS NOT NULL OR #{param4} = '' OR b.id = #{param4})
         ORDER BY b.id DESC
         LIMIT #{param1}, #{param2}
     </select>
 
     <select id="countAll" resultType="int">
         SELECT count(*)
-        FROM BOARD
+        FROM BOARD b
+                 JOIN USER u ON b.user_id = u.id
+                 JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
+                 LEFT JOIN CLUB c ON b.club_id = c.id
+        WHERE (#{param1} IS NULL OR #{param1} = '' OR bt.id = #{param1})
+           OR (#{param2} IS NOT NULL OR #{param2} = '' OR b.id = #{param2})
+
+#         AND c.id IS NULL
+
     </select>
 
     <resultMap id="mapClub" type="com.lec.spring.domain.Club">

@@ -7,10 +7,10 @@ body {
     text-decoration: none;
 }
 
-.write {
+.container1 {
     width: 90%;
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 150px auto;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -28,6 +28,7 @@ body {
 
 label {
     display: inline-block;
+    margin-left: 8px;
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 25px;
@@ -47,7 +48,7 @@ label {
 }
 
 input[type="text"], textarea {
-    width: 98%; /* 부모 요소에 맞춤 */
+    width:100%; /* 부모 요소에 맞춤 */
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -80,13 +81,17 @@ hr {
     justify-content: space-between;
     margin-top: 20px;
 }
+.button .btn:hover{
+    background-color: #D3374A;
+    color: #fff;
+}
 
 .button .left-buttons {
     display: flex;
     gap: 10px;
 }
 
-.btn {
+.button .btn {
     padding: 10px 20px;
     font-size: 16px;
     color: #fff;
@@ -97,4 +102,30 @@ hr {
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s;
+}
+
+#files .btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3A4D72;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.file-input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.file-input-group input[type="file"] {
+    flex: 1;
+    margin-right: 10px;
+}
+.file-input-group button {
+    margin-left: 10px;
 }
