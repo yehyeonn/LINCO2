@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 import com.lec.spring.domain.Socializing;
 //import com.lec.spring.repository.UserSocializingRepository;
+import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserSocializingService;
 import com.lec.spring.util.U;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -28,8 +30,8 @@ public class SocializingController {
 
     @GetMapping("/write")
     public void write(Model model){
-        List<String> categories = socializingService.getAllCategories();
-        model.addAttribute("categories", categories);
+        List<String> category = socializingService.getAllCategories();
+        model.addAttribute("category", category);
     }
 
     @GetMapping("/list")
@@ -52,6 +54,8 @@ public class SocializingController {
             ){
         if(result.hasErrors()){
             System.out.println("에러났지롱~");
+            System.out.println(socializing.getCategory() + "카테고리");
+            System.out.println(socializing.getDetail_category() + "디테일_카테고리");
             redirectAttributes.addFlashAttribute("socializing_title", socializing.getSocializing_title());
             redirectAttributes.addFlashAttribute("category", socializing.getCategory());
             redirectAttributes.addFlashAttribute("detail_category", socializing.getDetail_category());
@@ -79,47 +83,13 @@ public class SocializingController {
     public void detail(){
     }
 
-//    @GetMapping("detail/{id}")
-//    public String detail(@PathVariable Long id, Model model){
-//
-//        Socializing socializing = socializingService.detail(id);
-//        model.addAttribute("socializing", socializing);
-//
-//        return "socializing/detail";
-//    }
 
-//    @PostMapping("/update")
-//    public String updateOk(
-//            @Valid Socializing socializing
-//            , BindingResult result
-//            , Model model
-//            , RedirectAttributes redirectAttributes
-//    ){
-//        if(result.hasErrors()){
-//            //TODO
-//
-//            return "redirect:/socializing/update" + socializing.getId();
-//        }
-//
-//        model.addAttribute("result", socializingService.update(socializing));
-//        return "socializing/updateOk";
-//    }
-//
-//    @PostMapping("/delete")
-//    public String deleteOk(Long id, Model model){
-//        model.addAttribute("result", socializingService.deleteById(id));
-//        return "socializing/deleteOk";
-//    }
 
-    //페이징
-    //pageRows 변경시 동작
-//    @PostMapping("/pageRows")
-//    public String pageRows(Integer page, Integer pageRows) {
-//        U.getSession().setAttribute("pageRows",pageRows);
-//        System.out.println("여기는 언제?");
-//        return "redirect:/socializing/list?page=" + page;
-//
-//    }
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        System.out.println("SocializingController.initBinder() 호출");
 
+        binder.setValidator(new SocializingValidator());
+    }
 
 }
