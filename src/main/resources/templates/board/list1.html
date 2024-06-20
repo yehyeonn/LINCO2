@@ -110,7 +110,7 @@
         </div>
 
         <div class="write">
-            <a class="button" th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+            <a class="button" th:href="@{/board/write}" sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">
                 글쓰기
             </a>
         </div>
