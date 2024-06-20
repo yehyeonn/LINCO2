@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS AUTHORITY;
 CREATE TABLE USER
 (
     id              INT          NOT NULL AUTO_INCREMENT,
-    tel             VARCHAR(20)  NOT NULL,
+    tel             VARCHAR(20)  NULL,
     username        VARCHAR(50)  NOT NULL COMMENT '이메일',
     password        VARCHAR(250) NOT NULL,
     name            VARCHAR(20)  NOT NULL,

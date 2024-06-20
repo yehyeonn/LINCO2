@@ -2,6 +2,7 @@ package com.lec.spring.config.oauth;
 
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.config.oauth.provider.GoogleUserInfo;
+import com.lec.spring.config.oauth.provider.KakaoUserInfo;
 import com.lec.spring.config.oauth.provider.NaverUserInfo;
 import com.lec.spring.config.oauth.provider.OAuth2UserInfo;
 import com.lec.spring.domain.User;
@@ -35,6 +36,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
             case "naver" -> new NaverUserInfo(oAuth2User.getAttributes());
 
+            case "kakao" -> new KakaoUserInfo(oAuth2User.getAttributes()); // 카카오 추가
+
+
             default -> null;
         };
 
@@ -43,10 +47,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String username = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
 
+        System.out.println(username + "?!!!!!!!!");
         // 회원가입 하기 전에
         // 이미 가입한 회원인지, 신규회원인지 체크
         User user = userService.findByUsername(username);
-        if (user == null) { // 신규회원인 경우 회원가입 진행
+        if(user == null){  // 미가입자인 경우, 회원 가입 진행
             User newUser = User.builder()
                     .username(username)
                     .name(name)
@@ -54,10 +59,20 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider)
                     .providerId(providerId)
                     .build();
+            int cnt = userService.register(newUser);    // 회원가입!
+            if(cnt > 0){
+                System.out.println("[OAuth2 인증. 회원 가입 성공]");
+                user = userService.findByUsername(username);    // 다시 읽어온다. regDate 정보 등..
+            } else {
+                System.out.println("[OAuth2 인증. 회원 가입 실패]");
+            }
+        } else {
+            System.out.println("[OAuth2 인증. 이미 가입된 회원입니다]");
         }
-            PrincipalDetails principalDetails = new PrincipalDetails(user, oAuth2User.getAttributes());
-            principalDetails.setUserService(userService);
 
-            return principalDetails;
+        PrincipalDetails principalDetails = new PrincipalDetails(user, oAuth2User.getAttributes());
+        principalDetails.setUserService(userService);
+
+        return principalDetails;
     }
 }
