@@ -100,7 +100,6 @@
                 </thead>
 
                 <tbody class="tbody">
-                <!--                <tr th:each="board : ${boards}" th:if="${board.boardType.id == 1 and board.club == null}">-->
                 <tr th:each="board : ${boards}" th:if="${board.boardType.id == 1 and board.club == null}">
                     <td th:text="${board.user.username}"></td>
                     <td><a th:href="@{'/board/detail/' + ${board.id}}" th:text="${board.title}"></a></td>
@@ -111,7 +110,7 @@
         </div>
 
         <div class="write">
-            <a class="button" th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER')">
+            <a class="button" th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
                 글쓰기
             </a>
         </div>
@@ -121,7 +120,7 @@
     </section>
 
 </main>
-<script th:src="@{/js/board.js}"></script>
+<script th:src="@{/js/board/board.js}"></script>
 
 <!--<th:block th:replace="/common/footer :: footer-body"></th:block>-->
 <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"-->

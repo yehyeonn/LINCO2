@@ -216,10 +216,10 @@ public class BoardServiceImpl implements BoardService{
             if (endPage >= totalPage) endPage = totalPage;
 
             list = boardRepository.selectFromRow(fromRow, pageRows,boardTypeId, clubId);
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println(list.get(i).toString()+"\n");
-            }
-            System.out.println("list 개수"+list.size());
+//            for (int i = 0; i < list.size(); i++) {
+//                System.out.println(list.get(i).toString()+"\n");
+//            }
+//            System.out.println("list 개수"+list.size());
             model.addAttribute("list", list);
             model.addAttribute("boardTypeId", boardTypeId);
             model.addAttribute("clubId", clubId);

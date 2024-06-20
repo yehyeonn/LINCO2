@@ -32,7 +32,7 @@ public class CommentController {
     public QryResult write(
             @RequestParam("board_id") Long boardId,
             @RequestParam("user_id") Long userId,
-            String content
+            @RequestParam("content") String content
     ){
         // 디버깅 용도
         System.out.println("Writing comment for board ID: " + boardId);
