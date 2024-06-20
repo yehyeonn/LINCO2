@@ -2,18 +2,149 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Culture & Art</title>
+    <link rel="stylesheet" th:href="@{/css/culture.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/185c349b6c.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
     <th:block th:replace="~{common/header :: header-head}"></th:block>
 </head>
 <body>
 <header th:replace="~{common/header :: header-body}"></header>
 
+<div class="button-container">
+    <div class="culture-button-row">
+        <button class="custom-btn btn-1"><span>Let's GO!</span><span>문화교양</span></button>
+        <button class="custom-btn btn-2"><span>Let's GO!</span><span>전시 & 미술</span></button>
+        <button class="custom-btn btn-3"><span>Let's GO!</span><span>뮤지컬 & 오페라</span></button>
+        <button class="custom-btn btn-4"><span>Let's GO!</span><span>연극</span></button>
+        <button class="custom-btn btn-5"><span>Let's GO!</span><span>무용</span></button>
+    </div>
+
+    <div class="culture-button-row">
+        <button class="custom-btn btn-1"><span>Let's GO!</span><span>영화</span></button>
+        <button class="custom-btn btn-2"><span>Let's GO!</span><span>국악</span></button>
+        <button class="custom-btn btn-3"><span>Let's GO!</span><span>클래식</span></button>
+        <button class="custom-btn btn-4"><span>Let's GO!</span><span>콘서트</span></button>
+        <button class="custom-btn btn-5"><span>Let's GO!</span><span>축제</span></button>
+    </div>
+</div>
+
+    <div class="culture-container">
+        <div class="card-container">
+            <article class="card-article">
+                <img th:src="@{/img/avatar1.png}" alt="culture-image" class="card-img">
+
+                <div class="card-data">
+                    <ul class="card-description">
+                        <li>제목: <span></span></li>
+                        <li>시간: <span></span></li>
+                        <li>장소: <span></span></li>
+                        <li>대상: <span></span></li>
+                        <li>요금: <span></span></li>
+                    </ul>
+                    <div class="card-button-container">
+                    <a th:href="@{#}"><button class="custom-btn btn-1 card-button"><span>Let's GO!</span><span>상세</span></button></a>
+                    <a th:href="@{#}"><button class="custom-btn btn-4 card-button"><span>Let's GO!</span><span>예약</span></button></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card-article">
+                <img th:src="@{/img/avatar2.png}" alt="culture-image" class="card-img">
+
+                <div class="card-data">
+                    <ul class="card-description">
+                        <li>제목: <span></span></li>
+                        <li>시간: <span></span></li>
+                        <li>장소: <span></span></li>
+                        <li>대상: <span></span></li>
+                        <li>요금: <span></span></li>
+                    </ul>
+                    <div class="card-button-container">
+                        <a th:href="@{#}"><button class="custom-btn btn-1 card-button"><span>Let's GO!</span><span>상세</span></button></a>
+                        <a th:href="@{#}"><button class="custom-btn btn-4 card-button"><span>Let's GO!</span><span>예약</span></button></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card-article">
+                <img th:src="@{/img/avatar3.png}" alt="culture-image" class="card-img">
+
+                <div class="card-data">
+                    <ul class="card-description">
+                        <li>제목: <span></span></li>
+                        <li>시간: <span></span></li>
+                        <li>장소: <span></span></li>
+                        <li>대상: <span></span></li>
+                        <li>요금: <span></span></li>
+                    </ul>
+                    <div class="card-button-container">
+                        <a th:href="@{#}"><button class="custom-btn btn-1 card-button"><span>Let's GO!</span><span>상세</span></button></a>
+                        <a th:href="@{#}"><button class="custom-btn btn-4 card-button"><span>Let's GO!</span><span>예약</span></button></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card-article">
+                <img th:src="@{/img/avatar4.png}" alt="culture-image" class="card-img">
+
+                <div class="card-data">
+                    <ul class="card-description">
+                        <li>제목: <span></span></li>
+                        <li>시간: <span></span></li>
+                        <li>장소: <span></span></li>
+                        <li>대상: <span></span></li>
+                        <li>요금: <span></span></li>
+                    </ul>
+                    <div class="card-button-container">
+                        <a th:href="@{#}"><button class="custom-btn btn-1 card-button"><span>Let's GO!</span><span>상세</span></button></a>
+                        <a th:href="@{#}"><button class="custom-btn btn-4 card-button"><span>Let's GO!</span><span>예약</span></button></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card-article">
+                <img th:src="@{/img/avatar5.png}" alt="culture-image" class="card-img">
+
+                <div class="card-data">
+                    <ul class="card-description">
+                        <li>제목: <span></span></li>
+                        <li>시간: <span></span></li>
+                        <li>장소: <span></span></li>
+                        <li>대상: <span></span></li>
+                        <li>요금: <span></span></li>
+                    </ul>
+                    <div class="card-button-container">
+                        <a th:href="@{#}"><button class="custom-btn btn-1 card-button"><span>Let's GO!</span><span>상세</span></button></a>
+                        <a th:href="@{#}"><button class="custom-btn btn-4 card-button"><span>Let's GO!</span><span>예약</span></button></a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+<div class="slide-buttons">
+    <button class="custom-btn btn-1 slide-prev"><span>PREV</span><span>이전</span></button>
+    <button class="custom-btn btn-4 slide-next"><span>NEXT</span><span>다음</span></button>
+</div>
+
 
 
 <footer th:replace="~{common/footer :: footer-body}"></footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
+<script th:src="@{/js/culture.js}"></script>
 </body>
 </html>
+
+
+
+
