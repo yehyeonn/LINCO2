@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS ATTACHMENT;
 DROP TABLE IF EXISTS RESERVATION;
 DROP TABLE IF EXISTS USER_SOCIALIZING;
 DROP TABLE IF EXISTS SOCIALIZING;
-DROP TABLE IF EXISTS VENUE;
+# DROP TABLE IF EXISTS VENUE;
 DROP TABLE IF EXISTS BOARD;
 DROP TABLE IF EXISTS BOARD_TYPE;
 DROP TABLE IF EXISTS CLUB;
@@ -116,22 +116,22 @@ CREATE TABLE COMMENT
     PRIMARY KEY (id)
 );
 
-CREATE TABLE VENUE
-(
-    id                 INT          NOT NULL AUTO_INCREMENT,
-    venue_name         VARCHAR(50)  NOT NULL,
-    address            VARCHAR(100) NOT NULL,
-    limit_num          INT          NOT NULL,
-    venue_category     VARCHAR(20)  NOT NULL,
-    info_tel           VARCHAR(50)  NULL,
-    price              INT          NOT NULL,
-    posible_start_date VARCHAR(20)         NOT NULL COMMENT '이용가능시작',
-    posible_end_date   VARCHAR(20)         NOT NULL COMMENT '이용가능끝',
-    open_time          VARCHAR(20)         NOT NULL COMMENT '영업시작',
-    close_time         VARCHAR(20)         NOT NULL COMMENT '영업끝',
-    img                VARCHAR(500) NULL,
-    PRIMARY KEY (id)
-);
+# CREATE TABLE VENUE
+# (
+#     id                 INT          NOT NULL AUTO_INCREMENT,
+#     venue_name         VARCHAR(50)  NOT NULL,
+#     address            VARCHAR(100) NOT NULL,
+#     limit_num          INT          NOT NULL,
+#     venue_category     VARCHAR(20)  NOT NULL,
+#     info_tel           VARCHAR(50)  NULL,
+#     price              INT          NOT NULL,
+#     posible_start_date VARCHAR(20)         NOT NULL COMMENT '이용가능시작',
+#     posible_end_date   VARCHAR(20)         NOT NULL COMMENT '이용가능끝',
+#     open_time          VARCHAR(20)         NOT NULL COMMENT '영업시작',
+#     close_time         VARCHAR(20)         NOT NULL COMMENT '영업끝',
+#     img                VARCHAR(500) NULL,
+#     PRIMARY KEY (id)
+# );
 
 CREATE TABLE RESERVATION
 (
