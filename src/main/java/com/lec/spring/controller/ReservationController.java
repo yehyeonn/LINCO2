@@ -3,11 +3,12 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.Reservation;
 import com.lec.spring.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/reservation")
 public class ReservationController {
 
