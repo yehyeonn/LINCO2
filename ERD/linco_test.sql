@@ -95,12 +95,12 @@ WHERE c.board_id = 3
 ORDER BY c.regdate DESC;
 
 
-<<<<<<<<< Temporary merge branch 1
-=========
+
+
 select *
 from club_user_list;
 
->>>>>>>>> Temporary merge branch 2
+
 
 
 

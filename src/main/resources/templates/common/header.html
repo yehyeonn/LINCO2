@@ -41,7 +41,10 @@
         <!-- 로그인 안했을때는 로그인 버튼 보여주기 -->
         <a class="login-out" sec:authorize="isAnonymous()" th:href="@{/user/login}">Login</a>
         <!-- 로그인한 사람에게 로그아웃 버튼 보여주기, 로그아웃시 다시 홈으로 -->
-        <a class="login-out" sec:authorize="isAuthenticated()" th:href="@{/home}">Logout</a>
+        <form th:action="@{/user/logout}" method="POST" sec:authorize="isAuthenticated()">
+            <button class="login-out btn btn-danger" type="submit">Logout</button>
+        </form>
+
 
 
         <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
