@@ -21,7 +21,7 @@ public interface BoardService {
     List<Board> list();
 
     // 페이징 리스트 메소드
-    List<Board> list(Integer page, Model model);
+    List<Board> list(Integer page, Model model,Long boardTypeId, Long clubId);
 
     // 특정 id로 글 읽기
     Board findById(Long id);

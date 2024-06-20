@@ -26,9 +26,15 @@
     <section class="post-list">
 
         <div class="menu-1">
-            <div class="title" id="board-list">자유게시판</div>
-            <div class="title" id="board-club">클럽홍보</div>
-            <div class="title" id="board-notices">공지사항</div>
+            <form action="/board/list" method="get">
+                <button type="submit" class="title" name="boardTypeId" id="board-list" th:value="2" >자유게시판</button>
+            </form>
+            <form action="/board/list" method="get">
+                <button type="submit" class="title" name="boardTypeId" id="board-club" th:value="3">클럽홍보</button>
+            </form>
+            <form action="/board/list" method="get">
+                <button type="submit" class="title" name="boardTypeId" id="board-notices"  th:value="1">공지사항</button>
+            </form>
         </div>
 
         <!-- 자유게시판 부분 -->
@@ -51,7 +57,7 @@
 
                 <tbody class="tbody">
                 <tr th:each="board : ${boards}"
-                    th:if="${board.boardType != null and board.boardType.id == 2 and board.club == null}">
+                    th:if="${board.boardType.id == 2}">
                     <td th:text="${board.user.username}"></td>
                     <td><a th:href="@{'/board/detail/' + ${board.id}}" th:text="${board.title}"></a></td>
                     <td th:text="${#temporals.format(board.regdate, 'yyyy-MM-dd')}"></td>
@@ -65,15 +71,13 @@
         <div class="board-type-3" style="display: none">
             <h2 class="title-center">클럽홍보</h2>
             <div class="club-list">
-                <table>
-                    <tr th:each="board : ${boards}" th:if="${board.boardType.id == 3 and board.club != null}">
-                        <div class="club-info">
-                            <img th:if="${board.club != null}" th:src="@{'/img/' + ${board.club.representative_picture}}" alt="대표사진" class="club-img">
-                            <p class="club-name" th:text="${board.club.name}"></p>
-                            <p class="club-category" th:text="${board.club.detail_category}"></p>
-                        </div>
-                    </tr>
-                </table>
+                <tr th:each="board : ${boards}" th:if="${board.boardType.id == 3}">
+                    <div class="club-info">
+                        <img th:if="${board.club != null}" th:src="@{'/img/' + ${board.club.representative_picture}}" alt="대표사진" class="club-img">
+                        <p class="club-name" th:if="${board.club != null}" th:text="${board.club.name}"></p>
+                        <p class="club-category" th:if="${board.club != null}" th:text="${board.club.detail_category}"></p>
+                    </div>
+                </tr>
             </div>
         </div>
 

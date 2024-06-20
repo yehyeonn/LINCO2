@@ -37,12 +37,12 @@ public class BoardServiceImpl implements BoardService{
     private String uploadDir;
 
 //     페이징 갯수
-    @Value("5")
-    private int WRITE_PAGES;
+
+    private int WRITE_PAGES=5;
 
 //     페이징 안의 페이지 갯수
-    @Value("6")
-    private int PAGE_ROWS;
+
+    private int PAGE_ROWS=10;
 
     // 글 작성 관련 정보 가져오기
     private BoardRepository boardRepository;
@@ -182,7 +182,9 @@ public class BoardServiceImpl implements BoardService{
 
     // 페이지 네이션 관련
     @Override
-    public List<Board> list(Integer page, Model model) {
+    public List<Board> list(Integer page, Model model,Long boardTypeId, Long clubId) {
+        System.out.println("boardId:" + boardTypeId);
+        System.out.println("clubId: " + clubId);
         if (page == null || page < 1) page = 1;
 
         HttpSession session = U.getSession();
@@ -194,8 +196,11 @@ public class BoardServiceImpl implements BoardService{
 
         session.setAttribute("page", page);
 
-        long cnt = boardRepository.countAll();
+        long cnt = boardRepository.countAll(boardTypeId, clubId);
+        System.out.println("개수"+cnt);
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);
+
+//        if (totalPage < 1) totalPage = 1;
 
         int startPage = 0;
         int endPage = 0;
@@ -210,16 +215,24 @@ public class BoardServiceImpl implements BoardService{
             endPage = startPage + writePages - 1;
             if (endPage >= totalPage) endPage = totalPage;
 
-            list = boardRepository.selectFromRow(fromRow, pageRows);
+            list = boardRepository.selectFromRow(fromRow, pageRows,boardTypeId, clubId);
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println(list.get(i).toString()+"\n");
+            }
+            System.out.println("list 개수"+list.size());
+            model.addAttribute("list", list);
+            model.addAttribute("boardTypeId", boardTypeId);
+            model.addAttribute("clubId", clubId);
         } else {
             page = 0;
         }
 
-        model.addAttribute("list", list);
+
         model.addAttribute("cnt", cnt);
         model.addAttribute("page", page);
         model.addAttribute("totalPage", totalPage);
         model.addAttribute("pageRows", pageRows);
+
         model.addAttribute("url", U.getRequest().getRequestURI());
         model.addAttribute("writePages", writePages);
         model.addAttribute("startPage", startPage);
