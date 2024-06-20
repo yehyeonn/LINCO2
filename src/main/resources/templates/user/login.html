@@ -13,22 +13,20 @@
 <header th:replace="~{common/header :: header-body}"></header>
 <div class="container-login" id="container">
     <div class="form-container sign-up">
-        <form>
+        <form method="POST" th:action="@{/user/register}">
             <h1>Sign up</h1>
-            <input type="email" placeholder="아이디">
-            <input type="password" placeholder="비밀번호">
-            <input type="text" placeholder="이름">
-            <input type="tel" placeholder="전화번호">
-            <input type="date" placeholder="생일">
-            <select class="form-select form-select-sm" aria-label="Small select example">
-                <option selected>성별</option>
-                <option value="man">남자</option>
-                <option value="woman">여자</option>
-                <option value="other">기타</option>
+            <input type="email" name="username" placeholder="아이디(이메일)" th:value="${username}" required>
+            <input type="password" name="password" placeholder="비밀번호" th:value="${password}" required>
+            <input type="text" name="name" placeholder="이름" th:value="${name}" required>
+            <input type="tel" name="tel" placeholder="전화번호" th:value="${tel}" required>
+            <input type="date" name="birthday" placeholder="생일" th:value="${birthday}">
+            <select class="form-select form-select-sm" aria-label="Small select example" name="gender" th:value="${gender}">
+                <option value="" disabled selected>성별</option>
+                <option value="MALE">남자</option>
+                <option value="FEMALE">여자</option>
             </select>
-            <input type="email" placeholder="이메일">
             <div class="address-container">
-                <input type="text" id="sample4_roadAddress" placeholder="주소">
+                <input type="text" id="sample4_roadAddress" name="address" placeholder="주소" th:value="${address}">
                 <div id="guide" style="display:none;"></div>
                 <button type="button" class="address" onclick="sample4_execDaumPostcode()">주소</button>
             </div>

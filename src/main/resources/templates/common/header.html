@@ -1,4 +1,4 @@
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header-head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,29 +21,24 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-4" aria-current="page" href="#">Club</a>
+                        <a class="nav-link mx-lg-4" aria-current="page" th:href="@{/club/list}">Club</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-4" href="/socializing/list">Socializing</a>
+                        <a class="nav-link mx-lg-4" th:href="@{/socializing/list}">Socializing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-4" href="#">Board</a>
+                        <a class="nav-link mx-lg-4" th:href="@{/board/list}">Board</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-4" href="#">Venue</a>
+                        <a class="nav-link mx-lg-4" th:href="@{/venue/list}">Venue</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-4" href="#">Culture & Art</a>
+                        <a class="nav-link mx-lg-4" th:href="@{/culture/detail}">Culture & Art</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <!-- 로그인 안했을때는 로그인 버튼 보여주기 -->
-        <a class="login-out" sec:authorize="isAnonymous()" th:href="@{/user/login}">Login</a>
-        <!-- 로그인한 사람에게 로그아웃 버튼 보여주기, 로그아웃시 다시 홈으로 -->
-        <a class="login-out" sec:authorize="isAuthenticated()" th:href="@{/home}">Logout</a>
-
-
+        <a th:href="@{/user/login}" class="login">Login</a>
         <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
