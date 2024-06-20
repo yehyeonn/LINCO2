@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Board;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,8 +22,8 @@ public interface BoardRepository {
     int delete(Board board);
 
     // 페이징 동작 (from ~ row 까지 - 몇번째부터 몇개 select 할 것인지)
-    List<Board> selectFromRow(int from, int row);
+    List<Board> selectFromRow(int from, int row, @Param("param3") Long boardTypeId, @Param("param4") Long clubId);
 
     // 전체 글 갯수
-    int countAll();
+    int countAll(Long boardTypeId, Long clubId);
 }

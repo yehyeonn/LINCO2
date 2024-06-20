@@ -33,7 +33,7 @@
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.User"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO user( tel, username, password, name, address, gender, birthday, profile_picture)
+        INSERT INTO user(tel, username, password, name, address, gender, birthday, profile_picture)
         VALUE(#{tel},#{username},#{password},#{name},#{address},#{gender},#{birthday},#{profile_picture})
     </insert>
     

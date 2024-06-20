@@ -99,22 +99,17 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String list(@RequestParam(required = false, defaultValue = "1") Integer page, Model model){
-        boardService.list(page, model);
+    public String list(Integer page, Model model, @RequestParam(name = "boardTypeId", required = false, defaultValue = "") Long boardTypeId, @RequestParam(name = "clubId", required = false, defaultValue = "") Long clubId){      // @RequestParam(required = false, defaultValue = "1") Integer page
+//        boardService.list(page, model);
 
-        List<Board> boards = boardService.list();
-//        List<Board> boards = (List<Board>) model.getAttribute("list");
+        List<Board> boards = boardService.list(page, model, boardTypeId, clubId);
         List<Club> clubs = clubService.getAllClubs();
-
-        // 디버깅 추가
-//        for (Board board : boards) {
-//            System.out.println("Board.toString : " + board.toString() + "\n");
-//        }
 
         model.addAttribute("boards", boards);
         model.addAttribute("clubs", clubs);
+        System.out.println("boards : " +boards.toString() + "\n");
 
-        return "board/list";
+        return "board/list1";
     }
 
     @GetMapping("/update/{id}")
