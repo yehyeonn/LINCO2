@@ -95,8 +95,11 @@ WHERE c.board_id = 3
 ORDER BY c.regdate DESC;
 
 
+
+
 select *
 from club_user_list;
+
 
 
 
