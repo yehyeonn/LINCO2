@@ -124,3 +124,6 @@ body {
 }
 
 /* 달력 css */
+#selected__ {
+    display: inline;
+}
