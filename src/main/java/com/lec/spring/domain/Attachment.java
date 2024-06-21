@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Attachment {
     private Long id;
 
-    private String sourceName;
+    private String sourcename;
     private String fileName;
     private boolean isImage;
 

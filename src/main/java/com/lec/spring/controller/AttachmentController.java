@@ -39,7 +39,7 @@ public class AttachmentController {
         // 없으면 404에러
         if (file == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
-        String sourceName = file.getSourceName();   // 원본 파일 명
+        String sourceName = file.getSourcename();   // 원본 파일 명
         String fileName = file.getFileName();       // 저장된 파일 명
 
         String path = new File(uploadDir, fileName).getAbsolutePath();      // 저장된 파일의 절대경로

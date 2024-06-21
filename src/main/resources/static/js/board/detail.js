@@ -226,7 +226,7 @@ function buildComment(comments) {
         let username = comment.user.username;
         let name = comment.user.name;
         let user_id = parseInt(comment.user.id);
-        let delBtn = (logged_id === user_id) ? `<i class="btn fa-solid fa-delete-left text-danger" data-cmtdel-id="${id}" title="삭제"></i>` : '';
+        let delBtn = (logged_id === user_id) ? `<i class="btn" data-cmtdel-id="${id}" title="삭제">댓글 삭제</i>` : '';
 
         // 댓글 row 생성
         let row = `

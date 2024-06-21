@@ -22,6 +22,10 @@ body {
     margin-bottom: 10px;
 }
 
+span.form-control {
+    margin-bottom: 20px;
+}
+
 .form-group {
     margin-bottom: 15px;
 }
