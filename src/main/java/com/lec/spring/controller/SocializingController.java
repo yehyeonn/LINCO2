@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 import com.lec.spring.domain.Socializing;
 //import com.lec.spring.repository.UserSocializingRepository;
+import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserSocializingService;
 import com.lec.spring.util.U;
@@ -58,8 +59,19 @@ public class SocializingController {
         return "socializing/writeOk";
     }
 
-    @GetMapping("/detail")
-    public void detail(){
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+        Socializing socializing = socializingService.detail(id);
+        int socializingcnt = socializingService.membercnt(id);
+        List<UserSocializing> socializingMemberList = socializingService.socializingMemberList(id);
+
+        String content = socializing.getContent().replace("\n","<br>");
+
+        model.addAttribute("detailsocializing",socializing);
+        model.addAttribute("membercnt",socializingcnt);
+        model.addAttribute("members",socializingMemberList);
+        model.addAttribute("content",content);
+        return "/socializing/detail";
     }
 
 //    @GetMapping("detail/{id}")

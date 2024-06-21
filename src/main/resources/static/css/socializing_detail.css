@@ -1,0 +1,174 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #EDEBDA;
+    color: #3A4D72;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.social-info{
+    color: black;
+    font-size: 25px;
+}
+#social-cnt{
+    color: black;
+    font-size: 20px;
+}
+#social-price{
+    color: black;
+    font-size: 20px;
+}
+nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.container1 {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    margin: 150px auto 190px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+main {
+    padding: 20px;
+}
+
+.event-info {
+    display: flex;
+    background-color: #b3b49e;
+    padding: 20px;
+    border: 1px solid #B3B49E;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.event-info .event-image {
+    width: 328px;
+    height: 150px;
+    object-fit: contain;
+    background-color: #3A4D72;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-details {
+    margin-left: 20px;
+}
+
+.event-details h1 {
+    margin: 0;
+}
+
+.event-details p {
+    margin: 5px 0;
+}
+
+.event-details button {
+    background-color: #3A4D72;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.event-details .delete-button {
+    background-color: #D3374A;
+}
+
+.description {
+    background-color: #b3b49e;
+    padding: 20px;
+    border: 1px solid #B3B49E;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.description h2 {
+    margin-top: 0;
+}
+
+.location-button {
+    background-color: #D3374A;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.participants {
+    background-color: #B3B49E;
+    padding: 20px;
+    border: 1px solid #B3B49E;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.participants h2 {
+    margin-top: 0;
+}
+
+.participants ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.participants ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+}
+
+footer {
+    background-color: #3A4D72;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+h2{
+    font-weight: bolder;
+}
+
+#detaildescription{
+    font-size: 20px;
+}
+
+.event-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 20px;
+    position: relative;
+}
+
+.details-header {
+    flex: 1;
+}
+
+.details-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
