@@ -4,6 +4,7 @@ const subCategories = {
     "공부": ["컴퓨터", "영어", "수학"]
 };
 
+
 // 시작날짜(min 속성)
 let sDate = new Date();
 
@@ -19,22 +20,38 @@ console.log('시작날짜 : ', minStr);
 
 $(document).ready(function () {
     const detail_category = $('#detail_category');
+    if($("#category").val() == ""){
+        $("#a").text("소분류 선택");
+    }else{
+        $("#a").text(localStorage.getItem("detail"));
+    }
+
+
+
+    // 밑에 두 줄 추가 된 것
+
     $('#category').on('change', function () {
         const category = $(this).val();
-        console.log(category + "카테고리~")
+
         detail_category.empty();
-        detail_category.append('<option value="">소분류 선택</option>'); // Reset subcategories
+        detail_category.append('<option value="">소분류 선택</option>');
         if (category && subCategories[category]) {
             $.each(subCategories[category], function (index, value) {
                 detail_category.append('<option th:value="' + value + '">' + value + '</option>');
-                // detail_category.append(value);
+
+                // detail_category.append('<option th:value="' + value + '"  th:text="' + value + '" th:selected="' + value + ' == ${detail_category1}" th:if="${detail_category1}"></option>');
+                // detail_category.append('<option th:value="' + value + '"  th:text="' + value + '" th:unless="${detail_category1}"></option>');
+
             });
+            // alert(localStorage.getItem("detail"))
         }
+
+    });
+    $('#detail_category').on('change', function () {
+        localStorage.setItem("detail",detail_category.val());
     });
 
-    $('#fileSelect').on('click', function () {
-        $('#fileInput').click();
-    });
+
 
     $('#fileInput').on('change', function () {
         const file = this.files[0];
@@ -63,26 +80,6 @@ $(document).ready(function () {
         }
     });
 
-
-    // $('#socializingForm').on('submit', function(e) {
-    //     e.preventDefault();
-    //     const formData = new FormData(this);
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/socializing/write',
-    //         data: formData,
-    //         processData: false,
-    //         contentType: false,
-    //         success: function(response) {
-    //             alert('소셜라이징이 성공적으로 생성되었습니다.');
-    //             // 성공 시 처리
-    //         },
-    //         error: function(error) {
-    //             alert('오류가 발생했습니다.');
-    //             console.error('Error:', error);
-    //         }
-    //     });
-    // });
 
 });
 
@@ -190,11 +187,15 @@ function displayPlaces(places) {
                 }
             );
 
+            // address 값에 주소 넣어줬어용~
             itemEl.addEventListener("click", function (e) {
                 displayInfowindow(marker, title);
                 map.panTo(placePosition);
                 document.getElementById('address').value = places[i].road_address_name || places[i].address_name;
                 console.log(document.getElementById('address').value);
+                document.getElementById('placeName').value = places[i].place_name;
+                console.log(document.getElementById('placeName').value)
+
             });
         })(marker, places[i].place_name);
 

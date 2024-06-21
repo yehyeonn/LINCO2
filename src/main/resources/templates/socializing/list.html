@@ -59,8 +59,8 @@
 
     <div class="detail-category-area">
         <ul class="detail-category-list category1-list">
-            <li class="detail-search-category">
-                <label class="detail-category-checkbox">
+            <li class="search-category">
+                <label class="category-checkbox">
                     <input type="checkbox" name="detail-category" value="축구">
                     <span>축구</span>
                 </label>
@@ -83,8 +83,8 @@
 
         </ul>
         <ul class="detail-category-list category2-list">
-            <li class="detail-search-category">
-                <label class="detail-category-checkbox">
+            <li class="search-category">
+                <label class="category-checkbox">
                     <input type="checkbox" name="detail-category" value="전시">
                     <span>전시</span>
                 </label>
@@ -107,8 +107,8 @@
 
         </ul>
         <ul class="detail-category-list category3-list">
-            <li class="detail-search-category">
-                <label class="detail-category-checkbox">
+            <li class="search-category">
+                <label class="category-checkbox">
                     <input type="checkbox" name="detail-category" value="컴퓨터">
                     <span>컴퓨터</span>
                 </label>
@@ -136,11 +136,13 @@
 
     <div class="main-content">
         <div class="socializing-item" th:each=" social : ${list}">
-            <img th:src="@{'/img/'+${social.img}}" class="img-thumbnail" alt="Socializing Image">
-            <p th:text="${social.socializing_title}"><br>스포츠 | 서초구</p>
-            <p th:text="${social.category}" id="category" class="hidden"></p>
-            <p th:text="${social.detail_category}" id="detail_category"></p>
-            <p th:text="${social.address}" id="address"></p>
+            <a th:href="@{'/socializing/detail/' + ${social.id}}">
+                <img th:src="@{'/img/'+${social.img}}" class="img-thumbnail" id="fixed-size" alt="Socializing Image">
+                <p th:text="${social.socializing_title}"><br>스포츠 | 서초구</p>
+                <p th:text="${social.category}" id="category" class="hidden"></p>
+                <p th:text="${social.detail_category}" id="detail_category"></p>
+                <p th:text="${social.address}" id="address"></p>
+            </a>
         </div>
     </div>
     <th:block th:insert="~{socializing/listPagination::pagination}"></th:block>
