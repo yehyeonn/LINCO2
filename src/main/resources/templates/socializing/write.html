@@ -18,7 +18,7 @@
 <header th:replace="~{common/header :: header-body}"></header>
 <div class="container1">
     <form id="socializingForm" th:action="@{/socializing/write}" method="post" enctype="multipart/form-data">
-        <div class="form-group"><!--th:with="user=${#authentication.getPrincipal().getUser()}"-->
+        <div class="form-group" th:with="user=${#authentication.getPrincipal().getUser()}">
             <label for="socializing_title">소셜라이징 이름</label>
             <input type="text" id="socializing_title" name="socializing_title" placeholder="제목을 입력하세요"
                    th:value="${socializing_title}"/>
@@ -30,14 +30,15 @@
             <label for="category">카테고리</label>
             <select id="category" name="category">
                 <option value="">카테고리 선택</option>
-                <th:block th:each="category : ${category}">
-                    <option th:value="${category}" th:text="${category}"></option>
+                <th:block th:each="cat : ${category}">
+                    <option th:value="${cat}" th:text="${cat}" th:selected="${cat} == ${category1}" th:if="${category1}"></option>
+                    <option th:value="${cat}" th:text="${cat}" th:unless="${category1}"></option>
                 </th:block>
             </select>
+
             <label for="detail_category">소분류</label>
-            <select id="detail_category" name="detail_category">
-                <option value="">소분류 선택</option>
-                <option th:value="${detail_category}" th:text="${detail_category}"></option>
+            <select id="detail_category" name="detail_category" text="">
+                <option id="a" text="" value="">소분류 선택</option>
             </select>
         </div>
 
@@ -78,6 +79,7 @@
             <label for="location">위치</label>
             <input type="text" id="location" name="location"/>
             <button type="button" id="mapSearch">검색하기</button>
+            <input type="text" id="placeName" name="placeName">
             <input type="text" id="address" name="address" th:value="${address}">
         </div>
         <div><span class="text-danger" th:if="${error_address}" th:utext="${error_address}"></span></div>

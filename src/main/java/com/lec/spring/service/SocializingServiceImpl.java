@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Socializing;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.repository.SocializingRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
@@ -52,7 +53,7 @@ public class SocializingServiceImpl implements SocializingService {
 
         return cnt;
     }
-//    // 세부사항
+//    // 소셜의 세부사항
     @Override
     @Transactional
     public Socializing detail(Long id) {
@@ -60,16 +61,24 @@ public class SocializingServiceImpl implements SocializingService {
         return socializing;
     }
 
+    //해당 소셜에 인원수를 뽑아옴
     @Override
-    public List<Socializing> list() {
-        return socializingRepository.findAll();
+    public int membercnt(Long id) {
+        int socialMemberCnt = socializingRepository.membercnt(id);
+        return socialMemberCnt;
     }
 
+    //해당 소셜에 해당하는 사람들의 이름, 전화번호, 권한 뽑기
+    @Override
+    public List<UserSocializing> socializingMemberList(Long id) {
+        List<UserSocializing> userSocializing = socializingRepository.findBySocialMembers(id);
+        return userSocializing;
+    }
+
+
+    //list 페이지에서 주소, 카테고리, 소분류로 나눠 각각에 맞는 컬럼들을 뽑아서 페이지로 보여줌
     @Override
     public List<Socializing> list(Integer page, Model model, String selectaddress, String selectcategory, String selectdetailcategory) {
-        System.out.println("category : "+selectcategory);
-        System.out.println("detailcategory : " + selectdetailcategory);
-
 
         // 현재페이지
         if(page == null || page <1) page = 1; //디폴트 1page
@@ -84,7 +93,6 @@ public class SocializingServiceImpl implements SocializingService {
         session.setAttribute("page",page); // 현재 페이지 번호 -> session 에 저장한다.
 
         long cnt = socializingRepository.countSelectAddress(selectaddress, selectcategory, selectdetailcategory);  //글 목록 전체의 개수
-        System.out.println("개수:"+cnt);
         int totalPage = (int) Math.ceil(cnt/(double)pageRows);  // 총 몇 페이지인지 분량
 
         //[페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
@@ -110,9 +118,7 @@ public class SocializingServiceImpl implements SocializingService {
 
             // 해당 페이지의 글 목록 읽어오기
             list = socializingRepository.selectFromRow(fromRow, pageRows, selectaddress, selectcategory, selectdetailcategory);
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println(list.toString());
-            }
+
             model.addAttribute("list", list);
             model.addAttribute("address",selectaddress);
             model.addAttribute("category",selectcategory);
@@ -128,8 +134,6 @@ public class SocializingServiceImpl implements SocializingService {
 
 
         // [페이징]
-
-        System.out.println( U.getRequest().getRequestURI());
         model.addAttribute("url",U.getRequest().getRequestURI());  // 목록 url
         model.addAttribute("writePages", writePages); // [페이징] 에 표시할 숫자 개수
         model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
@@ -138,14 +142,10 @@ public class SocializingServiceImpl implements SocializingService {
         return list;
     }
 
-
-
-    // 수정용
+    //수정
     @Override
-    public Socializing selectById(Long id) {
-        Socializing socializing = socializingRepository.findById(id);
-
-        return socializing;
+    public Socializing selectById(Long id, Model model) {
+        return null;
     }
 
     @Override

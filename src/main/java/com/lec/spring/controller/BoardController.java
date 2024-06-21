@@ -1,9 +1,6 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.Board;
-import com.lec.spring.domain.BoardType;
-import com.lec.spring.domain.Club;
-import com.lec.spring.domain.Comment;
+import com.lec.spring.domain.*;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.ClubService;
 import com.lec.spring.service.CommentService;
@@ -17,12 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/board")
@@ -75,31 +74,35 @@ public class BoardController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
-//        model.addAttribute("board", boardService.detail(id));
-//        model.addAttribute("club", clubService.getClubById(id));
-
         Board board = boardService.detail(id);
-
         model.addAttribute("board", board);
-        System.out.println("board : " +board.toString());
+//        System.out.println("board : " +board.toString());
 
         Club club = board.getClub() != null ? clubService.getClubById(board.getClub().getId()) : null;
         model.addAttribute("club", club);
 
         List<Comment> comments = commentService.list(id).getList();  // 게시물의 댓글 목록을 가져옴
+
+        List<Comment> filterComments = comments.stream()
+                .filter(comment -> comment.getAttachment().getId() == null ||comment.getAttachment().getId() == null)
+                .collect(Collectors.toList());
         int cnt = commentService.list(id).getCount();
 
         model.addAttribute("cnt", cnt);
         model.addAttribute("comments", comments);
 
-        System.out.println("comments 갯수: " + comments.size());
-        System.out.println("comments 정보 : " + comments.toString());
+//        System.out.println("filter comments 갯수 : " + filterComments.size());
+//        comments.forEach(comment -> {
+//            System.out.println("comment id : " + comment.getId());
+//            System.out.println("comment content : " + comment.getContent());
+//            System.out.println("comment attachment id : " + (comment.getAttachment() != null ? comment.getAttachment().getId() : null));
+//        });
 
         return "board/detail";
     }
 
     @GetMapping("/list")
-    public String list(Integer page, Model model, @RequestParam(name = "boardTypeId", required = false, defaultValue = "") Long boardTypeId, @RequestParam(name = "clubId", required = false, defaultValue = "") Long clubId){      // @RequestParam(required = false, defaultValue = "1") Integer page
+    public String list(Integer page, Model model, @RequestParam(name = "boardTypeId", required = false, defaultValue = "2") Long boardTypeId, @RequestParam(name = "clubId", required = false, defaultValue = "") Long clubId){      // @RequestParam(required = false, defaultValue = "1") Integer page
 //        boardService.list(page, model);
 
         List<Board> boards = boardService.list(page, model, boardTypeId, clubId);
@@ -107,7 +110,8 @@ public class BoardController {
 
         model.addAttribute("boards", boards);
         model.addAttribute("clubs", clubs);
-        System.out.println("boards : " +boards.toString() + "\n");
+//        System.out.println("boards : " +boards.toString() + "\n");
+//        System.out.println("boardType : " +boardTypeId + "\n");
 
         return "board/list1";
     }
@@ -149,10 +153,10 @@ public class BoardController {
         return "board/deleteOk";
     }
 
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder){
-//        binder.setValidator(new BoardValidator());
-//    }
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(new BoardValidator());
+    }
 
     // 페이징 관련
     @PostMapping("/pageRows")

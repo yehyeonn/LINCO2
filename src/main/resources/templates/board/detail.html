@@ -2,32 +2,33 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- 로그인한 유저의 글이 없을 수도 있기 때문에 만듬 -->
-<!--<script th:unless="${board}">-->
-<!--    alert("해당 정보가 삭제되거나 없습니다. ")-->
-<!--    history.back();-->
-<!--</script>-->
+<script th:unless="${board}">
+    alert("해당 정보가 삭제되거나 없습니다. ")
+    history.back();
+</script>
 
 <!-- board 값이 있는 경우에만 렌더링 -->
-<th:block th:if="${board}"> <!-- th:with="logged_user=${#authentication.principal.user}" -->
+<th:block th:if="${board}" th:with="logged_user=${#authentication.principal.user}">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" th:href="@{/css/board_detail.css}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
 
-        <!--        <script th:inline="javascript">-->
-        <!--/*            const logged_id = [[${logged_user.id}]] */-->
-        <!--        </script>-->
+
+        <script th:inline="javascript">
+            const logged_id = [[${logged_user.id}]]
+        </script>
         <th:block th:insert="/common/header :: header-head"></th:block>
-        <script th:src="@{/js/list.js}"></script>
         <title>board_detail</title>
     </head>
 
-    <!--    <body th:with="logged_user = ${#authentication.principal.user}">    &lt;!&ndash; 현재 로그인한 유저의 정보 &ndash;&gt;-->
+    <body>    <!-- 현재 로그인한 유저의 정보 -->
 
     <th:block th:insert="/common/header :: header-body"></th:block>
-
     <div class="body">
         <section>
             <!--삭제 기능을 위해 만든 폼-->
@@ -70,21 +71,22 @@
                 <div class="button">
                     <div class="left-buttons">
                         <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
-                        <a class="btn" th:href="@{'/board/update/' + ${board.id}}">수정</a>
-                        <!-- th:if="${logged_user.id == board.id}" -->
+                        <a class="btn" th:href="@{'/board/update/' + ${board.id}}"
+                           th:if="${logged_user.id == board.id}">수정</a>
                         <a th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER')">글쓰기</a>
                     </div>
 
-                    <button type="button" class="btn" id="btnDel">삭제하기</button>
-                    <!-- th:if="${logged_user.id == board.user.id}" -->
+                    <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기
+                    </button>
+
                 </div>
                 <hr>
 
                 <!-- 댓글 -->
                 <div class="container comment">
-                    <label>댓글 : <span id="cmt_cnt" th:text="${cnt}" > 0 </span> 개</label>
+                    <label>댓글 : <span id="cmt_cnt" th:text="${cnt}"> 0 </span> 개</label>
 
-                    <div sec:authorize="hasAnyRole('MEMBER')">  <!-- 회원만 댓글 작성 가능하도록 설정 -->
+                    <div sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">  <!-- 회원만 댓글 작성 가능하도록 설정 -->
                         <input type="text" id="input_comment">
                         <button type="button" class="btn" id="btn_comment">등록</button>
                     </div>
@@ -98,10 +100,8 @@
                         </tr>
                         </thead>
 
-                        <tbody id="cmt_list" th:each="comments : ${comments}" th:if="${comments.board.id} == ${board.id} and ${comments.attachment.id} == null">
-                            <td th:text="${comments.user.username}"></td>
-                            <td th:text="${comments.content}"></td>
-                            <td th:text="${#temporals.format(comments.regdate, 'yyyy-MM-dd')}"></td>
+                        <tbody id="cmt_list">
+
                         </tbody>
                     </table>
                 </div>
@@ -117,5 +117,7 @@
 
     <!--    <th:block th:replace="/common/footer :: footer-scripts"></th:block>-->
     </body>
+    <script th:src="@{/js/board/detail.js}"></script>
+
 </th:block>
 </html>
