@@ -56,7 +56,6 @@ ALTER TABLE AUTHORITY
 # 외래 키 제약 조건 활성화
 SET FOREIGN_KEY_CHECKS = 1;
 
-
 insert into USER (tel, username, password, name, address, gender, birthday, profile_picture, regdate)
 values ('010-0000-0000', 'yee@gmail.com', '$2a$10$VEAsTnm2FApO.iJBYGf8wOiL2dzr9kk3IXIMbVcDLTO0BZMiLndS6', '김예현', '서울시 관악구 신림동', 'FEMALE', '1999-05-14', 'face04.png', null),
        ('010-1111-1111', 'seye@gmail.com', '$2a$10$2NL.gbL4ZcawpKGTQzgdeuZU/.aeS7V7i5r7CRuM8NgpEf6XoYByq', '김세현', '서울시 관악구 사당동', 'FEMALE', '1998-05-14', 'face01.png',
@@ -64,6 +63,7 @@ values ('010-0000-0000', 'yee@gmail.com', '$2a$10$VEAsTnm2FApO.iJBYGf8wOiL2dzr9k
        ('010-2222-3333', 'sejin@gmail.com', '$2a$10$tjrJus3ojRXGngNQDQFn6OW.6ii6QE5gzhgnJtbQ5vqtJ9ui0p6ku', '김세진', '서울시 관악구 역삼동', 'MALE', '1999-01-01', 'face02.png',
         null),
        ('010-4444-4444', 'so@gmail.com', '$2a$10$tjrJus3ojRXGngNQDQFn6OW.6ii6QE5gzhgnJtbQ5vqtJ9ui0p6ku', '김소소', '서울시 강남구 역삼동', 'MALE', '1999-12-31', 'face03.png', null);
+
 
 # select * from USER;
 
@@ -106,7 +106,6 @@ values ('공지사항'),
 
 insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
 values
-       (1, null, 3, '벌레마시쪙', '벌레마시쪙????', 1),
        (1, null, 2, '야 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
        (2, null, 1, '야 나두1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
        (3, null, 1, '너두?!1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
@@ -122,6 +121,16 @@ values
        (4, null, 2, '자유게시판8', '자유게시판8',1),
        (4, null, 2, '자유게시판9', '자유게시판9',1),
        (4, null, 2, '자유게시판10', '자유게시판10',1),
+       (1, null, 1, '공지사항1', '공지사항1',1),
+       (1, null, 1, '공지사항2', '공지사항1',2),
+       (1, null, 1, '공지사항3', '공지사항1',3),
+       (1, null, 1, '공지사항4', '공지사항1',4),
+       (1, null, 1, '공지사항5', '공지사항1',5),
+       (1, null, 1, '공지사항6', '공지사항1',6),
+       (1, null, 1, '공지사항7', '공지사항1',7),
+       (1, null, 1, '공지사항8', '공지사항1',8),
+       (1, null, 1, '공지사항9', '공지사항1',9),
+       (1, null, 1, '공지사항10', '공지사항1',10),
        (3, 1, 3, '이건?', '되려나?', 1),
        (2, 2, 3, '과연', '두둥',1)
        ;

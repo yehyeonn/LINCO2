@@ -83,6 +83,8 @@ public class BoardServiceImpl implements BoardService{
             if (!e.getKey().startsWith("upfile"))
                 continue;
 
+            System.out.println("\n첨부파일 정보 : " + e.getKey());
+            U.printFileInfo(e.getValue());
             Attachment file = upload(e.getValue());
 
             if (file != null){
@@ -91,7 +93,8 @@ public class BoardServiceImpl implements BoardService{
 //                file.setBoard(board);
 //
 //                attachmentRepository.save(file);
-                file.setBoard(Board.builder().id(id).build());
+                file.setBoard_id(id);
+//                file.setBoard(Board.builder().id(id).build());
                 attachmentRepository.save(file);
             }
         }
@@ -129,8 +132,8 @@ public class BoardServiceImpl implements BoardService{
             throw new RuntimeException(e);
         }
         return Attachment.builder()
-                .fileName(fileName)
-                .sourceName(sourceName)
+                .filename(fileName)
+                .sourcename(sourceName)
                 .build();
 
 //        attachment = Attachment.builder()
@@ -161,7 +164,7 @@ public class BoardServiceImpl implements BoardService{
 
         for (Attachment attachment : fileList){
 //            BufferedImage imgData = null;
-            File f = new File(realPath, attachment.getFileName());
+            File f = new File(realPath, attachment.getFilename());
             try {
                 BufferedImage imgData = ImageIO.read(f);
                 if (imgData != null) attachment.setImage(true);
@@ -197,7 +200,7 @@ public class BoardServiceImpl implements BoardService{
         session.setAttribute("page", page);
 
         long cnt = boardRepository.countAll(boardTypeId, clubId);
-        System.out.println("개수"+cnt);
+        System.out.println("board 개수 : "+cnt);
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);
 
 //        if (totalPage < 1) totalPage = 1;
@@ -284,7 +287,7 @@ public class BoardServiceImpl implements BoardService{
 
     private void delFile(Attachment file) {
         String saveDirectory = new File(uploadDir).getAbsolutePath();       // 파일의 저장 경로를 절대경로로 가져오기
-        File f = new File(saveDirectory, file.getFileName());
+        File f = new File(saveDirectory, file.getFilename());
 
         // 새로 추가
         if (f.exists() && f.delete()){

@@ -2,7 +2,7 @@ package com.lec.spring.config.oauth.provider;
 
 import java.util.Map;
 
-public class KakaoUserInfo implements OAuth2UserInfo{
+public class KakaoUserInfo implements OAuth2UserInfo {
 
     private Map<String, Object> attributes;
 
@@ -17,16 +17,24 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 
     @Override
     public String getProviderId() {
-        return (String) attributes.get("sub");
+        return String.valueOf(attributes.get("id"));
     }
 
     @Override
     public String getEmail() {
-        return (String) attributes.get("email");
+        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+        if (kakaoAccount != null) {
+            return (String) kakaoAccount.get("email");
+        }
+        return null;
     }
 
     @Override
     public String getName() {
-        return (String) attributes.get("name");
+        Map<String, Object> properties = (Map<String, Object>) attributes.get("properties");
+        if (properties != null) {
+            return (String) properties.get("nickname");
+        }
+        return null;
     }
 }
