@@ -42,6 +42,7 @@ body {
     justify-content: space-around;
 }
 
+
 .venue_name {
     font-size: 1.5em;
     font-weight: bold;
@@ -120,4 +121,9 @@ body {
 .info_box ul li div {
     color: var(--navy);
     font-weight: bold;
+}
+
+/* 달력 css */
+#selected__ {
+    display: inline;
 }

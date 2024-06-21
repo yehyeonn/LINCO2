@@ -2,6 +2,7 @@ package com.lec.spring.config.oauth;
 
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.config.oauth.provider.GoogleUserInfo;
+import com.lec.spring.config.oauth.provider.KakaoUserInfo;
 import com.lec.spring.config.oauth.provider.NaverUserInfo;
 import com.lec.spring.config.oauth.provider.OAuth2UserInfo;
 import com.lec.spring.domain.User;
@@ -32,21 +33,27 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         OAuth2UserInfo oAuth2UserInfo = switch (provider.toLowerCase()) {
             case "google" -> new GoogleUserInfo(oAuth2User.getAttributes());
-
             case "naver" -> new NaverUserInfo(oAuth2User.getAttributes());
-
+            case "kakao" -> new KakaoUserInfo(oAuth2User.getAttributes());
             default -> null;
         };
 
         String providerId = oAuth2UserInfo.getProviderId();
         String password = oauth2Password;
-        String username = oAuth2UserInfo.getEmail();
+        String username;
+
+        // 카카오의 경우, username을 provider + providerId로 구성
+        if (provider.equalsIgnoreCase("kakao")) {
+            username = provider + "_" +  oAuth2UserInfo.getName();
+        } else {
+            username = oAuth2UserInfo.getEmail();
+        }
+
         String name = oAuth2UserInfo.getName();
 
-        // 회원가입 하기 전에
-        // 이미 가입한 회원인지, 신규회원인지 체크
+        // 회원가입 처리 로직 (기존 코드와 동일)
         User user = userService.findByUsername(username);
-        if (user == null) { // 신규회원인 경우 회원가입 진행
+        if (user == null) {
             User newUser = User.builder()
                     .username(username)
                     .name(name)
@@ -54,10 +61,20 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider)
                     .providerId(providerId)
                     .build();
+            int cnt = userService.register(newUser);
+            if (cnt > 0) {
+                System.out.println("[OAuth2 인증. 회원 가입 성공]");
+                user = userService.findByUsername(username);
+            } else {
+                System.out.println("[OAuth2 인증. 회원 가입 실패]");
+            }
+        } else {
+            System.out.println("[OAuth2 인증. 이미 가입된 회원입니다]");
         }
-            PrincipalDetails principalDetails = new PrincipalDetails(user, oAuth2User.getAttributes());
-            principalDetails.setUserService(userService);
 
-            return principalDetails;
+        PrincipalDetails principalDetails = new PrincipalDetails(user, oAuth2User.getAttributes());
+        principalDetails.setUserService(userService);
+
+        return principalDetails;
     }
 }

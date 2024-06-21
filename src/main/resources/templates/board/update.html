@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!--<script th:unless="${board}">-->
+<!--    alert("해당 정보가 삭제되거나 없습니다.")-->
+<!--    history.back();-->
+<!--</script>-->
+
+<th:block th:if="${board}" >        <!-- th:with="logged_user=${#authentication.principal.user}" -->
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/board_update.css}">
+    <title>update</title>
+</head>
+</th:block>
+<body>
+
+
+</body>
+</html>

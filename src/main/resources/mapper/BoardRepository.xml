@@ -8,7 +8,7 @@
             keyColumn="id" keyProperty="id">
         INSERT INTO BOARD
             (title, content, user_id, board_type_id)
-        VALUES (#{title}, #{content}, #{user_id}, #{board_type_id})
+        VALUES (#{title}, #{content}, #{user.id}, #{boardType.id})
     </insert>
 
     <update id="incViewCnt" flushCache="true">
@@ -45,11 +45,13 @@
                  JOIN USER u ON b.user_id = u.id
                  JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
                  LEFT JOIN CLUB c ON b.club_id = c.id
+        WHERE
+            1=1
     </sql>
 
-    <select id="findById" resultMap="mapBoard">
+    <select id="findById" resultType="com.lec.spring.domain.Board" resultMap="mapBoard">
         <include refid="SELECT_BASE"/>
-        WHERE b.id = #{id}
+        AND b.id = #{id}
     </select>
 
     <select id="findByBoardTypeId" resultMap="mapBoard">
@@ -64,10 +66,10 @@
     </select>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Board">
-        UPDATE BOARD
-        SET title   = #{title},
-            content = #{content}
-        WHERE id = #{id}
+        UPDATE BOARD b, ATTACHMENT a
+        SET b.title   = #{title},
+            b.content = #{content}
+        WHERE b.id = #{id} AND a.id = NULL
     </update>
 
     <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.Board">
@@ -79,13 +81,20 @@
     <!-- 페이지용 쿼리 -->
     <select id="selectFromRow" resultMap="mapBoard">
         <include refid="SELECT_BASE"/>
-        ORDER BY b.id DESC
+        AND (#{param3} IS NULL OR #{param3} = '' OR bt.id = #{param3})
+        OR (#{param4} IS NOT NULL OR #{param4} = '' OR b.id = #{param4})
         LIMIT #{param1}, #{param2}
     </select>
 
     <select id="countAll" resultType="int">
         SELECT count(*)
-        FROM BOARD
+        FROM BOARD b
+                 JOIN USER u ON b.user_id = u.id
+                 JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
+                 LEFT JOIN CLUB c ON b.club_id = c.id
+        WHERE (#{param1} IS NULL OR #{param1} = '' OR bt.id = #{param1})
+           OR (#{param2} IS NOT NULL OR #{param2} = '' OR b.id = #{param2})
+
     </select>
 
     <resultMap id="mapClub" type="com.lec.spring.domain.Club">

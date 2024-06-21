@@ -62,19 +62,52 @@
             1 = 1
     </sql>
 
+    <resultMap id="mapuser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_tel" property="tel"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_address" property="address"/>
+        <result column="u_gender" property="gender"/>
+        <result column="u_birthday" property="birthday"/>
+        <result column="u_profile_picture" property="profile_picture"/>
+        <result column="u_regdate" property="regdate"/>
+    </resultMap>
+
+    <resultMap id="mapSocializing" type="com.lec.spring.domain.Socializing">
+        <result column="s_id" property="id"/>
+        <result column="s_socializing_title" property="socializing_title"/>
+        <result column="s_category" property="category"/>
+        <result column="s_detail_category" property="detail_category"/>
+        <result column="s_address" property="address"/>
+        <result column="s_meeting_date" property="meeting_date"/>
+        <result column="s_meeting_time" property="meeting_time"/>
+        <result column="s_limit_num" property="limit_num"/>
+        <result column="s_content" property="content"/>
+        <result column="s_total_price" property="total_price"/>
+        <result column="s_img" property="img"/>
+        <result column="s_regdate" property="regdate"/>
+    </resultMap>
+
+    <resultMap id="mapusersocializing" type="com.lec.spring.domain.UserSocializing">
+        <result column="us_role" property="role"/>
+        <association property="user" resultMap="mapuser"/>
+        <association property="socializing" resultMap="mapSocializing"/>
+    </resultMap>
+    
+
     <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
     <select id="findById" resultType="com.lec.spring.domain.Socializing">
-        <include refid="SELECT_BASE"/>
+        <include refid="SELECT_SOCIALIZING"/>
         AND id = #{id};
     </select>
 
-
-    <select id="findAll" resultType="com.lec.spring.domain.Socializing">
-        <include refid="SELECT_SOCIALIZING"/>
-        ORDER BY id DESC;
+<!--    특정 소셜에 가입한 사용자의 수-->
+    <select id="membercnt" resultType="int">
+        SELECT count(*)
+        from user_socializing
+        WHERE socializing_id = #{param1};
     </select>
-
-
 
     <!-- 수정 -->
     <update id="update" flushCache="true"
@@ -90,19 +123,7 @@
         WHERE id = #{id}
     </delete>
 
-
-
-
-    <select id="selectAllRow" resultType="com.lec.spring.domain.Socializing">
-        <include refid="SELECT_SOCIALIZING"/>
-        ORDER BY id DESC
-        LIMIT #{param1}, #{param2}
-    </select>
-
-    <select id="countAll" resultType="int">
-        SELECT count(*) FROM socializing
-    </select>
-
+<!--    조건에 맞는 소셜 리스트들-->
     <select id="selectFromRow" resultType="com.lec.spring.domain.Socializing">
         <include refid="SELECT_SOCIALIZING"/>
         AND (#{param3} IS NULL OR #{param3} = '' OR address LIKE CONCAT('%', #{param3}, '%'))
@@ -113,13 +134,46 @@
         LIMIT #{param1}, #{param2}
     </select>
 
+<!--    페이지 계산을 위한 각각의 조건에 맞는 리스트 개수-->
     <select id="countSelectAddress" resultType="int">
         SELECT count(*) FROM socializing
         where
             (#{param1} IS NULL OR #{param1} = '' OR address LIKE CONCAT('%', #{param1}, '%'))
             AND (#{param2} IS NULL OR #{param2} = '' OR category = #{param2})
+
             AND (#{param3} IS NULL OR #{param3} = '' OR detail_category= #{param3})
     </select>
+
+    <select id="findBySocialMembers" flushCache="true" resultMap="mapusersocializing">
+        select
+            u.id                    "u_id",
+            u.tel                   "u_tel",
+            u.username              "u_username",
+            u.password              "u_password",
+            u.address               "u_address",
+            u.gender                "u_gender",
+            u.birthday              "u_birthday",
+            u.profile_picture       "u_profile_prcture",
+            u.regdate               "u_regdate",
+            s.id                    "s_id",
+            s.socializing_title     "s_socializing_title",
+            s.category              "s_category",
+            s.detail_category       "s_detail_category",
+            s.address               "s_address",
+            s.meeting_date          "s_meeting_date",
+            s.meeting_time          "s_meeting_time",
+            s.limit_num             "s_limit_num",
+            s.content               "s_content",
+            s.total_price           "s_total_price",
+            s.img                   "s_img",
+            s.regdate               "s_regdate",
+            us.role                 "us_role"
+        FROM user_socializing us
+                 join user u on us.user_id = u.id
+                join socializing s on us.socializing_id = s.id
+        where us.socializing_id = #{param1}
+    </select>
+
 
 
 </mapper>

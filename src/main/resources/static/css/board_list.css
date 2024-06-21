@@ -10,9 +10,26 @@ body {
 /* 링크 박스 스타일 */
 .menu-1 {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 30px auto 50px auto;
     padding: 20px;
+}
+
+.menu-1 button{
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #B3B49E;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-width: 200px;
+}
+.menu-1 button:hover {
+    background-color: #D3374A;
 }
 
 .title {
@@ -23,19 +40,6 @@ body {
     margin: 0 10px;
     text-decoration: none;
     font-size: 18px;
-}
-
-.menu-1 div:hover {
-    background-color: #D3374A;
-}
-
-.menu-1 div {
-    text-decoration: none;
-    color: #fff;
-    background-color: #B3B49E;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
 }
 
 /* 메인 콘텐츠 스타일 */
@@ -113,16 +117,21 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-top: 20px;
 }
 
 .club-item {
-    width: 30%;
+    width:calc(30% - 20px);
+    height: 20%;
+    margin: 10px;
     background-color: #f4f4f4;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: black;
 }
 
 .club-item:hover {
@@ -134,19 +143,18 @@ body {
     width: 100%; /* 이미지 너비를 클럽 항목 너비에 맞춤 */
     height: 100%; /* 이미지 높이를 자동으로 조정 */
     border-radius: 8px; /* 이미지 모서리 둥글게 */
+    margin-bottom: 15px;
 }
 
-.club-info {
-    margin: 10px 0 0;
-}
 
 .club-name {
     font-weight: bold; /* 클럽 이름을 굵게 */
-    font-size: 1.2em; /* 클럽 이름 폰트 크기 조정 */
+    font-size: 30px; /* 클럽 이름 폰트 크기 조정 */
 }
 
 .club-category {
     color: #555; /* 카테고리 텍스트 색상 조정 */
+    font-size: 20px;
 }
 
 /* 글쓰기 버튼 스타일 */

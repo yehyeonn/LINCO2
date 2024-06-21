@@ -71,6 +71,17 @@ public class ClubController {
         return "club/createOk";
     }
 
+    @GetMapping("/list")
+    private String list(Integer page, Model model){
+        List<Club> clubs = clubService.getAllClubs();
+
+        model.addAttribute("clubs", clubs);
+        System.out.println("clubs 갯수 : " + clubs.size());
+        System.out.println("clubs : " + clubs.toString());
+
+        return "club/list";
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");

@@ -4,118 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.CommentRepository">
 
-    <!--    <resultMap id="mapBoard" type="com.lec.spring.domain.Board">-->
-    <!--        <id column="b_id" property="id"/>-->
-    <!--        <result column="b_title" property="title"/>-->
-    <!--        <result column="b_content" property="content"/>-->
-    <!--        <result column="b_viewcnt" property="viewcnt"/>-->
-    <!--        <result column="b_regdate" property="regdate"/>-->
-    <!--        &lt;!&ndash; Board 객체의 user 필드와 관련된 resultMap 설정 &ndash;&gt;-->
-    <!--        <association property="user" resultMap="mapUser"/>-->
-    <!--        &lt;!&ndash; Board 객체의 boardType 필드와 관련된 resultMap 설정 &ndash;&gt;-->
-    <!--        <association property="boardType" resultMap="mapBoardType"/>-->
-    <!--        &lt;!&ndash; Board 객체의 club 필드와 관련된 resultMap 설정 &ndash;&gt;-->
-    <!--        <association property="club" resultMap="mapClub"/>-->
-    <!--    </resultMap>-->
-
-    <!--    <resultMap id="mapClub" type="com.lec.spring.domain.Club">-->
-    <!--        <id column="c_id" property="id"/>-->
-    <!--        <result column="c_name" property="name"/>-->
-    <!--        <result column="c_category" property="category"/>-->
-    <!--        <result column="c_detail_category" property="detailCategory"/>-->
-    <!--        <result column="c_intro" property="intro"/>-->
-    <!--        <result column="c_content" property="content"/>-->
-    <!--        <result column="c_representative_picture" property="representativePicture"/>-->
-    <!--    </resultMap>-->
-
-    <!--    <resultMap id="mapUser" type="com.lec.spring.domain.User">-->
-    <!--        <result column="u_id" property="id"/>-->
-    <!--        <result column="u_tel" property="tel"/>-->
-    <!--        <result column="u_username" property="username"/>-->
-    <!--        <result column="u_password" property="password"/>-->
-    <!--        <result column="u_address" property="address"/>-->
-    <!--        <result column="u_gender" property="gender"/>-->
-    <!--        <result column="u_birthday" property="birthday"/>-->
-    <!--        <result column="u_profile_picture" property="profilePicture"/>-->
-    <!--        <result column="u_regdate" property="regdate"/>-->
-    <!--    </resultMap>-->
-
-    <!--    <resultMap id="mapAttachment" type="com.lec.spring.domain.Attachment">-->
-    <!--        <result column="a_id" property="id"/>-->
-    <!--        <result column="a_sourcename" property="sourceName"/>-->
-    <!--        <result column="a_filename" property="fileName"/>-->
-    <!--        <result column="a_isImage" property="isImage"/>-->
-    <!--        &lt;!&ndash; 필요한 경우 board와 club을 추가 &ndash;&gt;-->
-    <!--        <association property="board" resultMap="mapBoard"/>-->
-    <!--        <association property="club" resultMap="mapClub"/>-->
-    <!--    </resultMap>-->
-
-    <!--    <resultMap id="mapComment" type="com.lec.spring.domain.Comment">-->
-    <!--        <result column="c_id" property="id"/>-->
-    <!--        <result column="c_content" property="content"/>-->
-    <!--        <result column="c_regdate" property="regdate"/>-->
-    <!--        <result column="user_id" property="user.id"/>-->
-    <!--        <result column="board_id" property="board.id"/>-->
-    <!--        <result column="attachment_id" property="attachment.id"/>-->
-    <!--        <association property="user" resultMap="mapUser"/>-->
-    <!--        <association property="attachment" resultMap="mapAttachment"/>-->
-    <!--        <association property="club" resultMap="mapClub"/>-->
-    <!--        <association property="board" resultMap="mapBoard"/>-->
-    <!--    </resultMap>-->
-
-    <!--    <select id="findByBoard" resultMap="mapComment">-->
-    <!--        SELECT-->
-    <!--            c.id AS c_id,-->
-    <!--            c.content AS c_content,-->
-    <!--            c.regdate AS c_regdate,-->
-    <!--            c.user_id,-->
-    <!--            c.board_id,-->
-    <!--            c.attachment_id,-->
-    <!--            u.id AS u_id,-->
-    <!--            u.tel AS u_tel,-->
-    <!--            u.username AS u_username,-->
-    <!--            u.password AS u_password,-->
-    <!--            u.address AS u_address,-->
-    <!--            u.gender AS u_gender,-->
-    <!--            u.birthday AS u_birthday,-->
-    <!--            u.profile_picture AS u_profilePicture,-->
-    <!--            u.regdate AS u_regdate,-->
-    <!--            a.id AS a_id,-->
-    <!--            a.sourcename AS a_sourceName,-->
-    <!--            a.filename AS a_fileName-->
-    <!--        FROM COMMENT c-->
-    <!--                 LEFT JOIN USER u ON c.user_id = u.id-->
-    <!--                 LEFT JOIN ATTACHMENT a ON c.attachment_id = a.id-->
-    <!--                 LEFT JOIN BOARD b ON c.board_id = b.id-->
-    <!--        WHERE c.board_id = #{board_id}-->
-    <!--        ORDER BY c.regdate DESC-->
-    <!--    </select>-->
-
-    <!--    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Comment">-->
-    <!--        INSERT INTO COMMENT (user_id, board_id, attachment_id, content)-->
-    <!--        VALUES (#{user.id}, #{board.id}, #{attachment.id}, #{content})-->
-    <!--    </insert>-->
-
-    <!--    <delete id="deleteById" flushCache="true" >&lt;!&ndash; parameterType="java.lang.Long" &ndash;&gt;-->
-    <!--        DELETE FROM COMMENT-->
-    <!--        WHERE id = #{id}-->
-    <!--    </delete>-->
-
     <resultMap id="mapBoardType" type="com.lec.spring.domain.BoardType">
         <id column="bt_id" property="id"/>
         <result column="bt_name" property="name"/>
     </resultMap>
-
-<!--    <resultMap id="mapBoard" type="com.lec.spring.domain.Board">-->
-<!--        <id column="b_id" property="id"/>-->
-<!--        <result column="b_title" property="title"/>-->
-<!--        <result column="b_content" property="content"/>-->
-<!--        <result column="b_viewcnt" property="viewcnt"/>-->
-<!--        <result column="b_regdate" property="regdate"/>-->
-<!--        <association property="user" resultMap="mapUser"/>-->
-<!--        <association property="boardType" resultMap="mapBoardType"/>-->
-<!--        <association property="club" resultMap="mapClub"/>-->
-<!--    </resultMap>-->
 
     <resultMap id="mapBoard" type="com.lec.spring.domain.Board">
         <id column="b_id" property="id"/>
@@ -127,7 +19,6 @@
         <association property="boardType" resultMap="mapBoardType"/>
         <association property="club" resultMap="mapClub"/>
     </resultMap>
-
 
     <resultMap id="mapClub" type="com.lec.spring.domain.Club">
         <id column="c_id" property="id"/>
@@ -160,18 +51,6 @@
         <association property="club" resultMap="mapClub"/>
     </resultMap>
 
-<!--    <resultMap id="mapComment" type="com.lec.spring.domain.Comment">-->
-<!--        <id column="c_id" property="id"/>-->
-<!--        <result column="c_content" property="content"/>-->
-<!--        <result column="c_regdate" property="regdate"/>-->
-<!--        <result column="user_id" property="user.id"/>-->
-<!--        <result column="board_id" property="board.id"/>-->
-<!--        <result column="attachment_id" property="attachment.id"/>-->
-<!--        <association property="user" resultMap="mapUser"/>-->
-<!--        <association property="attachment" resultMap="mapAttachment"/>-->
-<!--        <association property="board" resultMap="mapBoard"/>-->
-<!--    </resultMap>-->
-
     <resultMap id="mapComment" type="com.lec.spring.domain.Comment">
         <id column="c_id" property="id"/>
         <result column="c_content" property="content"/>
@@ -184,42 +63,6 @@
         <association property="club" resultMap="mapClub"/>
         <association property="board" resultMap="mapBoard"/>
     </resultMap>
-
-
-    <!--    <select id="findByBoard" resultMap="mapComment">-->
-<!--        SELECT c.id              AS c_id,-->
-<!--               c.content         AS c_content,-->
-<!--               c.regdate         AS c_regdate,-->
-<!--               c.user_id,-->
-<!--               c.board_id,-->
-<!--               c.attachment_id,-->
-<!--               u.id              AS u_id,-->
-<!--               u.tel             AS u_tel,-->
-<!--               u.username        AS u_username,-->
-<!--               u.password        AS u_password,-->
-<!--               u.address         AS u_address,-->
-<!--               u.gender          AS u_gender,-->
-<!--               u.birthday        AS u_birthday,-->
-<!--               u.profile_picture AS u_profilePicture,-->
-<!--               u.regdate         AS u_regdate,-->
-<!--               a.id              AS a_id,-->
-<!--               a.sourcename      AS a_sourceName,-->
-<!--               a.filename        AS a_fileName,-->
-<!--               b.id              AS b_id,-->
-<!--               b.title           AS b_title,-->
-<!--               b.content         AS b_content,-->
-<!--               b.viewcnt         AS b_viewcnt,-->
-<!--               b.regdate         AS b_regdate,-->
-<!--               b.user_id         AS b_user_id,-->
-<!--               b.club_id         AS b_club_id,-->
-<!--               b.board_type_id   AS b_board_type_id-->
-<!--        FROM COMMENT c-->
-<!--                 LEFT JOIN USER u ON c.user_id = u.id-->
-<!--                 LEFT JOIN ATTACHMENT a ON c.attachment_id = a.id-->
-<!--                 LEFT JOIN BOARD b ON c.board_id = b.id-->
-<!--        WHERE c.board_id = #{board_id}-->
-<!--        ORDER BY c.regdate DESC-->
-<!--    </select>-->
 
     <select id="findByBoard" resultMap="mapComment">
         SELECT
@@ -253,7 +96,7 @@
                  LEFT JOIN ATTACHMENT a ON c.attachment_id = a.id
                  LEFT JOIN BOARD b ON c.board_id = b.id
                  LEFT JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
-        WHERE c.board_id = #{board_id}
+        WHERE c.board_id = #{board_id} AND (c.attachment_id IS NULL)
         ORDER BY c.regdate DESC
     </select>
 

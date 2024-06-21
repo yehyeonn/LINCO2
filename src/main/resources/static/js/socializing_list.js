@@ -1,6 +1,14 @@
 $(function (){
     $(".detail-category-area").hide();
     $(".category-area").hide();
+    const currentNewUrl = new URL(window.location.href);
+    const perfEntries = performance.getEntriesByType("navigation");
+    if (perfEntries[0].type === "reload") {
+        currentNewUrl.searchParams.set("address","");
+        currentNewUrl.searchParams.set("category","");
+        currentNewUrl.searchParams.set("detailcategory","");
+        window.location.href = currentNewUrl.toString();
+    }
 
 
 
@@ -11,11 +19,6 @@ $(function (){
         $(".socializing-item").show();
         $(".detail-category-area").hide();
     });
-
-
-
-
-
 
     // 페이지 로드 시 URL에서 카테고리 값을 가져와 체크박스에 반영
     var urlParams = new URLSearchParams(window.location.search);
@@ -165,10 +168,10 @@ $(function (){
         document.getElementById('search').value = address;
     }
 
-    // 입력 필드 값이 변경될 때마다 localStorage에 저장
-    document.getElementById('search').addEventListener('input', function() {
-        localStorage.setItem('searchAddress', this.value);
-    });
+
+
+
+
 
     //category의 데이터를 받아 파라미터로 넘김
     function select(e){
