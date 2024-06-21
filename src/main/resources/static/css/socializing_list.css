@@ -208,3 +208,12 @@ span {
 }
 
 
+
+#fixed-size {
+    width: 328px;
+    height: 150px;
+    object-fit: contain; /* 이미지 비율을 유지하며 전체 이미지가 보이게 함 */
+    /* object-fit: cover; 를 사용하면 이미지가 크기에 맞게 잘려서 채워짐 */
+}
+
+
