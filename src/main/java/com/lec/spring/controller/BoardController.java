@@ -1,10 +1,7 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.*;
-import com.lec.spring.service.BoardService;
-import com.lec.spring.service.ClubService;
-import com.lec.spring.service.CommentService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +33,9 @@ public class BoardController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private AttachmentService attachmentService;
 
     // 기본생성자
     public BoardController() {

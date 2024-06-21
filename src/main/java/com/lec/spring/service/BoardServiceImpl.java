@@ -129,7 +129,7 @@ public class BoardServiceImpl implements BoardService{
             throw new RuntimeException(e);
         }
         return Attachment.builder()
-                .fileName(fileName)
+                .filename(fileName)
                 .sourcename(sourceName)
                 .build();
 
@@ -161,7 +161,7 @@ public class BoardServiceImpl implements BoardService{
 
         for (Attachment attachment : fileList){
 //            BufferedImage imgData = null;
-            File f = new File(realPath, attachment.getFileName());
+            File f = new File(realPath, attachment.getFilename());
             try {
                 BufferedImage imgData = ImageIO.read(f);
                 if (imgData != null) attachment.setImage(true);
@@ -284,7 +284,7 @@ public class BoardServiceImpl implements BoardService{
 
     private void delFile(Attachment file) {
         String saveDirectory = new File(uploadDir).getAbsolutePath();       // 파일의 저장 경로를 절대경로로 가져오기
-        File f = new File(saveDirectory, file.getFileName());
+        File f = new File(saveDirectory, file.getFilename());
 
         // 새로 추가
         if (f.exists() && f.delete()){
