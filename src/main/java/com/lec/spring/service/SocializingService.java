@@ -5,6 +5,7 @@ import com.lec.spring.domain.UserSocializing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,4 +39,7 @@ public interface SocializingService {
 
     // 삭제
     int deleteById(Long id);
+
+    // 첨부파일
+    Boolean uploadImage(MultipartFile image, String dirName) throws Exception;
 }

@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,11 +47,11 @@ public class SocializingServiceImpl implements SocializingService {
         User user = U.getLoggedUser();
         socializing.setUser(user);  // 글 작성자
 
-        int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
-
         if(socializing.getImg() == null) {
-            socializing.setImg("/img/DefaultImg.jpg");
+            socializing.setImg("DefaultImg.jpg");
         }
+
+        int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
 
         return cnt;
     }
@@ -168,6 +170,25 @@ public class SocializingServiceImpl implements SocializingService {
     public List<String> getAllCategories(){
         return Arrays.asList("운동", "공연", "공부");
     }
-    
+
+    @Override
+    public Boolean uploadImage(MultipartFile image, String dirName) throws Exception {
+        Boolean result = Boolean.FALSE;
+        try {
+            File folder = new File(dirName);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File destination = new File(dirName + File.separator + image.getOriginalFilename());
+            image.transferTo(destination);
+
+            result = Boolean.TRUE;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
+    }
 
 }

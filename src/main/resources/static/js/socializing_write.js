@@ -26,10 +26,6 @@ $(document).ready(function () {
         $("#a").text(localStorage.getItem("detail"));
     }
 
-
-
-    // 밑에 두 줄 추가 된 것
-
     $('#category').on('change', function () {
         const category = $(this).val();
 
@@ -51,22 +47,27 @@ $(document).ready(function () {
         localStorage.setItem("detail",detail_category.val());
     });
 
+    $(document).ready(function () {
+        $('#fileSelect').on('click', function () {
+            $('#fileInput').click();
+        });
 
-
-    $('#fileInput').on('change', function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                $('#previewImage').attr('src', e.target.result).show();
-                $('#img_txt').hide();
-            };
-            reader.readAsDataURL(file);
-        } else {
-            $('#previewImage').hide();
-        }
+        $('#fileInput').on('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#previewImage').attr('src', e.target.result).show();
+                    $('#img_txt').hide();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#previewImage').hide();
+                $('#img_txt').show();
+            }
+        });
     });
-
+});
 
     // 엔터키로 form 제출 막기, 하지만 #location 필드에서는 searchPlaces() 실행
     $(document).on('keydown', function (event) {
@@ -81,7 +82,7 @@ $(document).ready(function () {
     });
 
 
-});
+
 
 
 // 지도와 장소 검색을 위한 변수와 객체 초기화

@@ -79,7 +79,7 @@
             <label for="location">위치</label>
             <input type="text" id="location" name="location"/>
             <button type="button" id="mapSearch">검색하기</button>
-            <input type="text" id="placeName" name="placeName">
+            <input type="text" id="placeName" name="placeName" style="display: none">
             <input type="text" id="address" name="address" th:value="${address}">
         </div>
         <div><span class="text-danger" th:if="${error_address}" th:utext="${error_address}"></span></div>

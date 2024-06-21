@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
@@ -104,6 +105,32 @@ public class SocializingController {
         return "/socializing/detail";
     }
 
+    @GetMapping("/upload")
+    public String uploadForm() {
+        return "uploadForm";
+    }
+
+    @PostMapping("/upload")
+    public String uploadFile(@RequestParam("file") MultipartFile file, Model model) {
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a file to upload");
+            return "uploadForm";
+        }
+
+        try {
+            Boolean isUploaded = socializingService.uploadImage(file, uploadPath);
+            if (isUploaded) {
+                model.addAttribute("message", "Successfully uploaded '" + file.getOriginalFilename() + "'");
+            } else {
+                model.addAttribute("message", "Failed to upload '" + file.getOriginalFilename() + "'");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Failed to upload '" + file.getOriginalFilename() + "'");
+        }
+
+        return "uploadForm";
+    }
 
 
     @InitBinder
