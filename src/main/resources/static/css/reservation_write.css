@@ -97,7 +97,7 @@ td #sat {
 
 .calendar tr td:hover {
     cursor: pointer;
-    background-color: var(--navy);
+    background-color: lightblue;
     color: white;
 }
 
@@ -174,14 +174,20 @@ td #sat {
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #eee;
+
 }
 
-.info-box ul li input {
+
+.info-box ul li input, .info-box ul li div  {
     width: 60%;
     padding: 8px;
     border: 1px solid #ced4da;
     border-radius: 5px;
     font-size: 16px;
+
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: right;
 }
 
 .info-box ul li input:focus {
@@ -216,22 +222,22 @@ td #sat {
 }
 
 .pay-box ul li {
+    /*outline: 3px solid red;*/
     margin-bottom: 10px;
     font-size: 20px;
     font-family: var(--font-family);
+    color: black;
 }
 
-info-box input {
-    width: 30%;
-}
-
-.pay-box ul li input {
-    width: 100%;
+.pay-box ul li div {
     padding: 8px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    font-size: 16px;
+    font-size: 20px;
+    color: var(--navy);
+    border: 0;
+
+    width: 80%;
     margin-top: 5px;
+    text-align: right;
 }
 
 .pay-btn {

@@ -52,12 +52,55 @@ body {
     text-align: center;
 }
 
-.main_img, .calendar {
+.main_img {
     width: 80%;
     height: 230px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 10px;
+}
+
+.calendar {
+    width: 80%;
+    font-size: 20px;
+    font-family: var(--font-family);
+}
+
+.calendar table {
+    caption-side: bottom;
+    border-collapse: collapse;
+    font-size: 20px;
+    font-family: var(--font-family);
+}
+
+.calendar tr {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.calendar tr td {
+    /*outline: 3px solid red;*/
+    padding: 10px;
+    text-align: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 50px;
+    height: 40px;
+}
+
+.calendar td#calendarTitle{
+    max-width: 200px;
+}
+
+.calendar tr td:first-child, .calendar tr td:last-child {
+    flex: 1;
+}
+
+.calendar tr td:hover {
+    cursor: pointer;
+    background-color: lightblue;
+    color: white;
 }
 
 .info-area {
@@ -126,4 +169,7 @@ body {
 /* 달력 css */
 #selected__ {
     display: inline;
+}
+.empty{
+    pointer-events: none !important;
 }

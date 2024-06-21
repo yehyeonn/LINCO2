@@ -16,4 +16,6 @@ public interface VenueService {
 
     List<Venue> list(Integer page, Model model, String venue_category);
 
+    Venue getVenueById(Long id);
+
 }
