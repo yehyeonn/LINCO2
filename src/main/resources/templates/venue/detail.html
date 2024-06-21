@@ -35,17 +35,25 @@
                 <td align="center"><label onclick="nextCalendar()"> ▶ </label></td>
             </tr>
             <tr>
-                <td align="center"><font color ="#F79DC2">일</td>
+                <td align="center"><font color ="red">일</td>
                 <td align="center">월</td>
                 <td align="center">화</td>
                 <td align="center">수</td>
                 <td align="center">목</td>
                 <td align="center">금</td>
-                <td align="center"><font color ="skyblue">토</td>
+                <td align="center"><font color ="blue">토</td>
             </tr>
             <script type="text/javascript">buildCalendar();</script>
         </table>
+    <!--//선택한 예약일시를 출력할 위치-->
+        <div id="selected__">
+        <input id="selectedDate" name="selectedDate" value="" readonly="readonly" style="display: none">
+        <!--//총 예약금액을 출력할 위치-->
+        <input id="totalPrice" name="totalPrice" value="" readonly="readonly" style="display: none">
+        </div>
     </div>
+
+
 
     <div class="info-area">
         <div class="info_box" th:fragment="venue-list">
@@ -54,9 +62,9 @@
                     <div th:text="${venue.venue_category}"></div>
                 </li>
                 <li>이용기간
-                    <div th:text="${venue.posible_start_date}"/>
+                    <div id="start_date" th:text="${venue.posible_start_date}"/>
                     ~
-                    <div th:text="${venue.posible_end_date}"/>
+                    <div id="end_date" th:text="${venue.posible_end_date}"/>
                 </li>
                 <li>운영시간
                     <div th:text="${venue.open_time}"/>
@@ -72,12 +80,15 @@
                 <li>주소
                     <div th:text="${venue.address}"></div>
                 </li>
+                <li>
+                    대여료
+                    <div id="venue_price" th:text="${venue.price} + ' ' + 원" ></div>
+                </li>
             </ul>
         </div>
         <button>예약하기</button>
     </div>
 </div>
-
 <footer th:replace="~{common/footer :: footer-body}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

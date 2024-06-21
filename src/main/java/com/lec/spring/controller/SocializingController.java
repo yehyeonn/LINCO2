@@ -16,7 +16,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/socializing")
@@ -32,7 +35,13 @@ public class SocializingController {
     @GetMapping("/write")
     public void write(Model model){
         List<String> category = socializingService.getAllCategories();
-        model.addAttribute("category", category);
+        Map<String, List<String>> detail_category = new HashMap<>();
+        detail_category.put("운동", Arrays.asList("축구", "야구", "농구"));
+        detail_category.put("공연", Arrays.asList("전시", "댄스", "영화"));
+        detail_category.put("공부", Arrays.asList("컴퓨터", "영어", "수학"));
+
+        model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
+        model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
     }
 
     @GetMapping("/list")
@@ -58,8 +67,8 @@ public class SocializingController {
             System.out.println(socializing.getCategory() + "카테고리");
             System.out.println(socializing.getDetail_category() + "디테일_카테고리");
             redirectAttributes.addFlashAttribute("socializing_title", socializing.getSocializing_title());
-            redirectAttributes.addFlashAttribute("category", socializing.getCategory());
-            redirectAttributes.addFlashAttribute("detail_category", socializing.getDetail_category());
+            redirectAttributes.addFlashAttribute("category1", socializing.getCategory());  // 대분류
+            redirectAttributes.addFlashAttribute("detail_category1", socializing.getDetail_category());  // 소분류
             redirectAttributes.addFlashAttribute("address", socializing.getAddress());
             redirectAttributes.addFlashAttribute("meeting_date", socializing.getMeeting_date());
             redirectAttributes.addFlashAttribute("meeting_time", socializing.getMeeting_time());
