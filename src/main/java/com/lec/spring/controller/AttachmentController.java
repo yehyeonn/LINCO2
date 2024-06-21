@@ -40,7 +40,7 @@ public class AttachmentController {
         if (file == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
         String sourceName = file.getSourcename();   // 원본 파일 명
-        String fileName = file.getFileName();       // 저장된 파일 명
+        String fileName = file.getFilename();       // 저장된 파일 명
 
         String path = new File(uploadDir, fileName).getAbsolutePath();      // 저장된 파일의 절대경로
 
