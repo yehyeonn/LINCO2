@@ -3,6 +3,8 @@
 //import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.lec.spring.domain.User;
+//import com.lec.spring.domain.oauth.KakaoOAuthToken;
+//import com.lec.spring.domain.oauth.KakaoProfile;
 //import com.lec.spring.service.UserService;
 //import com.lec.spring.util.U;
 //import org.springframework.beans.factory.annotation.Autowired;

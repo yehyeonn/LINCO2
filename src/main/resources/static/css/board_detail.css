@@ -34,6 +34,7 @@ label #cmt_cnt{
 }
 
 .content {
+    height: 200px;
     border: 1px solid #ccc;
     padding: 15px;
     margin-top: 15px;
@@ -82,7 +83,7 @@ label #cmt_cnt{
 }
 
 .comment {
-    margin: 50px auto;
+    margin: 30px auto;
 }
 
 .comment label {

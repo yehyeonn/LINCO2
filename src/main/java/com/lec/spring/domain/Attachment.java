@@ -12,12 +12,13 @@ import lombok.NoArgsConstructor;
 public class Attachment {
     private Long id;
 
-    private String sourceName;
-    private String fileName;
+    private String sourcename;
+    private String filename;
     private boolean isImage;
 
     private Board board;
     private Club club;
+    private Long board_id;
 
     public void setBoard(Board board){
         this.board = board;

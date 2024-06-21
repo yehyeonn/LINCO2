@@ -150,7 +150,6 @@ where id = 1;
 
 
 
-
 select *
 from club_user_list;
 

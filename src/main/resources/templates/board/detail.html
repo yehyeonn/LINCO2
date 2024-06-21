@@ -16,8 +16,9 @@
         <link rel="stylesheet" th:href="@{/css/board_detail.css}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
 
+        <script src="https://kit.fontawesome.com/21b1be2aba.js" crossorigin="anonymous"></script>
+        <script th:src="@{/js/board/detail.js}"></script>
 
         <script th:inline="javascript">
             const logged_id = [[${logged_user.id}]]
@@ -36,6 +37,12 @@
                 <input type="hidden" name="id" th:value="${board.id}">
             </form>
 
+            <div>
+                <div>
+                    <label>작성자 : </label>
+                    <span th:text="${board.user.username}" class="text"></span>
+                </div>
+            </div>
             <div class="title">
                 <div class="form-group">
                     <label>게시글 제목 : </label>
@@ -52,11 +59,11 @@
             </div>
 
             <!-- 첨부파일 -->
-            <div class="attachment">
-                <label>첨부파일 : </label>
+            <div class="attachment" >
+                <label th:if="attachment != null">첨부파일 : </label>
                 <ul th:if="${not #lists.isEmpty(board.fileList)}">
                     <li th:each="attachment : ${board.fileList}">
-                        <div th:text="${attachment.sourceName}" class="text"></div>
+                        <div th:text="${attachment.sourcename}" class="text"></div>
                         <!-- boardType에 따라 다른 처리 -->
                         <div th:switch="${board.boardType.id}">
                             <!-- 자유게시판인 경우 -->
@@ -71,9 +78,8 @@
                 <div class="button">
                     <div class="left-buttons">
                         <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
-                        <a class="btn" th:href="@{'/board/update/' + ${board.id}}"
-                           th:if="${logged_user.id == board.id}">수정</a>
-                        <a th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER')">글쓰기</a>
+                        <a class="btn" th:href="@{'/board/update/' + ${board.id}}" th:if="${logged_user.id == board.user.id}">수정</a>
+                        <a class="btn" th:href="@{/board/write}" sec:authorize="hasAnyAuthority('MEMBER')">글쓰기</a>
                     </div>
 
                     <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기
@@ -117,7 +123,6 @@
 
     <!--    <th:block th:replace="/common/footer :: footer-scripts"></th:block>-->
     </body>
-    <script th:src="@{/js/board/detail.js}"></script>
 
 </th:block>
 </html>

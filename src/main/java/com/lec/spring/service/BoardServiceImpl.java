@@ -130,7 +130,7 @@ public class BoardServiceImpl implements BoardService{
         }
         return Attachment.builder()
                 .fileName(fileName)
-                .sourceName(sourceName)
+                .sourcename(sourceName)
                 .build();
 
 //        attachment = Attachment.builder()
@@ -197,7 +197,7 @@ public class BoardServiceImpl implements BoardService{
         session.setAttribute("page", page);
 
         long cnt = boardRepository.countAll(boardTypeId, clubId);
-        System.out.println("개수"+cnt);
+        System.out.println("board 개수 : "+cnt);
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);
 
 //        if (totalPage < 1) totalPage = 1;
