@@ -18,9 +18,9 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     /*justify-content: center;*/
-    gap: 40px; /* 버튼 간격 추가 */
+    gap: 20px; /* 버튼 간격 추가 */
     position: absolute; /* 절대 위치 */
-    top: 20%; /* 화면의 중앙에서 수직으로 이동 */
+    top: 22%; /* 화면의 중앙에서 수직으로 이동 */
     left: 50%; /* 화면의 중앙에서 수평으로 이동 */
     transform: translate(-50%, -50%); /* 중앙에서 이동된 위치를 원래대로 */
 }
@@ -295,10 +295,10 @@ body {
     transform: rotateX(-90deg);
 }
 
-/* 버튼 5 */
+/* 버튼5 */
 .btn-5 span {
-    background: rgb(73, 207, 173);
-    background: linear-gradient(0deg, rgb(73, 210, 170) 0%, rgb(76, 234, 89) 100%);
+    background: rgba(33, 251, 109, 0.98);
+    background: linear-gradient(0deg, rgba(33, 251, 109, 0.98) 0%, rgb(0, 200, 93) 100%);
     display: block;
     position: absolute;
     width: 130px;
@@ -352,6 +352,7 @@ body {
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
 }
+
 /* 카테고리 버튼 끝 */
 
 
@@ -369,6 +370,7 @@ body {
 .card-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 1rem; /* 요소 간 간격 설정 */
     transition: transform 0.5s ease-in-out;
 }
@@ -377,18 +379,16 @@ body {
     position: relative;
     overflow: hidden;
     flex: 0 0 20%;
-    width: 330px;
 }
 
 .card-img {
-    background: #B3B49E;
-    display: block;
-    /*width: 330px;*/
     border-radius: 30px !important;
+    display: block;
+
 }
 
 .card-data {
-    /*width: 330px;*/
+    width: 330px;
     background-color: #3A4D72;
     color: #EDEBDA;
     padding: 1rem 1.5rem;
@@ -398,23 +398,20 @@ body {
     bottom: -11rem;
     left: 0;
     right: 0;
-    margin-inline: auto;
+    margin-inline: 10px;
     opacity: 0;
     transition: opacity 0.5s 0.5s;
     font-weight: bold;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
 }
 
 .card-data ul {
     padding: 0;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.5rem 0;
     list-style: none;
 }
 
 .card-description {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: .25rem;
 }
 
@@ -488,8 +485,10 @@ body {
 .slide-buttons {
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    margin-right: 25px;
     gap: 60px;
+
 }
 
 
