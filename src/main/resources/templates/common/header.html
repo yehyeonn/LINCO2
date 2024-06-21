@@ -1,4 +1,4 @@
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="header-head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,7 +38,11 @@
                 </ul>
             </div>
         </div>
-        <a th:href="@{/user/login}" class="login">Login</a>
+        <a th:href="@{/user/login}" sec:authorize="isAnonymous()" class="login">Login</a>
+        <form th:action="@{/user/logout}" method="POST" sec:authorize="isAuthenticated()" >
+            <button class="login-out" type="submit">Logout</button>
+        </form>
+        <!-- 햄버거 -->
         <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

@@ -1,16 +1,15 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Comment;
-import com.lec.spring.domain.QryCommentList;
-import com.lec.spring.domain.QryResult;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.*;
 import com.lec.spring.repository.AttachmentRepository;
+import com.lec.spring.repository.BoardRepository;
 import com.lec.spring.repository.CommentRepository;
 import com.lec.spring.repository.UserRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -21,11 +20,14 @@ public class CommentServiceImpl implements CommentService {
 
     private AttachmentRepository attachmentRepository;
 
+    private BoardRepository boardRepository;
+
     // 생성자
     public CommentServiceImpl(SqlSession sqlSession){
         commentRepository = sqlSession.getMapper(CommentRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
         attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+        boardRepository = sqlSession.getMapper(BoardRepository.class);
     }
 
     @Override
@@ -34,8 +36,13 @@ public class CommentServiceImpl implements CommentService {
 
 //        System.out.println("boardId : " + boardId);
         List<Comment> comments = commentRepository.findByBoard(boardId);
+        List<Comment> filterComments = comments.stream()
+                .filter(comment -> comment.getAttachment() == null || comment.getAttachment().getId() == null)
+                .collect(Collectors.toList());
 
-        int cnt = commentRepository.selectCommentCount(boardId);
+//        int cnt = commentRepository.selectCommentCount(boardId);
+
+        int cnt = filterComments.size();
 
         list.setCount(cnt);
         list.setList(comments);
@@ -48,11 +55,14 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public QryResult write(Long boardId, Long userId, String content) {
         User user = userRepository.findById(userId);
+        Board board = boardRepository.findById(boardId);
+        System.out.println("boardId : " + board);
+        System.out.println("boardId : " + boardId);
 
         Comment comment = Comment.builder()
                 .user(user)
                 .content(content)
-//                .board(boardId)
+                .board(board)
                 .build();
 
         int cnt = commentRepository.save(comment);

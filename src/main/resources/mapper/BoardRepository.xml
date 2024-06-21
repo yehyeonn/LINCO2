@@ -49,9 +49,9 @@
             1=1
     </sql>
 
-    <select id="findById" resultMap="mapBoard">
+    <select id="findById" resultType="com.lec.spring.domain.Board" resultMap="mapBoard">
         <include refid="SELECT_BASE"/>
-        WHERE b.id = #{id}
+        AND b.id = #{id}
     </select>
 
     <select id="findByBoardTypeId" resultMap="mapBoard">
@@ -66,10 +66,10 @@
     </select>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Board">
-        UPDATE BOARD
-        SET title   = #{title},
-            content = #{content}
-        WHERE id = #{id}
+        UPDATE BOARD b, ATTACHMENT a
+        SET b.title   = #{title},
+            b. content = #{content}
+        WHERE b. id = #{id} AND a.id = NULL
     </update>
 
     <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.Board">
@@ -83,7 +83,6 @@
         <include refid="SELECT_BASE"/>
         AND (#{param3} IS NULL OR #{param3} = '' OR bt.id = #{param3})
         OR (#{param4} IS NOT NULL OR #{param4} = '' OR b.id = #{param4})
-        ORDER BY b.id DESC
         LIMIT #{param1}, #{param2}
     </select>
 
@@ -95,8 +94,6 @@
                  LEFT JOIN CLUB c ON b.club_id = c.id
         WHERE (#{param1} IS NULL OR #{param1} = '' OR bt.id = #{param1})
            OR (#{param2} IS NOT NULL OR #{param2} = '' OR b.id = #{param2})
-
-#         AND c.id IS NULL
 
     </select>
 
