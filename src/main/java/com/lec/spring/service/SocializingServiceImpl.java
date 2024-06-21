@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Socializing;
 import com.lec.spring.domain.User;
 import com.lec.spring.domain.UserSocializing;
@@ -16,12 +17,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SocializingServiceImpl implements SocializingService {
+
+
+    // 첨부파일 업로드
+    @Value("upload")
+    private String uploadDir;
 
     @Value("${app.pagination.write_pages}")
     private int WRITE_PAGES;
@@ -30,16 +40,34 @@ public class SocializingServiceImpl implements SocializingService {
     private int PAGE_ROWS;
 
 
-
     private UserRepository userRepository;
     private SocializingRepository socializingRepository;
 
     @Autowired
-    public SocializingServiceImpl(SqlSession sqlSession){
+    public SocializingServiceImpl(SqlSession sqlSession) {
         userRepository = sqlSession.getMapper(UserRepository.class);
         socializingRepository = sqlSession.getMapper(SocializingRepository.class);
 
         System.out.println("SocializingService() 생성");
+    }
+
+    private void setImage(List<Attachment> fileList) {
+        String realPath = new File(uploadDir).getAbsolutePath();
+
+        for (Attachment attachment : fileList) {
+//            BufferedImage imgData = null;
+            File f = new File(realPath, attachment.getFilename());
+            try {
+                BufferedImage imgData = ImageIO.read(f);
+                if (imgData != null) attachment.setImage(true);
+//                imgData = ImageIO.read(f);
+//
+//                if (imgData != null)
+//                    attachment.setImage(true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
@@ -47,15 +75,18 @@ public class SocializingServiceImpl implements SocializingService {
         User user = U.getLoggedUser();
         socializing.setUser(user);  // 글 작성자
 
-        if(socializing.getImg() == null) {
-            socializing.setImg("DefaultImg.jpg");
-        }
+//        if (socializing.getImg() == null) {
+//            socializing.setImg("DefaultImg.jpg");
+//        }
 
         int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
 
+
         return cnt;
     }
-//    // 소셜의 세부사항
+
+
+    // 소셜의 세부사항
     @Override
     @Transactional
     public Socializing detail(Long id) {
@@ -83,19 +114,19 @@ public class SocializingServiceImpl implements SocializingService {
     public List<Socializing> list(Integer page, Model model, String selectaddress, String selectcategory, String selectdetailcategory) {
 
         // 현재페이지
-        if(page == null || page <1) page = 1; //디폴트 1page
+        if (page == null || page < 1) page = 1; //디폴트 1page
         // 페이징
         // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
         // pageRows: 한 '페이지'에 몇개의 글을 리스트 할것인가?
         HttpSession session = U.getSession();
-        Integer writePages = (Integer)session.getAttribute("writePages");
+        Integer writePages = (Integer) session.getAttribute("writePages");
         if (writePages == null) writePages = WRITE_PAGES;
         Integer pageRows = (Integer) session.getAttribute("pageRows");
         if (pageRows == null) pageRows = PAGE_ROWS;
-        session.setAttribute("page",page); // 현재 페이지 번호 -> session 에 저장한다.
+        session.setAttribute("page", page); // 현재 페이지 번호 -> session 에 저장한다.
 
         long cnt = socializingRepository.countSelectAddress(selectaddress, selectcategory, selectdetailcategory);  //글 목록 전체의 개수
-        int totalPage = (int) Math.ceil(cnt/(double)pageRows);  // 총 몇 페이지인지 분량
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);  // 총 몇 페이지인지 분량
 
         //[페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
         int startPage = 0;
@@ -122,9 +153,9 @@ public class SocializingServiceImpl implements SocializingService {
             list = socializingRepository.selectFromRow(fromRow, pageRows, selectaddress, selectcategory, selectdetailcategory);
 
             model.addAttribute("list", list);
-            model.addAttribute("address",selectaddress);
-            model.addAttribute("category",selectcategory);
-            model.addAttribute("detailcategory",selectdetailcategory);
+            model.addAttribute("address", selectaddress);
+            model.addAttribute("category", selectcategory);
+            model.addAttribute("detailcategory", selectdetailcategory);
         } else {
             page = 0;
         }
@@ -136,7 +167,7 @@ public class SocializingServiceImpl implements SocializingService {
 
 
         // [페이징]
-        model.addAttribute("url",U.getRequest().getRequestURI());  // 목록 url
+        model.addAttribute("url", U.getRequest().getRequestURI());  // 목록 url
         model.addAttribute("writePages", writePages); // [페이징] 에 표시할 숫자 개수
         model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
         model.addAttribute("endPage", endPage);   // [페이징] 에 표시할 마지막 페이지
@@ -161,34 +192,15 @@ public class SocializingServiceImpl implements SocializingService {
     public int deleteById(Long id) {
         int result = 0;
         Socializing socializing = socializingRepository.findById(id);
-        if(socializing != null){
+        if (socializing != null) {
             result = socializingRepository.delete(socializing);
         }
         return result;
     }
 
-    public List<String> getAllCategories(){
+    public List<String> getAllCategories() {
         return Arrays.asList("운동", "공연", "공부");
     }
-
-    @Override
-    public Boolean uploadImage(MultipartFile image, String dirName) throws Exception {
-        Boolean result = Boolean.FALSE;
-        try {
-            File folder = new File(dirName);
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            File destination = new File(dirName + File.separator + image.getOriginalFilename());
-            image.transferTo(destination);
-
-            result = Boolean.TRUE;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return result;
-        }
-    }
-
 }
+
+

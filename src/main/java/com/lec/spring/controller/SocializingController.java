@@ -1,4 +1,5 @@
 package com.lec.spring.controller;
+import com.lec.spring.config.MvcConfiguration;
 import com.lec.spring.domain.Socializing;
 //import com.lec.spring.repository.UserSocializingRepository;
 import com.lec.spring.domain.SocializingValidator;
@@ -8,8 +9,10 @@ import com.lec.spring.service.UserSocializingService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,6 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +32,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/socializing")
 public class SocializingController {
+
+
+    @Value("${app.upload.path}")
+    private String uploadDir;
+
 
     @Autowired
     private SocializingService socializingService;
@@ -58,11 +70,12 @@ public class SocializingController {
 
     @PostMapping("/write")
     public String writeOk(
-            @Valid Socializing socializing
-            , BindingResult result
-            , Model model
-            , RedirectAttributes redirectAttributes
-            ){
+            @Valid Socializing socializing,
+            @RequestParam("files") MultipartFile file,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) throws IOException {
         if(result.hasErrors()){
             System.out.println("에러났지롱~");
             System.out.println(socializing.getCategory() + "카테고리");
@@ -84,9 +97,19 @@ public class SocializingController {
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
         return "redirect:/socializing/write";
+        }  // Handle file upload
+        if (!file.isEmpty()) {
+            // Save the file to a specific location or process it as needed
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//            String uploadDir = "upload"; // Set your upload directory
+            Path uploadPath = Paths.get(uploadDir);
+
+            socializing.setImg(fileName); // Set the file name to the img field
+        } else {
+            socializing.setImg("DefaultImg.jpg");
         }
 
-    model.addAttribute("result", socializingService.write(socializing));
+        model.addAttribute("result", socializingService.write(socializing));
         return "socializing/writeOk";
     }
 
@@ -105,32 +128,6 @@ public class SocializingController {
         return "/socializing/detail";
     }
 
-    @GetMapping("/upload")
-    public String uploadForm() {
-        return "uploadForm";
-    }
-
-    @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, Model model) {
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a file to upload");
-            return "uploadForm";
-        }
-
-        try {
-            Boolean isUploaded = socializingService.uploadImage(file, uploadPath);
-            if (isUploaded) {
-                model.addAttribute("message", "Successfully uploaded '" + file.getOriginalFilename() + "'");
-            } else {
-                model.addAttribute("message", "Failed to upload '" + file.getOriginalFilename() + "'");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("message", "Failed to upload '" + file.getOriginalFilename() + "'");
-        }
-
-        return "uploadForm";
-    }
 
 
     @InitBinder
