@@ -83,6 +83,8 @@ public class BoardServiceImpl implements BoardService{
             if (!e.getKey().startsWith("upfile"))
                 continue;
 
+            System.out.println("\n첨부파일 정보 : " + e.getKey());
+            U.printFileInfo(e.getValue());
             Attachment file = upload(e.getValue());
 
             if (file != null){
@@ -91,7 +93,8 @@ public class BoardServiceImpl implements BoardService{
 //                file.setBoard(board);
 //
 //                attachmentRepository.save(file);
-                file.setBoard(Board.builder().id(id).build());
+                file.setBoard_id(id);
+//                file.setBoard(Board.builder().id(id).build());
                 attachmentRepository.save(file);
             }
         }
