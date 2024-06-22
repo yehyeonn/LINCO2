@@ -7,7 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-        <th:block th:insert="/common/header :: header-head"></th:block>
+    <th:block th:insert="/common/header :: header-head"></th:block>
 </head>
 <body>
 
@@ -29,7 +29,8 @@
                 <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
                 <label for="title">게시글 제목:</label>
 
-                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title" th:value="${title}">
+                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title"
+                       th:value="${title}">
             </div>
             <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
         </div>
@@ -37,13 +38,14 @@
 
         <div class="form-group">
             <label for="content">내용:</label>
-            <textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
+            <textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
+                      th:utext="${content}"></textarea>
         </div>
         <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
 
 
         <div id="files">
-        <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
+            <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
         </div>
 
         <div class="button">

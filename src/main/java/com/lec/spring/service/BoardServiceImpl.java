@@ -36,12 +36,10 @@ public class BoardServiceImpl implements BoardService{
     @Value("upload")
     private String uploadDir;
 
-//     페이징 갯수
-
+    // 페이징 갯수
     private int WRITE_PAGES=5;
 
-//     페이징 안의 페이지 갯수
-
+    // 페이징 안의 페이지 갯수
     private int PAGE_ROWS=10;
 
     // 글 작성 관련 정보 가져오기
@@ -88,28 +86,22 @@ public class BoardServiceImpl implements BoardService{
             Attachment file = upload(e.getValue());
 
             if (file != null){
-//                Board board = new Board();
-//                board.setId(id);
-//                file.setBoard(board);
-//
-//                attachmentRepository.save(file);
                 file.setBoard_id(id);
-//                file.setBoard(Board.builder().id(id).build());
                 attachmentRepository.save(file);
             }
         }
     }
 
     private Attachment upload(MultipartFile multipartFile){
-//        Attachment attachment = null;
+        Attachment attachment = null;
 
         String originalFilename = multipartFile.getOriginalFilename();
         if (originalFilename == null || originalFilename.isEmpty()) return null;
 
         String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         String fileName = sourceName;
-        File file = new File(uploadDir, fileName);
 
+        File file = new File(uploadDir, fileName);
         if (file.exists()){
             int pos = fileName.lastIndexOf(".");
             if (pos > -1){
@@ -121,27 +113,29 @@ public class BoardServiceImpl implements BoardService{
                 fileName += "_" + System.currentTimeMillis();
             }
         }
+        // 디버깅용
+        System.out.println("fileName : " + fileName);
+
         Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
+        // 경로 디버깅용
+        System.out.println("copyOfLocation : " + copyOfLocation);
+
         try {
             Files.copy(
                 multipartFile.getInputStream(),
                 copyOfLocation,
-                    StandardCopyOption.REPLACE_EXISTING
+                StandardCopyOption.REPLACE_EXISTING
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return Attachment.builder()
+
+        attachment = Attachment.builder()
                 .filename(fileName)
                 .sourcename(sourceName)
                 .build();
 
-//        attachment = Attachment.builder()
-//                .fileName(fileName)
-//                .sourceName(sourceName)
-//                .build();
-//
-//        return attachment;
+        return attachment;
     }
 
     @Override
@@ -163,15 +157,10 @@ public class BoardServiceImpl implements BoardService{
         String realPath = new File(uploadDir).getAbsolutePath();
 
         for (Attachment attachment : fileList){
-//            BufferedImage imgData = null;
             File f = new File(realPath, attachment.getFilename());
             try {
                 BufferedImage imgData = ImageIO.read(f);
                 if (imgData != null) attachment.setImage(true);
-//                imgData = ImageIO.read(f);
-//
-//                if (imgData != null)
-//                    attachment.setImage(true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -203,8 +192,6 @@ public class BoardServiceImpl implements BoardService{
         System.out.println("board 개수 : "+cnt);
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);
 
-//        if (totalPage < 1) totalPage = 1;
-
         int startPage = 0;
         int endPage = 0;
 
@@ -219,6 +206,8 @@ public class BoardServiceImpl implements BoardService{
             if (endPage >= totalPage) endPage = totalPage;
 
             list = boardRepository.selectFromRow(fromRow, pageRows,boardTypeId, clubId);
+
+//            디버깅용
 //            for (int i = 0; i < list.size(); i++) {
 //                System.out.println(list.get(i).toString()+"\n");
 //            }
@@ -229,7 +218,6 @@ public class BoardServiceImpl implements BoardService{
         } else {
             page = 0;
         }
-
 
         model.addAttribute("cnt", cnt);
         model.addAttribute("page", page);
@@ -260,16 +248,12 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public List<Board> findByBoardTypeId(Long boardTypeId) {
         return boardRepository.findByBoardTypeId(boardTypeId);
-//        return (List<Board>) boardRepository.findByBoardTypeId(boardTypeId);
     }
 
     @Override
     public int update(Board board, Map<String, MultipartFile> files, Long[] delfile) {
-//        int result = 0;
-//        result = boardRepository.update(board);
-
-        // 새로 추가
-        int result = boardRepository.update(board);
+        int result = 0;
+        result = boardRepository.update(board);
 
         addFiles(files, board.getId());
 
@@ -288,44 +272,30 @@ public class BoardServiceImpl implements BoardService{
     private void delFile(Attachment file) {
         String saveDirectory = new File(uploadDir).getAbsolutePath();       // 파일의 저장 경로를 절대경로로 가져오기
         File f = new File(saveDirectory, file.getFilename());
+        System.out.println("삭제시도 : " + f.getAbsolutePath());
 
-        // 새로 추가
-        if (f.exists() && f.delete()){
-            System.out.println("삭제 성공");
+        if (f.exists()){
+            if (f.delete()){
+                System.out.println("삭제 성공");
+            }else {
+                System.out.println("삭제 실패");
+            }
         }else {
             System.out.println("파일이 존재하지 않음");
         }
-//        if (f.exists()){
-//            if (f.delete()){
-//                System.out.println("삭제 성공");
-//            }else {
-//                System.out.println("삭제 실패");
-//            }
-//        }else {
-//            System.out.println("파일이 존재하지 않음");
-//        }
     }
 
     @Override
     public int deleteById(Long id) {
-//        int result = 0;
         Board board = boardRepository.findById(id);
         if (board != null) {
             List<Attachment> fileList = attachmentRepository.findByBoard(id);
-            // 새로 추가
+
             for (Attachment file : fileList){
                 delFile(file);
             }
             return boardRepository.delete(board);
         }
         return 0;
-//            if (fileList != null || fileList.size() > 0){
-//                for (Attachment file : fileList){
-//                    delFile(file);
-//                }
-//            }
-//            result = boardRepository.delete(board);
-//        }
-//        return result;
     }
 }

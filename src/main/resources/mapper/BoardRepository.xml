@@ -66,10 +66,10 @@
     </select>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Board">
-        UPDATE BOARD b, ATTACHMENT a
-        SET b.title   = #{title},
-            b.content = #{content}
-        WHERE b.id = #{id} AND a.id = NULL
+        UPDATE BOARD
+        SET title   = #{title},
+            content = #{content}
+        WHERE id = #{id}
     </update>
 
     <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.Board">

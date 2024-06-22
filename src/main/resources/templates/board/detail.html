@@ -59,10 +59,10 @@
             </div>
 
             <!-- 첨부파일 -->
-            <div class="attachment" >
-                <label th:if="attachment != null">첨부파일 : </label>
-                <ul th:if="${not #lists.isEmpty(board.fileList)}">
-                    <li th:each="attachment : ${board.fileList}">
+            <div class="attachment">
+                <label th:if="${not #lists.isEmpty(board.fileList)}">첨부파일 : </label>
+                <ul th:if="${not #lists.isEmpty(attachments)}">
+                    <li th:each="attachment : ${attachments}">
                         <div th:text="${attachment.sourcename}" class="text"></div>
                         <!-- boardType에 따라 다른 처리 -->
                         <div th:switch="${board.boardType.id}">
@@ -73,44 +73,45 @@
                         </div>
                     </li>
                 </ul>
+            </div>
 
-                <!-- 버튼 -->
-                <div class="button">
-                    <div class="left-buttons">
-                        <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
-                        <a class="btn" th:href="@{'/board/update/' + ${board.id}}" th:if="${logged_user.id == board.user.id}">수정</a>
-                        <a class="btn" th:href="@{/board/write}" sec:authorize="hasAnyAuthority('MEMBER')">글쓰기</a>
-                    </div>
-
-                    <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기
-                    </button>
-
+            <!-- 버튼 -->
+            <div class="button">
+                <div class="left-buttons">
+                    <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
+                    <a class="btn" th:href="@{'/board/update/' + ${board.id}}"
+                       th:if="${logged_user.id == board.user.id}">수정</a>
+                    <a class="btn" th:href="@{/board/write}" sec:authorize="hasAnyAuthority('MEMBER')">글쓰기</a>
                 </div>
-                <hr>
 
-                <!-- 댓글 -->
-                <div class="container comment">
-                    <label>댓글 : <span id="cmt_cnt" th:text="${cnt}"> 0 </span> 개</label>
+                <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기
+                </button>
 
-                    <div sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">  <!-- 회원만 댓글 작성 가능하도록 설정 -->
-                        <input type="text" id="input_comment">
-                        <button type="button" class="btn" id="btn_comment">등록</button>
-                    </div>
+            </div>
+            <hr>
 
-                    <table class="table" id="cmt_table">
-                        <thead>
-                        <tr>
-                            <th>작성자</th>
-                            <th>댓글</th>
-                            <th>작성일</th>
-                        </tr>
-                        </thead>
+            <!-- 댓글 -->
+            <div class="container comment">
+                <label>댓글 : <span id="cmt_cnt" th:text="${cnt}"> 0 </span> 개</label>
 
-                        <tbody id="cmt_list">
-
-                        </tbody>
-                    </table>
+                <div sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">  <!-- 회원만 댓글 작성 가능하도록 설정 -->
+                    <input type="text" id="input_comment">
+                    <button type="button" class="btn" id="btn_comment">등록</button>
                 </div>
+
+                <table class="table" id="cmt_table">
+                    <thead>
+                    <tr>
+                        <th>작성자</th>
+                        <th>댓글</th>
+                        <th>작성일</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="cmt_list">
+
+                    </tbody>
+                </table>
             </div>
         </section>
     </div>
