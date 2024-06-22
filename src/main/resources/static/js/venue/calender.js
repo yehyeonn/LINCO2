@@ -15,6 +15,10 @@ var realToDay = date.getDate();
 var selectedMonth = null;
 var selectedDate = null;
 
+function getQueryParam(param) {
+    var url = new URLSearchParams(window.location.search);
+    return url.get(param);
+}
 
 function buildCalendar() {
     var row = null;
@@ -86,6 +90,8 @@ function buildCalendar() {
                 this.style.color = 'white';
                 selectedCell = this;
 
+                // console.log(this);   // 선택한 날짜 콘솔창에 출력해보긔
+
                 seelctMonth = today.getMonth() + 1;
                 selectedDate = this.getAttribute('id');
 
@@ -97,7 +103,11 @@ function buildCalendar() {
                 clickedMonth = clickedMonth >= 10 ? clickedMonth : '0' + clickedMonth;
                 clickedYMD = clickedYear + "-" + clickedMonth + "-" + clickedDate;  // date 타입으로 값 세팅
 
+                // 로컬 스토리지에 선택한 날짜 저장
+                localStorage.setItem('selectedDate', clickedYMD);
+
                 document.getElementById("selectedDate").value = clickedYMD; // 같은 창의 입력 필드에 설정
+
             };
         }
     }
