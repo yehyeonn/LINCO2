@@ -74,8 +74,8 @@ public class SocializingController {
     @PostMapping("/write")
     public String writeOk(
             @Valid Socializing socializing,
-            @RequestParam("files") MultipartFile file,
             BindingResult result,
+            @RequestParam("files") MultipartFile file,
             Model model,
             RedirectAttributes redirectAttributes
     ) throws IOException {
