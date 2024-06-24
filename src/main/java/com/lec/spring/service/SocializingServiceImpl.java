@@ -158,8 +158,10 @@ public class SocializingServiceImpl implements SocializingService {
 
     //수정
     @Override
-    public Socializing selectById(Long id, Model model) {
-        return null;
+    public Socializing selectById(Long id) {
+        Socializing socializing = socializingRepository.findById(id);
+
+        return socializing;
     }
 
     @Override
@@ -179,9 +181,26 @@ public class SocializingServiceImpl implements SocializingService {
         return result;
     }
 
+    @Override
     public List<String> getAllCategories() {
+        // 실제 구현 내용
         return Arrays.asList("운동", "공연", "공부");
     }
-    
+
+    @Override
+    public List<String> getDetailCategories(String category) {
+        switch (category) {
+            case "운동":
+                return Arrays.asList("축구", "야구", "농구");
+            case "공연":
+                return Arrays.asList("전시", "댄스", "영화");
+            case "공부":
+                return Arrays.asList("컴퓨터", "영어", "수학");
+            default:
+                return Arrays.asList();
+        }
+    }
+
+
 
 }

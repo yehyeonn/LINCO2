@@ -34,16 +34,15 @@ public interface SocializingService {
     UserSocializing findBySocializingMaster(long id);
 
     // 수정
-    Socializing selectById(Long id, Model model);
+    Socializing selectById(Long id);
     // 제목, 내용
     int update(Socializing socializing);
 
     List<String> getAllCategories();
 
+    List<String> getDetailCategories(String category);
 
     // 삭제
     int deleteById(Long id);
 
-    // 첨부파일
-    // TODO
 }
