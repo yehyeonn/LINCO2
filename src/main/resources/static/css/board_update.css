@@ -1,0 +1,117 @@
+.body {
+    width: 90%;
+    max-width: 1200px;
+    margin: 150px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.title .form-group {
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-left: 8px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #3A4D72; /* 제목 및 레이블 색상 */
+}
+
+.text {
+    font-size: 20px;
+    color: #333; /* 텍스트 색상 */
+    font-weight: bolder;
+}
+
+.content {
+    height: 200px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.attachment {
+    margin-top: 30px;
+}
+
+.attachment label {
+    font-size: 20px;
+}
+
+.attachment .text {
+    font-size: 16px;
+    color: #333; /* 첨부파일 텍스트 색상 */
+}
+
+.button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button .left-buttons{
+    display: flex;
+    gap: 10px;
+}
+
+.button .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3A4D72;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3A4D72;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.btn:hover {
+    background-color: #D3374A; /* 버튼 호버 색상 */
+    color: #fff;
+}
+
+.button .btn:hover{
+    background-color: #D3374A;
+    color: #fff;
+}
+
+.newAttachment {
+    margin-top: 20px;
+}
+
+.newAttachment label {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.newAttachment #files {
+    flex: 2;
+    margin-right: 10px;
+}
+
+.newAttachment #btnAdd {
+    flex-shrink: 0;
+}
