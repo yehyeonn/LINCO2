@@ -1,4 +1,6 @@
 package com.lec.spring.controller;
+
+import com.lec.spring.config.MvcConfiguration;
 import com.lec.spring.domain.Socializing;
 //import com.lec.spring.repository.UserSocializingRepository;
 import com.lec.spring.domain.SocializingValidator;
@@ -8,8 +10,10 @@ import com.lec.spring.service.UserSocializingService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,6 +21,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +36,11 @@ import java.util.Map;
 @RequestMapping("/socializing")
 public class SocializingController {
 
+
+    @Value("${app.upload.path}")
+    private String uploadDir;
+
+
     @Autowired
     private SocializingService socializingService;
 
@@ -34,7 +49,7 @@ public class SocializingController {
 
 
     @GetMapping("/write")
-    public void write(Model model){
+    public void write(Model model) {
         List<String> category = socializingService.getAllCategories();
         Map<String, List<String>> detail_category = new HashMap<>();
         detail_category.put("운동", Arrays.asList("축구", "야구", "농구"));
@@ -50,7 +65,7 @@ public class SocializingController {
                      @RequestParam(name = "address", required = false, defaultValue = "") String address,
                      @RequestParam(name = "category", required = false, defaultValue = "") String category,
                      @RequestParam(name = "detailcategory", required = false, defaultValue = "") String detailcategory,
-                     Model model){
+                     Model model) {
 
         socializingService.list(page, model, address, category, detailcategory);
     }
@@ -58,18 +73,42 @@ public class SocializingController {
 
     @PostMapping("/write")
     public String writeOk(
-            @Valid Socializing socializing
-            , BindingResult result
-            , Model model
-            , RedirectAttributes redirectAttributes
-            ){
-        if(result.hasErrors()){
+            @Valid Socializing socializing,
+            BindingResult result,
+            @RequestParam("files") MultipartFile file,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) throws IOException {
+        // 기본 이미지 경로 설정
+        String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
+
+        // 파일이 비어있지 않으면 업로드 처리
+        if (!file.isEmpty()) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            imgPath = "upload/" + fileName;
+
+            try {
+                Path path = Paths.get(imgPath);
+                Files.createDirectories(path.getParent());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 이미지 경로를 Socializing 객체에 설정
+        socializing.setImg(imgPath);
+        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
+
+
+        if (result.hasErrors()) {
             System.out.println("에러났지롱~");
             System.out.println(socializing.getCategory() + "카테고리");
             System.out.println(socializing.getDetail_category() + "디테일_카테고리");
+
             redirectAttributes.addFlashAttribute("socializing_title", socializing.getSocializing_title());
-            redirectAttributes.addFlashAttribute("category1", socializing.getCategory());  // 대분류
-            redirectAttributes.addFlashAttribute("detail_category1", socializing.getDetail_category());  // 소분류
+            redirectAttributes.addFlashAttribute("category1", socializing.getCategory());
+            redirectAttributes.addFlashAttribute("detail_category1", socializing.getDetail_category());
             redirectAttributes.addFlashAttribute("address", socializing.getAddress());
             redirectAttributes.addFlashAttribute("meeting_date", socializing.getMeeting_date());
             redirectAttributes.addFlashAttribute("meeting_time", socializing.getMeeting_time());
@@ -78,63 +117,65 @@ public class SocializingController {
             redirectAttributes.addFlashAttribute("total_price", socializing.getTotal_price());
             redirectAttributes.addFlashAttribute("img", socializing.getImg());
 
-
             List<FieldError> errList = result.getFieldErrors();
-            for(FieldError err : errList){
+            for (FieldError err : errList) {
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
-        return "redirect:/socializing/write";
+
+            // 폼 입력 값을 다시 보내기 위해 추가
+            return "redirect:/socializing/write";
         }
 
-    model.addAttribute("result", socializingService.write(socializing));
+        // 저장 로직 호출
+        model.addAttribute("result", socializingService.write(socializing));
         return "socializing/writeOk";
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model){
+    public String detail(@PathVariable Long id, Model model) {
         Socializing socializing = socializingService.detail(id);
         int socializingcnt = socializingService.membercnt(id);
         List<UserSocializing> socializingMemberList = socializingService.socializingMemberList(id);
 
-        String content = socializing.getContent().replace("\n","<br>");
+        String content = socializing.getContent().replace("\n", "<br>");
 
-        model.addAttribute("detailsocializing",socializing);
-        model.addAttribute("membercnt",socializingcnt);
-        model.addAttribute("members",socializingMemberList);
-        model.addAttribute("content",content);
+        model.addAttribute("detailsocializing", socializing);
+        model.addAttribute("membercnt", socializingcnt);
+        model.addAttribute("members", socializingMemberList);
+        model.addAttribute("content", content);
         return "/socializing/detail";
     }
-
-    @GetMapping("/upload")
-    public String uploadForm() {
-        return "uploadForm";
-    }
-
-    @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, Model model) {
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a file to upload");
-            return "uploadForm";
-        }
-
-        try {
-            Boolean isUploaded = socializingService.uploadImage(file, uploadPath);
-            if (isUploaded) {
-                model.addAttribute("message", "Successfully uploaded '" + file.getOriginalFilename() + "'");
-            } else {
-                model.addAttribute("message", "Failed to upload '" + file.getOriginalFilename() + "'");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("message", "Failed to upload '" + file.getOriginalFilename() + "'");
-        }
-
-        return "uploadForm";
-    }
+//
+//    @GetMapping("/update/{id}")
+//    public String update(@PathVariable Long id, Model model){
+//        model.addAttribute("post", socializingService.selectById(id));
+//        return "board/update";
+//    }
+//
+//    @PostMapping("/update") // 제출하고 만들 post 방식
+//    public String updateOk(
+//            @Valid Socializing socializing
+//            , BindingResult result
+//            , Model model
+//            , RedirectAttributes redirectAttributes
+//    ) {
+//        if (result.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("subject", post.getSubject());
+//            redirectAttributes.addFlashAttribute("content", post.getContent());
+//
+//            List<FieldError> errList = result.getFieldErrors();
+//            for (FieldError err : errList) {
+//                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+//            }
+//            return "redirect:/board/update/" + post.getId(); // Id는 수정사항이 아니다
+//        }
+//
+//        model.addAttribute("result", boardService.update(post, files, delfile));
+//        return "board/updateOk";
 
 
     @InitBinder
-    public void initBinder(WebDataBinder binder){
+    public void initBinder(WebDataBinder binder) {
         System.out.println("SocializingController.initBinder() 호출");
 
         binder.setValidator(new SocializingValidator());
