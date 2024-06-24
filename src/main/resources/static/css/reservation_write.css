@@ -1,0 +1,258 @@
+:root {
+    --navy: #4075e2;
+    --red: #D3374A;
+    --background-color: #EDEBDA;
+    --page-color: #B3B49E;
+    --font-family: 'Helvetica Neue', Arial, sans-serif;
+
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+}
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+
+    width: 1500px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    margin-top: 140px;
+}
+
+.reservation-box {
+    /*outline: 3px solid red;*/
+    width: 40%;
+    height: 80%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.venue_name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--navy);
+}
+
+.calendar {
+    width: 80%;
+    font-size: 20px;
+    font-family: var(--font-family);
+}
+
+.calendar table {
+    caption-side: bottom;
+    border-collapse: collapse;
+    font-size: 20px;
+    font-family: var(--font-family);
+}
+
+.calendar tr {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.calendar tr td {
+    /*outline: 3px solid red;*/
+    padding: 10px;
+    text-align: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 50px;
+    height: 40px;
+}
+
+.calendar td#calendarTitle{
+    max-width: 200px;
+}
+
+.calendar tr td:first-child, .calendar tr td:last-child {
+    flex: 1;
+}
+
+td #sun {
+    color: #F79DC2;
+}
+
+td #sat {
+    color: skyblue;
+}
+
+.calendar tr td:hover {
+    cursor: pointer;
+    background-color: lightblue;
+    color: white;
+}
+
+.time {
+    height: auto;
+    font-size: 24px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.time table {
+    caption-side: bottom;
+    border-collapse: collapse;
+    font-size: 20px;
+    font-family: var(--font-family);
+}
+
+.time tr {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.time tr td {
+    /*outline: 3px solid red;*/
+    width: 100%;
+    padding: 5px;
+    margin: 10px;
+    text-align: center;
+    flex: 1;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.time tr td:hover {
+    transform: translateY(-2px);
+    background-color: var(--navy);
+    color: white;
+    cursor: pointer;
+}
+
+.time tr:last-child td:nth-last-child(-n+2) {
+    visibility: hidden;
+}
+
+.info-box {
+
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+    height: 80%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.info-box ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.info-box ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+
+}
+
+
+.info-box ul li input, .info-box ul li div  {
+    width: 60%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 16px;
+
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+.info-box ul li input:focus {
+    border-color: #FFD700;
+    outline: none;
+    box-shadow: 0 0 5px #FFD700;
+}
+
+.info-box span {
+    /*outline: 3px solid blue;*/
+    font-size: 20px;
+    color: black;
+}
+
+.pay-box {
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 15px;
+    color: var(--navy);
+    position: sticky;
+    top: 20px;
+}
+
+.pay-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.pay-box ul li {
+    /*outline: 3px solid red;*/
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-family: var(--font-family);
+    color: black;
+}
+
+.pay-box ul li div {
+    padding: 8px;
+    font-size: 20px;
+    color: var(--navy);
+    border: 0;
+
+    width: 80%;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.pay-btn {
+    width: 30%;
+    padding: 10px;
+    background-color: var(--navy);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 0;
+}
+
+.pay-btn:hover {
+    background-color: var(--red);
+}

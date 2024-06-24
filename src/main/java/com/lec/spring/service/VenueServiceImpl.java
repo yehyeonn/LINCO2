@@ -109,4 +109,9 @@ public class VenueServiceImpl implements VenueService {
 
         return list;
     }
+
+    @Override
+    public Venue getVenueById(Long id) {
+        return venueRepository.findById(id);
+    }
 }

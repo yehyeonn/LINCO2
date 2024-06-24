@@ -20,15 +20,11 @@ console.log('시작날짜 : ', minStr);
 
 $(document).ready(function () {
     const detail_category = $('#detail_category');
-    if($("#category").val() == ""){
+    if ($("#category").val() == "") {
         $("#a").text("소분류 선택");
-    }else{
+    } else {
         $("#a").text(localStorage.getItem("detail"));
     }
-
-
-
-    // 밑에 두 줄 추가 된 것
 
     $('#category').on('change', function () {
         const category = $(this).val();
@@ -48,24 +44,30 @@ $(document).ready(function () {
 
     });
     $('#detail_category').on('change', function () {
-        localStorage.setItem("detail",detail_category.val());
+        localStorage.setItem("detail", detail_category.val());
     });
 
+    // 파일 선택 버튼 클릭 시 파일 입력 필드 클릭
+    $('#fileSelect').on('click', function () {
+        $('#fileInput').click();
+    });
 
-
+    // 파일 선택 시 미리보기 표시
     $('#fileInput').on('change', function () {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                $('#previewImage').attr('src', e.target.result).show();
-                $('#img_txt').hide();
-            };
+                var previewImage = document.getElementById("previewImage");
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";
+                var imgtxt = document.getElementById('img_txt');
+                imgtxt.style.display = "none";
+            }
             reader.readAsDataURL(file);
-        } else {
-            $('#previewImage').hide();
         }
     });
+
 
 
     // 엔터키로 form 제출 막기, 하지만 #location 필드에서는 searchPlaces() 실행
@@ -74,6 +76,8 @@ $(document).ready(function () {
             if ($(event.target).attr('id') === 'location') {
                 event.preventDefault();
                 searchPlaces();
+            }    else if ($(event.target).is('textarea')) {
+                return; // 아무것도 하지 않음
             } else {
                 event.preventDefault();
             }

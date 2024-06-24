@@ -6,7 +6,6 @@ var possibleDay = getDayLimit.toString().split('');
 // console.log(possibleDay)
 
 
-
 // 사용자가 클릭한 셀 객체
 var selectedCell;
 var realMonth = date.getMonth() + 1;    // 오늘이전 불가능
@@ -16,6 +15,10 @@ var realToDay = date.getDate();
 var selectedMonth = null;
 var selectedDate = null;
 
+function getQueryParam(param) {
+    var url = new URLSearchParams(window.location.search);
+    return url.get(param);
+}
 
 function buildCalendar() {
     var row = null;
@@ -40,7 +43,7 @@ function buildCalendar() {
     }
 
     for (i = 1; i <= lastDate.getDate(); i++) {
-          noCount = 0;    // 예약을 못하면 1씩 증가
+        noCount = 0;    // 예약을 못하면 1씩 증가
         etp = exchangeToPosibleDay(cnt) * 1;
         if (cnt % 7 == 0) {
             row = calendarTable.insertRow();
@@ -53,49 +56,76 @@ function buildCalendar() {
         cnt += 1;
 
         // 색 표시
-        if (cnt % 7 == 1) { // 일요일
-            cell.innerHTML = "<font color=red>" + i + "</font>";
+        if (cnt % 7 === 1) { // 일요일
+            cell.textContent = i;
             cell.classList.add('disabled'); // 선택 불가능하게 하기 위해 클래스 추가
-        } else if (cnt % 7 == 0) { // 토요일
-            cell.innerHTML = "<font color=blue>" + i + "</font>";
+            cell.style.pointerEvents = 'none';  // 일요일은 호버 기능 삭제
+        } else if (cnt % 7 === 0) { // 토요일
+            cell.style.color = 'blue';
+            cell.textContent = i;
+            cell.classList.add('saturday');
             row = calendarTable.insertRow();
         }
 
-    // console.log(noCount)
+        // console.log(noCount)
 
-    // 선택한 날짜 출력
-    if (noCount > 0 || cell.classList.contains('disabled')) {
-        cell.style.backgroundColor = "#E0E0E0";
-        cell.innerHTML = "<font color='#C6C6C6' >" + i + "</font>";
-    } else {
-        cell.onclick = function () {
-            clickedYear = today.getFullYear();
-            clickedMonth = (1 + today.getMonth());  // 0월부터 시작하니까
-            clickedDate = this.getAttribute('id');
+        // 선택한 날짜 출력
+        if (cell.innerHTML === '') {
+            cell.classList.add('empty');
+            cell.style.pointerEvents = 'none';
+        }
+        if (noCount > 0 || cell.classList.contains('disabled')) {
+            cell.style.color = "#E0E0E0";
+            cell.innerHTML = "<font color='#C6C6C6' >" + i + "</font>";
+        } else {
+            cell.onclick = function () {
+                if (selectedCell) {
+                    selectedCell.style.backgroundColor = '';
+                    selectedCell.style.color = '';
+                    if (selectedCell.classList.contains('saturday')) {
+                        selectedCell.style.color = 'blue'; // 토요일은 다시 파란색으로 설정
+                    }
+                }
+                this.style.backgroundColor = 'lightblue';
+                this.style.color = 'white';
+                selectedCell = this;
 
-            clickedDate = clickedDate >= 10 ? clickedDate : '0' + clickedDate;  // 0~9 면 앞에 0 입력
-            clickedMonth = clickedMonth >= 10 ? clickedMonth : '0' + clickedMonth;
-            clickedYMD = clickedYear + "-" + clickedMonth + "-" + clickedDate;  // date 타입으로 값 세팅
+                // console.log(this);   // 선택한 날짜 콘솔창에 출력해보긔
 
-            document.getElementById("selectedDate").value = clickedYMD; // 같은 창의 입력 필드에 설정
+                seelctMonth = today.getMonth() + 1;
+                selectedDate = this.getAttribute('id');
+
+                clickedYear = today.getFullYear();
+                clickedMonth = (1 + today.getMonth());  // 0월부터 시작하니까
+                clickedDate = this.getAttribute('id');
+
+                clickedDate = clickedDate >= 10 ? clickedDate : '0' + clickedDate;  // 0~9 면 앞에 0 입력
+                clickedMonth = clickedMonth >= 10 ? clickedMonth : '0' + clickedMonth;
+                clickedYMD = clickedYear + "-" + clickedMonth + "-" + clickedDate;  // date 타입으로 값 세팅
+
+                // 로컬 스토리지에 선택한 날짜 저장
+                localStorage.setItem('selectedDate', clickedYMD);
+
+                document.getElementById("selectedDate").value = clickedYMD; // 같은 창의 입력 필드에 설정
+
+            };
         }
     }
-}
 
-if (cnt % 7 != 0) {
-    for (i = 0; i < 7 - (cnt % 7); i++) {
-        cell = row.insertCell();
+    if (cnt % 7 != 0) {
+        for (i = 0; i < 7 - (cnt % 7); i++) {
+            cell = row.insertCell();
+        }
     }
-}
 
-nowMonth = today.getMonth() + 1;
+    nowMonth = today.getMonth() + 1;
 
 // 예약 불가 일자 분류 1
-if (nowMonth > realMonth && i > realToDay) {
-    noCount += 1;
-} else if (possibleDay[etp] == 0) {
-    noCount += 1;
-}
+    if (nowMonth > realMonth && i > realToDay) {
+        noCount += 1;
+    } else if (possibleDay[etp] == 0) {
+        noCount += 1;
+    }
 };
 
 function prevCalendar() {
@@ -128,13 +158,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 날짜가 잘 들어갔을까요~?
-    // console.log("This Month Full Date List:");
+    console.log("This Month Full Date List:");
     // console.log(thisMonthFullDateList);
 
     var priceStr = document.getElementById('venue_price').textContent.trim().split(' ')[0];
-    // console.log(priceStr)
+    console.log(priceStr)
     var price = Number(priceStr);
-    // console.log(price)
+    console.log(price)
 
 
 });

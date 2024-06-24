@@ -5,14 +5,16 @@ import com.lec.spring.domain.UserSocializing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public interface SocializingService {
-//    // 작성, 내용보기, 전체 목록, 수정하기, 삭제
+    // 작성, 내용보기, 전체 목록, 수정하기, 삭제
     int write(Socializing socializing);
-//
+
     @Transactional
     Socializing detail(Long id);
 
@@ -38,4 +40,7 @@ public interface SocializingService {
 
     // 삭제
     int deleteById(Long id);
+
+    // 첨부파일
+    // TODO
 }
