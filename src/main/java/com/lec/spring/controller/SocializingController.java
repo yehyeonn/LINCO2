@@ -79,6 +79,28 @@ public class SocializingController {
             Model model,
             RedirectAttributes redirectAttributes
     ) throws IOException {
+        // 기본 이미지 경로 설정
+        String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
+
+        // 파일이 비어있지 않으면 업로드 처리
+        if (!file.isEmpty()) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            imgPath = "upload/" + fileName;
+
+            try {
+                Path path = Paths.get(imgPath);
+                Files.createDirectories(path.getParent());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 이미지 경로를 Socializing 객체에 설정
+        socializing.setImg(imgPath);
+        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
+
+
         if (result.hasErrors()) {
             System.out.println("에러났지롱~");
             System.out.println(socializing.getCategory() + "카테고리");
@@ -103,26 +125,6 @@ public class SocializingController {
             // 폼 입력 값을 다시 보내기 위해 추가
             return "redirect:/socializing/write";
         }
-        // 기본 이미지 경로 설정
-        String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
-
-        // 파일이 비어있지 않으면 업로드 처리
-        if (!file.isEmpty()) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = "upload/" + fileName;
-
-            try {
-                Path path = Paths.get(imgPath);
-                Files.createDirectories(path.getParent());
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // 이미지 경로를 Socializing 객체에 설정
-        socializing.setImg(imgPath);
-        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
 
         // 저장 로직 호출
         model.addAttribute("result", socializingService.write(socializing));
