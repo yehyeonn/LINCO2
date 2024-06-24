@@ -74,6 +74,7 @@ public class BoardController {
     public String detail(@PathVariable Long id, Model model){
         Board board = boardService.detail(id);
         model.addAttribute("board", board);
+//        디버깅 용도
 //        System.out.println("board : " +board.toString());
 
         Club club = board.getClub() != null ? clubService.getClubById(board.getClub().getId()) : null;
@@ -86,9 +87,13 @@ public class BoardController {
                 .collect(Collectors.toList());
         int cnt = commentService.list(id).getCount();
 
+        List<Attachment> attachments = attachmentService.findByAttachment(id);
+
+        model.addAttribute("attachments", attachments);
         model.addAttribute("cnt", cnt);
         model.addAttribute("comments", comments);
 
+//        디버깅 용도
 //        System.out.println("filter comments 갯수 : " + filterComments.size());
 //        comments.forEach(comment -> {
 //            System.out.println("comment id : " + comment.getId());
@@ -120,6 +125,9 @@ public class BoardController {
 
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model){
+        List<Attachment> attachments = attachmentService.findByAttachment(id);
+
+        model.addAttribute("attachments", attachments);
         model.addAttribute("board", boardService.findById(id));
         return "board/update";
     }
@@ -141,10 +149,14 @@ public class BoardController {
             for(FieldError err : errList) {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
-            return "redirect:/common/board_update" + board.getId();
+            System.out.println("ErrList" + errList);
+            return "redirect:/board/update/" + board.getId();
         }
-        model.addAttribute("result", boardService.update(board, files, delfile));
 
+        int updateResult = boardService.update(board, files, delfile);
+        model.addAttribute("result", updateResult);
+
+        System.out.println("Update result : " + updateResult);
         return "board/updateOk";
     }
 

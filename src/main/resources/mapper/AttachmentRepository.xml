@@ -26,7 +26,7 @@
     <select id="findByBoard" resultType="com.lec.spring.domain.Attachment">
         <include refid="SELECTFILE"/>
         AND
-        board_id = #{board_id}
+        board_id = #{param1} AND club_id IS NULL
         ORDER BY id ASC
     </select>
 
@@ -36,7 +36,7 @@
     </select>
 
     <select id="findByIds" resultType="com.lec.spring.domain.Attachment"
-            parameterType="arraylist">
+            parameterType="Arraylist">
         <include refid="SELECTFILE"/>
         AND id in
         <foreach collection="array" item="e" separator="," open="(" close=")">
@@ -48,8 +48,8 @@
     <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
         DELETE FROM ATTACHMENT
         WHERE id in (<foreach collection="array" item="e" separator=",">
-        #{e}
-    </foreach> )
+                        #{e}
+                    </foreach> )
     </delete>
 
     <delete id="delete" flushCache="true">
