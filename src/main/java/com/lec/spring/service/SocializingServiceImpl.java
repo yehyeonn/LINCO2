@@ -142,6 +142,11 @@ public class SocializingServiceImpl implements SocializingService {
         return list;
     }
 
+    @Override
+    public UserSocializing findBySocializingMaster(long id) {
+        return socializingRepository.findBySocializingMaster(id);
+    }
+
     //수정
     @Override
     public Socializing selectById(Long id, Model model) {
@@ -168,6 +173,7 @@ public class SocializingServiceImpl implements SocializingService {
     public List<String> getAllCategories(){
         return Arrays.asList("운동", "공연", "공부");
     }
-    
+
+
 
 }

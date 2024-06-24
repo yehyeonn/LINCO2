@@ -22,6 +22,7 @@
             <label for="socializing_title">소셜라이징 이름</label>
             <input type="text" id="socializing_title" name="socializing_title" placeholder="제목을 입력하세요"
                    th:value="${socializing_title}"/>
+            <input type="text" class="hidden" name="user_id" th:value="${user.id}">    <!--수정부분-->
         </div>
         <div><span class="text-danger" th:if="${error_socializing_title}" th:utext="${error_socializing_title}"></span>
         </div>

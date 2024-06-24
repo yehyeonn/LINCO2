@@ -25,10 +25,10 @@ public class UserSocializingServiceImpl implements UserSocializingService {
 
     @Override
     public int addUserToSocializing(Long userId, Long socializingId, String role) {
-        User user = userRepository.findById(userId);
+//        User user = userRepository.findById(userId);
         int result = 0;
         result = userSocializingRepository.addUserToSocializing(userId, socializingId, role);
-        return 0;
+        return result;
     }
 
     @Override

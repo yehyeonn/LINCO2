@@ -7,8 +7,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserSocializing {
-    private User user;  // 참가자 정보
-    private Socializing socializing;    // 어느 글 참여자인지 확인하기 위함
+    private User user;
+    private Socializing socializing;
+    private Long user_id; // 참가자 id
+    private Long socializing_id; // 참여글 아이디
     private String role;  // master, member
 
 }

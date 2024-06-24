@@ -215,3 +215,7 @@ label {
     margin-right: 15%;
 
 }
+
+.hidden{
+    display: none;
+}

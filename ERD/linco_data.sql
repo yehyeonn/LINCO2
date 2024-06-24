@@ -92,7 +92,8 @@ insert into CLUB_USER_LIST(user_id, club_id, role)
 values (1, 1, 'MASTER'),
        (2, 1, 'MEMBER'),
        (3, 2, 'MASTER'),
-       (4, 2, 'MEMBER');
+       (4, 2, 'MEMBER')
+;
 
 
 # select * from CLUB_USER_LIST;
@@ -207,12 +208,13 @@ values (1, '같이 스야치쟝~', '운동', '야구', '서울시 강남구 역�
        (2, '축구하쟝~~', '운동', '축구', '서울특별시 마포구 월드컵로 240', '2024-06-14', '09:00', 30, '강의실에서 키보드나 두드리쟝', 20000,
         'face02.png');
 
-# select * from SOCIALIZING;
-
 insert into USER_SOCIALIZING (user_id, socializing_id, role)
 values (1, 1, 'MASTER'),
        (2, 1, 'MEMBER'),
        (3, 2, 'MASTER'),
-       (4, 2, 'MEMBER');
+       (4, 2, 'MEMBER')
+;
 
-select * from USER_SOCIALIZING;
+# insert into USER_SOCIALIZING (user_id, socializing_id, role)
+# values (2, 12, 'MASTER')
+# ;

@@ -5,9 +5,9 @@ import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserSocializingService;
-import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/socializing")
@@ -59,6 +56,7 @@ public class SocializingController {
     public String writeOk(
             @Valid Socializing socializing
             , BindingResult result
+            , UserSocializing userSocializing
             , Model model
             , RedirectAttributes redirectAttributes
             ){
@@ -84,32 +82,47 @@ public class SocializingController {
             }
         return "redirect:/socializing/write";
         }
-
     model.addAttribute("result", socializingService.write(socializing));
+        userSocializingService.addUserToSocializing(userSocializing.getUser_id(), socializing.getId(), "MASTER");
         return "socializing/writeOk";
     }
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
+        List<UserSocializing> socializingMemberList = socializingService.socializingMemberList(id);
+        List<Long> membersid = new ArrayList<>();
+        UserSocializing socializingMaster = socializingService.findBySocializingMaster(id);
         Socializing socializing = socializingService.detail(id);
         int socializingcnt = socializingService.membercnt(id);
-        List<UserSocializing> socializingMemberList = socializingService.socializingMemberList(id);
-
         String content = socializing.getContent().replace("\n","<br>");
+        for (UserSocializing e : socializingMemberList) {
+            membersid.add(e.getUser().getId());
+        }
 
         model.addAttribute("detailsocializing",socializing);
         model.addAttribute("membercnt",socializingcnt);
         model.addAttribute("members",socializingMemberList);
         model.addAttribute("content",content);
+        model.addAttribute("Master",socializingMaster);
+        model.addAttribute("Listnum",membersid);
         return "/socializing/detail";
     }
 
+    @PostMapping("/detail")
+    public String detailOk(@RequestParam(name = "user_id", required = false, defaultValue = "") Long userId
+                           ,@RequestParam(name = "socializing_id",required = false,defaultValue = "") Long socializingId
+                            , Model model){
+
+        int result = userSocializingService.addUserToSocializing(userId,socializingId, "MEMBER");
+        model.addAttribute("result",result);
+        model.addAttribute("userSocializing",socializingId);
+        return "socializing/detailOk";
+    }
 
 
-    @InitBinder
+    @InitBinder("socializing")
     public void initBinder(WebDataBinder binder){
         System.out.println("SocializingController.initBinder() 호출");
-
         binder.setValidator(new SocializingValidator());
     }
 

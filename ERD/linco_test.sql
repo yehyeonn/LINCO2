@@ -81,7 +81,7 @@ from club_user_list;
 desc BOARD;
 
 update socializing
-set content = '6월 15일 토요일 06시30분 ~ 10시 갈현체육공원 야구장\n\n
+set content ='6월 15일 토요일 06시30분 ~ 10시 갈현체육공원 야구장
 
 몸풀고 펑고좀 받고 바로 경기 진행하겠습니다
 빠른경기진행으로 9회 목표로 해보겠습니다
@@ -148,13 +148,34 @@ where id = 1;
 
 
 
-
-
-
 select *
 from club_user_list;
 
 
+select
+    u.id                    "u_id",
+    u.tel                   "u_tel",
+    u.username              "u_username",
+    u.password              "u_password",
+    u.address               "u_address",
+    u.gender                "u_gender",
+    u.birthday              "u_birthday",
+    u.profile_picture       "u_profile_picture",
+    u.regdate               "u_regdate",
+    us.role                 "us_role"
+FROM user_socializing us, user u
+where
+    us.user_id = u.id
+  AND us.socializing_id = 1
 
 
+SELECT count(*)
+from user_socializing
+WHERE socializing_id = 1;
 
+
+select
+    count(*)
+FROM user_socializing us, user u, socializing s
+where us.socializing_id = s.id
+  AND us.user_id = u.id
