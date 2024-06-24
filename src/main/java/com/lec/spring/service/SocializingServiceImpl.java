@@ -1,12 +1,10 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Socializing;
 import com.lec.spring.domain.User;
 import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.repository.SocializingRepository;
 import com.lec.spring.repository.UserRepository;
-import com.lec.spring.util.U;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -15,15 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SocializingServiceImpl implements SocializingService {
@@ -182,6 +174,10 @@ public class SocializingServiceImpl implements SocializingService {
     public List<String> getAllCategories() {
         return Arrays.asList("운동", "공연", "공부");
     }
-    
+
+    @Override
+    public List<Socializing> findAll() {
+        return socializingRepository.findAll();
+    }
 
 }

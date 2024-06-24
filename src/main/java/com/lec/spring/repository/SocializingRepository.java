@@ -26,4 +26,6 @@ public interface SocializingRepository {
 
 
     UserSocializing findBySocializingMaster(@Param("param1") Long id);
+
+    List<Socializing> findAll();
 }

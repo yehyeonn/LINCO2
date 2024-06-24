@@ -7,9 +7,9 @@ $(document).ready(function() {
     const showSection = (index) => {
         sections.each((i, section) => {
             if (i === index) {
-                $(section).css('display', 'flex');
+                $(section).css('display', 'flex').addClass('visible'); // Add 'visible' class
             } else {
-                $(section).css('display', 'none');
+                $(section).css('display', 'none').removeClass('visible'); // Remove 'visible' class
             }
         });
     };

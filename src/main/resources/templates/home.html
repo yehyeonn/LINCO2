@@ -18,19 +18,24 @@
             <div class="box">
                 <div class="category-header">Club</div>
                 <div class="columns">
-                    <div class="column" th:each="club : ${clubs}">
+                    <div class="column">
+                        <div th:each="club : ${leftClubs}">
                        <a th:href="@{/club/detail/{id}(id=${club.id})}"><div class="img-box">
-                            <img th:src="@{/img/no_img.jpg}" alt="Placeholder Image">
+                            <img th:src="@{club.img}" alt="Placeholder Image">
                             <div class="img-title" th:text="${club.name}">클럽제목</div>
                         </div>
                        </a>
-                    </div>
-                    <div class="column">
-                        <a th:href="@{/club/detail}"><div class="img-box">
-                            <img src="https://via.placeholder.com/60" alt="Placeholder Image">
-                            <div class="img-title">클럽제목</div>
                         </div>
-                        </a>
+                    </div>
+
+                    <div class="column">
+                        <div th:each="club : ${rightClubs}">
+                            <a th:href="@{/club/detail/{id}(id=${club.id})}"><div class="img-box">
+                                <img th:src="@{club.img}" alt="Placeholder Image">
+                                <div class="img-title" th:text="${club.name}">클럽제목</div>
+                            </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,21 +44,26 @@
             <div class="box">
                 <div class="category-header">Socializing</div>
                 <div class="columns">
-                    <div class="column" th:each="socializing : ${socializings}">
-                        <a th:href="@{/socializing/detail/{id}(id=${socializing.id})}">> <div class="img-box">
-                            <img th:src="${socializing.img != null ? socializing.img : '/img/no_img.jpg'}" alt="Image">
+                    <div class="column">
+                        <div th:each="socializing : ${leftSocializing}">
+                        <a th:href="@{/socializing/detail/{id}(id=${socializing.id})}"> <div class="img-box">
+                            <img th:src="${socializing.img}">
 
-                            <div class="img-title" th:text="${socializing}">제목</div>
+                            <div class="img-title" th:text="${socializing.getSocializing_title()}">제목</div>
                         </div>
                         </a>
+                        </div>
                     </div>
 
-                    <div class="column" th:each="socializing : ${socializing}">
-                        <a th:href="@{/socializing/detail/{id}(id=${socializing.id})}">> <div class="img-box">
-                            <img th:src="@{'/img/'+${detailsocializing.img}}" alt="X">
-                            <div class="img-title" th:text="${detailsocializing.getSocializing_title()}">제목</div>
+                    <div class="column">
+                        <div th:each="socializing : ${rightSocializing}">
+                            <a th:href="@{/socializing/detail/{id}(id=${socializing.id})}"> <div class="img-box">
+                                <img th:src="${socializing.img}">
+
+                                <div class="img-title" th:text="${socializing.getSocializing_title()}">제목</div>
+                            </div>
+                            </a>
                         </div>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -65,7 +75,7 @@
                     <div class="column">
                         <div th:each="venue, stat : ${leftVenues}">
                         <a th:href="@{/home/venue/detail/{id}(id=${venue.id})}"><div class="img-box">
-                            <img th:src="${venue.img}" alt="X">
+                            <img th:src="${venue.img}">
                             <div class="img-title" th:text="${venue.venue_name}">제목</div>
                         </div>
                         </a>
@@ -74,7 +84,7 @@
                     <div class="column">
                         <div th:each="venue, stat : ${rightVenues}">
                             <a th:href="@{/home/venue/detail/{id}(id=${venue.id})}"><div class="img-box">
-                                <img th:src="${venue.img}" alt="X">
+                                <img th:src="${venue.img}">
                                 <div class="img-title" th:text="${venue.venue_name}">제목</div>
                             </div>
                             </a>

@@ -44,6 +44,8 @@ public interface SocializingService {
     // 삭제
     int deleteById(Long id);
 
+    List<Socializing> findAll();
+
     // 첨부파일
     // TODO
 }
