@@ -51,15 +51,10 @@ public class SocializingServiceImpl implements SocializingService {
         System.out.println("SocializingService() 생성");
     }
 
-
     @Override
     public int write(Socializing socializing) {
         User user = U.getLoggedUser();
         socializing.setUser(user);  // 글 작성자
-
-//        if (socializing.getImg() == null) {
-//            socializing.setImg("DefaultImg.jpg");
-//        }
 
         int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
 
@@ -156,6 +151,11 @@ public class SocializingServiceImpl implements SocializingService {
         return list;
     }
 
+    @Override
+    public UserSocializing findBySocializingMaster(long id) {
+        return socializingRepository.findBySocializingMaster(id);
+    }
+
     //수정
     @Override
     public Socializing selectById(Long id, Model model) {
@@ -182,6 +182,6 @@ public class SocializingServiceImpl implements SocializingService {
     public List<String> getAllCategories() {
         return Arrays.asList("운동", "공연", "공부");
     }
+    
+
 }
-
-

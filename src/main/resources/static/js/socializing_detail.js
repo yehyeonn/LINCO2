@@ -3,7 +3,10 @@ $(function (){
     var tokens = fullAddress.split(' ');
     var district = tokens[0] + " " + tokens[1];
     if (district) {
-        $('#address').text(district);
+        var newSpan = $('<span id="district" class="social-info"></span>').text(district);
+        $('#address').after(newSpan);  // #address 요소 뒤에 새로운 <span> 요소 추가
+        // $('#address').text(district);
+        // alert(district);
     }
 
     var geocoder = new kakao.maps.services.Geocoder();
@@ -36,6 +39,11 @@ $(function (){
             // 마커 중심으로 설정
             map.setCenter(coords);
             map.relayout();
+
+            displayInfowindow(marker, title);
+            map.panTo(placePosition);
+            document.getElementById('placeName').value = places[i].place_name;
+            console.log(document.getElementById('placeName').value);
         }
     });
 
