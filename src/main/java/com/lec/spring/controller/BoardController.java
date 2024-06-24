@@ -1,14 +1,9 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.*;
-import com.lec.spring.service.BoardService;
-import com.lec.spring.service.ClubService;
-import com.lec.spring.service.CommentService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +33,9 @@ public class BoardController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private AttachmentService attachmentService;
 
     // 기본생성자
     public BoardController() {
@@ -110,10 +108,14 @@ public class BoardController {
 
         model.addAttribute("boards", boards);
         model.addAttribute("clubs", clubs);
-//        System.out.println("boards : " +boards.toString() + "\n");
+
+        // 디버깅용
+//        for (int i = 1; i < boards.size(); i++) {
+//            System.out.println("boards : " +boards.get(i).getClub().toString() + "\n");
+//        }
 //        System.out.println("boardType : " +boardTypeId + "\n");
 
-        return "board/list1";
+        return "board/list";
     }
 
     @GetMapping("/update/{id}")

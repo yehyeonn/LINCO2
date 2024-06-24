@@ -15,8 +15,8 @@
              , birthday
              , profile_picture
              , regdate
-             , provider "provider"
-             , providerId "providerId"
+#              , provider "provider"
+#              , providerId "providerId"
         FROM user
         WHERE 1 = 1
     </sql>
@@ -33,8 +33,8 @@
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.User"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO user(tel, username, password, name, address, gender, birthday, profile_picture)
-        VALUE(#{tel},#{username},#{password},#{name},#{address},#{gender},#{birthday},#{profile_picture})
+        INSERT INTO user(tel, username, password, name, address, gender, birthday, profile_picture, provider, providerId)
+        VALUE(#{tel},#{username},#{password},#{name},#{address},#{gender},#{birthday},#{profile_picture},#{provider},#{providerId})
     </insert>
     
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">

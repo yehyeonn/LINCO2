@@ -17,6 +17,7 @@ public class BoardValidator implements Validator {
         Board board = (Board) target;
         System.out.println("BoardValidator 호출" + board);
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"subject", "글 제목은 필수입니다.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"title", "글 제목은 필수입니다.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"content", "내용은 필수입니다.");
     }
 }

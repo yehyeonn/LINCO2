@@ -37,9 +37,7 @@
         <form th:action="@{/user/login}" method="POST">
             <h1>Sign In</h1>
             <div class="social-img">
-                <a th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'},
-                    client_id=${@environment.getProperty('app.oauth2.kakao.client-id')},
-                    redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}"><img th:src="@{/img/kakao_login_button.png}" alt="kakao-login"></a>
+                <a th:href="@{/oauth2/authorization/kakao}"><img th:src="@{/img/kakao_login_button.png}" alt="kakao-login"></a>
                 <a th:href="@{/oauth2/authorization/naver}"><img th:src="@{/img/naver_login_button.png}" alt="naver-login"></a>
                 <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/img/google_login_button.png}" alt="google-login"></a>
             </div>
