@@ -47,24 +47,27 @@ $(document).ready(function () {
         localStorage.setItem("detail", detail_category.val());
     });
 
+    // 파일 선택 버튼 클릭 시 파일 입력 필드 클릭
     $('#fileSelect').on('click', function () {
-        $('#fileInput').click(); // 파일 선택 input 클릭 이벤트 발생
+        $('#fileInput').click();
     });
 
+    // 파일 선택 시 미리보기 표시
     $('#fileInput').on('change', function () {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                $('#previewImage').attr('src', e.target.result).show(); // 이미지 미리보기 설정 및 보이기
-                $('#img_txt').hide(); // 이미지 미리보기 텍스트 숨기기
-            };
-            reader.readAsDataURL(file); // 파일을 Data URL로 변환하여 읽기
-        } else {
-            $('#previewImage').hide(); // 이미지 미리보기 숨기기
-            $('#img_txt').show(); // 이미지 미리보기 텍스트 보이기
+                var previewImage = document.getElementById("previewImage");
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";
+                var imgtxt = document.getElementById('img_txt');
+                imgtxt.style.display = "none";
+            }
+            reader.readAsDataURL(file);
         }
     });
+
 
 
     // 엔터키로 form 제출 막기, 하지만 #location 필드에서는 searchPlaces() 실행
@@ -73,6 +76,8 @@ $(document).ready(function () {
             if ($(event.target).attr('id') === 'location') {
                 event.preventDefault();
                 searchPlaces();
+            }    else if ($(event.target).is('textarea')) {
+                return; // 아무것도 하지 않음
             } else {
                 event.preventDefault();
             }

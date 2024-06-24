@@ -51,24 +51,6 @@ public class SocializingServiceImpl implements SocializingService {
         System.out.println("SocializingService() 생성");
     }
 
-    private void setImage(List<Attachment> fileList) {
-        String realPath = new File(uploadDir).getAbsolutePath();
-
-        for (Attachment attachment : fileList) {
-//            BufferedImage imgData = null;
-            File f = new File(realPath, attachment.getFilename());
-            try {
-                BufferedImage imgData = ImageIO.read(f);
-                if (imgData != null) attachment.setImage(true);
-//                imgData = ImageIO.read(f);
-//
-//                if (imgData != null)
-//                    attachment.setImage(true);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     @Override
     public int write(Socializing socializing) {
@@ -80,7 +62,6 @@ public class SocializingServiceImpl implements SocializingService {
 //        }
 
         int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
-
 
         return cnt;
     }

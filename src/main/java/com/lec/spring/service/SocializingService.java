@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface SocializingService {
-//    // 작성, 내용보기, 전체 목록, 수정하기, 삭제
+    // 작성, 내용보기, 전체 목록, 수정하기, 삭제
     int write(Socializing socializing);
-//
+
     @Transactional
     Socializing detail(Long id);
 

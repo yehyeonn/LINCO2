@@ -153,7 +153,5 @@ where id = 1;
 select *
 from club_user_list;
 
-
-
-
+delete from socializing WHERE id = 19
 
