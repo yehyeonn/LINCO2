@@ -44,13 +44,16 @@
         </div>
 
         <div class="socializing-list active">
-            <a th:href="@{#}"><div class="socializing-item">
+            <div th:each="socializing : ${userSocializings}">
+                <a th:href="@{/socializing/detail/{id}(id=${socializing.socializing_id})}">
+                    <div class="socializing-item">
                 <div class="socializing-pic">
-                    <img th:src="@{/img/face01.png}" alt="소셜라이징 사진">
+                    <img th:src="@{'/' + ${socializing.socializing.img}}" alt="소셜라이징 사진">
                 </div>
-                <div class="socializing-title">아이언맨 보러갈래?</div>
+                        <div class="socializing-title" th:text="${socializing.socializing.getSocializing_title()}">아이언맨 보러갈래?</div>
+                     </div>
+                </a>
             </div>
-            </a>
         </div>
 
         <div class="payment-history">

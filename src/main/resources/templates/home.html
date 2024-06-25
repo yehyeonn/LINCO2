@@ -21,7 +21,7 @@
                     <div class="column">
                         <div th:each="club : ${leftClubs}">
                        <a th:href="@{/club/detail/{id}(id=${club.id})}"><div class="img-box">
-                            <img th:src="${club.representative_picture}" alt="Placeholder Image">
+                           <img th:src="@{'/img/' + ${club.representative_picture}}" alt="클럽이미지">
                             <div class="img-title" th:text="${club.name}">클럽제목</div>
                         </div>
                        </a>
@@ -31,7 +31,7 @@
                     <div class="column">
                         <div th:each="club : ${rightClubs}">
                             <a th:href="@{/club/detail/{id}(id=${club.id})}"><div class="img-box">
-                                <img th:src="${club.representative_picture}" alt="Placeholder Image">
+                                <img th:src="@{'/img/' + ${club.representative_picture}}" alt="클럽이미지">
                                 <div class="img-title" th:text="${club.name}">클럽제목</div>
                             </div>
                             </a>

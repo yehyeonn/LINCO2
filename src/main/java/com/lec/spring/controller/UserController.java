@@ -4,6 +4,7 @@ import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.service.ClubService;
 import com.lec.spring.service.SocializingService;
@@ -82,6 +83,7 @@ public class UserController {
     }
 
 
+    // 마이페이지
     @GetMapping("/my_page")
     public String my_page(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
 
@@ -91,8 +93,10 @@ public class UserController {
 
         User user = principalDetails.getUser();
         List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
-
+        List<UserSocializing> userSocializings = userService.getUserSocializings(user.getId());
+        System.out.println(userSocializings);
         model.addAttribute("userClubs", userClubs);
+        model.addAttribute("userSocializings", userSocializings);
 
         return "user/my_page";
     }
