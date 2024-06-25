@@ -10,4 +10,6 @@ public interface ReservationService {
     List<Reservation> list();
 
     int update(Reservation reservation);
+
+    List<Reservation> findByVenueAndDate(Long id, String reserve_date);
 }

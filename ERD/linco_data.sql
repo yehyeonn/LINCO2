@@ -22,6 +22,8 @@ ALTER TABLE ATTACHMENT
     AUTO_INCREMENT = 1;
 DELETE
 FROM RESERVATION;
+ALTER TABLE RESERVATION
+    AUTO_INCREMENT = 1;
 DELETE
 FROM USER_SOCIALIZING;
 DELETE
@@ -183,11 +185,12 @@ values (1, 1, 1, '재미없쪙', null),
 
 # select * from VENUE;
 
-insert into RESERVATION (user_id, reservation_name, email, tel, venue_id, venue_name, status, reserve_date, reserve_start_time, reserve_end_time, total_price, paydate)
-values (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 1, '코리아IT아카데미', 'PAYED', '2024-06-14', '09:00:00',  '18:00:00', 1000, null),
-       (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 2, '코리아IT아카데미', 'CANCELED', '2024-06-15', '09:00:00',  '22:00:00', 1000, null),
-       (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 3, '해성이집', 'PAYED', '2024-06-13', '00:00:00',  '23:59:59', 0, null),
-       (2, '김세현', 'sehyun_jjang@naver.com', '010-1111-1111', 2, '코리아IT아카데미', 'DONE', '2024-06-16', '09:00:00',  '18:00:00', 1000, null);
+insert into RESERVATION (user_id, reservation_name, email, tel, venue_id, venue_name, status, reserve_date, reserve_start_time, reserve_end_time, total_price)
+values (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 1, '서울역사박물관 야주개홀(강당) (24. 5월)', 'PAYED', '2024-06-28', '14:00:00',  '18:00:00', 1000),
+       (2, '김세현', 'yee0514@gamil.com', '010-1234-1234', 1, '서울역사박물관 야주개홀(강당) (24. 5월)', 'CANCELED', '2024-06-28', '09:00:00',  '11:00:00', 1000),
+       (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 1, '서울역사박물관 야주개홀(강당) (24. 5월)', 'CANCELED', '2024-06-29', '09:00:00',  '11:00:00', 1000),
+       (1, '김예현', 'yee0514@gamil.com', '010-0000-0000', 12, '2024년 영화촬영(주간)-잠실한강공원', 'PAYED', '2024-06-29', '09:00:00',  '11:00:00', 10000),
+       (2, '김세현', 'sehyun_jjang@naver.com', '010-1111-1111', 12, '2024년 영화촬영(주간)-잠실한강공원', 'DONE', '2024-06-28', '14:00:00',  '16:00:00', 1000 );
 
 # select * from RESERVATION;
 
