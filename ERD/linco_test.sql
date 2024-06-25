@@ -145,7 +145,17 @@ set content ='6월 15일 토요일 06시30분 ~ 10시 갈현체육공원 야구�
 유격수 - 김동현 (입완) 1년보험(레이더스)'
 where id = 1;
 
+desc reservation;
+desc venue;
 
+select re.*,
+       u.*,
+       v.*
+from RESERVATION re
+         join user u on re.user_id = u.id
+         join venue v on re.venue_id = v.id
+where re.venue_id = 12
+  and re.reserve_date = '2024-06-29';
 
 
 

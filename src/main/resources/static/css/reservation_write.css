@@ -73,13 +73,26 @@ body {
     /*outline: 3px solid red;*/
     padding: 10px;
     text-align: center;
+    align-items: center;
     justify-content: center;
     flex: 1;
     max-width: 50px;
     height: 40px;
+    display: flex;
+    box-sizing: border-box;
 }
 
-.calendar td#calendarTitle{
+.calendar label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.calendar td#calendarTitle {
     max-width: 200px;
 }
 
@@ -94,6 +107,7 @@ td #sun {
 td #sat {
     color: skyblue;
 }
+
 
 .calendar tr td:hover {
     cursor: pointer;
@@ -144,10 +158,6 @@ td #sat {
     cursor: pointer;
 }
 
-.time tr:last-child td:nth-last-child(-n+2) {
-    visibility: hidden;
-}
-
 .info-box {
 
     display: flex;
@@ -178,7 +188,7 @@ td #sat {
 }
 
 
-.info-box ul li input, .info-box ul li div  {
+.info-box ul li input, .info-box ul li div {
     width: 60%;
     padding: 8px;
     border: 1px solid #ced4da;
@@ -256,3 +266,15 @@ td #sat {
 .pay-btn:hover {
     background-color: var(--red);
 }
+
+.reserved {
+    pointer-events: none;
+    background-color: #cccccc;
+    color: #cccccc;
+    cursor: not-allowed;
+}
+.selected {
+    background-color: #4075e2;
+    color: white;
+}
+

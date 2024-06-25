@@ -24,4 +24,6 @@ public class Venue {
     private String close_time;
     private String img;
 
+    private User user;
+
 }

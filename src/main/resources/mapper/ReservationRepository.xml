@@ -7,25 +7,81 @@
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Reservation"
             keyColumn="id" keyProperty="id">
-insert into RESERVATION
-(reservation_name, email, tel, total_price, reserve_date, reserve_start_time, reserve_end_time)
-values (#{reservation_name}, #{email}, #{tel}, #{total_price}, #{reserve_date}, #{reserve_start_time}, #{reserve_end_time})
+        insert into RESERVATION
+        (user_id, reservation_name, email, tel, venue_id, venue_name, status, reserve_date, reserve_start_time,
+         reserve_end_time, total_price, paydate)
+        values (#{user_id}, #{reservation_name}, #{email}, #{tel}, #{venue_id}, #{venue_name}, #{status},
+                #{reserve_date}, #{reserve_start_time}, #{reserve_end_time},
+                #{total_price}, #{paydate})
     </insert>
 
     <select id="findById" resultType="com.lec.spring.domain.Reservation">
-select id,
-       venue_name,
-       reserve_date,
-       paydate,
-       total_price,
-       status
-    from RESERVATION
-where 1 = 1
+        select *
+        from RESERVATION
+        where 1 = 1;
     </select>
 
-    <update id="updeate" flushCache="true" parameterType="com.lec.spring.domain.Reservation">
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Reservation">
         update RESERVATION
         set status=#{status}
         where id = #{id}
     </update>
+
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_name" property="name"/>
+        <result column="u_username" property="username"/>
+    </resultMap>
+
+    <resultMap id="mapVenue" type="com.lec.spring.domain.Venue">
+        <result column="v_id" property="id"/>
+        <result column="v_venue_name" property="venue_name"/>
+        <result column="v_address" property="address"/>
+        <result column="v_limit_num" property="limit_num"/>
+        <result column="v_venue_category" property="venue_category"/>
+        <result column="v_info_tel" property="info_tel"/>
+        <result column="v_price" property="price"/>
+        <result column="v_posible_start_date" property="posible_start_date"/>
+        <result column="v_posible_end_date" property="posible_end_date"/>
+        <result column="v_open_time" property="open_time"/>
+        <result column="v_close_time" property="close_time"/>
+    </resultMap>
+
+    <resultMap id="mapReservation" type="com.lec.spring.domain.Reservation">
+        <result column="re_id" property="id"/>
+        <result column="re_reserve_date" property="reserve_date"/>
+        <result column="re_reserve_start_time" property="reserve_start_time"/>
+        <result column="re_reserve_end_time" property="reserve_end_time"/>
+        <collection property="user" resultMap="mapUser"/>
+        <collection property="venue" resultMap="mapVenue"/>
+    </resultMap>
+
+
+    <select id="findByVenueAndDate" resultMap="mapReservation">
+        select re.id                 "re_id",
+               re.reserve_date       "re_reserve_date",
+               re.reserve_start_time "re_reserve_start_time",
+               re.reserve_end_time   "re_reserve_end_time",
+               re.status             "re_status",
+               u.id                  "u_id",
+               u.name                "u_name",
+               u.username            "u_username",
+               u.tel                 "u_tel",
+               v.id                  "v_id",
+               v.venue_name          "v_venue_name",
+               v.address             "v_address",
+               v.limit_num           "v_limit_num",
+               v.venue_category      "v_venue_category",
+               v.info_tel            "v_info_tel",
+               v.price               "v_price",
+               v.posible_start_date  "v_posible_start_date",
+               v.posible_end_date    "v_posible_end_date",
+               v.open_time           "v_open_time",
+               v.close_time          "v_close_time"
+        from RESERVATION re
+                 join user u on re.user_id = u.id
+                 join venue v on re.venue_id = v.id
+        where re.venue_id = #{venue_id}
+          and re.reserve_date = #{reserve_date};
+    </select>
 </mapper>
