@@ -1,8 +1,10 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Authority;
+import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
+import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.repository.UserRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,14 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
+    private ClubUserListRepository clubUserListRepository;
+
 
     @Autowired
     public UserServiceImpl(SqlSession sqlSession){
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+        clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
     }
 
     @Override
@@ -59,5 +64,11 @@ public class UserServiceImpl implements UserService {
     public List<Authority> selectAuthoritiesById(Long id) {
         User user = userRepository.findById(id);
         return authorityRepository.findByUser(user);
+    }
+
+
+    @Override
+    public List<ClubUserList> getUserClubs(Long user_id) {
+        return clubUserListRepository.findByUserId(user_id);
     }
 }

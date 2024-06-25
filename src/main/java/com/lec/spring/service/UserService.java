@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Authority;
+import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface UserService {
     boolean isExist(String username);
     int register(User user);
     List<Authority> selectAuthoritiesById(Long id);
+
+    List<ClubUserList> getUserClubs(Long user_id);
 }
