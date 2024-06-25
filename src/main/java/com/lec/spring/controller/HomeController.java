@@ -50,27 +50,6 @@ public class HomeController {
         List<Socializing> socializing = socializingService.findAll();
 
 
-//        // 베뉴 랜덤으로 8개 섞기
-//        Collections.shuffle(venues);
-//        List<Venue> randomVenues = venues.stream().limit(8).collect(Collectors.toList());
-//
-//        List<Venue> leftVenues = randomVenues.subList(0, 4);
-//        List<Venue> rightVenues = randomVenues.subList(4, 8);
-//
-//        // 소셜라이징 랜덤으로 8개 섞기
-//        Collections.shuffle(socializing);
-//        List<Socializing> randomSocializing = socializing.stream().limit(8).collect(Collectors.toList());
-//
-//        List<Socializing> leftSocializing = randomSocializing.subList(0, 4);
-//        List<Socializing> rightSocializing = randomSocializing.subList(4, 8);
-
-        // 클럽 랜덤으로 8개 섞기
-//        Collections.shuffle(clubs);
-//        List<Club> randomClubs = clubs.stream().limit(8).collect(Collectors.toList());
-//
-//        List<Club> leftClubs = randomClubs.subList(0, 4);
-//        List<Club> rightClubs = randomClubs.subList(4, 8);
-
         // 랜덤으로 섞기
         Collections.shuffle(venues);
         Collections.shuffle(socializing);

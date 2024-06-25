@@ -32,123 +32,25 @@
         </div>
 
         <div class="club-list active">
-            <a th:href="@{}"><div class="club-item">
+            <div th:each="club : ${userClubs}">
+            <a th:href="@{/club/list(id=${club.club_id})}"><div class="club-item">
                 <div class="club-pic">
-                    <img th:src="@{/img/face01.png}" alt="클럽 사진">
+                    <img th:src="@{#}" alt="클럽 사진">
                 </div>
-                <div class="club-title">아이언맨 클럽</div>
+                <div class="club-title" th:text="@{#}">아이언맨 클럽</div>
             </div>
             </a>
-            <a th:href="@{}"><div class="club-item">
-                <div class="club-pic">
-                    <img th:src="@{/img/face02.png}" alt="클럽 사진">
-                </div>
-                <div class="club-title">캡틴아메리카 클럽</div>
             </div>
-            </a>
-            <a th:href="@{}"><div class="club-item">
-                <div class="club-pic">
-                    <img th:src="@{/img/face03.png}" alt="클럽 사진">
-                </div>
-                <div class="club-title">헐크 클럽</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="club-item">
-                <div class="club-pic">
-                    <img th:src="@{/img/face04.png}" alt="클럽 사진">
-                </div>
-                <div class="club-title">블랙위도우 클럽</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="club-item">
-                <div class="club-pic">
-                    <img th:src="@{/img/face05.png}" alt="클럽 사진">
-                </div>
-                <div class="club-title">누군지 잘 모르겠네요</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="club-item">
-                <div class="club-pic">
-                    <img th:src="@{/img/face06.png}" alt="클럽 사진">
-                </div>
-                <div class="club-title">로봇 클럽</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="club-item">
-                <div class="club-pic">
-                    <img th:src="@{/img/face07.png}" alt="클럽 사진">
-                </div>
-                <div class="club-title">이름이 생각이 안나네요</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="club-item">
-                <div class="club-pic">
-                    <img th:src="@{/img/face08.png}" alt="클럽 사진">
-                </div>
-                <div class="club-title">토르 클럽</div>
-            </div>
-            </a>
-
         </div>
 
         <div class="socializing-list active">
-            <a th:href="@{}"><div class="socializing-item">
+            <a th:href="@{#}"><div class="socializing-item">
                 <div class="socializing-pic">
                     <img th:src="@{/img/face01.png}" alt="소셜라이징 사진">
                 </div>
                 <div class="socializing-title">아이언맨 보러갈래?</div>
             </div>
             </a>
-            <a th:href="@{}"><div class="socializing-item">
-                <div class="socializing-pic">
-                    <img th:src="@{/img/face02.png}" alt="소셜라이징 사진">
-                </div>
-                <div class="socializing-title">캡틴아메리카 보러 가실분~~</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="socializing-item">
-                <div class="socializing-pic">
-                    <img th:src="@{/img/face03.png}" alt="소셜라이징 사진">
-                </div>
-                <div class="socializing-title">헐크 보러 가실분!</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="socializing-item">
-                <div class="socializing-pic">
-                    <img th:src="@{/img/face04.png}" alt="소셜라이징 사진">
-                </div>
-                <div class="socializing-title">블랙위도우 보자@@@</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="socializing-item">
-                <div class="socializing-pic">
-                    <img th:src="@{/img/face05.png}" alt="소셜라이징 사진">
-                </div>
-                <div class="socializing-title"><- 보러가실?</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="socializing-item">
-                <div class="socializing-pic">
-                    <img th:src="@{/img/face06.png}" alt="소셜라이징 사진">
-                </div>
-                <div class="socializing-title">로봇 박물관 가실분~~</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="socializing-item">
-                <div class="socializing-pic">
-                    <img th:src="@{/img/face07.png}" alt="소셜라이징 사진">
-                </div>
-                <div class="socializing-title">마법사 보러 가실분~</div>
-            </div>
-            </a>
-            <a th:href="@{}"><div class="socializing-item">
-                <div class="socializing-pic">
-                    <img th:src="@{/img/face08.png}" alt="소셜라이징 사진">
-                </div>
-                <div class="socializing-title">토르 보러 가실분@@@@</div>
-            </div>
-            </a>
-
         </div>
 
         <div class="payment-history">

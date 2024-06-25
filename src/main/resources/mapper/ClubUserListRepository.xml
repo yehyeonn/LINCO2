@@ -46,4 +46,35 @@
         WHERE club_id = #{clubId}
     </select>
 
+    <resultMap id="mapClubuserList" type="com.lec.spring.domain.ClubUserList">
+        <result column="cs_uid" property="user_id"/>
+        <result column="cs_cid" property="club_id"/>
+        <result column="cs_role" property="role"/>
+        <collection property="club" resultMap="mapClub"/>
+    </resultMap>
+
+    <resultMap id="mapClub" type="com.lec.spring.domain.Club">
+        <result column="c_id" property="id"/>
+        <result column="c_name" property="name"/>
+        <result column="c_category" property="category"/>
+        <result column="c_detail_category" property="detail_category"/>
+        <result column="c_intro" property="intro"/>
+        <result column="c_representative_picture" property="representative_picture"/>
+    </resultMap>
+
+    <select id="findByClubuserList" flushCache="true" resultMap="mapClubuserList">
+        select
+            cs.user_id "cs_uid",
+            cs.club_id "cs_cid",
+            cs.role "cs_role",
+            c.id "c_id",
+            c.name "c_name",
+            c.category "c_category",
+            c.detail_category "c_detail_category",
+            c.intro "c_inrto",
+            c.representative_picture "c_representative_picture"
+            FROM CLUB_USER_LIST cs, CLUB c
+            WHERE cs.club_id = c.id;
+    </select>
+
 </mapper>

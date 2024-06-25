@@ -1,5 +1,12 @@
 /* start navbar css */
-.login-out, .login {
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.login-out, .login, .my-page{
     background-color: #B3B49E;
     color: #EDEBDA;
     font-size: 14px;
@@ -9,7 +16,11 @@
     transition: 0.3s background-color;
 }
 
-.login-out:hover, .login:hover {
+.my-page {
+    margin-top: 10px;
+}
+
+.login-out:hover, .login:hover, .my-page:hover {
     background-color: #D3374A;
 }
 
@@ -50,7 +61,7 @@ span, button {
 .nav-link {
     color: #EDEBDA;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1.5em;
     position: relative;
 }
 

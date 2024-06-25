@@ -1,18 +1,22 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.domain.Club;
+import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.ClubUserListRepository;
+import com.lec.spring.service.ClubService;
+import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -76,6 +80,20 @@ public class UserController {
     public String loginError() {
         return "user/login";
     }
+
+
     @GetMapping("/my_page")
-    public void my_page(){}
+    public String my_page(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
+
+        if(principalDetails == null){ // 인증되지 않은 사용자 로그인 페이지로 리다이렉션
+            return "redirect:/user/login";
+        }
+
+        User user = principalDetails.getUser();
+        List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
+
+        model.addAttribute("userClubs", userClubs);
+
+        return "user/my_page";
+    }
 }
