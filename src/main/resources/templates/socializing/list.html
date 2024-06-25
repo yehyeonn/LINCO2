@@ -136,7 +136,7 @@
 
     <div class="main-content">
         <div class="socializing-item" th:each=" social : ${list}">
-            <a th:href="@{'/socializing/detail/' + ${social.id}}">
+            <a  th:href="@{'/socializing/detail/' + ${social.id}}">
                 <img th:src="@{'/'+${social.img}}" class="img-thumbnail" id="fixed-size"><!-- alt="Socializing Image"-->
                 <p th:text="${social.socializing_title}"><br>스포츠 | 서초구</p>
                 <p th:text="${social.category}" id="category" class="hidden"></p>

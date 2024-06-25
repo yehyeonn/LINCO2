@@ -161,6 +161,7 @@ CREATE TABLE SOCIALIZING
     category          VARCHAR(10)  NOT NULL,
     detail_category   VARCHAR(20)  NOT NULL,
     address           VARCHAR(100) NOT NULL,
+    place_name        VARCHAR(100) NULL,
     meeting_date      DATE         NOT NULL COMMENT '약속날짜시간',
     meeting_time      TIME         NOT NULL,
     limit_num         int          NOT NULL COMMENT '2명 이상',
