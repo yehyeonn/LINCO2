@@ -10,9 +10,9 @@
             parameterType="com.lec.spring.domain.Socializing"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
     INSERT INTO socializing
-        (venue_id, socializing_title, category, detail_category, address, meeting_date, meeting_time, limit_num, content, total_price, img)
+        (venue_id, socializing_title, category, detail_category, address, place_name , meeting_date, meeting_time, limit_num, content, total_price, img)
     VALUES
-        (#{venue_id}, #{socializing_title}, #{category}, #{detail_category}, #{address}, #{meeting_date}, #{meeting_time}, #{limit_num}, #{content}, #{total_price},
+        (#{venue_id}, #{socializing_title}, #{category}, #{detail_category}, #{address}, #{place_name}, #{meeting_date}, #{meeting_time}, #{limit_num}, #{content}, #{total_price},
         #{img})
     </insert>
 
@@ -28,6 +28,7 @@
             , s.category
             , s.detail_category
             , s.address
+            , s.place_name
             , s.meeting_date
             , s.meeting_time
             , s.limit_num
@@ -49,6 +50,7 @@
             category,
             detail_category,
             address,
+            place_name,
             meeting_date,
             meeting_time,
             limit_num,
@@ -68,6 +70,7 @@
         <result column="s_category" property="category"/>
         <result column="s_detail_category" property="detail_category"/>
         <result column="s_address" property="address"/>
+        <result column="s_place_name" property="place_name"/>
         <result column="s_meeting_date" property="meeting_date"/>
         <result column="s_meeting_time" property="meeting_time"/>
         <result column="s_limit_num" property="limit_num"/>
@@ -127,6 +130,8 @@
     WHERE id = #{id}
     </update>
 
+
+    <!-- 삭제-->
     <delete id="delete" flushCache="true"
             parameterType="com.lec.spring.domain.Socializing">
         DELETE FROM socializing
@@ -176,6 +181,7 @@
             s.category              "s_category",
             s.detail_category       "s_detail_category",
             s.address               "s_address",
+            s.place_name            "s_place_name",
             s.meeting_date          "s_meeting_date",
             s.meeting_time          "s_meeting_time",
             s.limit_num             "s_limit_num",

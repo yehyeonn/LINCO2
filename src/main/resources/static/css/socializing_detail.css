@@ -177,3 +177,18 @@ h2{
 .hidden{
     display: none;
 }
+
+#backbtn{
+    margin-top: 20px;
+    background-color: #3A4D72;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.align-right {
+    display: flex;
+    justify-content: flex-end;
+}

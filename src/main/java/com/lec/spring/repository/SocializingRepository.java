@@ -10,6 +10,7 @@ public interface SocializingRepository {
     int save(Socializing socializing);
     Socializing findById(Long id);
     int update(Socializing socializing);
+
     int delete(Socializing socializing);
 
     List<Socializing> selectFromRow(int from, int rows
