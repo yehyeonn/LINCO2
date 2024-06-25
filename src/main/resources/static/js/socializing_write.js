@@ -195,10 +195,13 @@ function displayPlaces(places) {
             itemEl.addEventListener("click", function (e) {
                 displayInfowindow(marker, title);
                 map.panTo(placePosition);
+                // 주소
                 document.getElementById('address').value = places[i].road_address_name || places[i].address_name;
                 console.log(document.getElementById('address').value);
+
+                // 타이틀
                 document.getElementById('placeName').value = places[i].place_name;
-                console.log(document.getElementById('placeName').value)
+                console.log(document.getElementById('placeName').value);
 
             });
         })(marker, places[i].place_name);
@@ -211,7 +214,6 @@ function displayPlaces(places) {
 
     // map.panTo(bounds);
 }
-
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
