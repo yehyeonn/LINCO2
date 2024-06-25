@@ -38,16 +38,36 @@
         DELETE FROM club WHERE id = #{id}
     </delete>
 
+    <sql id="SELECT_CLUB">
+        SELECT id,
+               name,
+               category,
+               detail_category,
+               intro,
+               content,
+               representative_picture
+        FROM CLUB
+        WHERE 1 = 1
+    </sql>
+
     <!-- 페이징 -->
-    <select id="selectFromRow" parameterType="map" resultType="com.lec.spring.domain.Club">
-        SELECT * FROM club
-        ORDER BY id
-        LIMIT #{rows} OFFSET #{from}
+    <select id="selectFromRow" resultType="com.lec.spring.domain.Club">
+        <include refid="SELECT_CLUB"/>
+        AND (#{param3} IS NULL OR #{param3} = '' OR category = #{param3})
+        AND (#{param4} IS NULL OR #{param4} = '' OR detail_category LIKE CONCAT('%', #{param4}, '%'))
+        ORDER BY id DESC
+        LIMIT #{param1}, #{param2}
     </select>
 
     <!-- 전체 클럽의 개수 -->
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM club
+    </select>
+
+    <select id="countSelect" resultType="int">
+        SELECT count(*) FROM CLUB
+        WHERE (#{param1} IS NULL OR #{param1} = '' OR category = #{param1})
+        AND (#{param2} IS NULL OR #{param2} = '' OR detail_category LIKE CONCAT('%', #{param2}, '%'))
     </select>
 
 

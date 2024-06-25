@@ -2,25 +2,26 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubValidator;
-import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.ClubService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/club")
 public class ClubController {
+
+    @Value("upload")
+    private String uploadDir;
 
     @Autowired
     private ClubService clubService;
@@ -72,8 +73,13 @@ public class ClubController {
     }
 
     @GetMapping("/list")
-    private String list(Integer page, Model model){
-        List<Club> clubs = clubService.getAllClubs();
+    private String list(
+            Integer page,
+            @RequestParam(name="clubCategory", required = false, defaultValue = "") String category,
+            @RequestParam(name= "detailCategory", required = false, defaultValue = "") String detailcategory,
+            Model model){
+
+        List<Club> clubs = clubService.list(page, model, category, detailcategory);
 
         model.addAttribute("clubs", clubs);
         System.out.println("clubs 갯수 : " + clubs.size());

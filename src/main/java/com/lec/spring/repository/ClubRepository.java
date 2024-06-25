@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Club;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,10 +26,12 @@ public interface ClubRepository {
 
     // 페이징
     // from 부터 row 개 만큼 SELECT
-    List<Club> selectFromRow(int from, int rows);
+    List<Club> selectFromRow(int from, int rows, @Param("param3") String selectcategory, @Param("param4") String selectdetailcategory);
 
     // 전체 클럽의 개수
     int countAll();
+
+    int countSelect(String category, String detailcategory);
 
 
 }

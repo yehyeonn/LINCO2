@@ -7,15 +7,28 @@ import com.lec.spring.repository.ClubRepository;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
+import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
 @Service
 public class ClubServiceImpl implements ClubService {
+
+    // 첨부파일 업로드
+    @Value("upload")
+    private String uploadDir;
+
+    @Value("5")
+    private int WRITE_PAGES;
+
+    @Value("15")
+    private int PAGE_ROWS;
 
     private final ClubRepository clubRepository;
     private final ClubUserListRepository clubUserListRepository;
@@ -81,7 +94,6 @@ public class ClubServiceImpl implements ClubService {
     }
 
 
-
     @Override
     public int updateClub(Club club) {
         return clubRepository.update(club);
@@ -90,6 +102,58 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public List<Club> getAllClubs() {
         return clubRepository.findAll();
+    }
+
+    @Override
+    public List<Club> list(Integer page, Model model, String selectcategory, String selectdetailcategory) {
+        System.out.println("selectcategory:" + selectcategory);
+        System.out.println("selectdetailcategory:" + selectdetailcategory);
+
+        if (page == null || page < 1) page = 1;
+
+        HttpSession session = U.getSession();
+        Integer writePages = (Integer) session.getAttribute("writePages");
+        if (writePages == null) writePages = WRITE_PAGES;
+
+        Integer pageRows = (Integer) session.getAttribute("pageRows");
+        if (pageRows == null) pageRows = PAGE_ROWS;
+        session.setAttribute("page", page);
+
+        long cnt = clubRepository.countSelect(selectcategory, selectdetailcategory);
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);
+
+        int startPage = 0;
+        int endPage = 0;
+
+        List<Club> list = null;
+
+        if (cnt > 0) {
+            if (page > totalPage) page = totalPage;
+            int fromRow = (page - 1) * pageRows;
+
+            startPage = (((page - 1) / writePages) * writePages) + 1;
+            endPage = startPage + writePages - 1;
+            if (endPage >= totalPage) endPage = totalPage;
+
+            list = clubRepository.selectFromRow(fromRow, pageRows, selectcategory, selectdetailcategory);
+
+            model.addAttribute("list", list);
+            model.addAttribute("category", selectcategory);
+            model.addAttribute("detailcategory", selectdetailcategory);
+        } else {
+            page = 0;
+        }
+        model.addAttribute("cnt", cnt);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("pageRows", pageRows);
+
+        model.addAttribute("url", U.getRequest().getRequestURI());      // 목록의 url
+        model.addAttribute("writePages", writePages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return list;
     }
 
     @Override
