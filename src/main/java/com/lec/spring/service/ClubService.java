@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -22,6 +23,11 @@ public interface ClubService {
 
     // 클럽 목록 조회
     List<Club> getAllClubs();
+
+    List<Club> list(Integer page,
+                    Model model,
+                    String selectcategory,
+                    String selectdetailcategory);
 
     // 특정 클럽 조회
     Club getClubById(Long club_id);

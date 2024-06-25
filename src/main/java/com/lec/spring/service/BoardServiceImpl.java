@@ -175,8 +175,8 @@ public class BoardServiceImpl implements BoardService{
     // 페이지 네이션 관련
     @Override
     public List<Board> list(Integer page, Model model,Long boardTypeId, Long clubId) {
-        System.out.println("boardId:" + boardTypeId);
-        System.out.println("clubId: " + clubId);
+//        System.out.println("boardId:" + boardTypeId);
+//        System.out.println("clubId: " + clubId);
         if (page == null || page < 1) page = 1;
 
         HttpSession session = U.getSession();
@@ -189,7 +189,7 @@ public class BoardServiceImpl implements BoardService{
         session.setAttribute("page", page);
 
         long cnt = boardRepository.countAll(boardTypeId, clubId);
-        System.out.println("board 개수 : "+cnt);
+//        System.out.println("board 개수 : "+cnt);
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);
 
         int startPage = 0;
