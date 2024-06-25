@@ -88,11 +88,19 @@ public class ClubController {
         return "club/list";
     }
 
+    @GetMapping( "/update/{id}")
+    public String update(){
+
+        return "club/update";
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());
     }
+
+
 
 }
 
