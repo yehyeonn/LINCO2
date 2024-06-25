@@ -47,7 +47,7 @@
                     <div class="column">
                         <div th:each="socializing : ${leftSocializing}">
                         <a th:href="@{/socializing/detail/{id}(id=${socializing.id})}"> <div class="img-box">
-                            <img th:src="${socializing.img}">
+                            <img th:src="@{'/'+${socializing.img}}">
 
                             <div class="img-title" th:text="${socializing.getSocializing_title()}">제목</div>
                         </div>
