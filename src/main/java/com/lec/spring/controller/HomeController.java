@@ -1,29 +1,107 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.domain.Club;
+import com.lec.spring.domain.Socializing;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.Venue;
+import com.lec.spring.service.ClubService;
+import com.lec.spring.service.SocializingService;
+import com.lec.spring.service.SocializingServiceImpl;
+import com.lec.spring.service.VenueService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
+    @Autowired
+    private VenueService venueService;
+    @Autowired
+    private SocializingService socializingService;
+    @Autowired
+    private ClubService clubService;
+
 
     @RequestMapping("/")
     public String home(Model model){
         return "redirect:/home";
     }
 
-    @RequestMapping("/home")
-    public void home(){}
+    @GetMapping("/home")
+    public String homepage(Long id, Model model) {
+        List<Venue> venues = venueService.findAll();
+        List<Club> clubs = clubService.getAllClubs();
+        List<Socializing> socializing = socializingService.findAll();
+
+
+//        // 베뉴 랜덤으로 8개 섞기
+//        Collections.shuffle(venues);
+//        List<Venue> randomVenues = venues.stream().limit(8).collect(Collectors.toList());
+//
+//        List<Venue> leftVenues = randomVenues.subList(0, 4);
+//        List<Venue> rightVenues = randomVenues.subList(4, 8);
+//
+//        // 소셜라이징 랜덤으로 8개 섞기
+//        Collections.shuffle(socializing);
+//        List<Socializing> randomSocializing = socializing.stream().limit(8).collect(Collectors.toList());
+//
+//        List<Socializing> leftSocializing = randomSocializing.subList(0, 4);
+//        List<Socializing> rightSocializing = randomSocializing.subList(4, 8);
+
+        // 클럽 랜덤으로 8개 섞기
+//        Collections.shuffle(clubs);
+//        List<Club> randomClubs = clubs.stream().limit(8).collect(Collectors.toList());
+//
+//        List<Club> leftClubs = randomClubs.subList(0, 4);
+//        List<Club> rightClubs = randomClubs.subList(4, 8);
+
+        // 랜덤으로 섞기
+        Collections.shuffle(venues);
+        Collections.shuffle(socializing);
+        Collections.shuffle(clubs);
+
+        // 8개 제한, 부족할 경우 처리
+        List<Venue> randomVenues = venues.stream().limit(8).collect(Collectors.toList());
+        List<Socializing> randomSocializing = socializing.stream().limit(8).collect(Collectors.toList());
+        List<Club> randomClubs = clubs.stream().limit(8).collect(Collectors.toList());
+
+        List<Venue> leftVenues = randomVenues.subList(0, Math.min(4, randomVenues.size()));
+        List<Venue> rightVenues = randomVenues.subList(Math.min(4, randomVenues.size()), randomVenues.size());
+
+        List<Socializing> leftSocializing = randomSocializing.subList(0, Math.min(4, randomSocializing.size()));
+        List<Socializing> rightSocializing = randomSocializing.subList(Math.min(4, randomSocializing.size()), randomSocializing.size());
+
+        List<Club> leftClubs = randomClubs.subList(0, Math.min(4, randomClubs.size()));
+        List<Club> rightClubs = randomClubs.subList(Math.min(4, randomClubs.size()), randomClubs.size());
+
+
+        model.addAttribute("leftVenues", leftVenues);
+        model.addAttribute("rightVenues", rightVenues);
+        model.addAttribute("leftSocializing", leftSocializing);
+        model.addAttribute("rightSocializing", rightSocializing);
+        model.addAttribute("leftClubs", leftClubs);
+        model.addAttribute("rightClubs", rightClubs);
+
+
+        return "home";
+    }
+
 
     //-------------------------------------------------------------------------
     // 현재 Authentication 보기 (디버깅 등 용도로 활용)
@@ -69,5 +147,26 @@ public class HomeController {
     }
 
 
+    @GetMapping("/home/venue/detail/{id}")
+    public String getVenues(@PathVariable("id") Long id, Model model) {
+        Venue venue = venueService.getVenueById(id);
+        model.addAttribute("venue", venue);
+        return "venue/detail";
+    }
+
+    @GetMapping("/home/socializing/detail/{id}")
+    public String getSocializing(@PathVariable("id") Long id, Model model) {
+        Socializing socializing = socializingService.detail(id);
+        model.addAttribute("socializing", socializing);
+        System.out.println(socializing);
+        return "socializing/detail";
+    }
+
+    @GetMapping("/home/club/detail/{id}")
+    public String getClub(@PathVariable("id") Long id, Model model) {
+        Club club = clubService.getClubById(id);
+        model.addAttribute("club", club);
+        return "club/detail";
+    }
 
 }

@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Socializing;
 import com.lec.spring.domain.UserSocializing;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -30,6 +31,8 @@ public interface SocializingService {
             , String selectdetailcategory
     );
 
+    UserSocializing findBySocializingMaster(long id);
+
     // 수정
     Socializing selectById(Long id, Model model);
     // 제목, 내용
@@ -40,6 +43,8 @@ public interface SocializingService {
 
     // 삭제
     int deleteById(Long id);
+
+    List<Socializing> findAll();
 
     // 첨부파일
     // TODO

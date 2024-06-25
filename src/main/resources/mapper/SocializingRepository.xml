@@ -62,18 +62,6 @@
             1 = 1
     </sql>
 
-    <resultMap id="mapuser" type="com.lec.spring.domain.User">
-        <result column="u_id" property="id"/>
-        <result column="u_tel" property="tel"/>
-        <result column="u_username" property="username"/>
-        <result column="u_password" property="password"/>
-        <result column="u_address" property="address"/>
-        <result column="u_gender" property="gender"/>
-        <result column="u_birthday" property="birthday"/>
-        <result column="u_profile_picture" property="profile_picture"/>
-        <result column="u_regdate" property="regdate"/>
-    </resultMap>
-
     <resultMap id="mapSocializing" type="com.lec.spring.domain.Socializing">
         <result column="s_id" property="id"/>
         <result column="s_socializing_title" property="socializing_title"/>
@@ -89,12 +77,34 @@
         <result column="s_regdate" property="regdate"/>
     </resultMap>
 
+    <resultMap id="mapuser" type="com.lec.spring.domain.User">
+        <id column="u_id" property="id"/>
+        <result column="u_tel" property="tel"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_address" property="address"/>
+        <result column="u_gender" property="gender"/>
+        <result column="u_birthday" property="birthday"/>
+        <result column="u_profile_picture" property="profile_picture"/>
+        <result column="u_regdate" property="regdate"/>
+
+
+    </resultMap>
+
+
     <resultMap id="mapusersocializing" type="com.lec.spring.domain.UserSocializing">
         <result column="us_role" property="role"/>
-        <association property="user" resultMap="mapuser"/>
-        <association property="socializing" resultMap="mapSocializing"/>
+        <result column="us_user_id" property="user_id"/>
+        <result column="us_socializing_id" property="socializing_id"/>
+        <collection property="socializing" resultMap="mapSocializing"/>
+        <collection property="user" resultMap="mapuser"/>
+
     </resultMap>
     
+    <select id="findAll" resultType="com.lec.spring.domain.Socializing">
+        <include refid="SELECT_SOCIALIZING"/>
+    </select>
+
 
     <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
     <select id="findById" resultType="com.lec.spring.domain.Socializing">
@@ -144,18 +154,24 @@
             AND (#{param3} IS NULL OR #{param3} = '' OR detail_category= #{param3})
     </select>
 
-    <select id="findBySocialMembers" flushCache="true" resultMap="mapusersocializing">
+    <select id="findBySocialMembers" flushCache="true"  resultMap="mapusersocializing">
         select
             u.id                    "u_id",
             u.tel                   "u_tel",
             u.username              "u_username",
             u.password              "u_password",
+            u.name                  "u_name",
             u.address               "u_address",
             u.gender                "u_gender",
             u.birthday              "u_birthday",
-            u.profile_picture       "u_profile_prcture",
+            u.profile_picture       "u_profile_picture",
             u.regdate               "u_regdate",
+            u.provider              "u_provider",
+            u.providerId            "u_providerId",
+            us.user_id              "us_user_id",
+            us.socializing_id       "us_socializing_id",
             s.id                    "s_id",
+            s.venue_id              "s_venue_id",
             s.socializing_title     "s_socializing_title",
             s.category              "s_category",
             s.detail_category       "s_detail_category",
@@ -168,10 +184,29 @@
             s.img                   "s_img",
             s.regdate               "s_regdate",
             us.role                 "us_role"
+        FROM user_socializing us, user u , socializing s
+        where us.user_id = u.id AND us.socializing_id = s.id
+        AND us.socializing_id = ${param1}
+    </select>
+
+    <select id="findBySocializingMaster" resultMap="mapusersocializing">
+        select
+            u.id                    "u_id",
+            u.tel                   "u_tel",
+            u.username              "u_username",
+            u.password              "u_password",
+            u.address               "u_address",
+            u.gender                "u_gender",
+            u.birthday              "u_birthday",
+            u.profile_picture       "u_profile_prcture",
+            u.regdate               "u_regdate",
+            s.id                    "s_id",
+            s.socializing_title     "s_socializing_title",
+            us.role                 "us_role"
         FROM user_socializing us
                  join user u on us.user_id = u.id
-                join socializing s on us.socializing_id = s.id
-        where us.socializing_id = #{param1}
+                 join socializing s on us.socializing_id = s.id
+        where us.socializing_id = #{param1} AND us.role = 'MASTER'
     </select>
 
 

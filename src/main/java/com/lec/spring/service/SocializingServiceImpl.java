@@ -1,12 +1,10 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Socializing;
 import com.lec.spring.domain.User;
 import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.repository.SocializingRepository;
 import com.lec.spring.repository.UserRepository;
-import com.lec.spring.util.U;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -15,15 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SocializingServiceImpl implements SocializingService {
@@ -51,15 +43,10 @@ public class SocializingServiceImpl implements SocializingService {
         System.out.println("SocializingService() 생성");
     }
 
-
     @Override
     public int write(Socializing socializing) {
         User user = U.getLoggedUser();
         socializing.setUser(user);  // 글 작성자
-
-//        if (socializing.getImg() == null) {
-//            socializing.setImg("DefaultImg.jpg");
-//        }
 
         int cnt = socializingRepository.save(socializing);  // 글 저장 성공 여부
 
@@ -156,6 +143,11 @@ public class SocializingServiceImpl implements SocializingService {
         return list;
     }
 
+    @Override
+    public UserSocializing findBySocializingMaster(long id) {
+        return socializingRepository.findBySocializingMaster(id);
+    }
+
     //수정
     @Override
     public Socializing selectById(Long id, Model model) {
@@ -182,6 +174,10 @@ public class SocializingServiceImpl implements SocializingService {
     public List<String> getAllCategories() {
         return Arrays.asList("운동", "공연", "공부");
     }
+
+    @Override
+    public List<Socializing> findAll() {
+        return socializingRepository.findAll();
+    }
+
 }
-
-

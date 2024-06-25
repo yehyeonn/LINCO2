@@ -41,6 +41,6 @@
 
     <insert id="addUserToSocializing" flushCache="true" parameterType="com.lec.spring.domain.UserSocializing">
         INSERT INTO user_socializing(user_id, socializing_id, role)
-        VALUES(#{user.id}, #{socializing_id}, #{role})
+        VALUES(#{userId}, #{socializingId}, #{role})
     </insert>
 </mapper>

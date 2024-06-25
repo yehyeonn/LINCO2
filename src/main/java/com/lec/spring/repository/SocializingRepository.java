@@ -22,5 +22,10 @@ public interface SocializingRepository {
             , String catetory
             , String selectdetailcategory);
 
-    List<UserSocializing> findBySocialMembers(@Param("param1") long id);
+    List<UserSocializing> findBySocialMembers(@Param("param1") Long id);
+
+
+    UserSocializing findBySocializingMaster(@Param("param1") Long id);
+
+    List<Socializing> findAll();
 }

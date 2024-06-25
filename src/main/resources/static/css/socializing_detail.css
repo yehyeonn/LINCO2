@@ -149,6 +149,7 @@ h2{
 
 #detaildescription{
     font-size: 20px;
+    color: black;
 }
 
 .event-details {
@@ -171,4 +172,8 @@ h2{
     position: absolute;
     right: 0;
     bottom: 0;
+}
+
+.hidden{
+    display: none;
 }

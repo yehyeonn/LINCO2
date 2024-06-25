@@ -39,7 +39,9 @@ public class SecurityConfig {
                 // 클럽 회원:
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/board/detail/**").authenticated()
-                                .requestMatchers("/board/write/**", "/board/update/**", "/board/delete").hasAnyAuthority("MEMBER", "ADMIN")
+                                .requestMatchers("/socializing/detail/**").authenticated()
+                                .requestMatchers("/socializing/write").authenticated()
+                                .requestMatchers("/board/write/**", "/board/update/**", "/board/delete").hasAnyRole("MEMBER", "ADMIN")
                                 .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
