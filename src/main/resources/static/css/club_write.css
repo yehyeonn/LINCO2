@@ -1,0 +1,135 @@
+body {
+    background-color: #EDEBDA;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.container1 {
+    width: 90%;
+    max-width: 1200px;
+    margin: 150px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    position: relative;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+span.form-control {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: inline-block;
+    margin-left: 8px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.select-right {
+    float: right;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+input[type="text"], textarea {
+    width:100%; /* 부모 요소에 맞춤 */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    resize: vertical; /* 수직 크기 조정 가능 */
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+textarea {
+    height: 150px; /* 고정 높이 설정 */
+    line-height: 1.5; /* 줄 간격 설정 */
+}
+
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 100%;
+}
+
+.button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.button .btn:hover{
+    background-color: #D3374A;
+    color: #fff;
+}
+
+.button .left-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3A4D72;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+#files .btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3A4D72;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.file-input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.file-input-group input[type="file"] {
+    flex: 1;
+    margin-right: 10px;
+}
+.file-input-group button {
+    margin-left: 10px;
+}

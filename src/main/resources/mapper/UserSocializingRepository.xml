@@ -15,26 +15,50 @@
         <result column="u_regdate" property="regdate"/>
     </resultMap>
 
+    <resultMap id="mapSocializing" type="com.lec.spring.domain.Socializing">
+        <result column="s_id" property="id"/>
+        <result column="s_socializing_title" property="socializing_title"/>
+        <result column="s_category" property="category"/>
+        <result column="s_detail_category" property="detail_category"/>
+        <result column="s_address" property="address"/>
+        <result column="s_place_name" property="place_name"/>
+        <result column="s_meeting_date" property="meeting_date"/>
+        <result column="s_meeting_time" property="meeting_time"/>
+        <result column="s_limit_num" property="limit_num"/>
+        <result column="s_content" property="content"/>
+        <result column="s_total_price" property="total_price"/>
+        <result column="s_img" property="img"/>
+        <result column="s_regdate" property="regdate"/>
+    </resultMap>
+
     <resultMap id="mapUserSocializing" type="com.lec.spring.domain.UserSocializing">
         <result column="us_role" property="role"/>
-        <collection property="user" resultMap="mapUser"/>
+        <result column="us_user_id" property="user_id"/>
+        <result column="us_socializing_id" property="socializing_id"/>
+        <collection property="socializing" resultMap="mapSocializing"/>
     </resultMap>
 
     <select id="findBySocializingId" resultMap="mapUserSocializing">
         SELECT
-            u.id "u_id"
-             , u.tel "u_tel"
-             , u.username "u_username"
-             , u.password "u_password"
-             , u.name "u_name"
-             , u.address "u_address"
-             , u.gender "u_gender"
-             , u.birthday "u_birthday"
-             , u.profile_picture "u_profile_picture"
-             , u.regdate "u_regdate"
-             , us.role "us_role"
-        FROM user u
-        JOIN user_socializing us ON u.id = us.user_id
+             s.id                    "s_id"
+            , s.venue_id              "s_venue_id"
+            , s.socializing_title     "s_socializing_title"
+            , s.category              "s_category"
+            , s.detail_category       "s_detail_category"
+            , s.address               "s_address"
+            , s.place_name            "s_place_name"
+            , s.meeting_date          "s_meeting_date"
+            , s.meeting_time          "s_meeting_time"
+            , s.limit_num             "s_limit_num"
+            , s.content               "s_content"
+            , s.total_price           "s_total_price"
+            , s.img                   "s_img"
+            , s.regdate               "s_regdate"
+            , us.user_id "us_user_id"
+            , us.socializing_id "us_socializing_id"
+            , us.role "us_role"
+        FROM SOCIALIZING s
+        JOIN user_socializing us ON s.id = us.socializing_id
         WHERE us.socializing_id = #{socializing_id}
 
     </select>

@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import lombok.*;
 
+import java.beans.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

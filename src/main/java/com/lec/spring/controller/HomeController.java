@@ -129,8 +129,9 @@ public class HomeController {
     @GetMapping("/home/venue/detail/{id}")
     public String getVenues(@PathVariable("id") Long id, Model model) {
         Venue venue = venueService.getVenueById(id);
+
         if(venue.getImg() == null || venue.getImg().equals("")) {
-            String imgPath = "upload/no_image.png";
+            String imgPath = "upload/no_image.jpg";
             venue.setImg(imgPath);
         }
         model.addAttribute("venue", venue);
@@ -147,7 +148,7 @@ public class HomeController {
         }
 
         model.addAttribute("socializing", socializing);
-        System.out.println(socializing);
+
 
         return "socializing/detail";
     }
@@ -155,6 +156,12 @@ public class HomeController {
     @GetMapping("/home/club/detail/{id}")
     public String getClub(@PathVariable("id") Long id, Model model) {
         Club club = clubService.getClubById(id);
+
+        if (club.getRepresentative_picture().equals("upload/Default.png")) {
+            String imgPath = "upload/no_img.jpg";
+            club.setRepresentative_picture(imgPath);
+        }
+
         model.addAttribute("club", club);
         return "club/detail";
     }

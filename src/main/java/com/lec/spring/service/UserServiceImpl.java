@@ -3,9 +3,11 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.repository.UserSocializingRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
     private ClubUserListRepository clubUserListRepository;
+    private UserSocializingRepository userSocializingRepository;
 
 
     @Autowired
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
         clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
+        userSocializingRepository = sqlSession.getMapper(UserSocializingRepository.class);
     }
 
     @Override
@@ -66,9 +70,15 @@ public class UserServiceImpl implements UserService {
         return authorityRepository.findByUser(user);
     }
 
-
+    // 유저가 가입한 클럽 리스트
     @Override
     public List<ClubUserList> getUserClubs(Long user_id) {
         return clubUserListRepository.findByUserId(user_id);
+    }
+
+    // 유저가 참여한 소셜라이징 리스트
+    @Override
+    public List<UserSocializing> getUserSocializings(Long user_id) {
+        return userSocializingRepository.findBySocializingId(user_id);
     }
 }

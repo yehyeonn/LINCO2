@@ -100,7 +100,9 @@ public class ClubController {
         binder.setValidator(new ClubValidator());
     }
 
-
+    // 클럽 글 작성
+    @GetMapping("/write")
+        private void clubWrite(){}
 
 }
 

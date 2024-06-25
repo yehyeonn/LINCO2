@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserSocializing;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface UserService {
     List<Authority> selectAuthoritiesById(Long id);
 
     List<ClubUserList> getUserClubs(Long user_id);
+    List<UserSocializing> getUserSocializings(Long user_id);
 }
