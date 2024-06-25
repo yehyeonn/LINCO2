@@ -49,4 +49,10 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.update(reservation);
 
     }
+
+    @Override
+    public List<Reservation> findByVenueAndDate(Long venue_id, String reserve_date) {
+        return reservationRepository.findByVenueAndDate(venue_id, reserve_date);
+    }
+
 }
