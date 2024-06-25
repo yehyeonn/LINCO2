@@ -141,7 +141,6 @@ public class SocializingController {
         for (UserSocializing e : socializingMemberList) {
             membersid.add(e.getUser().getId());
         }
-        System.out.println(socializing.getPlace_name());
 
         model.addAttribute("detailsocializing",socializing);
         model.addAttribute("membercnt",socializingcnt);
@@ -154,40 +153,42 @@ public class SocializingController {
 
     @PostMapping("/detail")
     public String detailOk(@RequestParam(name = "user_id", required = false, defaultValue = "") Long userId
-                           ,@RequestParam(name = "socializing_id",required = false,defaultValue = "") Long socializingId
+                            ,@RequestParam(name = "socializing_id",required = false,defaultValue = "") Long socializingId
                             , Model model){
-//
-//    @GetMapping("/update/{id}")
-//    public String update(@PathVariable Long id, Model model){
-//        model.addAttribute("post", socializingService.selectById(id));
-//        return "board/update";
-//    }
-//
-//    @PostMapping("/update") // 제출하고 만들 post 방식
-//    public String updateOk(
-//            @Valid Socializing socializing
-//            , BindingResult result
-//            , Model model
-//            , RedirectAttributes redirectAttributes
-//    ) {
-//        if (result.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("subject", post.getSubject());
-//            redirectAttributes.addFlashAttribute("content", post.getContent());
-//
-//            List<FieldError> errList = result.getFieldErrors();
-//            for (FieldError err : errList) {
-//                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
-//            }
-//            return "redirect:/board/update/" + post.getId(); // Id는 수정사항이 아니다
-//        }
-//
-//        model.addAttribute("result", boardService.update(post, files, delfile));
-//        return "board/updateOk";
-
         int result = userSocializingService.addUserToSocializing(userId,socializingId, "MEMBER");
         model.addAttribute("result",result);
         model.addAttribute("userSocializing",socializingId);
         return "socializing/detailOk";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id, Model model){
+        Socializing socializing = socializingService.selectById(id);
+
+        model.addAttribute("updatesocializing", socializing);
+        return "socializing/update";
+    }
+
+    @PostMapping("/update") // 제출하고 만들 post 방식
+    public String updateOk(
+            @Valid Socializing socializing
+            , BindingResult result
+            , Model model
+            , RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("socializing_title", socializing.getSocializing_title());
+            redirectAttributes.addFlashAttribute("content", socializing.getContent());
+
+            List<FieldError> errList = result.getFieldErrors();
+            for (FieldError err : errList) {
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/board/update/" + socializing.getId(); // Id는 수정사항이 아니다
+        }
+
+        model.addAttribute("result", socializingService.update(socializing));
+        return "board/updateOk";
     }
 
     @PostMapping("delete")

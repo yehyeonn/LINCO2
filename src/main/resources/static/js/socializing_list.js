@@ -1,4 +1,5 @@
 $(function (){
+
     $(".detail-category-area").hide();
     $(".category-area").hide();
     const currentNewUrl = new URL(window.location.href);
@@ -148,8 +149,6 @@ $(function (){
 
 
     });
-
-
 
     // 주소에서 토큰을 활용하여 구,군 만 출력
 

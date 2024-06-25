@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import lombok.*;
 
+import java.beans.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,6 +25,8 @@ public class Socializing {
     private Long total_price;
     private String img;
     private LocalDateTime regdate;
+
+    private String placeName;
 
     private Venue venue;
 
