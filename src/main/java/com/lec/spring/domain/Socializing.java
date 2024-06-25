@@ -16,6 +16,7 @@ public class Socializing {
     private String category;
     private String detail_category;
     private String address;
+    private String place_name;
     private LocalDate meeting_date;
     private LocalTime meeting_time;
     private Integer limit_num;

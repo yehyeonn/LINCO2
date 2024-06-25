@@ -219,5 +219,8 @@ $(function (){
         window.location.href = newUrl.toString();
     }
 
+    $(".socializing-item").click(function (){
+        localStorage.setItem("backUrl",location.href.toString())
+    });
 
-})
+});

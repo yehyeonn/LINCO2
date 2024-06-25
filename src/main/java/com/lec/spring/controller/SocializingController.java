@@ -124,6 +124,7 @@ public class SocializingController {
             // 폼 입력 값을 다시 보내기 위해 추가
             return "redirect:/socializing/write";
         }
+
     model.addAttribute("result", socializingService.write(socializing));
         userSocializingService.addUserToSocializing(userSocializing.getUser_id(), socializing.getId(), "MASTER");
         return "socializing/writeOk";
@@ -140,6 +141,7 @@ public class SocializingController {
         for (UserSocializing e : socializingMemberList) {
             membersid.add(e.getUser().getId());
         }
+        System.out.println(socializing.getPlace_name());
 
         model.addAttribute("detailsocializing",socializing);
         model.addAttribute("membercnt",socializingcnt);
@@ -188,6 +190,11 @@ public class SocializingController {
         return "socializing/detailOk";
     }
 
+    @PostMapping("delete")
+    public String deleteOk(Long id, Model model){
+         model.addAttribute("result",socializingService.deleteById(id));
+        return "socializing/deleteOk";
+    }
 
     @InitBinder("socializing")
     public void initBinder(WebDataBinder binder){

@@ -40,11 +40,21 @@ $(function (){
             map.setCenter(coords);
             map.relayout();
 
-            displayInfowindow(marker, title);
+            displayInfowindow(marker);
             map.panTo(placePosition);
-            document.getElementById('placeName').value = places[i].place_name;
-            console.log(document.getElementById('placeName').value);
+
         }
     });
+
+
+
+    $('#deletebtn').click(function (){
+        let answer = confirm("삭제하시겠습니까?");
+        answer && $("form[name = 'frmDelete']").submit();
+    });
+
+    $('#backbtn').click(function (){
+        window.location.href = localStorage.getItem("backUrl")
+    })
 
 });
