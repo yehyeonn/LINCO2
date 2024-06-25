@@ -26,8 +26,6 @@ public class Socializing {
     private String img;
     private LocalDateTime regdate;
 
-    private String placeName;
-
     private Venue venue;
 
     private User user;

@@ -163,18 +163,18 @@ public class SocializingController {
 
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model){
-        Socializing socializing = socializingService.selectById(id);
-
-        model.addAttribute("updatesocializing", socializing);
+//        Socializing socializing = socializingService.selectById(id);
+//        System.out.println(socializing);
+        model.addAttribute("updatesocializing", socializingService.selectById(id));
         return "socializing/update";
     }
 
-    @PostMapping("/update") // 제출하고 만들 post 방식
+    @PostMapping("/update")
     public String updateOk(
-            @Valid Socializing socializing
-            , BindingResult result
-            , Model model
-            , RedirectAttributes redirectAttributes
+            @Valid Socializing socializing,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("socializing_title", socializing.getSocializing_title());
@@ -182,13 +182,13 @@ public class SocializingController {
 
             List<FieldError> errList = result.getFieldErrors();
             for (FieldError err : errList) {
-                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getDefaultMessage());
             }
-            return "redirect:/board/update/" + socializing.getId(); // Id는 수정사항이 아니다
+            return "redirect:/socializing/update/" + socializing.getId();
         }
 
         model.addAttribute("result", socializingService.update(socializing));
-        return "board/updateOk";
+        return "socializing/updateOk";
     }
 
     @PostMapping("delete")

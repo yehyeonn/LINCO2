@@ -6,35 +6,53 @@ $(document).ready(function () {
     };
 
     // 페이지 로드 시 선택된 카테고리의 소분류를 표시
-    const selectedCategory = [[${updatesocializing.category}]];
-    const detailCategory = $('#detail_category');
-    detailCategory.empty();
-    detailCategory.append(new Option([[${updatesocializing.detail_category}]], [[${updatesocializing.detail_category}]]));
-    if (selectedCategory && detailCategoryMap[selectedCategory]) {
-        detailCategoryMap[selectedCategory].forEach(function (item) {
-            detailCategory.append(new Option(item, item));
-        });
-    };
+    const detailCategory = $('#detailCategory').val();
 
+    console.log(detailCategory)
 
-    const mapContainer = document.getElementById('map');
-    const mapOption = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 3
-    };
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-
-    const geocoder = new kakao.maps.services.Geocoder();
+    console.log("여기까지는 오지롱~")
     const address = $('#address').val();
+    const placeName = $('#placeName').val();
+    console.log(placeName)
 
+    var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표 검색
     geocoder.addressSearch(address, function(result, status) {
+
+        // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
-            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            const marker = new kakao.maps.Marker({
+            console.log("검색했지롱~!")
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 지도 생성 및 해당 위치로 중심 설정
+            var mapContainer = document.getElementById('map'),
+                mapOption = {
+                    center: coords, // 주소로 얻은 좌표로 중심 설정
+                    level: 3
+
+                };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            var marker = new kakao.maps.Marker({
                 map: map,
                 position: coords
             });
+
+            //인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content:  '<div style="width:150px;text-align:center;padding:6px 0;">' + placeName + '</div>'
+            });
+            infowindow.open(map, marker);
+
+            // 마커 중심으로 설정
             map.setCenter(coords);
+            map.relayout();
+
+            displayInfowindow(marker);
+            map.panTo(placePosition);
         }
     });
 });
