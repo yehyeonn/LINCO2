@@ -138,7 +138,7 @@
         <div class="socializing-item" th:each=" social : ${list}">
             <a  th:href="@{'/socializing/detail/' + ${social.id}}">
                 <img th:src="@{'/'+${social.img}}" class="img-thumbnail" id="fixed-size"><!-- alt="Socializing Image"-->
-                <p th:text="${social.socializing_title}"><br>스포츠 | 서초구</p>
+                <p th:text="${social.socializing_title}" id="main-title"></p>
                 <p th:text="${social.category}" id="category" class="hidden"></p>
                 <p th:text="${social.detail_category}" id="detail_category"></p>
                 <p th:text="${social.address}" id="address"></p>
@@ -146,7 +146,7 @@
         </div>
     </div>
     <th:block th:insert="~{socializing/listPagination::pagination}"></th:block>
-    <a href="/socializing/write" class="create-button">놀사람구함</a>
+    <a th:href="@{/socializing/write}" class="create-button">놀사람구함</a>
 </div>
 
 

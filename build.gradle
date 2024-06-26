@@ -39,8 +39,13 @@ dependencies {
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'com.github.iamport:iamport-rest-client-java:0.1.6'
 }
 
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
 
 tasks.named('test') {
     useJUnitPlatform()
