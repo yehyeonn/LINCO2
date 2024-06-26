@@ -18,7 +18,7 @@ public class CommentController {
         QryCommentList result = commentService.list(boardId);
 
         // 디버깅 용도
-        System.out.println("boardId : " + boardId);
+//        System.out.println("boardId : " + boardId);
         result.getList().forEach(comment -> {
             System.out.println("CommentId : " + comment.getId());
             System.out.println("Content : " + comment.getContent());
@@ -35,16 +35,16 @@ public class CommentController {
             @RequestParam("content") String content
     ){
         // 디버깅 용도
-        System.out.println("Writing comment for board ID: " + boardId);
-        System.out.println("User ID: " + userId);
-        System.out.println("Content: " + content);
+//        System.out.println("Writing comment for board ID: " + boardId);
+//        System.out.println("User ID: " + userId);
+//        System.out.println("Content: " + content);
 
         return commentService.write(boardId, userId, content);
     }
 
     @PostMapping("/delete")
     public QryResult delete(Long id){
-        System.out.println("Deleting comment ID : " + id);
+//        System.out.println("Deleting comment ID : " + id);
 
         return commentService.delete(id);
     }

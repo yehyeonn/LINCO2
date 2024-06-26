@@ -165,6 +165,10 @@ select *
 from club_user_list;
 
 
-
+SELECT cul.user_id, cul.club_id, cul.role, c.id, c.name, u.id, u.name, u.username
+FROM CLUB_USER_LIST cul
+         JOIN CLUB c ON cul.club_id = c.id
+         JOIN USER u ON cul.user_id = u.id
+WHERE club_id = 1;
 
 
