@@ -4,6 +4,7 @@ import com.lec.spring.domain.*;
 import com.lec.spring.service.ClubService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -174,6 +175,58 @@ public class ClubController {
     }
 
     @InitBinder("club")
+    @GetMapping( "/update/{id}")
+    public String update(@PathVariable Long id, Model model){
+        Club club = clubService.getClubById(id);
+        model.addAttribute("club", club);
+        return "club/update";
+    }
+
+    @PostMapping("/update")
+    public String updateOk(
+            @Valid Club club
+            , BindingResult result
+            , @RequestParam(name="files", required = false, defaultValue = "")MultipartFile file
+            ,Model model
+            ,RedirectAttributes redirectAttributes
+            ) throws IOException {
+            String imgPath = club.getRepresentative_picture();
+
+
+        if(!file.isEmpty()){
+                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                imgPath = fileName;
+
+                try{
+                    Path path = Paths.get(imgPath);
+                    Files.createDirectories(path.getParent());
+                    Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            club.setRepresentative_picture(imgPath);
+        System.out.println("이미지경로: " + imgPath);
+        System.out.println(club);
+
+        if(result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("intro", club.getIntro());
+            redirectAttributes.addFlashAttribute("content", club.getContent());
+            List<FieldError> errList = result.getFieldErrors();
+            for (FieldError err : errList) {
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/club/update/" + club.getId(); // Id는 수정사항이 아니다
+        }
+
+        model.addAttribute("result", clubService.updateClub(club));
+        return "club/updateOk";
+    }
+
+
+
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());

@@ -163,6 +163,8 @@ public class ClubServiceImpl implements ClubService {
         return list;
     }
 
+
+
     @Override
     public ClubUserList findClubMaster(Long club_id){
         return clubUserListRepository.findClubMaster(club_id);
