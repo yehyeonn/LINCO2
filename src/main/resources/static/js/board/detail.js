@@ -230,6 +230,11 @@ function buildComment(comments) {
         let regdate = comment.regdate;
         let username = comment.user.username;
         let name = comment.user.name;
+        console.log("id : " + id);
+        console.log("content : " + content);
+        console.log("regdate : " + regdate);
+        console.log("userName : " + username);
+        console.log("name : " + name);
         let user_id = parseInt(comment.user.id);
         let delBtn = (logged_id === user_id) ? `<i class="btn" data-cmtdel-id="${id}" title="삭제">댓글 삭제</i>` : '';
 

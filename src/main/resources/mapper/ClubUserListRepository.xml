@@ -13,19 +13,29 @@
 
     <!-- 특정 클럽의 사용자 목록 조회 -->
     <select id="findByClubId" parameterType="long" resultType="com.lec.spring.domain.ClubUserList">
-        SELECT cul.user_id, cul.club_id, cul.role, c.id, c.name, u.id, u.name, u.username
+        SELECT cul.user_id,
+               cul.club_id,
+               cul.role,
+               c.id,
+               c.name,
+               u.id,
+               u.name,
+               u.username
         FROM CLUB_USER_LIST cul
-        JOIN CLUB c ON cul.club_id = c.id
-        JOIN USER u ON cul.user_id = u.id
+                 JOIN CLUB c ON cul.club_id = c.id
+                 JOIN USER u ON cul.user_id = u.id
         WHERE club_id = #{clubId}
     </select>
 
     <!-- 특정 사용자가 가입한 클럽 목록 조회 -->
-    <select id="findByUserId" parameterType="long" resultType="com.lec.spring.domain.ClubUserList">
-        SELECT cul.user_id, cul.club_id, cul.role, c.id, c.name, u.id, u.name, u.username
+    <select id="findByUserId" parameterType="long" resultMap="mapuserclublist">
+        SELECT cul.user_id "cs_uid",
+               cul.club_id "cs_cid",
+               cul.role "cs_role",
+               c.id "c_id",
+               c.name "c_name"
         FROM CLUB_USER_LIST cul
                  JOIN CLUB c ON cul.club_id = c.id
-                 JOIN USER u ON cul.user_id = u.id
         WHERE cul.user_id = #{userId}
     </select>
 
@@ -49,6 +59,12 @@
         FROM CLUB_USER_LIST
         WHERE club_id = #{clubId}
     </select>
+    <resultMap id="mapuserclublist" type="com.lec.spring.domain.ClubUserList">
+        <result column="cs_uid" property="user_id"/>
+        <result column="cs_cid" property="club_id"/>
+        <result column="cs_role" property="role"/>
+        <collection property="club" resultMap="mapClub"/>
+    </resultMap>
 
     <resultMap id="mapClubuserList" type="com.lec.spring.domain.ClubUserList">
         <result column="cs_uid" property="user_id"/>

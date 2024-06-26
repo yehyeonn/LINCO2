@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface UserService {
     User findByUsername(String username);
+    User findByUserId(Long userId);
     boolean isExist(String username);
     int register(User user);
     List<Authority> selectAuthoritiesById(Long id);

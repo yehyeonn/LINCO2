@@ -1,10 +1,14 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.*;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +35,8 @@ public class BoardController {
 
     @Autowired
     private UserService userService;
+
+    private UserRepository userRepository;
 
     @Autowired
     private CommentService commentService;
@@ -57,11 +64,23 @@ public class BoardController {
             BindingResult boardResult,          // result -> boardResult
             @Valid ClubUserList clubUserList,
             BindingResult clubUserListResult,
-            User user,
             Club club,
             Model model,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Principal principal
     ) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+        if (user == null){
+            throw new NullPointerException("User Not Found" + username);
+        }
+
+        Long userId = user.getId();
+        User userIds = userService.findByUserId(userId);
+        System.out.println("UserId 에용 : " + userId);
+        System.out.println("userid에용 : " + userIds);
+        System.out.println("board에용 : " + board);
+
         // boardType 이 공지사항 이거나 자유게시판일 경우
         if (boardTypeId == 2) {
             if (boardResult.hasErrors()) {
@@ -86,12 +105,18 @@ public class BoardController {
                 handleErrors(clubUserListResult, clubUserList, redirectAttributes);
             }
             int result = boardService.write(board, files);
-            System.out.println("userID : " + user.getId());
-            List<ClubUserList> resultI = clubUserListService.findByUserId(user.getId());
-            for (ClubUserList e : resultI) {
-                System.out.println("result i :" + e);
+
+            List<ClubUserList> userClubs = clubUserListService.findByUserId(userId);
+            for(ClubUserList userClub : userClubs){
+                Club userClubEntity = userClub.getClub();
+                if (userClubEntity != null){
+                    System.out.println("Club name : " + userClubEntity.getName());
+                }
             }
+            model.addAttribute("userclubs", userClubs);
             model.addAttribute("result", result);
+
+            System.out.println("userClubs : " + userClubs);
         }
 
         return "board/writeOk";
@@ -103,9 +128,6 @@ public class BoardController {
             redirectAttributes.addFlashAttribute("user", board.getUser());
             redirectAttributes.addFlashAttribute("title", board.getTitle());
             redirectAttributes.addFlashAttribute("content", board.getContent());
-//        }else if(target instanceof ClubUserList){
-//            ClubUserList clubUserList = (ClubUserList) target;
-//            redirectAttributes.addFlashAttribute("user", clubUserList.)
         }
         List<FieldError> errList = result.getFieldErrors();
         for (FieldError err : errList) {

@@ -24,7 +24,7 @@
                         <option th:value="${3}">클럽홍보</option>
                         <option th:value="${1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
                     </select>
-                    <span class="form-control">[[${user.name}]]</span>
+                    <span class="form-control" th:text="${user.name}"></span>
                 </div>
                 <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
                 <label for="title">게시글 제목:</label>
@@ -70,9 +70,18 @@
             <div class="form-group">
                 <div>
                     <label>작성자:</label>
-                    <select>
+                    <select id="userClubs" name="usesrClubs">
                         <option>클럽리스트</option>
+                        <th:block th:each="clubUserList : ${userclubs}">
+                            <option th:value="${clubUserList.club.id}" th:text="${clubUserList.club.name}">클럽리스트</option>
+                        </th:block>
                     </select>
+                    <!-- 디버깅용 데이터 출력 -->
+                    <div th:each="clubUserList : ${userClubs}">
+                        <p>ID: <span th:text="${clubUserList.club.id}">ID</span></p>
+                        <p>Name: <span th:text="${clubUserList.club.name}">Name</span></p>
+                    </div>
+
                     <select name="boardType.id" id="clubWrite" class="select-right">
                         <option th:value="${2}">자유게시판</option>
                         <option th:value="${3}" selected>클럽홍보</option>
