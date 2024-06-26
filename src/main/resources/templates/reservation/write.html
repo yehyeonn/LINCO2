@@ -66,29 +66,32 @@
                 <td>17:00~18:00</td>
             </tr>
         </table>
+        <div id="time_err" text="" style="color: red"></div>
     </div>
 
-    <form class="info-box" th:action="@{/board/write}" method="post">
+    <div class="info-box">
         <input type="hidden" name="venue_id" th:value="${venue.id}">
         <input type="hidden" name="selectedDate" th:value="${selectedDate}">
-        <ul>
-            <li>예약자명
-                <input type="text" class="name form-control">
-            </li>
-            <div><span class="text-danger" th:if="${error_reservation_name}"
-                       th:utext="${error_reservation_name}"></span></div>
-            <li>이메일
-                <input type="text" class="email form-control">
-            </li>
-            <div><span class="text-danger" th:if="${error_email}" th:utext="${error_email}"></span></div>
-            <li>전화번호
-                <input type="text" class="tell form-control">
-            </li>
-            <div><span class="text-danger" th:if="${error_tel}" th:utext="${error_tel}"></span></div>
-            <li>시간당 요금
-                <div th:text="${venue.price}" class="price form-control"></div>
-            </li>
-        </ul>
+        <div class="input-box">
+            <ul class="info-ul">
+
+                <li>예약자명
+                    <input type="text" class="name form-control">
+                </li>
+                    <div class="err-name" style="color: red"></div>
+                <li>이메일
+                    <input type="text" class="email form-control">
+                </li>
+                    <div class="err-email" style="color: red"></div>
+                <li>전화번호
+                    <input type="text" class="tell form-control">
+                </li>
+                    <div class="err-tell" style="color: red"></div>
+                <li>시간당 요금
+                    <div th:text="${venue.price}" class="price form-control"></div>
+                </li>
+            </ul>
+        </div>
 
         <div class="pay-box">
             <span>작성내역 확인</span>
@@ -96,10 +99,11 @@
                 <li>장소명
                     <div th:text="${venue.venue_name}"></div>
                 </li>
+
                 <li>이용시작시간
                     <div></div>
                 </li>
-                    <li>이용종료시간
+                <li>이용종료시간
                     <div></div>
                 </li>
                 <li>예약날짜
@@ -109,10 +113,9 @@
                     <div></div>
                 </li>
             </ul>
-<!--           /*     <div><span class="text-danger" th:if="${error_start_time}" th:utext="${error_start_time}"></span></div> */-->
-            <button class="pay-btn" onclick="requestPay()">결제하기</button>
+            <button class="pay-btn" onclick="validateForm()">결제하기</button>
         </div>
-    </form>
+    </div>
 </div>
 
 <!--<footer th:replace="~{common/footer :: footer-body}"></footer>-->

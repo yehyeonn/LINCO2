@@ -185,6 +185,8 @@ td #sat {
     padding: 10px;
     border-bottom: 1px solid #eee;
 
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 20px;
 }
 
 
@@ -212,7 +214,7 @@ td #sat {
     color: black;
 }
 
-.pay-box {
+.pay-box , .info-box{
     width: 100%;
     background-color: #fff;
     padding: 10px;
