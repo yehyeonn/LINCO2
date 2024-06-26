@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/club_create.css}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <title>Club 생성 페이지</title>
@@ -18,18 +19,17 @@
                     <label for="club-name" class="form-label">클럽 이름:</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="club-name" placeholder="클럽 이름을 입력하세요" name="name" th:value="${name}">
-                        <button type="submit" class="btn btn-outline-dark">중복확인</button>
+                        <button class="btn btn-outline-dark" onclick="checkDuplicate()">중복확인</button>
                     </div>
                     <div><span class="text-danger" th:if="${error_name}" th:utext="${error_name}"></span></div>
                 </div>
                 <div class="form-group mt-3">
                     <label for="club-category" class="form-label">카테고리:</label>
                     <select id="club-category" name="category" class="form-select" th:value="${category}">
-                        <option value="sports">스포츠</option>
-                        <option value="music">음악</option>
-                        <option value="reading">독서</option>
-                        <option value="technology">기술</option>
-                        <option value="others">기타</option>
+                        <option value="운동">운동</option>
+                        <option value="문화예술">문화예술</option>
+                        <option value="여행">여행</option>
+                        <option value="스터디">스터디</option>
                     </select>
                     <div><span class="text-danger" th:if="${error_category}" th:utext="${error_category}"></span></div>
                 </div>
@@ -41,15 +41,28 @@
                     <div><span class="text-danger" th:if="${error_detail_category}" th:utext="${error_detail_category}"></span></div>
                 </div>
             </div>
-            <div class="col-md-6 text-center">
-                <label for="club-representative-picture" class="form-label">대표이미지:</label>
-                <div class="bordered-image" id="club-representative-picture">
-                    <span class="image-placeholder">대표 이미지</span>
+<!--            <div class="form-img">-->
+<!--                <div class="form-group image-placeholder">-->
+<!--                    <span id="img_txt">이미지 미리보기</span>-->
+<!--                    <img id="previewImage" style="display:block; max-width: 180px; height: auto;">-->
+<!--                </div>-->
+<!--                <div class="form-group fileBtn">-->
+<!--                    <button type="button" id="fileSelect">파일선택</button>-->
+<!--                    <input type="file" id="fileInput" name="files" style="display:none;">-->
+<!--                </div>-->
+<!--            </div> -->
+
+            <div class="col-md-6 text-center form-img">
+                <div class="bordered-image form-group image-placeholder" id="club-representative-picture">
+                    <span id="img_txt">대표 이미지</span>
+                    <img id="previewImage" style="display:block; max-width: 180px; height: auto;">
                 </div>
-                <label class="btn btn-primary btn-file mt-2">
-                    파일선택 <input type="file" id="btnAdd" class="d-none">
-                </label>
+                <div class="fileBtn mt-2">
+                    <button type="button" id="fileSelect" class="btn btn-primary">파일선택</button>
+                    <input type="file" id="fileInput" name="files" style="display:none;">
+                </div>
             </div>
+
         </div>
         <div class="form-group mt-3">
             <label for="club-intro" class="form-label">클럽 소개:</label>
@@ -67,8 +80,9 @@
         </div>
     </form>
 </div>
-</body>
     <footer th:replace="~{common/footer :: footer-body}"></footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
+    <script src="/js/club/create.js" type="text/javascript"></script>
+</body>
 </html>

@@ -8,7 +8,7 @@
     <!-- 새로운 클럽 사용자 추가 -->
     <insert id="save" parameterType="com.lec.spring.domain.ClubUserList">
         INSERT INTO club_user_list (user_id, club_id, role)
-        VALUES (#{userId}, #{clubId}, #{role})
+        VALUES (#{user_id}, #{club_id}, #{role})
     </insert>
 
     <!-- 특정 클럽의 사용자 목록 조회 -->
@@ -24,7 +24,7 @@
         FROM CLUB_USER_LIST cul
                  JOIN CLUB c ON cul.club_id = c.id
                  JOIN USER u ON cul.user_id = u.id
-        WHERE club_id = #{clubId}
+        WHERE club_id = #{club_id}
     </select>
 
     <!-- 특정 사용자가 가입한 클럽 목록 조회 -->
@@ -36,28 +36,34 @@
                c.name "c_name"
         FROM CLUB_USER_LIST cul
                  JOIN CLUB c ON cul.club_id = c.id
-        WHERE cul.user_id = #{userId}
+        WHERE cul.user_id = #{user_id}
     </select>
 
     <!-- 특정 클럽의 특정 사용자 조회 -->
     <select id="findByUserIdAndClubId" parameterType="map" resultType="com.lec.spring.domain.ClubUserList">
         SELECT user_id, club_id, role
         FROM club_user_list
-        WHERE user_id = #{userId} AND club_id = #{clubId}
+        WHERE user_id = #{user_id} AND club_id = #{club_id}
     </select>
 
+    <!-- 클럽장 조회-->
+    <select id="findClubMaster" parameterType="long" resultType="com.lec.spring.domain.ClubUserList">
+        SELECT user_id, club_id, role
+        FROM club_user_list
+        WHERE club_id = #{club_id} AND role = 'MASTER'
+    </select>
 
     <!-- 클럽의 멤버 삭제 -->
     <delete id="deleteByUserId" parameterType="map">
         DELETE FROM club_user_list
-        WHERE user_id = #{userId} AND club_id = #{clubId}
+        WHERE user_id = #{user_id} AND club_id = #{club_id}
     </delete>
 
     <!--클럽 회원들의 인원수-->
-    <select id="getClubMemberCount" parameterType="int" resultType="int">
+    <select id="getClubMemberCount" parameterType="long" resultType="int">
         SELECT COUNT(*)
         FROM CLUB_USER_LIST
-        WHERE club_id = #{clubId}
+        WHERE club_id = #{club_id}
     </select>
     <resultMap id="mapuserclublist" type="com.lec.spring.domain.ClubUserList">
         <result column="cs_uid" property="user_id"/>

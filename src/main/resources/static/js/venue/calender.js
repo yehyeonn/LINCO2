@@ -12,13 +12,8 @@ var realMonth = date.getMonth() + 1;    // 오늘이전 불가능
 var realToDay = date.getDate();
 
 // 사용자가 클릭한 일자의 월, 일 객체
-var selectedMonth = null;
 var selectedDate = null;
 
-function getQueryParam(param) {
-    var url = new URLSearchParams(window.location.search);
-    return url.get(param);
-}
 
 function buildCalendar() {
     var row = null;
@@ -26,7 +21,10 @@ function buildCalendar() {
 
     var calendarTable = document.getElementById("calendar");
     var calendarTableTitle = document.getElementById("calendarTitle");
-    calendarTableTitle.innerHTML = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월";
+
+    var nowYear = today.getFullYear();
+    var nowMonth = (today.getMonth() + 1);
+    calendarTableTitle.innerHTML = nowYear + "년 " + nowMonth + "월";
 
     var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
     var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
@@ -68,6 +66,17 @@ function buildCalendar() {
         }
 
         // console.log(noCount)
+        //
+        // var nowYear = today.getFullYear();
+        // var nowMonth = today.getMonth();
+        // var nowDay = today.getDate();
+        //
+        // var cellDate = new Date(nowYear, nowMonth, i); // 현재 셀의 날짜
+        // if (cellDate <= today) {
+        //     noCount += 1;
+        //     cell.classList.add('disabled');
+        //     cell.style.pointerEvents = 'none';
+        // }
 
         // 선택한 날짜 출력
         if (cell.innerHTML === '') {
@@ -128,6 +137,8 @@ function buildCalendar() {
     }
 
     emptyCells();
+    pastDate(nowYear, nowMonth);
+
 }
 
 function emptyCells() {
@@ -141,7 +152,35 @@ function emptyCells() {
             cell.style.pointerEvents = 'none';
         }
     }
+}
 
+function pastDate(nowYear, nowMonth) {
+    var calendarTable = document.getElementById("calendar");
+    var cells = calendarTable.getElementsByTagName("td");
+    var today = new Date();  // 현재 날짜.
+    var currentYear = today.getFullYear();
+    var currentMonth = today.getMonth() + 1;
+
+    // console.log('currentM : ' + currentMonth);
+
+    console.log(cells.length)
+    for (var i = 0; i < cells.length; i++) {
+        var cell = cells[i];
+        // var cellDate = new Date(currentYear, currentMonth, parseInt(cell.textContent)); // 셀의 날짜를 나타내는 Date 객체
+
+        // console.log(cell);
+
+        // 현재 월의 과거 날짜를 비활성화합니다.
+        if (1 <= cell.innerHTML && cell.innerHTML <= 31) {
+            if (nowYear < currentYear ||
+                (nowMonth < currentMonth && nowYear === currentYear) ||
+                (cell.innerHTML <= today.getDate() && nowMonth === currentMonth && nowYear === currentYear)) {
+                cell.style.color = '#E0E0E0';
+                cell.style.pointerEvents = 'none';
+            }
+
+        }
+    }
 }
 
 function prevCalendar() {

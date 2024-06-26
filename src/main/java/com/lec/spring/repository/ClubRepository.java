@@ -2,6 +2,7 @@ package com.lec.spring.repository;
 
 import com.lec.spring.domain.Club;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -12,6 +13,10 @@ public interface ClubRepository {
 
     // 특정 id 클럽 찾기
     Club findById(Long id);
+
+    // 이름으로 클럽 찾기
+    Club findByName(@Param("name") String name);
+
 
     // 전체 클럽 목록
     List<Club> findAll();
@@ -32,6 +37,7 @@ public interface ClubRepository {
     int countAll();
 
     int countSelect(String category, String detailcategory);
+
 
 
 }
