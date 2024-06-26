@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
     buildCalendar(); // 달력 초기화
     displaySavedDate(); // 저장된 날짜 표시
     disableReservedTimes()
-
+    localStorage.setItem('startTime', '');
+    localStorage.setItem('endTime', '');
 });
 
 
@@ -259,6 +260,7 @@ $(document).ready(function () {
 
 
     $('.time td').click(function () {
+
         var clickedCell = this;
         var selectedTime = $(clickedCell).text().trim();
         // console.log(selectedTime);
@@ -365,6 +367,75 @@ function parseTime(time) {
     // console.log(hour);
     // console.log(minute);
     return hour;
+}
+
+function validateForm() {
+    // console.log('벨리데이터지롱~~~')
+    let isValid = true;
+    let name = document.querySelector('.name');
+    let email = document.querySelector('.email');
+    let tell = document.querySelector('.tell');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // 예약자명 유효성검사
+    if (name.value.trim() === '') {
+        err_name = "예약자명을 입력하세요";
+        $('.err-name').text(err_name);
+        isValid = false;
+    }
+
+    // 이메일 유효성검사
+    if (email.value.trim() === '') {
+        // alert('이메일을 입력해 주세요.');
+        err_email = "이메일을 입력하세요";
+        $('.err-email').text(err_email);
+        isValid = false;
+    } else if (!emailPattern.test(email.value.trim())) {
+        err_email2 = "유효한 이메일 주소를 입력해 주세요. 예) aaa@email.com";
+        $('.err-email').text(err_email2);
+        isValid = false;
+    }
+
+    // 전화번호 유효성검사
+    const tellPattern = /^[0-9]{3}[0-9]{3,4}[0-9]{4}$/;
+    if (tell.value.trim() === '') {
+        err_tell = "전화번호를 입력해 주세요";
+        $('.err-tell').text(err_tell);
+        isValid = false;
+    } else if (!tellPattern.test(tell.value.trim())) {
+        err_tell2 = "유효한 전화번호를 입력해 주세요. 예) 01012345678";
+        $('.err-tell').text(err_tell2);
+        isValid = false;
+    }
+
+    if(localStorage.getItem("startTime") === '') {
+        err_time = "시간을 선택하세요.";
+        $('#time_err').text(err_time);
+        isValid = false;
+    }
+
+    if (isValid) {
+        return requestPay();
+        localStorage.setItem("startTime", '');
+        localStorage.setItem("endTime", '');
+    }else {
+        localStorage.setItem("startTime", '');
+        localStorage.setItem("endTime", '');
+        return;
+    }
+
+}
+
+function showError(input, message) {
+    let errorDiv = input.nextElementSibling;
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+}
+
+function clearError(input) {
+    let errorDiv = input.nextElementSibling;
+    errorDiv.textContent = '';
+    errorDiv.style.display = 'none';
 }
 
 /*

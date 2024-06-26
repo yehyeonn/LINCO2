@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.location.href = '/socializing/write';
             } else {
                 // 결제 실패 시 로직
+                alert('Payment failed', rsp.error_msg);
                 console.log('Payment failed', rsp.error_msg);
                 // 추가로 실행할 로직을 여기에 작성
             }
