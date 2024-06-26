@@ -117,5 +117,10 @@ public class ReservationController {
         System.out.println("Reservation.initBinder() 호출");
         binder.setValidator(new ReservationValidator());
     }
+    @PostMapping("/savePayment")
+    public ResponseEntity<Reservation> savePayment(@RequestBody Reservation reservation) {
+        reservationService.write(reservation);
+        return ResponseEntity.ok(reservation);
+    }
 }
 
