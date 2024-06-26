@@ -36,7 +36,7 @@
                c.name "c_name"
         FROM CLUB_USER_LIST cul
                  JOIN CLUB c ON cul.club_id = c.id
-        WHERE cul.user_id = #{user_id}
+        WHERE cul.user_id = #{userId}
     </select>
 
     <!-- 특정 클럽의 특정 사용자 조회 -->
