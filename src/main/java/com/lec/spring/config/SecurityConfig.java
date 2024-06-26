@@ -41,6 +41,7 @@ public class SecurityConfig {
                                 .requestMatchers("/board/detail/**").authenticated()
                                 .requestMatchers("/socializing/detail/**").authenticated()
                                 .requestMatchers("/socializing/write").authenticated()
+                                .requestMatchers("/club/detail/**", "/club/create/**").authenticated()
                                 .requestMatchers("/board/write/**", "/board/update/**", "/board/delete").hasAnyAuthority("MEMBER", "ADMIN")
                                 .anyRequest().permitAll()
                 )

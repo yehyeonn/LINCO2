@@ -47,4 +47,6 @@ public interface ClubService {
     int getClubMemberCount(Long club_id);
 
 
+    // 클럽 이름 중복확인
+    boolean isClubNameExists(String clubName);
 }

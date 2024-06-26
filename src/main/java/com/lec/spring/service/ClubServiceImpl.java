@@ -32,6 +32,14 @@ public class ClubServiceImpl implements ClubService {
 
     private final ClubRepository clubRepository;
     private final ClubUserListRepository clubUserListRepository;
+
+    @Override
+    public boolean isClubNameExists(String clubName) {
+        // 클럽 이름이 이미 존재하는지 확인하는 로직
+        Club club = clubRepository.findByName(clubName);
+        return club != null; // 클럽 객체가 null이 아니면 이미 존재하는 것으로 간주
+    }
+
     private final UserRepository userRepository;
 
     @Autowired

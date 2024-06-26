@@ -48,10 +48,7 @@ body {
     align-items: center;
     background-color: #f8f9fa;
 }
-.image-placeholder {
-    font-size: 1.2rem;
-    color: #6c757d;
-}
+
 .btn-file {
     position: relative;
     overflow: hidden;
@@ -71,3 +68,4 @@ body {
     cursor: inherit;
     display: block;
 }
+

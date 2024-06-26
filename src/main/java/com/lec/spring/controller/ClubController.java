@@ -8,14 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/club")
@@ -45,12 +54,33 @@ public class ClubController {
     // 클럽 생성 요청 처리
     @PostMapping("/create")
     public String createOk(
-//            @RequestParam Map<String, MultipartFile> files, // 첨부파일들 <name, file>
+            @RequestParam("files") MultipartFile file,
             @Valid Club club,
             BindingResult result,
             Model model,    // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
             RedirectAttributes redirectAttrs   // redirect 시 넘겨줄 값들을 담는 객체
-    ) {
+    ) throws IOException {
+        // 기본 이미지 경로 설정
+        String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
+
+        // 파일이 비어있지 않으면 업로드 처리
+        if (!file.isEmpty()) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            imgPath = "upload/" + fileName;
+
+            try {
+                Path path = Paths.get(imgPath);
+                Files.createDirectories(path.getParent());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 이미지 경로를 Socializing 객체에 설정
+        club.setRepresentative_picture(imgPath);
+        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
+
 
         // 유효성 검사에서 에러가 발생한 경우
         if (result.hasErrors()) {
@@ -74,6 +104,19 @@ public class ClubController {
         // 클럽 생성 로직 실행
         model.addAttribute("result", clubService.createClub(club));
         return "club/createOk";
+    }
+
+    // 클럽 이름 중복 확인 요청 처리
+    @PostMapping("/checkDuplicate")
+    @ResponseBody
+    public Map<String, Boolean> checkDuplicate(@RequestParam("clubName") String clubName) {
+        Map<String, Boolean> response = new HashMap<>();
+
+        // 클럽 이름 중복 체크
+        boolean isDuplicate = clubService.isClubNameExists(clubName);
+
+        response.put("duplicate", isDuplicate);
+        return response;
     }
 
     @GetMapping("/list")
