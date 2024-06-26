@@ -1,8 +1,8 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.Club;
-import com.lec.spring.domain.ClubValidator;
+import com.lec.spring.domain.*;
 import com.lec.spring.service.ClubService;
+import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,6 +26,9 @@ public class ClubController {
 
     @Autowired
     private ClubService clubService;
+
+    @Autowired
+    private UserService userService;
 
 
     public ClubController() {
@@ -88,7 +92,45 @@ public class ClubController {
         return "club/list";
     }
 
-    @InitBinder
+    @GetMapping("detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+        // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
+        Club club = clubService.getClubById(id);
+        System.out.println("club: " + club);
+        // 클럽의 멤버 리스트 -> user_id, club_id, role
+        List<ClubUserList> clubMemberList= clubService.getClubMemberList(id);
+        System.out.println("clubMemberList: "+ clubMemberList);
+
+        // 각 클럽 멤버의 사용자 이름을 찾기 위한 리스트
+        List<User> clubMembersWithUsernames = new ArrayList<>();
+
+        for (ClubUserList clubUser : clubMemberList) {
+            User user = userService.findById(clubUser.getUser_id());
+            clubMembersWithUsernames.add(user);
+        }
+        System.out.println("clubMembersWithUsernames: "+ clubMembersWithUsernames);
+
+
+        // 클럽장
+        ClubUserList clubMaster = clubService.findClubMaster(id);
+        System.out.println("clubMaster :" + clubMaster);
+
+        // 멤버 수 -> 현재인원
+        int memberCount = clubService.getClubMemberCount(id);
+        System.out.println("memberCount: " + memberCount);
+
+        model.addAttribute("club", club);
+        model.addAttribute("clubMemberList", clubMemberList);
+        model.addAttribute("clubMembersWithUsernames", clubMembersWithUsernames);
+        model.addAttribute("clubMaster", clubMaster);
+        model.addAttribute("memberCount", memberCount);
+
+
+        return "/club/detail";
+
+    }
+
+    @InitBinder("club")
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());
