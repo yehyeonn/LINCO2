@@ -146,15 +146,14 @@ set content ='6월 15일 토요일 06시30분 ~ 10시 갈현체육공원 야구�
 where id = 1;
 
 
-
-
-
-
-
 select *
 from club_user_list;
 
 
-
+SELECT cul.user_id, cul.club_id, cul.role, c.id, c.name, u.id, u.name, u.username
+FROM CLUB_USER_LIST cul
+         JOIN CLUB c ON cul.club_id = c.id
+         JOIN USER u ON cul.user_id = u.id
+WHERE club_id = 1;
 
 

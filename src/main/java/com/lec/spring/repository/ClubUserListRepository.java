@@ -14,7 +14,7 @@ public interface ClubUserListRepository {
     List<ClubUserList> findByClubId(Long club_id);
 
     // 특정 사용자가 가입한 클럽 목록 조회
-    List<ClubUserList> findByUserId(Long user_id);
+    List<ClubUserList> findByUserId(@Param("userId") Long user_id);
 
     // 특정 클럽의 특정 사용자 조회
     ClubUserList findByUserIdAndClubId(@Param("user_id") Long user_id, @Param("club_id") Long club_id);
@@ -26,5 +26,6 @@ public interface ClubUserListRepository {
     // 클럽 회원들의 인원수 조회
     int getClubMemberCount(Long clubId);
 
+    List<ClubUserList> findByClubuserList(@Param("user_id") Long user_id, @Param("club_id") Long club_id);
 }
 

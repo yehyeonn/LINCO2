@@ -47,6 +47,7 @@
                  LEFT JOIN CLUB c ON b.club_id = c.id
         WHERE
             1=1
+
     </sql>
 
     <select id="findById" resultType="com.lec.spring.domain.Board" resultMap="mapBoard">
@@ -62,7 +63,7 @@
 
     <select id="findAll" resultMap="mapBoard">
         <include refid="SELECT_BASE"/>
-        ORDER BY b.id DESC
+        ORDER BY b_regdate DESC
     </select>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Board">
@@ -83,6 +84,7 @@
         <include refid="SELECT_BASE"/>
         AND (#{param3} IS NULL OR #{param3} = '' OR bt.id = #{param3})
         OR (#{param4} IS NOT NULL OR #{param4} = '' OR b.id = #{param4})
+        ORDER BY b_regdate DESC
         LIMIT #{param1}, #{param2}
     </select>
 
@@ -134,5 +136,36 @@
         <association property="boardType" resultMap="mapBoardType"/>
         <association property="club" resultMap="mapClub"/>
     </resultMap>
+
+    <select id="allmenu" resultMap="mapBoard">
+        select
+            b.id "b_id",
+            b.title "b_title",
+            b.content "b_content",
+            b.viewcnt "b_viewcnt",
+            b.regdate "b_regdate",
+            u.id "u_id",
+            u.tel "u_tel",
+            u.username "u_username",
+            u.password "u_password",
+            u.address "u_address",
+            u.gender "u_gender",
+            u.birthday "u_birthday",
+            u.profile_picture "u_profile_picture",
+            u.regdate "u_regdate",
+            c.id "c_id",
+            c.name "c_name",
+            c.category "c_category",
+            c.detail_category "c_detail_category",
+            c.intro "c_inrto",
+            c.content "c_content",
+            c.representative_picture "c_representative_picture",
+            bt.id "bt_id",
+            bt.name "bt_name"
+            from BOARD b
+            LEFT join club c on b.club_id = c.id
+            join user u on b.user_id = u.id
+            join BOARD_TYPE bt on b.board_type_id = bt.id
+    </select>
 
 </mapper>
