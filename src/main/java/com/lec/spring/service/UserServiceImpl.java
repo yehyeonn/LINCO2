@@ -36,6 +36,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username.toUpperCase());
     }
 
+
+    @Override
+    public User findById(Long id){
+        return userRepository.findById(id);
+    }
+
+
     @Override
     public boolean isExist(String username) {
         User user = findByUsername(username.toUpperCase());

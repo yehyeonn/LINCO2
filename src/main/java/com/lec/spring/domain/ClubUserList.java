@@ -11,6 +11,5 @@ public class ClubUserList {
     private Long user_id;
     private Long club_id;
     private String role;
-
     private Club club;
 }
