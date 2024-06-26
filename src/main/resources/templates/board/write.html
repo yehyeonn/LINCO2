@@ -6,7 +6,6 @@
     <title>게시글 작성</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
     <th:block th:insert="/common/header :: header-head"></th:block>
 </head>
 <body>
@@ -14,13 +13,14 @@
 <th:block th:insert="/common/header :: header-body"></th:block>
 
 <div class="write container1" th:with="user=${#authentication.getPrincipal().getUser()}">
-    <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
+    <!-- 공지사항 혹은 자유게시판을 클릭하면 나오는 페이지-->
+    <form name="frmGeneral" id="generalForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data">
         <div class="title">
             <div class="form-group">
                 <div>
                     <label>작성자:</label>
                     <select name="boardType.id" id="lang" class="select-right">
-                        <option th:value="${2}">자유게시판</option>
+                        <option th:value="${2}" selected>자유게시판</option>
                         <option th:value="${3}">클럽홍보</option>
                         <option th:value="${1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
                     </select>
@@ -44,7 +44,7 @@
         <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
 
 
-        <div id="files">
+        <div class="files">
             <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
         </div>
 
@@ -54,12 +54,116 @@
                     목록
                 </a>
 
-                <button type="button" class="btn" id="btnAdd">
+                <button type="button" class="btn btnAdd">
+                    첨부파일 추가
+                </button>
+            </div>
+            <button type="button"  class="btn submit">     <!-- id="submit" -->
+                저장하기
+            </button>
+        </div>
+    </form>
+
+    <!-- 클럽 홍보 버튼을 누르면 나오는 페이지 -->
+    <form name="frmClub" id="clubForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data" style="display: none">
+        <div class="title">
+            <div class="form-group">
+                <div>
+                    <label>작성자:</label>
+                    <select>
+                        <option>클럽리스트</option>
+                    </select>
+                    <select name="boardType.id" id="clubWrite" class="select-right">
+                        <option th:value="${2}">자유게시판</option>
+                        <option th:value="${3}" selected>클럽홍보</option>
+                        <option th:value="${1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
+                    </select>
+                    <span class="form-control">[[${user.name}]]</span>
+                </div>
+                <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
+                <label for="title">클럽홍보 제목:</label>
+
+                <input type="text" class="form-control" id="clubTitle" placeholder="제목을 입력하세요" name="title"
+                       th:value="${title}">
+            </div>
+            <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
+        </div>
+        <hr>
+
+        <div class="form-group">
+            <label for="content">클럽홍보 내용:</label>
+            <textarea class="form-control" rows="5" id="clubContent" placeholder="내용을 입력하세요" name="content"
+                      th:utext="${content}"></textarea>
+        </div>
+        <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
+
+
+        <div class="files">
+            <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
+        </div>
+
+        <div class="button">
+            <div class="left-buttons">
+                <a class="btn" th:href="@{/board/list(page = ${session.page})}">
+                    목록
+                </a>
+
+                <button type="button" class="btn btnAdd">
                     첨부파일 추가
                 </button>
             </div>
 
-            <button type="submit" class="btn">
+            <button type="button"  class="btn clubSubmit">     <!-- id="clubSubmit" -->
+                저장하기
+            </button>
+        </div>
+    </form>
+
+    <form name="frmNotice" id="noticeForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data">
+        <div class="title">
+            <div class="form-group">
+                <div>
+                    <label>작성자:</label>
+                    <select name="boardType.id" id="noticeWrite" class="select-right">
+                        <option th:value="${2}">자유게시판</option>
+                        <option th:value="${3}">클럽홍보</option>
+                        <option th:value="${1}" selected sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
+                    </select>
+                    <span class="form-control">[[${user.name}]]</span>
+                </div>
+                <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
+                <label for="title">공지사항 제목:</label>
+
+                <input type="text" class="form-control" id="noticeTitle" placeholder="제목을 입력하세요" name="title"
+                       th:value="${title}">
+            </div>
+            <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
+        </div>
+        <hr>
+
+        <div class="form-group">
+            <label for="content">내용:</label>
+            <textarea class="form-control" rows="5" id="noticeContent" placeholder="내용을 입력하세요" name="content"
+                      th:utext="${content}"></textarea>
+        </div>
+        <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
+
+
+        <div class="files">
+            <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
+        </div>
+
+        <div class="button">
+            <div class="left-buttons">
+                <a class="btn" th:href="@{/board/list(page = ${session.page})}">
+                    목록
+                </a>
+
+                <button type="button" class="btn btnAdd">
+                    첨부파일 추가
+                </button>
+            </div>
+            <button type="button"  class="btn noticeSubmit">     <!-- id="submit" -->
                 저장하기
             </button>
         </div>

@@ -67,7 +67,12 @@ public class BoardServiceImpl implements BoardService{
         user = userRepository.findById(user.getId());
         board.setUser(user);
 
+        // 디버깅용
+        System.out.println("Saving Board : " + board);
+
         int cnt = boardRepository.save(board);
+
+        System.out.println("Saving cnt : " + cnt);
 
         addFiles(files, board.getId());
 
