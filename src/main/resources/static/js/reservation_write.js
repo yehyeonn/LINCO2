@@ -328,6 +328,7 @@ $(document).ready(function () {
 
         localStorage.setItem('startTime', startTime + ':00');
         localStorage.setItem('endTime', endTime + ':00');
+        localStorage.setItem('totalPrice', totalPrice);
         // console.log('로컬저장소 시작시간: ' + localStorage.getItem('startTime', startTime));
         // console.log('로컬저장소 종료시간: ' + localStorage.getItem('endTime', endTime));
 
