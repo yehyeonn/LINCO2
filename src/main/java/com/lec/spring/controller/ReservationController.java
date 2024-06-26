@@ -66,61 +66,65 @@ public class ReservationController {
         return "reservation/write";
     }
 
-
-    @PostMapping("/write")
-    public String writeOk(@RequestParam("venue_id") Long venueId
-            , @RequestParam("selectedDate") String selectedDate
-            , @Valid Reservation reservation
-            , BindingResult result
-            , Model model
-            , RedirectAttributes redirectAttributes) throws IOException {
-
-        Venue venue = venueService.getVenueById(venueId);
-        model.addAttribute("venue", venue);
-        model.addAttribute("selectedDate", selectedDate);
-
-        if (result.hasErrors()) {
-            System.out.println("에러네?");
-
-            redirectAttributes.addFlashAttribute("reservation_name", reservation.getReservation_name());
-            redirectAttributes.addFlashAttribute("email", reservation.getEmail());
-            redirectAttributes.addFlashAttribute("tel", reservation.getTel());
-            redirectAttributes.addFlashAttribute("reserve_start_time", reservation.getReserve_start_time());
-//            redirectAttributes.addFlashAttribute("reserve_end_time", reservation.getReserve_end_time());
-            System.out.println("출력이 될까?");
-
-            List<FieldError> errList = result.getFieldErrors();
-            for (FieldError err : errList) {
-                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
-            }
-
-            return "redirect:/reservation/write?venue_id=" + venueId + "&selectedDate=" + selectedDate;
-        }
-
-        model.addAttribute("result", reservationService.write(reservation));
-
-
-        List<Reservation> reservations = reservationService.findByVenueAndDate(venueId, selectedDate);
-//        for (int i = 0; i < reservations.size(); i++) {
-//            System.out.println(reservations.get(i));
+//
+//    @PostMapping("/write")
+//    public String writeOk(@RequestParam("venue_id") Long venueId
+//            , @RequestParam("selectedDate") String selectedDate
+//            , @Valid Reservation reservation
+//            , BindingResult result
+//            , Model model
+//            , RedirectAttributes redirectAttributes) throws IOException {
+//
+//        Venue venue = venueService.getVenueById(venueId);
+//        model.addAttribute("venue", venue);
+//        model.addAttribute("selectedDate", selectedDate);
+//
+//        if (result.hasErrors()) {
+//            System.out.println("에러네?");
+//
+//            redirectAttributes.addFlashAttribute("reservation_name", reservation.getReservation_name());
+//            redirectAttributes.addFlashAttribute("email", reservation.getEmail());
+//            redirectAttributes.addFlashAttribute("tel", reservation.getTel());
+//            redirectAttributes.addFlashAttribute("reserve_start_time", reservation.getReserve_start_time());
+////            redirectAttributes.addFlashAttribute("reserve_end_time", reservation.getReserve_end_time());
+//            System.out.println("출력이 될까?");
+//
+//            List<FieldError> errList = result.getFieldErrors();
+//            for (FieldError err : errList) {
+//                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+//            }
+//
+//            return "redirect:/reservation/write?venue_id=" + venueId + "&selectedDate=" + selectedDate;
 //        }
-        model.addAttribute("reservations", reservations);
+//
+//        model.addAttribute("result", reservationService.write(reservation));
+//
+//
+//        List<Reservation> reservations = reservationService.findByVenueAndDate(venueId, selectedDate);
+////        for (int i = 0; i < reservations.size(); i++) {
+////            System.out.println(reservations.get(i));
+////        }
+//        model.addAttribute("reservations", reservations);
+//
+//
+//        return "reservation/writeOk";
+//    }
+//
+//
+//    @InitBinder("reservation")
+//    public void initBinder(WebDataBinder binder) {
+//
+//        System.out.println("Reservation.initBinder() 호출");
+//        binder.setValidator(new ReservationValidator());
+//    }
 
-
-        return "reservation/writeOk";
-    }
-
-
-    @InitBinder("reservation")
-    public void initBinder(WebDataBinder binder) {
-
-        System.out.println("Reservation.initBinder() 호출");
-        binder.setValidator(new ReservationValidator());
-    }
     @PostMapping("/savePayment")
-    public ResponseEntity<Reservation> savePayment(@RequestBody Reservation reservation) {
-        reservationService.write(reservation);
-        return ResponseEntity.ok(reservation);
+    public String savePayment(@Valid Reservation reservation
+                                , BindingResult result
+                                , Model model
+    ) {
+        model.addAttribute("result", reservationService.write(reservation));
+        return "/socializing/write";
     }
 }
 

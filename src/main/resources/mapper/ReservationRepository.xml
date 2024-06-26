@@ -10,7 +10,7 @@
         insert into RESERVATION
         (user_id, reservation_name, email, tel, venue_id, venue_name, status, reserve_date, reserve_start_time,
          reserve_end_time, total_price, paydate)
-        values (#{user_id}, #{reservation_name}, #{email}, #{tel}, #{venue_id}, #{venue_name}, #{status},
+        values (#{user.id}, #{reservation_name}, #{email}, #{tel}, #{venue.id}, #{venue.name}, #{status},
                 #{reserve_date}, #{reserve_start_time}, #{reserve_end_time},
                 #{total_price}, #{paydate})
     </insert>
