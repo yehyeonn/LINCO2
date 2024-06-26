@@ -36,18 +36,19 @@
             <div class="event-details">
                 <div class="details-header">
                     <h1 th:text="${detailsocializing.getSocializing_title()}">Socializing 이름</h1>
-                    <span id="address" class="social-info" th:text="${detailsocializing.getAddress()}"
-                          style="display: none"></span>
-                    <span class="social-info">|</span>
-                    <span class="social-info"> [[${detailsocializing.getCategory()}]]</span>
-                    <span class="social-info">| [[${detailsocializing.getDetail_category()}]]</span>
-                    <span class="social-info">| [[${detailsocializing.getMeeting_date()}]]</span>
-                    <span class="social-info">  [[${detailsocializing.getMeeting_time()}]]</span>
+                    <p id="address" class="social-info" th:text="${detailsocializing.getAddress()}"
+                          style="display: none"></p>
+                    <span class="social-info"> | </span>
+                    <span class="social-info">[[${detailsocializing.getCategory()}]]</span>
+                    <span class="social-info"> | [[${detailsocializing.getDetail_category()}]]</span>
+                    <span class="social-info"> | [[${detailsocializing.getMeeting_date()}]]</span>
+                    <span class="social-info"> | [[${detailsocializing.getMeeting_time()}]]</span>
                     <p id="social-cnt">참여인원: [[${membercnt}]] / [[${detailsocializing.getLimit_num()}]]</p>
-                    <p id="social-price">입장료: [[${detailsocializing.getTotal_price()}]]</p>
+                    <p id="social-price">입장료: [[${detailsocializing.getTotal_price()}]]원</p>
                 </div>
                 <div class="details-buttons">
-                    <a class="edit-button btn" th:href="@{'/socializing/update/' + ${detailsocializing.id}}" th:if="${logged_user.id == Master.User.id}">수정하기</a>
+                    <a th:href="@{'/socializing/update/' + ${detailsocializing.id}}" th:if="${logged_user.id == Master.User.id}">
+                        <button class="edit-button btn">수정</button></a>
                     <form th:action="@{/socializing/detail}" method="POST">
                         <input type="text" class="hidden" name="user_id" th:value="${logged_user.id}">
                         <input type="text" class="hidden" name="socializing_id" th:value="${detailsocializing.getId()}">
@@ -63,25 +64,28 @@
         </form>
 <!--삭제기능-->
         <section class="description">
-            <h2>상세설명</h2>
+            <h1>상세설명</h1>
             <p id="detaildescription" th:utext="${content}"></p>
-            <span class="location-button">[[${detailsocializing.getPlace_name()}]]</span>
-            <div class="location-button">[[${detailsocializing.getAddress()}]]</div>
+
+            <div id="location-button1" class="location-button1">장소명: &nbsp;[[${detailsocializing.getPlace_name()}]]</div>
+            <div id="location-button2" class="location-button2">주소명: &nbsp;[[${detailsocializing.getAddress()}]]</div>
+
+
             <div class="map_wrap">
                 <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
             </div>
 
             <div class="align-right">
-                <button id="backbtn">이전으로</button>
+                <button id="backbtn">이전</button>
             </div>
         </section>
 
         <section class="participants">
-            <h2>참여자 리스트</h2>
-            <div th:each="member : ${members}" th:if="${#lists.contains(Listnum,logged_user.id)}">
+            <h1>참여자 리스트</h1>
+            <div class="social-list" th:each="member : ${members}" th:if="${#lists.contains(Listnum,logged_user.id)}">
                 <span>[[${member.User.username}]]</span>
-                <span th:if="${logged_user.id == Master.user.getId()}"> | [[${member.User.tel}]]</span>
-                <span> | [[${member.role}]] </span>
+                <span th:if="${logged_user.id == Master.user.getId()}">[[${member.User.tel}]]</span>
+                <span>[[${member.role}]] </span>
             </div>
         </section>
     </main>

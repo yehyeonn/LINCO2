@@ -4,33 +4,7 @@ body {
     color: #3A4D72;
     margin: 0;
     padding: 0;
-}
-
-nav ul {
-    list-style-type: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-.social-info{
-    color: black;
-    font-size: 25px;
-}
-#social-cnt{
-    color: black;
-    font-size: 20px;
-}
-#social-price{
-    color: black;
-    font-size: 20px;
-}
-nav ul li {
-    margin: 0 10px;
-}
-
-header nav ul li a {
-    color: white;
-    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .container1 {
@@ -47,6 +21,25 @@ main {
     padding: 20px;
 }
 
+.details-header h1 {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.social-info{
+    gap: 20px;
+    color: #333;
+    font-size: 20px;
+}
+#social-cnt{
+    color: #333;
+    font-size: 18px;
+}
+#social-price{
+    color: #333;
+    font-size: 18px;
+}
+
 .event-info {
     display: flex;
     background-color: #b3b49e;
@@ -56,27 +49,19 @@ main {
     border-radius: 10px;
 }
 
-.event-info .event-image {
-    width: 328px;
-    height: 150px;
+.event-image {
+    width: 350px;
+    height: 200px;
     object-fit: contain;
     background-color: #EDEBDA;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
-.event-details {
-    margin-left: 20px;
-}
-
-.event-details h1 {
-    margin: 0;
-}
-
-.event-details p {
-    margin: 5px 0;
+.event-details p, .event-details span {
+    margin: 25px 0;
 }
 
 .event-details button {
@@ -88,8 +73,34 @@ main {
     cursor: pointer;
 }
 
-.event-details .delete-button {
+.event-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 20px;
+    position: relative;
+}
+
+.details-buttons {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.edit-button, .delete-button, .join-button {
+    background-color: #3A4D72;
+    color: #EDEBDA;
+    border-radius: 1rem;
+    transition: all 0.3s;
+}
+
+.edit-button:hover, .delete-button:hover, .join-button:hover {
     background-color: #D3374A;
+    color: #EDEBDA;
+    transform: scale(1.1);
 }
 
 .description {
@@ -100,95 +111,84 @@ main {
     border-radius: 10px;
 }
 
-.description h2 {
-    margin-top: 0;
+.description h1 {
+    font-weight: bold;
+    font-size: 40px;
 }
 
-.location-button {
-    background-color: #D3374A;
-    color: white;
+
+.location-button1, .location-button2 {
+    border-radius: 10px;
+    background-color: #3A4D72;
+    color: #EDEBDA;
     padding: 10px;
     display: inline-block;
-    margin-top: 10px;
-}
-
-.participants {
-    background-color: #B3B49E;
-    padding: 20px;
-    border: 1px solid #B3B49E;
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
-
-.participants h2 {
-    margin-top: 0;
-}
-
-.participants ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.participants ul li {
-    padding: 10px 0;
-    border-bottom: 1px solid black;
-    font-size: 20px;
-}
-
-footer {
-    background-color: #3A4D72;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-h2{
-    font-weight: bolder;
+    margin: 10px 0;
 }
 
 #detaildescription{
-    font-size: 20px;
-    color: black;
+    font-size: 18px;
+    color: #333;
 }
 
-.event-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    margin-left: 20px;
-    position: relative;
-}
-
-.details-header {
-    flex: 1;
-}
-
-.details-buttons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
 
 .hidden{
     display: none;
 }
 
+/* 이전 버튼 */
 #backbtn{
     margin-top: 20px;
     background-color: #3A4D72;
-    color: white;
+    color: #EDEBDA;
     border: none;
     padding: 10px 20px;
     margin-right: 10px;
     cursor: pointer;
+    border-radius: 1rem;
+    transition: all 0.3s;
+}
+
+#backbtn:hover {
+    background-color: #D3374A;
+    transform: scale(1.1);
 }
 
 .align-right {
     display: flex;
     justify-content: flex-end;
+}
+
+/* 참여자 리스트 */
+.participants {
+    background-color: #B3B49E;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 0 auto;
+}
+
+.participants h1 {
+    font-weight: bold;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.social-list {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    border-bottom: 2px solid #EDEBDA;
+    margin: 10px;
+    padding: 5px;
+}
+
+.social-list span {
+    color: #333;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.participant {
+    border-radius: 4px;
+    padding: 10px;
 }

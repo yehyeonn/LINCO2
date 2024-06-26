@@ -6,109 +6,103 @@
     history.back();
 </script>
 
-
 <th:block th:if="${updatesocializing}" th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <title>Socializing 수정</title>
-    <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
-    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/socializing_update.css}">
+    <link rel="stylesheet" th:href="@{/css/update_map.css}">
     <th:block th:replace="~{common/header :: header-head}"></th:block>
-    <link rel="stylesheet" href="/css/socializing_write.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/update_map.css">
 </head>
 
-<body>
-<header th:replace="~{common/header :: header-body}"></header>
+    <body>
+    <header th:replace="~{common/header :: header-body}"></header>
 
-<div class="container1">
-    <form th:action="@{/socializing/update}" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" th:value="${updatesocializing.id}"/>
-<!--        <div class="form-group" th:with="user=${#authentication.getPrincipal().getUser()}">-->
+    <div class="container-social-update">
+        <form th:action="@{/socializing/update}" method="post" enctype="multipart/form-data">
+            <div class="form-group social-title">
+            <input type="hidden" name="id" th:value="${updatesocializing.id}"/>
             <label for="socializing_title">소셜라이징 이름</label>
             <input type="text" id="socializing_title" name="socializing_title" placeholder="제목을 입력하세요"
                    th:value="${socializing_title} ? ${socializing_title} : ${updatesocializing.socializing_title}"/>
-<!--        </div>-->
-        <div><span class="text-danger" th:if="${error_socializing_title}" th:utext="${error_socializing_title}"></span>
-        </div>
-
-        <div class="form-group select-container">
-            <label for="category">카테고리</label>
-            <select id="category" name="category" disabled>
-                <option th:value="${updatesocializing.category}" th:text="${updatesocializing.category}" selected readonly></option>
-            </select>
-            <input type="hidden" name="category" th:value="${updatesocializing.category}">
-
-            <label for="detail_category">소분류</label>
-            <select id="detail_category" name="detail_category" disabled>
-                <option th:text="${updatesocializing.detail_category}"readonly></option>
-            </select>
-            <input type="hidden" name="detail_category" id="detailCategory" th:value="${updatesocializing.detail_category}" selected readonly>
-        </div>
-
-        <div class="form-group">
-            <label for="content" class="content1">내용</label>
-            <textarea id="content" name="content" rows="5"  th:utext="${content} ? ${content} : ${updatesocializing.content}"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="meeting_date">날짜</label>
-            <input type="date" id="meeting_date" name="meeting_date" th:value="${updatesocializing.meeting_date}" readonly/>
-            <label for="meeting_time">시간</label>
-            <input type="time" id="meeting_time" name="meeting_time" th:value="${updatesocializing.meeting_time}" readonly/>
-        </div>
-
-        <div class="form-group">
-            <label for="limit_num">인원</label>
-            <input type="number" id="limit_num" name="limit_num" th:value="${updatesocializing.limit_num}" readonly/>
-        </div>
-
-        <div class="form-group">
-            <label for="total_price">가격</label>
-            <input type="text" id="total_price" name="total_price" th:value="${updatesocializing.total_price}" readonly/>
-        </div>
-
-        <div class="form-img">
-            <div class="form-group image-placeholder">
-                <img id="previewImage" style="display:block; max-width: 180px; height: auto;" th:src="@{'/' + ${updatesocializing.img}}" th:value="@{'/' + ${updatesocializing.img}}">
+            <div><span class="text-danger" th:if="${error_socializing_title}" th:utext="${error_socializing_title}"></span></div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <input  type="hidden" id="placeName" name="placeName" th:value="${updatesocializing.place_name}">
-            <input type="text" id="address" name="address" th:value="${updatesocializing.getAddress()}" readonly>
-        </div>
+            <div class="form-group select-container">
+                <label for="category">카테고리</label>
+                <select id="category" name="category" disabled>
+                    <option th:value="${updatesocializing.category}" th:text="${updatesocializing.category}" selected readonly></option>
+                </select>
+                <input type="hidden" name="category" th:value="${updatesocializing.category}">
 
-        <div class="map_wrap">
-            <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-        </div>
+                <label for="detail_category">소분류</label>
+                <select id="detail_category" name="detail_category" disabled>
+                    <option th:text="${updatesocializing.detail_category}" readonly></option>
+                </select>
+                <input type="hidden" name="detail_category" id="detailCategory" th:value="${updatesocializing.detail_category}" selected readonly>
+            </div>
 
-        <hr>
+            <div class="form-group">
+                <label for="content" class="content1">내용</label>
+                <textarea id="content" name="content" rows="5" th:utext="${content} ? ${content} : ${updatesocializing.content}"></textarea>
+            </div>
 
-        <div class="form-group btn-group">
-            <button type="button" id="prevButton" onclick="history.back()">이전으로</button>
-            <a class="btn btn-outline-dark ms-1" th:href="@{/socializing/list(page=${session.page})}">목록</a>
-            <button type="submit" class="socializing_confirm">수정완료</button>
-        </div>
+            <div class="form-group">
+                <label for="meeting_date">날짜</label>
+                <input type="date" id="meeting_date" name="meeting_date" th:value="${updatesocializing.meeting_date}" readonly/>
+                <label for="meeting_time">시간</label>
+                <input type="time" id="meeting_time" name="meeting_time" th:value="${updatesocializing.meeting_time}" readonly/>
+            </div>
 
-    </form>
-</div>
+            <div class="form-group">
+                <label for="limit_num">인원</label>
+                <input type="number" id="limit_num" name="limit_num" th:value="${updatesocializing.limit_num}" readonly/>
+            </div>
 
-<footer th:replace="~{common/footer :: footer-body}"></footer>
+            <div class="form-group">
+                <label for="total_price">가격</label>
+                <input type="text" id="total_price" name="total_price" th:value="${updatesocializing.total_price}" readonly/>
+            </div>
 
+            <div class="form-img">
+                <div class="form-group image-placeholder">
+                    <img id="previewImage" style="width: 400px; height: 250px;" th:src="@{'/' + ${updatesocializing.img}}" th:value="@{'/' + ${updatesocializing.img}}">
+                </div>
+            </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
+            <div class="form-group">
+                <label for="placeName">위치</label>
+                <input type="hidden" id="placeName" name="placeName" th:value="${updatesocializing.place_name}">
+                <input type="text" id="address" name="address" th:value="${updatesocializing.getAddress()}" readonly>
+            </div>
 
-<script type="text/javascript"
-        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=cf0f44225c7ff5ce919c81354ed2c1b2&libraries=services"></script>
-<script src="/js/socializing_update.js" type="text/javascript"></script>
-</body>
+            <div class="map_wrap">
+                <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+            </div>
+
+            <hr>
+
+            <div class="social-button-container">
+                    <a class="button-list" th:href="@{/socializing/list(page=${session.page})}">
+                        목록
+                    </a>
+
+                <div class="right-button">
+                        <a class="button-back" onclick="history.back()">이전으로</a>
+
+                        <button type="submit" class="button-submit">수정완료</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <footer th:replace="~{common/footer :: footer-body}"></footer>
+    <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
+
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=cf0f44225c7ff5ce919c81354ed2c1b2&libraries=services"></script>
+    <script th:src="@{/js/socializing_update.js}" type="text/javascript"></script>
+    </body>
 </th:block>
 </html>
