@@ -57,4 +57,16 @@ $(function (){
         window.location.href = localStorage.getItem("backUrl")
     })
 
+
+    $(document).ready(function() {
+        var $locationButton1 = $("#location-button1");
+        var placeName = $locationButton1.text().replace(/\u00a0/g, ' ').trim();
+
+        if (placeName === "장소명:" || placeName === "") {
+            $locationButton1.hide();
+        } else {
+            $locationButton1.show();
+        }
+    });
+
 });
