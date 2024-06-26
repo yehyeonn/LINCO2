@@ -56,5 +56,10 @@ public class ReservationController {
         return "reservation/write";
     }
 
+    @PostMapping("/savePayment")
+    public ResponseEntity<Reservation> savePayment(@RequestBody Reservation reservation) {
+        reservationService.write(reservation);
+        return ResponseEntity.ok(reservation);
+    }
 }
 
