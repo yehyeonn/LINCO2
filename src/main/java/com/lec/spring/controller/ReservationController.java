@@ -27,23 +27,14 @@ public class ReservationController {
         Venue venue = venueService.getVenueById(venueId);
         model.addAttribute("venue", venue);
         model.addAttribute("selectedDate", selectedDate);
+
+
+        List<Reservation> reservation = reservationService.findByVenueAndDate(venueId, selectedDate);
+        for (int i = 0; i < reservation.size(); i++) {
+            System.out.println(reservation.get(i));
+        }
+        model.addAttribute("reservations", reservation);
         return "reservation/write";
     }
 }
-
-//@PostMapping("/writeOk")
-//public int createReservation(@RequestBody Reservation reservation) {
-//    return reservationService.write(reservation);
-//}
-//
-//@GetMapping("/list")
-//public List<Reservation> reservationList() {
-//    return reservationService.list();
-//}
-//
-//@PostMapping("/update")
-//public int updateReservation(@PathVariable("id") Long id, @RequestBody Reservation reservation) {
-//    reservation.setId(id);
-//    return reservationService.update(reservation);
-//}
 

@@ -126,7 +126,23 @@ function buildCalendar() {
     } else if (possibleDay[etp] == 0) {
         noCount += 1;
     }
-};
+
+    emptyCells();
+}
+
+function emptyCells() {
+    var calendarTable = document.getElementById("calendar");
+    var cells = calendarTable.getElementsByTagName("td");
+
+    for (var i = 0; i < cells.length; i++) {
+        var cell = cells[i];
+
+        if (!cell.textContent.trim()) {
+            cell.style.pointerEvents = 'none';
+        }
+    }
+
+}
 
 function prevCalendar() {
     today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());

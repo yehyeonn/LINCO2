@@ -15,10 +15,10 @@ import java.time.LocalTime;
 public class Reservation {
 
     private Long id;
+    private LocalDate reserve_date;
+    private LocalTime reserve_start_time;
+    private LocalTime reserve_end_time;
+    private String status;
     private Venue venue;
     private User user;
-    private LocalDate reservate_date;
-    private LocalTime reservate_start_time;
-    private LocalTime reservate_end_time;
-    private String status;
 }
