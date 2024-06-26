@@ -25,21 +25,21 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public int write(Reservation reservation) {
-//        User user = U.getLoggedUser();
-        User user = new User();
+        User user = U.getLoggedUser();
+//        User user = new User();
 
         userRepository.findById(user.getId());
         reservation.setUser(user);
 
-        int cnt = reservationRepository.save(reservation);
+//        int cnt = reservationRepository.save(reservation);
 
-        return cnt;
+        return reservationRepository.save(reservation);
     }
 
     @Override
     public List<Reservation> list() {
-//        User user = U.getLoggedUser();
-        User user = new User();
+        User user = U.getLoggedUser();
+//        User user = new User();
 
         return reservationRepository.findById(user.getId());
     }
