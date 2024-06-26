@@ -174,7 +174,7 @@ public class ClubController {
 
     }
 
-    @InitBinder("club")
+
     @GetMapping( "/update/{id}")
     public String update(@PathVariable Long id, Model model){
         Club club = clubService.getClubById(id);
@@ -198,8 +198,9 @@ public class ClubController {
                 imgPath = fileName;
 
                 try{
-                    Path path = Paths.get(imgPath);
+                    Path path = Paths.get("/upload/"+imgPath);
                     Files.createDirectories(path.getParent());
+                    System.out.println(file.getOriginalFilename());
                     Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
 
                 }catch (IOException e){
