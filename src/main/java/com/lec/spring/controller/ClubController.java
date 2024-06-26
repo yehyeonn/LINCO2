@@ -168,9 +168,21 @@ public class ClubController {
         model.addAttribute("clubMaster", clubMaster);
         model.addAttribute("memberCount", memberCount);
 
-
         return "/club/detail";
-
+    }
+    @PostMapping("/detail")
+    public String detailOk(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
+            ,@RequestParam(name = "club_id",required = false,defaultValue = "") Long club_id
+            , Model model){
+        int result = clubService.addMemberToClub(user_id, club_id);
+        model.addAttribute("result",result);
+        model.addAttribute("club_id",club_id);
+        return "/club/detailOk";
+    }
+    @PostMapping("delete")
+    public String deleteOk(Long id, Model model){
+        model.addAttribute("result",clubService.deleteById(id));
+        return "club/deleteOk";
     }
 
     @InitBinder("club")
