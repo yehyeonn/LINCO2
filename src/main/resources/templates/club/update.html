@@ -41,7 +41,7 @@
             <div class="col-md-6 text-center">
                 <label for="club-representative-picture" class="form-label"></label>
                 <div class="bordered-image" id="club-representative-picture">
-                    <img th:src="@{'/'+${club.getRepresentative_picture()}}" id="previewImage" style="display:block; max-width: 180px; height: auto;">
+                    <img th:src="@{'/upload/'+${club.getRepresentative_picture()}}" id="previewImage" style="display:block; max-width: 180px; height: auto;">
                 </div>
                 <button type="button" id="fileSelect" class="btn btn-primary btn-file mt-2">파일선택 </button>
                 <input type="file" id="fileInput" class="d-none" name="files">

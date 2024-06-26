@@ -156,6 +156,8 @@ public class ClubServiceImpl implements ClubService {
         return list;
     }
 
+
+
     @Override
     public Club getClubById(Long club_id) {
         return clubRepository.findById(club_id);

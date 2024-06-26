@@ -116,7 +116,7 @@ public class ClubController {
 
         if(!file.isEmpty()){
                 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-                imgPath = "upload/" + fileName;
+                imgPath = fileName;
 
                 try{
                     Path path = Paths.get(imgPath);
