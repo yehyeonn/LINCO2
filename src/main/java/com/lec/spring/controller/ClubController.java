@@ -4,16 +4,24 @@ import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubValidator;
 import com.lec.spring.service.ClubService;
 import jakarta.validation.Valid;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -89,10 +97,55 @@ public class ClubController {
     }
 
     @GetMapping( "/update/{id}")
-    public String update(){
-
+    public String update(@PathVariable Long id, Model model){
+        Club club = clubService.getClubById(id);
+        model.addAttribute("club", club);
         return "club/update";
     }
+
+    @PostMapping("/update")
+    public String updateOk(
+            @Valid Club club
+            , BindingResult result
+            , @RequestParam(name="files", required = false, defaultValue = "")MultipartFile file
+            ,Model model
+            ,RedirectAttributes redirectAttributes
+            ) throws IOException {
+            String imgPath = club.getRepresentative_picture();
+
+
+        if(!file.isEmpty()){
+                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                imgPath = "upload/" + fileName;
+
+                try{
+                    Path path = Paths.get(imgPath);
+                    Files.createDirectories(path.getParent());
+                    Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            club.setRepresentative_picture(imgPath);
+        System.out.println("이미지경로: " + imgPath);
+        System.out.println(club);
+
+        if(result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("intro", club.getIntro());
+            redirectAttributes.addFlashAttribute("content", club.getContent());
+            List<FieldError> errList = result.getFieldErrors();
+            for (FieldError err : errList) {
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/club/update/" + club.getId(); // Id는 수정사항이 아니다
+        }
+
+        model.addAttribute("result", clubService.updateClub(club));
+        return "club/updateOk";
+    }
+
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

@@ -41,6 +41,7 @@ body {
     white-space: nowrap;
 }
 .bordered-image {
+
     border: 2px solid #ccc;
     height: 200px;
     display: flex;
