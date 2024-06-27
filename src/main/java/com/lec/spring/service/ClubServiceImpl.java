@@ -184,15 +184,9 @@ public class ClubServiceImpl implements ClubService {
         return clubRepository.findById(club_id);
     }
 
-    @Override
-    public List<ClubUserList> getClubMemberList(Long club_id) {
-        return clubUserListRepository.findByClubId(club_id);
-    }
 
-    @Override
-    public List<ClubUserList> getUserClubs(Long user_id) {
-        return clubUserListRepository.findByUserId(user_id);
-    }
+
+
 
     @Override
     public int getClubMemberCount(Long club_id){

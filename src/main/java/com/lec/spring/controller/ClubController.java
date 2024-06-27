@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.*;
 import com.lec.spring.service.ClubService;
+import com.lec.spring.service.ClubUserListService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.MutablePropertyValues;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/club")
@@ -36,6 +38,9 @@ public class ClubController {
 
     @Autowired
     private ClubService clubService;
+
+    @Autowired
+    private ClubUserListService clubUserListService;
 
     @Autowired
     private UserService userService;
@@ -141,11 +146,12 @@ public class ClubController {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
         System.out.println("club: " + club);
+
         // 클럽의 멤버 리스트 -> user_id, club_id, role
-        List<ClubUserList> clubMemberList= clubService.getClubMemberList(id);
+        List<ClubUserList> clubMemberList= clubUserListService.findByClubId(id);
         System.out.println("clubMemberList: "+ clubMemberList);
 
-        // 각 클럽 멤버의 사용자 이름을 찾기 위한 리스트
+        // 클럽멤버들의 User 리스트
         List<User> clubMembersWithUsernames = new ArrayList<>();
 
         for (ClubUserList clubUser : clubMemberList) {
@@ -159,12 +165,19 @@ public class ClubController {
         ClubUserList clubMaster = clubService.findClubMaster(id);
         System.out.println("clubMaster :" + clubMaster);
 
+        // clubMemberList에서 user_id만 추출하여 리스트로 만들기 (클럽장 제외)
+        List<Long> clubMemberIds = clubMemberList.stream()
+                .map(ClubUserList::getUser_id)
+                .filter(userId -> !userId.equals(clubMaster.getUser_id())) // 클럽장 제외
+                .collect(Collectors.toList());
+
         // 멤버 수 -> 현재인원
         int memberCount = clubService.getClubMemberCount(id);
         System.out.println("memberCount: " + memberCount);
 
         model.addAttribute("club", club);
         model.addAttribute("clubMemberList", clubMemberList);
+        model.addAttribute("clubMemberIds", clubMemberIds);
         model.addAttribute("clubMembersWithUsernames", clubMembersWithUsernames);
         model.addAttribute("clubMaster", clubMaster);
         model.addAttribute("memberCount", memberCount);
@@ -186,7 +199,7 @@ public class ClubController {
         return "club/deleteOk";
     }
 
-    @InitBinder("club")
+//    @InitBinder("club") // 에러남
     @GetMapping( "/update/{id}")
     public String update(@PathVariable Long id, Model model){
         Club club = clubService.getClubById(id);
