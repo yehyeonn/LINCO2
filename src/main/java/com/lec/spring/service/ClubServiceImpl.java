@@ -20,6 +20,8 @@ import java.util.List;
 @Service
 public class ClubServiceImpl implements ClubService {
 
+
+
     // 첨부파일 업로드
     @Value("upload")
     private String uploadDir;
@@ -32,6 +34,19 @@ public class ClubServiceImpl implements ClubService {
 
     private final ClubRepository clubRepository;
     private final ClubUserListRepository clubUserListRepository;
+
+    @Override
+    public int deleteById(Long club_id) {
+        int result = clubRepository.deleteById(club_id);
+        return result;
+    }
+    @Override
+    public boolean isClubNameExists(String clubName) {
+        // 클럽 이름이 이미 존재하는지 확인하는 로직
+        Club club = clubRepository.findByName(clubName);
+        return club != null; // 클럽 객체가 null이 아니면 이미 존재하는 것으로 간주
+    }
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -46,21 +61,20 @@ public class ClubServiceImpl implements ClubService {
     // 클럽 생성 (유저가 master 가 됨)
     public int createClub(Club club) {
         // 현재 로그인 한 작성자 정보
-//        User user = U.getLoggedUser();
+        User user = U.getLoggedUser();
 
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다.
-//        user = userRepository.findById(user.getId());
-
-
+        user = userRepository.findById(user.getId());
+        System.out.println("유저의 id는?? "+ user.getId());
         int result = clubRepository.save(club);
-//        if (result > 0) {
-//            ClubUserList clubUserList = new ClubUserList();
-////            clubUserList.setUser_id(user.getId()); // TODO 유저 id 직접 집어 넣어야함
-//            clubUserList.setUser_id(1L);
-//            clubUserList.setClub_id(club.getId());
-//            clubUserList.setRole("MASTER");
-//            clubUserListRepository.save(clubUserList);
-//        }
+        System.out.println("클럽의 id는?? " + club.getId());
+        if (result > 0) {
+            ClubUserList clubUserList = new ClubUserList();
+            clubUserList.setUser_id(user.getId());
+            clubUserList.setClub_id(club.getId());
+            clubUserList.setRole("MASTER");
+            clubUserListRepository.save(clubUserList);
+        }
         return result;
     }
 
@@ -68,12 +82,13 @@ public class ClubServiceImpl implements ClubService {
     @Override
     @Transactional
     // 클럽 가입 (유저가 member 가 됨)
-    public void addMemberToClub(Long user_id, Long club_id) {
+    public int addMemberToClub(Long user_id, Long club_id) {
         ClubUserList clubUserList = new ClubUserList();
         clubUserList.setUser_id(user_id);
         clubUserList.setClub_id(club_id);
         clubUserList.setRole("MEMBER");
-        clubUserListRepository.save(clubUserList);
+        int result = clubUserListRepository.save(clubUserList);
+        return result;
     }
 
     @Override
@@ -156,18 +171,31 @@ public class ClubServiceImpl implements ClubService {
         return list;
     }
 
+
+
+    @Override
+    public ClubUserList findClubMaster(Long club_id){
+        return clubUserListRepository.findClubMaster(club_id);
+    }
+
+
     @Override
     public Club getClubById(Long club_id) {
         return clubRepository.findById(club_id);
     }
 
     @Override
-    public List<ClubUserList> getClubUsers(Long club_id) {
+    public List<ClubUserList> getClubMemberList(Long club_id) {
         return clubUserListRepository.findByClubId(club_id);
     }
 
     @Override
     public List<ClubUserList> getUserClubs(Long user_id) {
         return clubUserListRepository.findByUserId(user_id);
+    }
+
+    @Override
+    public int getClubMemberCount(Long club_id){
+        return clubUserListRepository.getClubMemberCount(club_id);
     }
 }

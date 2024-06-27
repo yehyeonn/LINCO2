@@ -9,7 +9,9 @@ public interface ReservationService {
 
     List<Reservation> list();
 
+    // 결제 취소 시 사용
     int update(Reservation reservation);
+
 
     List<Reservation> findByVenueAndDate(Long id, String reserve_date);
 }

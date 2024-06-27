@@ -34,6 +34,7 @@
         <result column="u_id" property="id"/>
         <result column="u_tel" property="tel"/>
         <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
         <result column="u_password" property="password"/>
         <result column="u_address" property="address"/>
         <result column="u_gender" property="gender"/>
@@ -81,6 +82,7 @@
             u.birthday AS u_birthday,
             u.profile_picture AS u_profilePicture,
             u.regdate AS u_regdate,
+            u.name AS u_name,
             a.id AS a_id,
             a.sourcename AS a_sourceName,
             a.filename AS a_fileName,

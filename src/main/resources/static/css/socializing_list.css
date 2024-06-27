@@ -22,6 +22,7 @@ body {
     align-items: center;
     margin: auto;
     gap: 15px;
+    margin: auto;
 }
 .search-bar button {
     background-color: #B3B49E;

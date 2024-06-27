@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <script th:unless="${result > 0}">
-    alert("등록실패");
+    alert("참여에 실패했습니다.");
     history.back();
 </script>
+
 <script th:if="${result > 0}" th:inline="javascript">
-    alert("등록 성공");
-    location.href = "detail/[[${club.id}]]";
+    alert("참여되었습니다.")
+    //
+    location.href = "detail/[[${club_id}]]";
 </script>
+
 </html>

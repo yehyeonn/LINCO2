@@ -78,7 +78,7 @@
             <h2 class="title-center">클럽홍보</h2>
             <div class="club-list">
                 <a th:each="board : ${boards}" th:if="${board.boardType.id == 3}" class="club-item">
-                        <img th:if="${board.club != null}" th:src="@{'/img/' + ${board.club.representative_picture}}" alt="대표사진" class="club-img">
+                        <img th:if="${board.club != null}" th:src="@{'/upload/' + ${board.club.representative_picture}}" alt="대표사진" class="club-img">
                         <p class="club-name" th:if="${board.club != null}" th:text="${board.club.name}"></p>
                         <p class="club-category" th:if="${board.club != null}" th:text="${board.club.detail_category}"></p>
                 </a>

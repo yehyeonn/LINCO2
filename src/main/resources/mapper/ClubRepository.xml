@@ -5,7 +5,8 @@
 <mapper namespace="com.lec.spring.repository.ClubRepository">
 
     <!-- 클럽 생성 -->
-    <insert id="save" parameterType="com.lec.spring.domain.Club">
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Club"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO club (name, category, detail_category, intro, content, representative_picture)
         VALUES (#{name}, #{category}, #{detail_category}, #{intro}, #{content}, #{representative_picture})
     </insert>
@@ -15,6 +16,12 @@
         SELECT *
         FROM club
         WHERE id = #{id}
+    </select>
+    <!-- 이름으로  클럽 찾기 -->
+    <select id="findByName" parameterType="string" resultType="com.lec.spring.domain.Club">
+        SELECT *
+        FROM club
+        WHERE name = #{name}
     </select>
 
     <!-- 전체 클럽 목록 -->

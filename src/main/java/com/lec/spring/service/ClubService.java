@@ -11,8 +11,11 @@ public interface ClubService {
     // 클럽 생성 (유저가 master 가 됨)
     int createClub(Club club);
 
+    // 클럽 삭제
+    int deleteById(Long club_id);
+
     // 클럽 가입 (유저가 member 가 됨)
-    void addMemberToClub(Long user_id, Long club_id);
+    int addMemberToClub(Long user_id, Long club_id);
 
     // 클럽 사용자 삭제 (MASTER만 가능)
     void deleteClubMember(Long user_id, Long club_id);
@@ -29,15 +32,24 @@ public interface ClubService {
                     String selectcategory,
                     String selectdetailcategory);
 
+
+    // 클럽장 조회
+    ClubUserList findClubMaster(Long club_id);
+
     // 특정 클럽 조회
     Club getClubById(Long club_id);
 
     // 클럽 사용자 목록 조회
-    List<ClubUserList> getClubUsers(Long club_id);
+    List<ClubUserList> getClubMemberList(Long club_id);
 
 
     // 특정 사용자의 클럽 목록 조회
     List<ClubUserList> getUserClubs(Long user_id);
 
+    // 클럽 인원수 조회
+    int getClubMemberCount(Long club_id);
 
+
+    // 클럽 이름 중복확인
+    boolean isClubNameExists(String clubName);
 }
