@@ -102,6 +102,7 @@ CREATE TABLE CLUB_USER_LIST
     user_id INT                       NOT NULL,
     club_id INT                       NOT NULL,
     role    ENUM ('MASTER', 'MEMBER') NOT NULL DEFAULT 'MEMBER',
+    regdate DATETIME                  NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, club_id)
 );
 
