@@ -158,7 +158,10 @@ where re.venue_id = 12
   and re.reserve_date = '2024-06-29';
 
 
-
+delete
+    from club
+where id =17
+;
 
 
 select *

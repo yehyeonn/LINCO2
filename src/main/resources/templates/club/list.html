@@ -52,7 +52,7 @@
     <div class="main-content">
         <div class="club-item" th:each="clubs : ${clubs}">
             <a  th:href="@{'/club/detail/' + ${clubs.id}}">
-                <img th:src="@{'/img/' + ${clubs.representative_picture}}" alt="Club Image" class="club-img">
+                <img th:src="@{'/upload/' + ${clubs.representative_picture}}" alt="Club Image" class="club-img">
                 <p th:text="${clubs.name}" class="club-name">Club 이름</p>
                 <p th:text="${clubs.category}" class="club-category">카테고리</p>
                 <p th:text="${clubs.detail_category}" class="club-detail-category">상세종목</p>
