@@ -67,10 +67,10 @@ public class ClubController {
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = "upload/" + fileName;
+            imgPath = fileName;
 
             try {
-                Path path = Paths.get(imgPath);
+                Path path = Paths.get("upload/" +imgPath);
                 Files.createDirectories(path.getParent());
                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -169,12 +169,24 @@ public class ClubController {
         model.addAttribute("clubMaster", clubMaster);
         model.addAttribute("memberCount", memberCount);
 
-
         return "/club/detail";
-
+    }
+    @PostMapping("/detail")
+    public String detailOk(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
+            ,@RequestParam(name = "club_id",required = false,defaultValue = "") Long club_id
+            , Model model){
+        int result = clubService.addMemberToClub(user_id, club_id);
+        model.addAttribute("result",result);
+        model.addAttribute("club_id",club_id);
+        return "/club/detailOk";
+    }
+    @PostMapping("delete")
+    public String deleteOk(Long id, Model model){
+        model.addAttribute("result",clubService.deleteById(id));
+        return "club/deleteOk";
     }
 
-    @InitBinder("club")
+
     @GetMapping( "/update/{id}")
     public String update(@PathVariable Long id, Model model){
         Club club = clubService.getClubById(id);
@@ -198,8 +210,9 @@ public class ClubController {
                 imgPath = fileName;
 
                 try{
-                    Path path = Paths.get(imgPath);
+                    Path path = Paths.get("/upload/"+imgPath);
                     Files.createDirectories(path.getParent());
+                    System.out.println(file.getOriginalFilename());
                     Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
 
                 }catch (IOException e){

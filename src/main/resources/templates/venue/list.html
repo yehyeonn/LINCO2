@@ -8,9 +8,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/venue_list.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
     <th:block th:replace="~{common/header :: header-head}"></th:block>
     <title>Venue 페이지</title>
 </head>
@@ -19,64 +16,66 @@
 
 <div class="container-venue">
     <div class="category-area">
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="회의실" th:value="회의실"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="캠핑장" th:value="캠핑장"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="청년공간" th:value="청년공간"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="공유공간" th:value="공유공간"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="전시실" th:value="전시실"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="다목적실" th:value="다목적실"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="녹화장소" th:value="녹화장소"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="광장" th:value="광장"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="공연장" th:value="공연장"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="강의실" th:value="강의실"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="강당" th:value="강당"></button>
-        </form>
-        <form th:action="@{/venue/list}" method="get">
-            <button type="submit" name="venue_category" th:text="기타" th:value="기타"></button>
-        </form>
-
+        <div class="category-row">
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn green small" type="submit" name="venue_category" value="회의실">회의실</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn blue small" type="submit" name="venue_category" value="캠핑장">캠핑장</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn red small" type="submit" name="venue_category" value="청년공간">청년공간</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn purple small" type="submit" name="venue_category" value="공유공간">공유공간</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn cyan small" type="submit" name="venue_category" value="전시실">전시실</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn yellow small" type="submit" name="venue_category" value="다목적실">다목적실</button>
+            </form>
+        </div>
+        <div class="category-row">
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn green small" type="submit" name="venue_category" value="녹화장소">녹화장소</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn blue small" type="submit" name="venue_category" value="광장">광장</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn red small" type="submit" name="venue_category" value="공연장">공연장</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn purple small" type="submit" name="venue_category" value="강의실">강의실</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn cyan small" type="submit" name="venue_category" value="강당">강당</button>
+            </form>
+            <form th:action="@{/venue/list}" method="get">
+                <button class="venue-btn yellow small" type="submit" name="venue_category" value="기타">기타</button>
+            </form>
+        </div>
     </div>
+
     <div class="main-content" th:fragment="venue-list">
-        <a class="venue-item card" th:each="venue : ${list}" th:href="@{'/venue/detail/' + ${venue.id}}">
-            <img class="card-img-top" th:src="${venue.img}" alt="Venue Image">
-            <div class="card-body">
-                <p class="card-text" th:text="${venue.venue_name}"></p>
-                <p class="card-text" th:text="${venue.address}"></p>
-                <p class="card-text" th:text="${venue.venue_category}"></p>
-                <p class="card-text" th:text="${'이용시간: ' + venue.open_time + ' ~ ' + venue.close_time}"></p>
-                <p class="card-text" th:text="${venue.price}"></p>
+        <a class="venue-item" th:each="venue : ${list}" th:href="@{'/venue/detail/' + ${venue.id}}">
+            <div class="card">
+                <img class="card-img" th:src="${venue.img}" alt="Venue Image">
+                <div class="card-body">
+                    <p class="card-title" th:text="${venue.venue_name}"></p>
+                    <p class="card-text" th:text="${'주소: ' + venue.address}"></p>
+                    <p class="card-text" th:text="${'카데고리: ' + venue.venue_category}"></p>
+                    <p class="card-text" th:text="${'이용시간: ' + venue.open_time + ' ~ ' + venue.close_time}"></p>
+                    <p class="card-text" th:text="${'이용금액: ' + venue.price + '원'}"></p>
+                </div>
             </div>
         </a>
         <th:block th:insert="~{venue/venuePagination::pagination}"></th:block>
     </div>
-
-    <!--    <footer th:replace="~{common/footer :: footer-body}"></footer>-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 </div>
-</body>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
+</body>
 </html>

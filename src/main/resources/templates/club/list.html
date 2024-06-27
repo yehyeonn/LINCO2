@@ -8,7 +8,7 @@
     <script th:src="@{/js/club/list.js}"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
 
-    <title>Club 생성 페이지</title>
+    <title>Club List</title>
     <th:block th:insert="/common/header :: header-head"></th:block>
 </head>
 <body>
@@ -20,22 +20,22 @@
             <ul class="club-category-list">
                 <li class="club-category-search">
                     <label class="search-club-category">
-                        <button type="submit" name="clubCategory" th:value="운동">운동</button>
+                        <button class="custom-button button-1" type="submit" name="clubCategory" th:value="운동"><span>Search!</span><span>운동</span></button>
                     </label>
                 </li>
                 <li>
                     <label class="search-club-category">
-                        <button type="submit" name="clubCategory" th:value="문화예술">문화예술</button>
+                        <button class="custom-button button-2" type="submit" name="clubCategory" th:value="문화예술"><span>Search!</span><span>문화예술</span></button>
                     </label>
                 </li>
                 <li>
                     <label class="search-club-category">
-                        <button type="submit" name="clubCategory" th:value="여행">여행</button>
+                        <button class="custom-button button-3" type="submit" name="clubCategory" th:value="여행"><span>Search!</span><span>여행</span></button>
                     </label>
                 </li>
                 <li>
                     <label class="search-club-category">
-                        <button type="submit" name="clubCategory" th:value="스터디">스터디</button>
+                        <button class="custom-button button-4" type="submit" name="clubCategory" th:value="스터디"><span>Search!</span><span>스터디</span></button>
                     </label>
                 </li>
             </ul>
@@ -52,7 +52,7 @@
     <div class="main-content">
         <div class="club-item" th:each="clubs : ${clubs}">
             <a  th:href="@{'/club/detail/' + ${clubs.id}}">
-                <img th:src="@{'/img/' + ${clubs.representative_picture}}" alt="Club Image" class="club-img">
+                <img th:src="@{'/upload/' + ${clubs.representative_picture}}" alt="Club Image" class="club-img">
                 <p th:text="${clubs.name}" class="club-name">Club 이름</p>
                 <p th:text="${clubs.category}" class="club-category">카테고리</p>
                 <p th:text="${clubs.detail_category}" class="club-detail-category">상세종목</p>
@@ -63,7 +63,9 @@
     <th:block th:insert="~{club/clubPagination :: pagination}"></th:block>
 
     <div class="button-container">
-        <a href="/club/create" class="create-button" sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">클럽 생성</a>
+        <a href="/club/create" sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">
+            <button class="custom-button button-2"><span>Let's Go!</span><span>클럽 생성</span></button>
+        </a>
     </div>
 
 

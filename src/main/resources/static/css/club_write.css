@@ -133,3 +133,26 @@ hr {
 .file-input-group button {
     margin-left: 10px;
 }
+
+/* 이전 버튼 */
+#backbtn{
+    margin-top: 20px;
+    background-color: #3A4D72;
+    color: #EDEBDA;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 1rem;
+    transition: all 0.3s;
+}
+
+#backbtn:hover {
+    background-color: #D3374A;
+    transform: scale(1.1);
+}
+
+.align-right {
+    display: flex;
+    justify-content: flex-end;
+}
