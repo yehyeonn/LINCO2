@@ -21,7 +21,9 @@
 <body>
 <header th:replace="~{common/header :: header-body}"></header>
 
-<div class="container-wrapper">
+<div class="container-wrapper" th:with="user=${#authentication.getPrincipal().getUser()}">
+    <input type="hidden" class="hidden" name="user_id" th:value="${user.id}">
+    <div class="container-wrapper">
     <div class="reservation-box">
         <div class="venue_name" th:text="${venue.venue_name}">대관장소 이름</div>
         <table id="calendar" class="calendar">

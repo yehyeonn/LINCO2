@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -24,6 +25,7 @@ public class Reservation {
     private LocalTime reserve_start_time;
     private LocalTime reserve_end_time;
     private Long total_price;
+    private LocalDateTime paydate;
     private Venue venue;
     private User user;
 }

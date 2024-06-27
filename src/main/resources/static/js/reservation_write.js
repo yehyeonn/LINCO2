@@ -76,7 +76,6 @@ function disableReservedTimes() {
     });
 }
 
-
 // 저장된 날짜 표시 함수
 function displaySavedDate() {
     var savedDate = localStorage.getItem('selectedDate');
@@ -164,13 +163,12 @@ $(document).on('click', '#calendar td', function () {
         success: function (htmlString) {
             var reservations = getReservationTime(htmlString);
 
-            console.log(reservations);
+            // console.log(reservations)
             updateDisableReservations(reservations);
 
             localStorage.setItem('fullDate', `${year}-${fullMonth}-${selectedDate}`);
         },
     })
-
 });
 
 
@@ -260,6 +258,8 @@ $(document).on('click', '.pay-btn', function () {
     console.log('전화번호' + localStorage.getItem('tell'));
     console.log('베뉴아이디' + localStorage.getItem('venue_id'));
     console.log('전체날짜' + localStorage.getItem('fullDate'));
+    console.log('베뉴 이름' + document.querySelector('.venue_name').textContent);
+
 });
 
 $(document).ready(function () {
@@ -428,9 +428,13 @@ function validateForm() {
         return requestPay();
         localStorage.setItem("startTime", '');
         localStorage.setItem("endTime", '');
+        localStorage.setItem("name", '');
+        localStorage.setItem("email", '');
     } else {
         localStorage.setItem("startTime", '');
         localStorage.setItem("endTime", '');
+        localStorage.setItem("name", '');
+        localStorage.setItem("email", '');
         return;
     }
 

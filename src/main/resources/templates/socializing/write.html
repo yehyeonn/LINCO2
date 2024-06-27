@@ -9,10 +9,23 @@
     <link rel="stylesheet" th:href="@{/css/socializing_write.css}">
     <th:block th:replace="~{common/header :: header-head}"></th:block>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/payment.js}"></script>
 </head>
-
+<!-- // TODO : venue 값 불러서 찍어보고 그걸로 위치 표시하기 사진이랑.. ... 대관장소 이름 -->
 <body>
 <header th:replace="~{common/header :: header-body}"></header>
+
+<!--<div th:if="${venue != null}">-->
+<!--    <h1>Venue Information</h1>-->
+<!--    <p th:text="'ID: ' + ${venue.id}"></p>-->
+<!--    <p th:text="'Name: ' + ${venue.venue_name}"></p>-->
+<!--</div>-->
+
+<!--<div>-->
+<!--    <p th:text="'Debug: ' + ${venue}"></p>-->
+<!--    <p th:text="'Debug: ' + ${total_price}"></p>-->
+<!--</div>-->
+
 <div class="container1">
     <form id="socializingForm" th:action="@{/socializing/write}" method="post" enctype="multipart/form-data">
         <div class="form-group" th:with="user=${#authentication.getPrincipal().getUser()}">
@@ -61,7 +74,7 @@
         <div><span class="text-danger" th:if="${error_limit_num}" th:utext="${error_limit_num}"></span></div>
         <div class="form-group">
             <label for="total_price">가격</label>
-            <input type="text" id="total_price" name="total_price" th:value="${total_price}"/>
+            <input type="text" id="total_price" name="total_price" th:value="${total_price != null ? total_price : ''}" />원
         </div>
         <div class="form-img">
             <div class="form-group image-placeholder">
@@ -72,6 +85,19 @@
                 <button type="button" id="fileSelect">파일선택</button>
                 <input type="file" id="fileInput" name="files" style="display:none;">
             </div>
+        </div>
+        <div class="form-group" th:if="${venue.id != null}">
+            <label for="reservation">예약장소</label>
+            <input type="text" id="reservation" name="reservation" th:value="${venue.venue_name != null ? venue.venue_name : ''}">
+        </div>
+        <div class="form-group" th:if="${venue.id != null}">
+            <label for="reservationDate">예약날짜</label>
+            <input type="text" id="reservationDate" name="reservationDate" th:value="${reserveDate != null ? reserveDate : ''}">
+        </div>
+        <div class="form-group" th:if="${venue.id != null}">
+            <label for="reservationTime">예약시간</label>
+            <input type="text" id="reservationTime" name="reservationST" th:value="${reserveST != null ? reserveST : ''}"> ~
+            <input type="text" name="reservationET" th:value="${reserveET != null ? reserveET : ''}">
         </div>
         <div class="form-group">
             <label for="location">위치</label>

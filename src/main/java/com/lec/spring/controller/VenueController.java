@@ -69,7 +69,6 @@ public class VenueController {
 
     @GetMapping("/detail/{id}")
     public String detiail(@PathVariable Long id, Model model) {
-
         Venue venue = venueService.detail(id);
         model.addAttribute("venue", venue);
 
