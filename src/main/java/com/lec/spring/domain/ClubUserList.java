@@ -16,6 +16,7 @@ public class ClubUserList {
     private Club club;
     private User user;
 
+    private BoardType board_type;
     private String title;
     private String content;
     private Attachment attachment;

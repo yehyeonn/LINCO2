@@ -83,7 +83,7 @@
                        th:if="${logged_user.id == board.user.id}">수정</a>
                     <a class="btn" th:href="@{/board/write}" sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">글쓰기</a>
                 </div>
-                <a class="btn" id="clubDetail" th:if="${board.club.id != null}" th:href="@{'/club/detail/' + ${club.id}}">클럽 상세페이지</a>
+<!--                <a class="btn" id="clubDetail" th:if="${board.club.id != null}" th:href="@{'/club/detail/' + ${club.id}}">클럽 상세페이지</a>-->
                 <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기
                 </button>
 

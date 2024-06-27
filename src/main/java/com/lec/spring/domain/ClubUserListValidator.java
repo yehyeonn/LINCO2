@@ -17,10 +17,7 @@ public class ClubUserListValidator implements Validator {
         ClubUserList userList = (ClubUserList) target;
         System.out.println("ClubUserListValidator() 호출 : " + userList);
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "List_title", "글 제목은 필수 입력입니다.");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "List_content", "내용은 필수 입력입니다.");
-        if (userList.getAttachment() == null){
-            errors.rejectValue("attachment", "첨부파일은 필수 입력입니다.");
-        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "글 제목은 필수 입력입니다.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "content", "내용은 필수 입력입니다.");
     }
 }

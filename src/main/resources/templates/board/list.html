@@ -78,9 +78,10 @@
             <h2 class="title-center">클럽홍보</h2>
             <div class="club-list">
                 <a th:each="board : ${boards}" th:if="${board.boardType.id == 3}" class="club-item" th:href="@{'/board/detail/' + ${board.id}}">
-                        <img th:src="@{'/upload/' + ${board.fileList}}" alt="대표사진" class="club-img">        <!-- th:if="${board.club != null}" -->
-                        <p class="club-name" th:text="${board.title}"></p>              <!-- th:if="${board.club != null}" -->
-                        <p class="club-category"  th:text="${board.content}"></p>       <!-- th:if="${board.club != null}" -->
+                        <input type="hidden" id="imgPath" th:value="${imgPath}"/>
+                        <img alt="대표사진" class="club-img" id="img">
+                        <p class="club-name" th:text="${board.title}"></p>
+                        <p class="club-category"  th:text="${board.content}"></p>
                 </a>
             </div>
         </div>
