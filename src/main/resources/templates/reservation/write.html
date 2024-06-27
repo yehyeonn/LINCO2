@@ -26,9 +26,9 @@
         <div class="venue_name" th:text="${venue.venue_name}">대관장소 이름</div>
         <table id="calendar" class="calendar">
             <tr>
-                <td><label onclick="prevCalendar()"> ◀ </label></td>
+                <td class="arrow-left"><label onclick="prevCalendar()"> ◀ </label></td>
                 <td colspan="5" id="calendarTitle" style="pointer-events: none">yyyy년 m월</td>
-                <td><label onclick="nextCalendar()"> ▶ </label></td>
+                <td class="arrow-right"><label onclick="nextCalendar()"> ▶ </label></td>
             </tr>
             <tr style="pointer-events: none">
                 <td id="sun">일</td>
@@ -39,15 +39,16 @@
                 <td>금</td>
                 <td>토</td>
             </tr>
+
+            <div class="reservation-timebox" >
+                <th:block th:each="reservation:${reservations}">
+                    <span class="reserve-start" th:text="${reservation.reserve_start_time}"></span>
+                    <span class="reserve-end" th:text="${reservation.reserve_end_time}"></span>
+                </th:block>
+            </div>
+
             <script type="text/javascript">buildCalendar();</script>
         </table>
-
-        <div class="reservation-timebox" style="display: none">
-            <th:block th:each="reservation:${reservations}">
-                <span class="reserve-start" th:text="${reservation.reserve_start_time}"></span>
-                <span class="reserve-end" th:text="${reservation.reserve_end_time}"></span>
-            </th:block>
-        </div>
 
         <table class="time">
             <tr>
@@ -78,15 +79,15 @@
                 <li>예약자명
                     <input type="text" class="name form-control">
                 </li>
-                    <div class="err-name" style="color: red"></div>
+                <div class="err-name" style="color: red"></div>
                 <li>이메일
                     <input type="text" class="email form-control">
                 </li>
-                    <div class="err-email" style="color: red"></div>
+                <div class="err-email" style="color: red"></div>
                 <li>전화번호
                     <input type="text" class="tell form-control">
                 </li>
-                    <div class="err-tell" style="color: red"></div>
+                <div class="err-tell" style="color: red"></div>
                 <li>시간당 요금
                     <div th:text="${venue.price}" class="price form-control"></div>
                 </li>
