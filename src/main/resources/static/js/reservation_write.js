@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function disableReservedTimes() {
     var reservedStartTimes = [];
     var reservedEndTimes = [];
+    var status = [];
 
     // 예약 시작 시간과 종료 시간을 배열에 저장
     document.querySelectorAll('.reservation-timebox .reserve-start').forEach(function (element) {
@@ -38,6 +39,9 @@ function disableReservedTimes() {
     });
     document.querySelectorAll('.reservation-timebox .reserve-end').forEach(function (element) {
         reservedEndTimes.push(element.textContent.trim());
+    });
+    document.querySelectorAll('.reservation-timebox .status').forEach(function (element) {
+        status.push(element.textContent.trim());
     });
 
     // 모든 시간 셀을 가져와서 예약 불가능한 시간인지 확인
@@ -53,12 +57,14 @@ function disableReservedTimes() {
         for (var i = 0; i < reservedStartTimes.length; i++) {
             var startTime = parseTime(reservedStartTimes[i]);
             var endTime = parseTime(reservedEndTimes[i]);
-
+            var Status = status[i];
+            // console.log(Status);
             // console.log('시작시간 : ' + startTime);
             // console.log('종료시간 : ' + endTime);
 
 
-            if (currentTime >= startTime && currentTime < endTime) {
+            if (currentTime >= startTime && currentTime < endTime && Status === "PAYED") {
+            // if (currentTime >= startTime && currentTime < endTime) {
                 cell.classList.add('reserved');
                 isReserved = true;
                 break;
@@ -69,7 +75,6 @@ function disableReservedTimes() {
         }
     });
 }
-
 
 
 // 저장된 날짜 표시 함수
@@ -161,7 +166,6 @@ $(document).on('click', '#calendar td', function () {
 
             console.log(reservations);
             updateDisableReservations(reservations);
-            // disableReservedTimes();
 
             localStorage.setItem('fullDate', `${year}-${fullMonth}-${selectedDate}`);
         },
@@ -183,7 +187,8 @@ function getReservationTime(htmlString) {
         $timebox.find('.reserve-start').each(function (index) {
             var startTime = $(this).text().trim();
             var endTime = $timebox.find('.reserve-end').eq(index).text().trim();
-            reservations.push({reserve_start_time: startTime, reserve_end_time: endTime});
+            var status = $timebox.find('.status').eq(index).text().trim();
+            reservations.push({reserve_start_time: startTime, reserve_end_time: endTime, status: status});
         });
     });
     // console.log(reservations);
@@ -209,15 +214,14 @@ function updateDisableReservations(reservations) {
         // console.log(startTime)
         var endTime = parsingTimeTable(reservation.reserve_end_time);
         // console.log(endTime)
+        var status = reservation.status;
 
         timeCells.forEach(function (cell) {
             var cellTime = parsingTimeTable(cell.textContent.trim());
             // console.log(cellTime);
 
-            if (startTime <= cellTime && cellTime < endTime) {
+            if (startTime <= cellTime && cellTime < endTime && status === "PAYED") {
                 cell.classList.add('reserved');
-                // cell.style.backgroundColor = 'gray'; // 예약 불가능한 시간을 회색으로 표시
-                // cell.style.pointerEvents = 'none'; // 클릭 이벤트 비활성화
             }
         });
     });

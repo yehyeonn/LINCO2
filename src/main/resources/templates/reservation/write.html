@@ -40,10 +40,11 @@
                 <td>토</td>
             </tr>
 
-            <div class="reservation-timebox" >
+            <div class="reservation-timebox" style="display: none">
                 <th:block th:each="reservation:${reservations}">
                     <span class="reserve-start" th:text="${reservation.reserve_start_time}"></span>
                     <span class="reserve-end" th:text="${reservation.reserve_end_time}"></span>
+                    <span class="status" th:text="${reservation.status}"></span>
                 </th:block>
             </div>
 
