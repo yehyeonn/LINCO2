@@ -14,4 +14,9 @@ public class ClubUserList {
     private Long club_id;
     private String role;
     private Club club;
+    private User user;
+
+    private String title;
+    private String content;
+    private Attachment attachment;
 }

@@ -9,6 +9,7 @@ $(function() {
     const submitButton = document.querySelector('.submit');
     const clubSubmitButton = document.querySelector('.clubSubmit');
     const noticeSubmitButton = document.querySelector('.noticeSubmit');
+    const clubUserList = document.getElementById('userclubs');
 
     // 초기 상태 설정
     toggleForms(categorySelectGeneral.value);
@@ -23,6 +24,10 @@ $(function() {
 
     categorySelectNotice.addEventListener('change', function (){
         toggleForms(categorySelectNotice.value);
+    })
+
+    clubUserList.addEventListener('change', function (){
+        console.log("Club 정보 : " + clubUserList);
     })
 
     submitButton.addEventListener('click', function (event) {

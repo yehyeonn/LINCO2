@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -52,37 +53,44 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public void write() {
+    public void write(Principal principal, Model model) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+        if (user == null){
+            throw new NullPointerException("User Not Found" + username);
+        }
+        Long userId = user.getId();
+//        User userIds = userService.findByUserId(userId);
+//        System.out.println("UserId 에용 : " + userId);
+//        System.out.println("userid에용 : " + userIds);
+//        System.out.println("board에용 : " + board);
 
+        List<ClubUserList> userClubs = clubUserListService.findByUserId(userId);
+//         디버깅용
+//        for(ClubUserList userClub : userClubs){
+//            Club userClubEntity = userClub.getClub();
+//            if (userClubEntity != null){
+//                System.out.println("Club name : " + userClubEntity.getName());
+//            }
+//        }
+        model.addAttribute("userclubs", userClubs);
+//        System.out.println("userClubs : " + userClubs);
     }
 
     @PostMapping("/write")
     public String writeOk(
             @RequestParam Map<String, MultipartFile> files,
             @RequestParam("boardType.id") int boardTypeId,
+            @RequestParam("clubId") Optional<Long> clubId,
             @Valid Board board,
             BindingResult boardResult,          // result -> boardResult
             @Valid ClubUserList clubUserList,
             BindingResult clubUserListResult,
-            Club club,
             Model model,
-            RedirectAttributes redirectAttributes,
-            Principal principal
+            RedirectAttributes redirectAttributes
     ) {
-        String username = principal.getName();
-        User user = userService.findByUsername(username);
-        if (user == null){
-            throw new NullPointerException("User Not Found" + username);
-        }
-
-        Long userId = user.getId();
-        User userIds = userService.findByUserId(userId);
-        System.out.println("UserId 에용 : " + userId);
-        System.out.println("userid에용 : " + userIds);
-        System.out.println("board에용 : " + board);
-
         // boardType 이 공지사항 이거나 자유게시판일 경우
-        if (boardTypeId == 2) {
+        if (boardTypeId == 2 || boardTypeId == 1) {
             if (boardResult.hasErrors()) {
                 handleErrors(boardResult, board, redirectAttributes);
                 return "redirect:/board/write";
@@ -90,42 +98,28 @@ public class BoardController {
             int result = boardService.write(board, files);
 
             model.addAttribute("result", result);
-//            System.out.println("result2 : " + result);
-        } else if (boardTypeId == 1) {
-            if (boardResult.hasErrors()) {
-                handleErrors(boardResult, board, redirectAttributes);
-            }
-            int result = boardService.write(board, files);
-
-            model.addAttribute("result", result);
-//            System.out.println("result1 : " + result);
-
-        } else if (boardTypeId == 3) { // boardType 이 클럽홍보 일 경우
+        // boardType 이 클럽홍보 일 경우
+        } else if (boardTypeId == 3) {
             if (clubUserListResult.hasErrors()) {
-                handleErrors(clubUserListResult, clubUserList, redirectAttributes);
+                handleClubUserListErrors(clubUserListResult, clubUserList, redirectAttributes);
+                return "redirect:/board/write";
             }
+            Club club = clubService.getClubById(clubId.get());
+            System.out.println("club의 정보 : " + club);
+
+            board.setClub(club);
+
             int result = boardService.write(board, files);
 
-            List<ClubUserList> userClubs = clubUserListService.findByUserId(userId);
-            for(ClubUserList userClub : userClubs){
-                Club userClubEntity = userClub.getClub();
-                if (userClubEntity != null){
-                    System.out.println("Club name : " + userClubEntity.getName());
-                }
-            }
-            model.addAttribute("userclubs", userClubs);
             model.addAttribute("result", result);
-
-            System.out.println("userClubs : " + userClubs);
         }
-
+        System.out.println("clubID : " + clubUserList);
         return "board/writeOk";
     }
 
     private void handleErrors(BindingResult result, Object target, RedirectAttributes redirectAttributes) {
         if (target instanceof Board) {
             Board board = (Board) target;
-            redirectAttributes.addFlashAttribute("user", board.getUser());
             redirectAttributes.addFlashAttribute("title", board.getTitle());
             redirectAttributes.addFlashAttribute("content", board.getContent());
         }
@@ -135,12 +129,21 @@ public class BoardController {
         }
     }
 
+    private void handleClubUserListErrors(BindingResult result, ClubUserList clubUserList, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("title", clubUserList.getTitle());
+        redirectAttributes.addFlashAttribute("content", clubUserList.getContent());
+        redirectAttributes.addFlashAttribute("attachment", clubUserList.getAttachment());
+        for(FieldError err : result.getFieldErrors()){
+            redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+        }
+    }
+
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
         Board board = boardService.detail(id);
         model.addAttribute("board", board);
 //        디버깅 용도
-//        System.out.println("board : " +board.toString());
+        System.out.println("board : " +board.toString());
 
         Club club = board.getClub() != null ? clubService.getClubById(board.getClub().getId()) : null;
         model.addAttribute("club", club);
@@ -179,6 +182,7 @@ public class BoardController {
         model.addAttribute("boards", boards);
         model.addAttribute("clubs", clubs);
 
+        System.out.println("boards : " + boards);
         // 디버깅용
 //        for (int i = 1; i < boards.size(); i++) {
 //            System.out.println("boards : " +boards.get(i).getClub().toString() + "\n");

@@ -14,7 +14,7 @@ public interface ClubUserListRepository {
     List<ClubUserList> findByClubId(@Param("club_id") Long club_id);
 
     // 특정 사용자가 가입한 클럽 목록 조회
-    List<ClubUserList> findByUserId(@Param("userId") Long user_id);
+    List<ClubUserList> findByUserId(@Param("user_id") Long user_id);
 
     // 특정 클럽의 마스터 조회
     ClubUserList findClubMaster(@Param("club_id") Long club_id); // TODO 클럽 아이디로 클럽장 조회
