@@ -17,18 +17,21 @@ public interface ClubUserListRepository {
     List<ClubUserList> findByUserId(@Param("user_id") Long user_id);
 
     // 특정 클럽의 마스터 조회
-    ClubUserList findClubMaster(@Param("club_id") Long club_id); // TODO 클럽 아이디로 클럽장 조회
+    ClubUserList findClubMaster(@Param("club_id") Long club_id);
 
     // 특정 클럽의 특정 사용자 조회
     ClubUserList findByUserIdAndClubId(@Param("user_id") Long user_id, @Param("club_id") Long club_id);
 
+    // 특정 클럽의 특정 사용자를 삭제
+    int deleteByClubIdAndUserId(Long club_id, Long user_id);
 
-    // 클럽의 멤버 삭제하기
-    int deleteByUserId(@Param("club_id") Long club_id);
+
 
     // 클럽 회원들의 인원수 조회
     int getClubMemberCount(@Param("club_id") Long club_id);
 
     List<ClubUserList> findByClubuserList(@Param("user_id") Long user_id, @Param("club_id") Long club_id);
+
+    List<ClubUserList> clubuserlist(@Param("param1")Long id);
 }
 

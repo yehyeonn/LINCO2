@@ -19,6 +19,14 @@ console.log('시작날짜 : ', minStr);
 
 
 $(document).ready(function () {
+    // venue 용
+    const urlParams = new URLSearchParams(window.location.search);
+    const venueId = urlParams.get('venueId');
+    const venueName = urlParams.get('venueName');
+
+    console.log('Venue ID:', venueId);
+    console.log('Venue Name:', venueName);
+
     const detail_category = $('#detail_category');
     if ($("#category").val() == "") {
         $("#a").text("소분류 선택");

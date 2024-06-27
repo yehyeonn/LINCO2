@@ -16,7 +16,7 @@ public class ClubValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Club club = (Club) target;
-
+        System.out.println("validate() 호출 : " + club);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "클럽 이름은 필수 입니다.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "category", "클럽 카테고리 선택은 필수 입니다.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "intro", "클럽 소개는 필수 입니다.");
