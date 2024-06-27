@@ -6,6 +6,8 @@ import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.domain.Venue;
 import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.VenueService;
+import com.lec.spring.util.U;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import com.siot.IamportRestClient.IamportClient;
 import jakarta.annotation.PostConstruct;
@@ -119,12 +121,18 @@ public class ReservationController {
 //    }
 
     @PostMapping("/savePayment")
-    public String savePayment(@Valid Reservation reservation
-                                , BindingResult result
-                                , Model model
-    ) {
-        model.addAttribute("result", reservationService.write(reservation));
-        return "/socializing/write";
+    public ResponseEntity<String> savePayment(@RequestBody Reservation reservation) {
+        // 로그에 데이터 출력
+        System.out.println("Received reservation: " + reservation);
+
+        // 예약 정보를 데이터베이스에 저장하는 로직
+        reservationService.write(reservation);
+
+        HttpSession session = U.getSession();
+        session.setAttribute("venue", reservation.getVenue());
+        System.out.println("베뉴 정보가 들어올까요~?" + reservation.getVenue());
+
+        return ResponseEntity.ok("디비디비딥!");
     }
 }
 

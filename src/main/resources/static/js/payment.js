@@ -1,15 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const container = document.querySelector('.container-wrapper');
-    const userId = parseInt(document.querySelector('input[name="user_id"]').value, 10);
-    const venueId = parseInt(localStorage.getItem('venue_id'), 10);
-    const userName = document.querySelector('.name').value;
-    const userEmail = document.querySelector('.email').value;
-    const userTel = document.querySelector('.tell').value;
-    const totalPrice = parseInt(localStorage.getItem('totalPrice'), 10);
-    const reserveDate = localStorage.getItem('selectedDate');
-    const reserveStartTime = localStorage.getItem('startTime');
-    const reserveEndTime = localStorage.getItem('endTime');
-    const venueName = document.querySelector('.venue_name').textContent
+
 
     // function formatDate(date) {
     //     const year = date.getFullYear();
@@ -23,6 +13,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // }
 
     window.requestPay = function() {
+        const container = document.querySelector('.container-wrapper');
+        const userId = parseInt(document.querySelector('input[name="user_id"]').value, 10);
+        const venueId = parseInt(localStorage.getItem('venue_id'), 10);
+        // const userEmail = localStorage.getItem('email');
+        const userEmail = $('.info-box .email').val();
+        const userTel = $('.info-box .tell').val();
+        const reserveDate = localStorage.getItem('selectedDate');
+        const venueName = document.querySelector('.venue_name').textContent
+        const reserveStartTime = localStorage.getItem('startTime');
+        const reserveEndTime = localStorage.getItem('endTime');
+        const totalPrice = parseInt(localStorage.getItem('totalPrice'), 10);
+        const userName = $('.info-box .name').val();
+
+
         window.IMP.init('imp28617244');
         window.IMP.request_pay({
             pg: 'html5_inicis',
@@ -31,13 +35,16 @@ document.addEventListener('DOMContentLoaded', function () {
             name: "Linco 대관 예약",
             amount: totalPrice,
             buyer_email: userEmail,
-            buyer_name: userName,
+            buyer_name: name,
             buyer_tel: userTel,
         }, function (rsp) {
             if (rsp.success) {
                 // 결제 성공 시 로직
                 console.log('Payment succeeded');
 
+                // alert(userName);
+                // alert(reserveStartTime);
+                // alert(reserveEndTime);
                 // const payDate = formatDate(new Date());
                 // alert(payDate)
 
@@ -51,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     tel: userTel,
                     venue: {
                         id: venueId,
-                        name: venueName
+                        venue_name: venueName
                     },
                     status: 'PAYED',
                     reserve_date: reserveDate,
@@ -66,13 +73,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(paymentData)
+                    body: JSON.stringify(paymentData),
+                    credentials: 'include'  // 세션 쿠키를 포함하여 요청
                 })
-                    .then(response => response.json())
+                    .then(response => response.text())
                     .then(data => {
                         console.log('Payment data saved:', data);
-                        alert("과연 db에 저장됏을까요?")
-                        // window.location.href = '/socializing/write';
+                        // alert("과연 db에 저장됏을까요?");
+
+                        const venueId = paymentData.venue.id;
+                        window.location.href =  `/socializing/write?venueId=${venueId}`;
                     })
                     .catch(error => {
                         console.error('Error saving payment data:', error);

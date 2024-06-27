@@ -9,10 +9,10 @@
             keyColumn="id" keyProperty="id">
         insert into RESERVATION
         (user_id, reservation_name, email, tel, venue_id, venue_name, status, reserve_date, reserve_start_time,
-         reserve_end_time, total_price, paydate)
-        values (#{user.id}, #{reservation_name}, #{email}, #{tel}, #{venue.id}, #{venue.name}, #{status},
+         reserve_end_time, total_price)
+        values (#{user.id}, #{reservation_name}, #{email}, #{tel}, #{venue.id}, #{venue.venue_name}, #{status},
                 #{reserve_date}, #{reserve_start_time}, #{reserve_end_time},
-                #{total_price}, #{paydate})
+                #{total_price})
     </insert>
 
     <select id="findById" resultType="com.lec.spring.domain.Reservation">

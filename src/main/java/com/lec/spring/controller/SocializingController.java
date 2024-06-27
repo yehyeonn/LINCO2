@@ -5,9 +5,13 @@ import com.lec.spring.domain.Socializing;
 //import com.lec.spring.repository.UserSocializingRepository;
 import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.domain.UserSocializing;
+import com.lec.spring.domain.Venue;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserSocializingService;
+import com.lec.spring.service.VenueService;
 import com.lec.spring.util.U;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
@@ -45,17 +49,32 @@ public class SocializingController {
     @Autowired
     private UserSocializingService userSocializingService;
 
+    @Autowired
+    private VenueService venueService;
+
 
     @GetMapping("/write")
-    public void write(Model model) {
+    public String write(@RequestParam(name = "venueId", required = false) Long venueId
+            ,Model model) {
+
+        Venue venue = null;
+        if (venueId != null) {
+            venue = venueService.getVenueById(venueId);
+            System.out.println(venue);
+        }
+
         List<String> category = socializingService.getAllCategories();
         Map<String, List<String>> detail_category = new HashMap<>();
         detail_category.put("운동", Arrays.asList("축구", "야구", "농구"));
         detail_category.put("공연", Arrays.asList("전시", "댄스", "영화"));
         detail_category.put("공부", Arrays.asList("컴퓨터", "영어", "수학"));
 
+
+        model.addAttribute("venue", venue);
         model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
         model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
+
+        return "socializing/write";
     }
 
     @GetMapping("/list")

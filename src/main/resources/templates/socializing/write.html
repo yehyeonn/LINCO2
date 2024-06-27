@@ -9,10 +9,18 @@
     <link rel="stylesheet" th:href="@{/css/socializing_write.css}">
     <th:block th:replace="~{common/header :: header-head}"></th:block>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/payment.js}"></script>
 </head>
-
+<!-- // TODO : venue 값 불러서 찍어보고 그걸로 위치 표시하기 사진이랑.. ... 대관장소 이름 -->
 <body>
 <header th:replace="~{common/header :: header-body}"></header>
+
+<div th:if="${venue != null}">
+    <h1>Venue Information</h1>
+    <p th:text="'ID: ' + ${venue.id}"></p>
+    <p th:text="'Name: ' + ${venue.venue_name}"></p>
+</div>
+
 <div class="container1">
     <form id="socializingForm" th:action="@{/socializing/write}" method="post" enctype="multipart/form-data">
         <div class="form-group" th:with="user=${#authentication.getPrincipal().getUser()}">

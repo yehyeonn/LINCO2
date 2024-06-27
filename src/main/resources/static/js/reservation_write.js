@@ -250,6 +250,8 @@ $(document).on('click', '.pay-btn', function () {
     console.log('전화번호' + localStorage.getItem('tell'));
     console.log('베뉴아이디' + localStorage.getItem('venue_id'));
     console.log('전체날짜' + localStorage.getItem('fullDate'));
+    console.log('베뉴 이름' + document.querySelector('.venue_name').textContent);
+
 });
 
 $(document).ready(function () {
@@ -418,9 +420,13 @@ function validateForm() {
         return requestPay();
         localStorage.setItem("startTime", '');
         localStorage.setItem("endTime", '');
+        localStorage.setItem("name", '');
+        localStorage.setItem("email", '');
     }else {
         localStorage.setItem("startTime", '');
         localStorage.setItem("endTime", '');
+        localStorage.setItem("name", '');
+        localStorage.setItem("email", '');
         return;
     }
 
