@@ -103,11 +103,11 @@ values ('부리부리부리부리', '운동', '축구', '어서왕~~~~', '부리
 
 # select * from CLUB;
 
-insert into CLUB_USER_LIST(user_id, club_id, role)
-values (1, 1, 'MASTER'),
-       (2, 1, 'MEMBER'),
-       (3, 2, 'MASTER'),
-       (4, 2, 'MEMBER');
+insert into CLUB_USER_LIST(user_id, club_id, role, subscription)
+values (1, 1, 'MASTER','2024-06-27 16:42:15'),
+       (2, 1, 'MEMBER','2024-06-27 16:42:16'),
+       (3, 2, 'MASTER','2024-06-27 16:42:17'),
+       (4, 2, 'MEMBER','2024-06-27 16:42:18');
 
 
 # select * from CLUB_USER_LIST;
@@ -234,10 +234,10 @@ values (1, '같이 스야치쟝~', '운동', '야구', '서울시 강남구 역�
 
 select * from SOCIALIZING;
 
-insert into USER_SOCIALIZING (user_id, socializing_id, role)
-values (1, 1, 'MASTER'),
-       (2, 1, 'MEMBER'),
-       (3, 2, 'MASTER'),
-       (4, 2, 'MEMBER');
+insert into USER_SOCIALIZING (user_id, socializing_id, role, subscription)
+values (1, 1, 'MASTER','2024-06-27 16:42:15'),
+       (2, 1, 'MEMBER','2024-06-27 16:42:16'),
+       (3, 2, 'MASTER','2024-06-27 16:42:17'),
+       (4, 2, 'MEMBER','2024-06-27 16:42:18');
 
 select * from USER_SOCIALIZING;

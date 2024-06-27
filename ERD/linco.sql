@@ -102,6 +102,7 @@ CREATE TABLE CLUB_USER_LIST
     user_id INT                       NOT NULL,
     club_id INT                       NOT NULL,
     role    ENUM ('MASTER', 'MEMBER') NOT NULL DEFAULT 'MEMBER',
+    subscription DATETIME             NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, club_id)
 );
 
@@ -184,6 +185,7 @@ CREATE TABLE USER_SOCIALIZING
     user_id        INT                       NOT NULL,
     socializing_id INT                       NOT NULL,
     role           ENUM ('MASTER', 'MEMBER') NOT NULL DEFAULT 'MEMBER',
+    subscription   DATETIME                      NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, socializing_id)
 );
 
