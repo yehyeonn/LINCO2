@@ -8,7 +8,6 @@ $(document).ready(function () {
     });
 
     $('#checkname').click(function (){
-        alert("여긴 뜨나?");
         clubName = $("#club-name").val();
         checkDuplicate();
     })
