@@ -5,6 +5,7 @@ import com.lec.spring.service.ClubService;
 import com.lec.spring.service.ClubUserListService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -147,56 +148,64 @@ public class ClubController {
         Club club = clubService.getClubById(id);
         System.out.println("club: " + club);
 
-        // 클럽의 멤버 리스트 -> user_id, club_id, role
-        List<ClubUserList> clubMemberList= clubUserListService.findByClubId(id);
+        // 클럽의 멤버 리스트 -> user_id, club_id, role, user
+        List<ClubUserList> clubMemberList= clubUserListService.clubuserlist(id);
         System.out.println("clubMemberList: "+ clubMemberList);
 
-        // 클럽멤버들의 User 리스트
-        List<User> clubMembersWithUsernames = new ArrayList<>();
-
-        for (ClubUserList clubUser : clubMemberList) {
-            User user = userService.findById(clubUser.getUser_id());
-            clubMembersWithUsernames.add(user);
-        }
-        System.out.println("clubMembersWithUsernames: "+ clubMembersWithUsernames);
-
-
-        // 클럽장
+        // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
         System.out.println("clubMaster :" + clubMaster);
 
         // clubMemberList에서 user_id만 추출하여 리스트로 만들기 (클럽장 제외)
-        List<Long> clubMemberIds = clubMemberList.stream()
-                .map(ClubUserList::getUser_id)
-                .filter(userId -> !userId.equals(clubMaster.getUser_id())) // 클럽장 제외
+        List<Long> userIds = clubMemberList.stream()
+                .map(clubUserList -> clubUserList.getUser().getId())
+                .filter(user_id -> !user_id.equals(clubMaster.getUser_id())) // 클럽장 제외
                 .collect(Collectors.toList());
+
+        System.out.println("userIds: " + userIds);
+
+        // 클럽장과 동일한 user_id를 가진 항목을 제외한 리스트 만들기
+        List<ClubUserList> filteredClubMemberList = clubMemberList.stream()
+                .filter(clubUserList -> !clubUserList.getUser().getId().equals(clubMaster.getUser().getId()))
+                .collect(Collectors.toList());
+
+        System.out.println("filteredClubMemberList: " + filteredClubMemberList);
+
 
         // 멤버 수 -> 현재인원
         int memberCount = clubService.getClubMemberCount(id);
         System.out.println("memberCount: " + memberCount);
 
         model.addAttribute("club", club);
-        model.addAttribute("clubMemberList", clubMemberList);
-        model.addAttribute("clubMemberIds", clubMemberIds);
-        model.addAttribute("clubMembersWithUsernames", clubMembersWithUsernames);
+        model.addAttribute("filteredClubMemberList", filteredClubMemberList);
         model.addAttribute("clubMaster", clubMaster);
+        model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
         return "/club/detail";
     }
-    @PostMapping("/detail")
-    public String detailOk(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
+    @PostMapping("/join")
+    public String join(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
             ,@RequestParam(name = "club_id",required = false,defaultValue = "") Long club_id
             , Model model){
         int result = clubService.addMemberToClub(user_id, club_id);
         model.addAttribute("result",result);
         model.addAttribute("club_id",club_id);
-        return "/club/detailOk";
+        return "/club/joinOk";
     }
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public String deleteOk(Long id, Model model){
         model.addAttribute("result",clubService.deleteById(id));
-        return "club/deleteOk";
+        return "/club/deleteOk";
+    }
+
+
+    @PostMapping("/out")
+    public String outOk(Long user_id, Long club_id, Model model){
+        System.out.println("user_id: " + user_id);
+        System.out.println("club_id: " + club_id);
+        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id,club_id));
+        return "/club/outOk";
     }
 
 //    @InitBinder("club") // 에러남
@@ -251,7 +260,7 @@ public class ClubController {
 
 
 
-    @InitBinder
+    @InitBinder("club")
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());

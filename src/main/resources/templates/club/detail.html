@@ -43,10 +43,10 @@
                         <input type="hidden" name="id" th:value="${club.getId()}">
                     </form>
 
-                    <form th:action="@{/club/detail}" method="POST">
+                    <form th:action="@{/club/join}" method="POST">
                         <input type="text" class="hidden" name="user_id" th:value="${logged_user.id}">
                         <input type="text" class="hidden" name="club_id" th:value="${club.getId()}">
-                        <button class="btn btn-success" th:unless="${#lists.contains(clubMemberIds, logged_user.id)}">가입신청</button>
+                        <button class="btn btn-success" th:unless="${#lists.contains(userIds, logged_user.id) or logged_user.id == clubMaster.user_id}">가입신청</button>
                     </form>
                 </div>
 
@@ -63,18 +63,28 @@
         <section class="club-members">
             <h2>멤버 리스트</h2>
             <ul>
-                <li th:each="member : ${clubMembersWithUsernames}">
-                    [[${member.username}]]
+                <li>
+                    클럽장: [[${clubMaster.user.getUsername()}]]
+                </li>
+
+                <li th:each="member : ${filteredClubMemberList}">
+                    멤버: [[${member.user.getUsername()}]]
+                    <!-- 내보내기 기능-->
+                    <form name="frmOut" th:action="@{/club/out}" method="post">
+                        <input type="text" class="hidden" name="user_id" th:value="${member.user.getId()}">
+                        <input type="text" class="hidden" name="club_id" th:value="${club.getId()}">
+                    </form>
                     <button id="outBtn" class="btn btn-warning" th:if="${logged_user.id == clubMaster.user_id}">
                         내보내기
                     </button>
+
                 </li>
             </ul>
         </section>
         <div class="d-flex justify-content-between">
-            <button id="backBtn" class="btn">이전</button>
+            <button id="backBtn" class="btn btn-success">이전</button>
             <button id="leaveBtn" class="btn btn-warning"
-                    th:if="${loggedUser.id != clubMaster.user_id and #lists.contains(clubMemberIds, loggedUser.id)}">
+                    th:if="${logged_user.id != clubMaster.user_id and #lists.contains(userIds, logged_user.id)}">
                 탈퇴
             </button>
         </div>

@@ -94,18 +94,8 @@ public class ClubServiceImpl implements ClubService {
     @Override
     @Transactional
     public void deleteClubMember(Long club_id, Long user_id) {
-        List<ClubUserList> clubUserList = clubUserListRepository.findByClubId(club_id);
-        ClubUserList masterUser = null;
-        for (ClubUserList user : clubUserList) {
-            if (user.getRole().equals("MASTER")) {
-                masterUser = user;
-                break;
-            }
-        }
+        clubUserListRepository.findByUserId(user_id);
 
-//        if (masterUser != null && masterUser.getUser_id() == user_id) {
-//            clubUserListRepository.deleteByUserId(club_id));
-//        }
     }
 
 
