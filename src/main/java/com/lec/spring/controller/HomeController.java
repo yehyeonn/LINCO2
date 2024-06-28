@@ -157,8 +157,8 @@ public class HomeController {
     public String getClub(@PathVariable("id") Long id, Model model) {
         Club club = clubService.getClubById(id);
 
-        if (club.getRepresentative_picture().equals("upload/Default.png")) {
-            String imgPath = "upload/no_img.jpg";
+        if (club.getRepresentative_picture().equals("") || club.getRepresentative_picture() == null) {
+            String imgPath = "no_img.jpg";
             club.setRepresentative_picture(imgPath);
         }
 

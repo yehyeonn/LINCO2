@@ -33,7 +33,8 @@
                cul.club_id "cs_cid",
                cul.role "cs_role",
                c.id "c_id",
-               c.name "c_name"
+               c.name "c_name",
+               c.representative_picture "c_representative_picture"
         FROM CLUB_USER_LIST cul
                  JOIN CLUB c ON cul.club_id = c.id
         WHERE cul.user_id = #{user_id}
