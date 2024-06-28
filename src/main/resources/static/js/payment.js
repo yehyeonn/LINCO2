@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // alert("과연 db에 저장됏을까요?");
 
                         const venueId = paymentData.venue.id;
-                        window.location.href =  `/socializing/write?venueId=${venueId}&totalPrice=${totalPrice}&reserveDate=${reserveDate}&reserveST=${reserveStartTime}&reserveET=${reserveEndTime}`;
+                        window.location.href =  `/socializing/write`;
                     })
                     .catch(error => {
                         console.error('Error saving payment data:', error);
