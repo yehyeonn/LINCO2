@@ -65,12 +65,23 @@ public class SocializingController {
             , @RequestParam(name = "reserveDate", required = false)LocalDate reserveDate
             , @RequestParam(name = "reserveST", required = false) LocalTime reserveST
             , @RequestParam(name = "reserveET", required = false)LocalTime reserveET
-            , Model model) {
+            , Model model, HttpSession session) {
 
-        Venue venue = null;
-        if (venueId != null) {
+        Venue venue = (Venue) session.getAttribute("venue");
+        if (venue == null && venueId != null) {
             venue = venueService.getVenueById(venueId);
-            System.out.println(venue);
+        }
+        if (totalPrice == null) {
+            totalPrice = (Long) session.getAttribute("totalPrice");
+        }
+        if (reserveDate == null) {
+            reserveDate = (LocalDate) session.getAttribute("reserveDate");
+        }
+        if (reserveST == null) {
+            reserveST = (LocalTime) session.getAttribute("reserveST");
+        }
+        if (reserveET == null) {
+            reserveET = (LocalTime) session.getAttribute("reserveET");
         }
 
         List<String> category = socializingService.getAllCategories();

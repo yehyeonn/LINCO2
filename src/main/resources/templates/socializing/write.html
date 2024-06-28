@@ -25,6 +25,7 @@
 <!--    <p th:text="'Debug: ' + ${venue}"></p>-->
 <!--    <p th:text="'Debug: ' + ${total_price}"></p>-->
 <!--</div>-->
+<a th:text="${venue}" id="venueInfo"></a>
 
 <div class="container1">
     <form id="socializingForm" th:action="@{/socializing/write}" method="post" enctype="multipart/form-data">

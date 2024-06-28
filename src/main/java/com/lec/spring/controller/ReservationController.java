@@ -129,6 +129,10 @@ public class ReservationController {
 
         HttpSession session = U.getSession();
         session.setAttribute("venue", reservation.getVenue());
+        session.setAttribute("totalPrice", reservation.getTotal_price());
+        session.setAttribute("reserveDate", reservation.getReserve_date());
+        session.setAttribute("reserveST", reservation.getReserve_start_time());
+        session.setAttribute("reserveET", reservation.getReserve_end_time());
         System.out.println("베뉴 정보가 들어올까요~?" + reservation.getVenue());
 
         return ResponseEntity.ok("디비디비딥!");
