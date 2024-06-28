@@ -134,6 +134,7 @@ public class SocializingController {
             redirectAttributes.addFlashAttribute("content", socializing.getContent());
             redirectAttributes.addFlashAttribute("total_price", socializing.getTotal_price());
             redirectAttributes.addFlashAttribute("img", socializing.getImg());
+            redirectAttributes.addFlashAttribute("venue", socializing.getVenue());
 
             List<FieldError> errList = result.getFieldErrors();
             for (FieldError err : errList) {
