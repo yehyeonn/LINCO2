@@ -8,7 +8,9 @@ import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -53,5 +55,15 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> findByVenueAndDate(Long venue_id, String reserve_date) {
         return reservationRepository.findByVenueAndDate(venue_id, reserve_date);
+    }
+
+    @Override
+    public List<Reservation> findPayedReservation() {
+        return reservationRepository.findPayedReservation();
+    }
+
+    @Override
+    public List<Reservation> findByUserId(Long user_id) {
+        return reservationRepository.findByUserId(user_id);
     }
 }

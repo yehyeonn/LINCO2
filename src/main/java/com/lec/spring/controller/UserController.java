@@ -25,13 +25,14 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
-
-    @Autowired
     private ReservationService reservationService;
 
+
+
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserService userService, ReservationService reservationService) {
         this.userService = userService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/register")
@@ -95,11 +96,16 @@ public class UserController {
         User user = principalDetails.getUser();
         List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
         List<UserSocializing> userSocializings = userService.getUserSocializings(user.getId());
-        List<Reservation> reservations = reservationService.list();
+        List<Reservation> userReservations = reservationService.findByUserId(user.getId());
         System.out.println(userSocializings);
+
+        userReservations.forEach(reservation -> {
+            System.out.println(reservation);
+        });
+
         model.addAttribute("userClubs", userClubs);
         model.addAttribute("userSocializings", userSocializings);
-        model.addAttribute("reservations", reservations);
+        model.addAttribute("userReservations", userReservations);
 
         return "user/my_page";
     }

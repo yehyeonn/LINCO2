@@ -57,6 +57,7 @@
         <result column="re_reserve_end_time" property="reserve_end_time"/>
         <result column="re_total_price" property="total_price"/>
         <result column="re_status" property="status"/>
+        <result column="re_paydate" property="paydate"/>
         <collection property="user" resultMap="mapUser"/>
         <collection property="venue" resultMap="mapVenue"/>
     </resultMap>
@@ -92,5 +93,35 @@
                  join venue v on re.venue_id = v.id
         where re.venue_id = #{venue_id}
           and re.reserve_date = #{reserve_date};
+    </select>
+
+    <select id="findPayedReservation" resultType="com.lec.spring.domain.Reservation">
+        select *
+            from RESERVATION
+        where status='PAYED'
+    </select>
+
+    <select id="findByUserId" resultMap="mapReservation">
+        select re.id                 "re_id",
+               re.reservation_name   "re_reservation_name",
+               re.email              "re_email",
+               re.tel                "re_tel",
+               re.reserve_date       "re_reserve_date",
+               re.reserve_start_time "re_reserve_start_time",
+               re.reserve_end_time   "re_reserve_end_time",
+               re.total_price        "re_total_price",
+               re.status             "re_status",
+               re.paydate            "re_paydate",
+               u.id                  "u_id",
+               u.name                "u_name",
+               u.username            "u_username",
+               u.tel                 "u_tel",
+               v.id                  "v_id",
+               v.venue_name          "v_venue_name",
+               v.price               "v_price"
+        from RESERVATION re
+                 join user u on re.user_id = u.id
+                 join venue v on re.venue_id = v.id
+        where re.user_id = #{userId}
     </select>
 </mapper>
