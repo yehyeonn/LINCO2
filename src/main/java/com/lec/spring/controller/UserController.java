@@ -1,12 +1,10 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalDetails;
-import com.lec.spring.domain.Club;
-import com.lec.spring.domain.ClubUserList;
-import com.lec.spring.domain.User;
-import com.lec.spring.domain.UserSocializing;
+import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.service.ClubService;
+import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
@@ -27,6 +25,9 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -94,9 +95,11 @@ public class UserController {
         User user = principalDetails.getUser();
         List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
         List<UserSocializing> userSocializings = userService.getUserSocializings(user.getId());
+        List<Reservation> reservations = reservationService.list();
         System.out.println(userSocializings);
         model.addAttribute("userClubs", userClubs);
         model.addAttribute("userSocializings", userSocializings);
+        model.addAttribute("reservations", reservations);
 
         return "user/my_page";
     }
