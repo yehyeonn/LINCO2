@@ -2,8 +2,10 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.*;
 import com.lec.spring.service.ClubService;
+import com.lec.spring.service.ClubUserListService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/club")
@@ -36,6 +39,9 @@ public class ClubController {
 
     @Autowired
     private ClubService clubService;
+
+    @Autowired
+    private ClubUserListService clubUserListService;
 
     @Autowired
     private UserService userService;
@@ -67,10 +73,10 @@ public class ClubController {
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = fileName;
+            imgPath = "upload/" + fileName;
 
             try {
-                Path path = Paths.get("upload/" +imgPath);
+                Path path = Paths.get(imgPath);
                 Files.createDirectories(path.getParent());
                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -141,52 +147,68 @@ public class ClubController {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
         System.out.println("club: " + club);
-        // 클럽의 멤버 리스트 -> user_id, club_id, role
-        List<ClubUserList> clubMemberList= clubService.getClubMemberList(id);
+
+        // 클럽의 멤버 리스트 -> user_id, club_id, role, user
+        List<ClubUserList> clubMemberList= clubUserListService.clubuserlist(id);
         System.out.println("clubMemberList: "+ clubMemberList);
 
-        // 각 클럽 멤버의 사용자 이름을 찾기 위한 리스트
-        List<User> clubMembersWithUsernames = new ArrayList<>();
-
-        for (ClubUserList clubUser : clubMemberList) {
-            User user = userService.findById(clubUser.getUser_id());
-            clubMembersWithUsernames.add(user);
-        }
-        System.out.println("clubMembersWithUsernames: "+ clubMembersWithUsernames);
-
-
-        // 클럽장
+        // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
         System.out.println("clubMaster :" + clubMaster);
+
+        // clubMemberList에서 user_id만 추출하여 리스트로 만들기 (클럽장 제외)
+        List<Long> userIds = clubMemberList.stream()
+                .map(clubUserList -> clubUserList.getUser().getId())
+                .filter(user_id -> !user_id.equals(clubMaster.getUser_id())) // 클럽장 제외
+                .collect(Collectors.toList());
+
+        System.out.println("userIds: " + userIds);
+
+        // 클럽장과 동일한 user_id를 가진 항목을 제외한 리스트 만들기
+        List<ClubUserList> filteredClubMemberList = clubMemberList.stream()
+                .filter(clubUserList -> !clubUserList.getUser().getId().equals(clubMaster.getUser().getId()))
+                .collect(Collectors.toList());
+
+        System.out.println("filteredClubMemberList: " + filteredClubMemberList);
+
 
         // 멤버 수 -> 현재인원
         int memberCount = clubService.getClubMemberCount(id);
         System.out.println("memberCount: " + memberCount);
 
         model.addAttribute("club", club);
-        model.addAttribute("clubMemberList", clubMemberList);
-        model.addAttribute("clubMembersWithUsernames", clubMembersWithUsernames);
+        model.addAttribute("filteredClubMemberList", filteredClubMemberList);
         model.addAttribute("clubMaster", clubMaster);
+        model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
         return "/club/detail";
     }
-    @PostMapping("/detail")
-    public String detailOk(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
+    @PostMapping("/join")
+    public String join(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
             ,@RequestParam(name = "club_id",required = false,defaultValue = "") Long club_id
             , Model model){
         int result = clubService.addMemberToClub(user_id, club_id);
         model.addAttribute("result",result);
         model.addAttribute("club_id",club_id);
-        return "/club/detailOk";
+        return "/club/joinOk";
     }
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public String deleteOk(Long id, Model model){
         model.addAttribute("result",clubService.deleteById(id));
-        return "club/deleteOk";
+        return "/club/deleteOk";
     }
 
 
+    @PostMapping("/out")
+    public String outOk(Long user_id, Long club_id, Model model){
+        System.out.println("user_id: " + user_id);
+        System.out.println("club_id: " + club_id);
+        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id,club_id));
+        return "/club/outOk";
+    }
+
+//    @InitBinder("club") // 에러남
     @GetMapping( "/update/{id}")
     public String update(@PathVariable Long id, Model model){
         Club club = clubService.getClubById(id);
@@ -210,9 +232,8 @@ public class ClubController {
                 imgPath = fileName;
 
                 try{
-                    Path path = Paths.get("/upload/"+imgPath);
+                    Path path = Paths.get(imgPath);
                     Files.createDirectories(path.getParent());
-                    System.out.println(file.getOriginalFilename());
                     Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
 
                 }catch (IOException e){
@@ -239,7 +260,7 @@ public class ClubController {
 
 
 
-    @InitBinder
+    @InitBinder("club")
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());

@@ -7,8 +7,8 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Board" useGeneratedKeys="true"
             keyColumn="id" keyProperty="id">
         INSERT INTO BOARD
-            (title, content, user_id, board_type_id)
-        VALUES (#{title}, #{content}, #{user.id}, #{boardType.id})
+            (title, content, user_id, board_type_id, club_id)
+        VALUES (#{title}, #{content}, #{user.id}, #{boardType.id}, #{club.id})
     </insert>
 
     <update id="incViewCnt" flushCache="true">
@@ -18,35 +18,35 @@
     </update>
 
     <sql id="SELECT_BASE">
-        SELECT b.id              "b_id",
-               b.title           "b_title",
-               b.content         "b_content",
-               b.viewcnt         "b_viewcnt",
-               b.regdate         "b_regdate",
-               u.id              "u_id",
-               u.tel             "u_tel",
-               u.username        "u_username",
-               u.password        "u_password",
-               u.address         "u_address",
-               u.gender          "u_gender",
-               u.birthday        "u_birthday",
-               u.profile_picture "u_profile_picture",
-               u.regdate         "u_regdate",
-               bt.id             "bt_id",
-               bt.name           "bt_name",
-               c.id              "c_id",
-               c.name            "c_name",
-               c.category        "c_category",
-               c.detail_category "c_detail_category",
-               c.intro           "c_intro",
-               c.content         "c_content",
+        SELECT b.id                     "b_id",
+               b.title                  "b_title",
+               b.content                "b_content",
+               b.viewcnt                "b_viewcnt",
+               b.regdate                "b_regdate",
+               b.club_id                "b_clubId",
+               u.id                     "u_id",
+               u.tel                    "u_tel",
+               u.username               "u_username",
+               u.password               "u_password",
+               u.address                "u_address",
+               u.gender                 "u_gender",
+               u.birthday               "u_birthday",
+               u.profile_picture        "u_profile_picture",
+               u.regdate                "u_regdate",
+               bt.id                    "bt_id",
+               bt.name                  "bt_name",
+               c.id                     "c_id",
+               c.name                   "c_name",
+               c.category               "c_category",
+               c.detail_category        "c_detail_category",
+               c.intro                  "c_intro",
+               c.content                "c_content",
                c.representative_picture "c_representative_picture"
         FROM BOARD b
                  JOIN USER u ON b.user_id = u.id
                  JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
                  LEFT JOIN CLUB c ON b.club_id = c.id
-        WHERE
-            1=1
+        WHERE 1 = 1
 
     </sql>
 
