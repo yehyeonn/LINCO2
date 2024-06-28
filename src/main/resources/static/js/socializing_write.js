@@ -67,6 +67,14 @@ $(document).ready(function () {
     $('#fileInput').on('change', function () {
         const file = this.files[0];
         if (file) {
+            const fileType = file.type;
+            const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+            if (!validImageTypes.includes(fileType)) {
+                alert("이미지 파일만 업로드 가능합니다.");
+                $('#fileInput').val(''); // 입력 필드를 리셋
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 var previewImage = document.getElementById("previewImage");

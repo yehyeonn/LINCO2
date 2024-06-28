@@ -94,4 +94,16 @@ public class UserServiceImpl implements UserService {
     public List<UserSocializing> getUserSocializings(Long user_id) {
         return userSocializingRepository.findBySocializingId(user_id);
     }
+
+    // 유저 정보저장
+    @Override
+    public int save(User user) {
+        userRepository.save(user);
+        return 1;
+    }
+
+    @Override
+    public int update(User user) {
+        return userRepository.update(user);
+    }
 }

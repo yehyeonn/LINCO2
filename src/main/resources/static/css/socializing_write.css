@@ -46,7 +46,7 @@ textarea {
 
 .form-img {
     position: absolute;
-    top: 200px;
+    top: 250px;
     right: 50px;
     display: flex;
     flex-direction: column;
@@ -60,14 +60,28 @@ textarea {
     margin-bottom: 10px;
     border-radius: 10px;
     text-align: center;
-    width: 400px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
     object-fit: contain;
-
 }
+
+#previewImage {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    display: contents;
+    align-items: center;
+}
+
+#img_txt {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
 .select-container {
     display: flex;
     gap: 10px; /* 간격 조정 */
@@ -106,8 +120,12 @@ label {
     color: #3A4D72;
 }
 
-#location, #socializing_title {
+#socializing_title {
     width: 250px;
+}
+
+#location {
+    width: 360px;
 }
 
 #fileSelect {
@@ -116,7 +134,7 @@ label {
     border-radius: 1rem;
     border: none;
     padding: 10px 20px;
-    margin-right: 130px;
+    margin-right: 85px;
     transition: all 0.3s;
 }
 

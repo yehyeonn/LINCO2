@@ -84,6 +84,20 @@ public class SocializingController {
             reserveET = (LocalTime) session.getAttribute("reserveET");
         }
 
+
+        // 새로운 작성 요청 시 세션 정보 초기화
+        if (venueId == null) {
+            session.removeAttribute("venue");
+            session.removeAttribute("totalPrice");
+            session.removeAttribute("reserveDate");
+            session.removeAttribute("reserveST");
+            session.removeAttribute("reserveET");
+
+            // 세션이 초기화되었음을 확인하는 로그 추가
+            System.out.println("세션 정보 초기화 완료");
+        }
+
+
         List<String> category = socializingService.getAllCategories();
         Map<String, List<String>> detail_category = new HashMap<>();
         detail_category.put("운동", Arrays.asList("축구", "야구", "농구"));

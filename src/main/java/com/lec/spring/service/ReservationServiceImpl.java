@@ -7,8 +7,11 @@ import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,10 +44,11 @@ public class ReservationServiceImpl implements ReservationService {
         User user = U.getLoggedUser();
 //        User user = new User();
 
-        return reservationRepository.findById(user.getId());
+        return reservationRepository.findByUserId(user.getId());
     }
 
     @Override
+    @Transactional
     public int update(Reservation reservation) {
         return reservationRepository.update(reservation);
 
@@ -54,4 +58,27 @@ public class ReservationServiceImpl implements ReservationService {
     public List<Reservation> findByVenueAndDate(Long venue_id, String reserve_date) {
         return reservationRepository.findByVenueAndDate(venue_id, reserve_date);
     }
+
+    @Override
+    public List<Reservation> findPayedReservation() {
+        return reservationRepository.findPayedReservation();
+    }
+
+    @Override
+    public List<Reservation> findByUserId(Long user_id) {
+        return reservationRepository.findByUserId(user_id);
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 0 * * *")
+    public void updateExpiredReservationStatus() {
+        List<Reservation> expiredReservation = reservationRepository.findExpiredReservation();
+
+        for (Reservation reservation : expiredReservation) {
+            reservation.setStatus("DONE");
+            reservationRepository.update(reservation);
+        }
+    }
+
+
 }

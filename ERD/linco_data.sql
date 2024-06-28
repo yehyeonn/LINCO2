@@ -252,3 +252,16 @@ values (1, 1, 'MASTER','2024-06-27 16:42:15'),
        (4, 2, 'MEMBER','2024-06-27 16:42:18');
 
 select * from USER_SOCIALIZING;
+
+select *
+from club;
+
+# select * from user;
+# insert into club(id, name, category, detail_category, intro, content)
+# values (20, '클럽test1', '스터디', '코딩', '테스트', '제발 좀 되라~~ test test test');
+#
+# insert into club_user_list(user_id, club_id, role, regdate)
+# VALUES (7, 20, 'MASTER', '2024-6-27 17:33:00'),
+#        (5, 20, 'MEMBER', '2024-6-27 17:33:01'),
+#        (4, 20, 'MEMBER','2024-6-27 17:33:02');
+# select * from club_user_list;
