@@ -435,3 +435,57 @@ h2{
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
 }
+
+.post {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    font-size: 15px;
+}
+.post a {
+    text-decoration-line: none;
+    color: black;
+}
+
+.post thead {
+    font-size: 25px;
+}
+
+.post thead th, .post tbody td {
+    border-right: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+}
+
+.post thead th:last-child, .post tbody td:last-child {
+    border-right: none;
+}
+
+.post tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s;
+}
+
+.post tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* 추가: 헤더 행 스타일 */
+.post thead tr {
+    border-bottom: 2px solid #ddd; /* 두께를 조정하여 더 강조 */
+}
+
+/* 추가: 바디 행 스타일 */
+.post tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+/* 마지막 행의 바닥 경계를 제거 */
+.post tbody tr:last-child {
+    border-bottom: none;
+}
+
