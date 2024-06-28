@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+// 매일 자정 예약 내역을 확인하고 업데이트하는 백업 스케쥴러
 @Component
 public class ReservationUpdater {
 
@@ -20,7 +21,7 @@ public class ReservationUpdater {
         this.reservationService = reservationService;
     }
 
-    @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
+    @Scheduled(cron = "0 0 * * * *") // 매일 자정에 실행
     public void updateResrevationsStatus() {
         List<Reservation> reservations = reservationService.findPayedReservation();
 
@@ -36,8 +37,18 @@ public class ReservationUpdater {
         }
     }
 
-
-//    List<Reservation> payedReservations = reservations.
-
-//    for(Reservation reservation : )
+//    public void updateExpiredReservationStatus(){
+//        List<Reservation> reservations = reservationService.findPayedReservation();
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//        for(Reservation reservation : reservations) {
+//            LocalDate reservationsDate = reservation.getReserve_date();
+//
+//            if(reservationsDate.isBefore(LocalDate.now())) {
+//                reservation.setStatus("DONE");
+//                reservationService.update(reservation);
+//            }
+//        }
+//    }
 }

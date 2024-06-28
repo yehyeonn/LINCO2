@@ -73,85 +73,13 @@
                 <div class="tbl-content">
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tbody>
-                        <tr>
-                            <td class="reservation-number">1</td>
-                            <td>세진이집</td>
-                            <td class="reservation-ellipsis">2024-06-18</td>
-                            <td class="reservation-ellipsis">2024-06-01</td>
-                            <td>1,000원</td>
-                            <td>결제완료 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">2</td>
-                            <td>해성이집</td>
-                            <td class="reservation-ellipsis">2024-06-19</td>
-                            <td class="reservation-ellipsis">2024-06-02</td>
-                            <td>5,000원</td>
-                            <td>결제완료 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">3</td>
-                            <td>바나프레소</td>
-                            <td class="reservation-ellipsis">2024-06-20</td>
-                            <td class="reservation-ellipsis">2024-06-03</td>
-                            <td>100,000원</td>
-                            <td>결제완료 <button class="cancel">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">4</td>
-                            <td>코리아IT아카데미</td>
-                            <td class="reservation-ellipsis">2024-06-21</td>
-                            <td class="reservation-ellipsis">2024-06-04</td>
-                            <td>5,000원</td>
-                            <td>결제취소 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">5</td>
-                            <td>CGV</td>
-                            <td class="reservation-ellipsis">2024-06-22</td>
-                            <td class="reservation-ellipsis">2024-06-05</td>
-                            <td>500,000원</td>
-                            <td>이용완료 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">6</td>
-                            <td>풋살장</td>
-                            <td class="reservation-ellipsis">2024-06-23</td>
-                            <td class="reservation-ellipsis">2024-06-06</td>
-                            <td>80,000원</td>
-                            <td>이용완료 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">7</td>
-                            <td>관악산</td>
-                            <td class="reservation-ellipsis">2024-06-24</td>
-                            <td class="reservation-ellipsis">2024-06-07</td>
-                            <td>무료</td>
-                            <td>결제취소 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">8</td>
-                            <td>롯데리아</td>
-                            <td class="reservation-ellipsis">2024-06-25</td>
-                            <td class="reservation-ellipsis">2024-06-08</td>
-                            <td>300,000원</td>
-                            <td>결제완료 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">9</td>
-                            <td>삼성라이온즈파크</td>
-                            <td class="reservation-ellipsis">2024-06-26</td>
-                            <td class="reservation-ellipsis">2024-06-09</td>
-                            <td>30,000원</td>
-                            <td>이용완료 <button class="cancel-button">취소</button></td>
-                        </tr>
-                        <tr>
-                            <td class="reservation-number">10</td>
-                            <td>광주챔피언스필드</td>
-                            <td class="reservation-ellipsis">2024-06-27</td>
-                            <td class="reservation-ellipsis">2024-06-10</td>
-                            <td>30,000원</td>
-                            <td>결제완료 <button class="cancel-button">취소</button></td>
+                        <tr th:each="reservation, iterStat : ${userReservations}">
+                            <td class="reservation-number" th:text="${iterStat.count}">1</td>
+                            <td class="venue-name" th:text="${reservation.venue.venue_name}">세진이집</td>
+                            <td class="reservation-ellipsis" th:text="${reservation.reserve_date}">2024-06-18</td>
+                            <td class="reservation-ellipsis" th:text="${reservation.paydate}">2024-06-01</td>
+                            <td th:text="${reservation.total_price} + 원">1,000원</td>
+                            <td th:text="${reservation.status}">결제완료 <button class="cancel-button">취소</button></td>
                         </tr>
                         </tbody>
                     </table>
