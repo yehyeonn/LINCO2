@@ -13,4 +13,7 @@ public interface ReservationService {
     int update(Reservation reservation);
 
     List<Reservation> findByVenueAndDate(Long id, String reserve_date);
+
+    List<Reservation> findPayedReservation();
+
 }

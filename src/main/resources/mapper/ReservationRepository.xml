@@ -93,4 +93,11 @@
         where re.venue_id = #{venue_id}
           and re.reserve_date = #{reserve_date};
     </select>
+
+    <select id="findPayedReservation" resultType="com.lec.spring.domain.Reservation">
+        select *
+            from RESERVATION
+        where status='PAYED'
+    </select>
+
 </mapper>
