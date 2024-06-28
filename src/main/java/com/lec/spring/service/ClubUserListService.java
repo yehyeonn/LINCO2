@@ -14,5 +14,5 @@ public interface ClubUserListService {
 
     List<ClubUserList> clubuserlist(Long id);
 
-    int deleteByClubIdAndUserId(@Param("user_id") Long user_id ,@Param("club_id") Long club_id);
+    int deleteByClubIdAndUserId(Long user_id , Long club_id);
 }

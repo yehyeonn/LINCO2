@@ -68,15 +68,15 @@ public class ClubController {
             RedirectAttributes redirectAttrs   // redirect 시 넘겨줄 값들을 담는 객체
     ) throws IOException {
         // 기본 이미지 경로 설정
-        String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
+        String imgPath = "DefaultImg.jpg"; // 기본 이미지 경로
 
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = "upload/" + fileName;
+            imgPath = fileName;
 
             try {
-                Path path = Paths.get(imgPath);
+                Path path = Paths.get("upload/" + imgPath);
                 Files.createDirectories(path.getParent());
                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -204,9 +204,20 @@ public class ClubController {
     public String outOk(Long user_id, Long club_id, Model model){
         System.out.println("user_id: " + user_id);
         System.out.println("club_id: " + club_id);
-        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id,club_id));
+        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
+        model.addAttribute("club_id", club_id);
         return "/club/outOk";
     }
+
+    @PostMapping("/leave")
+    public String leaveOk(Long user_id, Long club_id, Model model){
+        System.out.println("user_id: " + user_id);
+        System.out.println("club_id: " + club_id);
+        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
+        model.addAttribute("club_id", club_id);
+        return "/club/leaveOk";
+    }
+
 
 //    @InitBinder("club") // 에러남
     @GetMapping( "/update/{id}")
