@@ -204,7 +204,8 @@ public class ClubController {
     public String outOk(Long user_id, Long club_id, Model model){
         System.out.println("user_id: " + user_id);
         System.out.println("club_id: " + club_id);
-        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id,club_id));
+        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
+        model.addAttribute("club_id", club_id);
         return "/club/outOk";
     }
 

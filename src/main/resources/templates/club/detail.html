@@ -74,7 +74,7 @@
                         <input type="text" class="hidden" name="user_id" th:value="${member.user.getId()}">
                         <input type="text" class="hidden" name="club_id" th:value="${club.getId()}">
                     </form>
-                    <button id="outBtn" class="btn btn-warning" th:if="${logged_user.id == clubMaster.user_id}">
+                    <button class="outBtn btn btn-warning" th:if="${logged_user.id == clubMaster.user_id}">
                         내보내기
                     </button>
 

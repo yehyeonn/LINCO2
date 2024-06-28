@@ -23,7 +23,7 @@ public interface ClubUserListRepository {
     ClubUserList findByUserIdAndClubId(@Param("user_id") Long user_id, @Param("club_id") Long club_id);
 
     // 특정 클럽의 특정 사용자를 삭제
-    int deleteByClubIdAndUserId(Long club_id, Long user_id);
+    int deleteByClubIdAndUserId(@Param("user_id") Long user_id, @Param("club_id") Long club_id);
 
 
 
