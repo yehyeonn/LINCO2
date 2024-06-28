@@ -124,4 +124,11 @@
                  join venue v on re.venue_id = v.id
         where re.user_id = #{userId}
     </select>
+
+    <select id="findExpiredReservation" resultType="com.lec.spring.domain.Reservation">
+        select *
+        from RESERVATION
+        where NOW() > reserve_date
+        and status='PAYED'
+    </select>
 </mapper>

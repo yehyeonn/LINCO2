@@ -17,4 +17,6 @@ public interface ReservationService {
     List<Reservation> findPayedReservation();
 
     List<Reservation> findByUserId(Long user_id);
+
+    void updateExpiredReservationStatus();
 }

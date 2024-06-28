@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -87,10 +90,11 @@ public class ReservationController {
         return ResponseEntity.ok("디비디비딥!");
     }
 
-    @PostMapping("/update")
-    public String updateOk() {
 
-        return "reservation/update";
-    }
+//    @PostMapping("/update")
+//    public String updateOk() {
+//
+//        return "reservation/update";
+//    }
 }
 
