@@ -103,7 +103,7 @@ values ('부리부리부리부리', '운동', '축구', '어서왕~~~~', '부리
 
 # select * from CLUB;
 
-insert into CLUB_USER_LIST(user_id, club_id, role, subscription)
+insert into CLUB_USER_LIST(user_id, club_id, role, regdate)
 values (1, 1, 'MASTER','2024-06-27 16:42:15'),
        (2, 1, 'MEMBER','2024-06-27 16:42:16'),
        (3, 2, 'MASTER','2024-06-27 16:42:17'),
