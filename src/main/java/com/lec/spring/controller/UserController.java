@@ -1,36 +1,47 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalDetails;
-import com.lec.spring.domain.Club;
-import com.lec.spring.domain.ClubUserList;
-import com.lec.spring.domain.User;
-import com.lec.spring.domain.UserSocializing;
+import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.service.ClubService;
+import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
+    @Value("${app.upload.path}")
+    private String uploadDir;
+
     private UserService userService;
+    private ReservationService reservationService;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserService userService, ReservationService reservationService) {
         this.userService = userService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/register")
@@ -94,10 +105,70 @@ public class UserController {
         User user = principalDetails.getUser();
         List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
         List<UserSocializing> userSocializings = userService.getUserSocializings(user.getId());
+        List<Reservation> userReservations = reservationService.findByUserId(user.getId());
         System.out.println(userSocializings);
+
+        userReservations.forEach(reservation -> {
+            System.out.println(reservation);
+        });
+
+
+        // 마이페이지 클럽목록 기본이미지
+        for (ClubUserList clubUserList : userClubs) {
+            Club club = clubUserList.getClub();
+            if ("upload/Default.png".equals(club.getRepresentative_picture())) {
+                String imgPath = "no_img.jpg";
+                club.setRepresentative_picture(imgPath);
+            }
+        }
+
+        // 마이페이지 소셜라이징 기본이미지
+        for (UserSocializing userSocializing : userSocializings) {
+            Socializing socializing = userSocializing.getSocializing();
+            if ("upload/Default.img".equals(socializing.getImg())) {
+                String imgPath = "upload/no_img.jpg";
+                socializing.setImg(imgPath);
+            }
+        }
+
         model.addAttribute("userClubs", userClubs);
         model.addAttribute("userSocializings", userSocializings);
+        model.addAttribute("userReservations", userReservations);
+        model.addAttribute("user", user);
 
         return "user/my_page";
+    }
+
+    @PostMapping("/update")
+    public String update(
+            @RequestParam("files") MultipartFile file,
+            User user,
+            Model model) throws IOException {
+        // 기본 이미지 경로 설정
+        String imgPath = "upload/profile_img.jpg"; // 기본 이미지 경로
+
+        // 파일이 비어있지 않으면 업로드 처리
+        if (!file.isEmpty()) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            imgPath = "upload/" + fileName;
+
+            try {
+                Path path = Paths.get(imgPath);
+                Files.createDirectories(path.getParent());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 이미지 경로를 Socializing 객체에 설정
+        user.setProfile_picture(imgPath);
+
+        System.out.println(user.getProfile_picture());
+
+        userService.update(user);
+        User users = userService.findByUserId(user.getId());
+        model.addAttribute("user", users);
+        return "/user/my_page";
     }
 }
