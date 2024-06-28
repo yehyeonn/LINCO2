@@ -16,6 +16,10 @@
         #{img})
     </insert>
 
+    <select id="selectsocializingvenue" resultMap="mapSocializing">
+
+    </select>
+
     <sql id="SELECT_BASE">
         SELECT
             u.id
@@ -78,6 +82,13 @@
         <result column="s_total_price" property="total_price"/>
         <result column="s_img" property="img"/>
         <result column="s_regdate" property="regdate"/>
+        <result column="s_venue_id" property="venue_id"/>
+        <collection property="venue" resultMap="mapvenue"/>
+    </resultMap>
+
+    <resultMap id="mapvenue" type="com.lec.spring.domain.Venue">
+        <result column="v_id" property="id"/>
+        <result column="v_venue_name" property="venue_name"/>
     </resultMap>
 
     <resultMap id="mapuser" type="com.lec.spring.domain.User">
@@ -108,9 +119,28 @@
 
 
     <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
-    <select id="findById" resultType="com.lec.spring.domain.Socializing">
-        <include refid="SELECT_SOCIALIZING"/>
-        AND id = #{id};
+    <select id="findById" resultMap="mapSocializing">
+        SELECT
+            s.id                "s_id"
+             , s.venue_id          "s_venue_id"
+             , s.socializing_title "s_scoializing_title"
+             , s.category          "s_category"
+             , s.detail_category   "s_detail_category"
+             , s.address           "s_address"
+             , s.place_name        "s_place_name"
+             , s.meeting_date      "s_meeting_date"
+             , s.meeting_time      "s_meeting_time"
+             , s.limit_num         "s_limit_num"
+             , s.content           "s_content"
+             , s.total_price       "s_total_price"
+             , s.img               "s_img"
+             , s.regdate           "s_regdate"
+             , v.id                "v_id"
+             , v.venue_name        "v_venue_name"
+        FROM socializing s join venue v on s.venue_id=v.id
+        WHERE
+            1 = 1
+        AND s.id = #{id};
     </select>
 
 <!--    특정 소셜에 가입한 사용자의 수-->
