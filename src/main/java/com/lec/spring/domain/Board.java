@@ -20,6 +20,7 @@ public class Board {
     private User user;
     private Club club;
     private BoardType boardType;
+    private ClubUserList clubUserList;
 
     @ToString.Exclude
     @Builder.Default

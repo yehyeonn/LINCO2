@@ -31,6 +31,12 @@ public class ClubUserListServiceImpl implements ClubUserListService {
     }
 
     @Override
+    public int deleteByClubIdAndUserId(Long user_id, Long club_id) {
+        int result = clubUserListRepository.deleteByClubIdAndUserId(user_id, club_id);
+        return result;
+    }
+
+    @Override
     public List<ClubUserList> findByClubId(Long clubId) {
         return clubUserListRepository.findByClubId(clubId);
     }
@@ -44,5 +50,10 @@ public class ClubUserListServiceImpl implements ClubUserListService {
 //        System.out.println("USERID : " + user.getId());
 
         return clubUserListRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<ClubUserList> clubuserlist(Long id) {
+        return clubUserListRepository.clubuserlist(id);
     }
 }

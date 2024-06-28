@@ -27,16 +27,16 @@ public class Socializing {
     private LocalDateTime regdate;
 
     private Venue venue;
-
+    private Long venue_id;
     private User user;
-    public Long getVenue_id() {
-        return venue != null ? venue.getId() : null;
-    }
-
-    public void setVenue_id(Long venue_id) {
-        if (venue == null) {
-            venue = new Venue();
-        }
-        venue.setId(venue_id);
-    }
+//    public Long getVenue_id() {
+//        return venue != null ? venue.getId() : null;
+//    }
+//
+//    public void setVenue_id(Long venue_id) {
+//        if (venue == null) {
+//            venue = new Venue();
+//        }
+//        venue.setId(venue_id);
+//    }
 }

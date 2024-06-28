@@ -2,11 +2,9 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Board;
+import com.lec.spring.domain.Club;
 import com.lec.spring.domain.User;
-import com.lec.spring.repository.AttachmentRepository;
-import com.lec.spring.repository.BoardRepository;
-import com.lec.spring.repository.ClubUserListRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -53,11 +51,15 @@ public class BoardServiceImpl implements BoardService{
 
     private ClubUserListRepository clubUserListRepository;
 
+    private ClubRepository clubRepository;
+
     @Autowired
     public BoardServiceImpl(SqlSession sqlSession){
         boardRepository = sqlSession.getMapper(BoardRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
         attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+        clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
+        clubRepository = sqlSession.getMapper(ClubRepository.class);
     }
 
     @Override
@@ -69,6 +71,17 @@ public class BoardServiceImpl implements BoardService{
         // 디버깅용
         System.out.println("userID : " + user.getId());
         System.out.println("Saving Board : " + board);
+
+        // 클럽 정보 설정
+        if(board.getBoardType() != null && board.getBoardType().getId() == 3){
+            Long clubId = board.getClub() != null ? board.getClub().getId() : null;
+            if (clubId != null){
+                Club club = clubRepository.findById(clubId);
+                if (club != null){
+                    board.setClub(club);
+                }
+            }
+        }
 
         int cnt = boardRepository.save(board);
 

@@ -6,11 +6,13 @@ import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,14 +20,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+
+    @Value("upload")
+    private String uploadDir;
 
     @Autowired
     private BoardService boardService;
@@ -52,85 +63,103 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public void write() {
+    public void write(Principal principal, @RequestParam(value = "boaredType", required = false, defaultValue = "1") int boardType, Model model) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+        if (user == null){
+            throw new NullPointerException("User Not Found" + username);
+        }
+        Long userId = user.getId();
+//        User userIds = userService.findByUserId(userId);
+//        System.out.println("UserId 에용 : " + userId);
+//        System.out.println("userid에용 : " + userIds);
+//        System.out.println("board에용 : " + board);
 
+        List<ClubUserList> userClubs = clubUserListService.findByUserId(userId);
+//         디버깅용
+//        for(ClubUserList userClub : userClubs){
+//            Club userClubEntity = userClub.getClub();
+//            if (userClubEntity != null){
+//                System.out.println("Club name : " + userClubEntity.getName());
+//            }
+//        }
+        model.addAttribute("boardType", boardType);
+        model.addAttribute("userclubsSize", userClubs.size());
+        model.addAttribute("userclubs", userClubs);
     }
 
     @PostMapping("/write")
     public String writeOk(
             @RequestParam Map<String, MultipartFile> files,
             @RequestParam("boardType.id") int boardTypeId,
+            @RequestParam("clubId") Optional<Long> clubId,
             @Valid Board board,
             BindingResult boardResult,          // result -> boardResult
             @Valid ClubUserList clubUserList,
             BindingResult clubUserListResult,
-            Club club,
             Model model,
-            RedirectAttributes redirectAttributes,
-            Principal principal
+            RedirectAttributes redirectAttributes
     ) {
-        String username = principal.getName();
-        User user = userService.findByUsername(username);
-        if (user == null){
-            throw new NullPointerException("User Not Found" + username);
-        }
-
-        Long userId = user.getId();
-        User userIds = userService.findByUserId(userId);
-        System.out.println("UserId 에용 : " + userId);
-        System.out.println("userid에용 : " + userIds);
-        System.out.println("board에용 : " + board);
-
         // boardType 이 공지사항 이거나 자유게시판일 경우
-        if (boardTypeId == 2) {
+        if (boardTypeId == 2 || boardTypeId == 1) {
             if (boardResult.hasErrors()) {
                 handleErrors(boardResult, board, redirectAttributes);
-                return "redirect:/board/write";
+                return "redirect:/board/write?boardType=" + boardTypeId;
             }
             int result = boardService.write(board, files);
 
             model.addAttribute("result", result);
-//            System.out.println("result2 : " + result);
-        } else if (boardTypeId == 1) {
-            if (boardResult.hasErrors()) {
-                handleErrors(boardResult, board, redirectAttributes);
-            }
-            int result = boardService.write(board, files);
+        // boardType 이 클럽홍보 일 경우
+        } else if (boardTypeId == 3) {
+            // 기본 이미지 경로 설정
+            String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
 
-            model.addAttribute("result", result);
-//            System.out.println("result1 : " + result);
+            // 파일이 비어있지 않으면 첫 번째 파일을 업로드 처리
+            if (!files.isEmpty()) {
+                for (MultipartFile file : files.values()) {
+                    if (!file.isEmpty()) {
+                        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                        imgPath = "upload/" + fileName;
 
-        } else if (boardTypeId == 3) { // boardType 이 클럽홍보 일 경우
-            if (clubUserListResult.hasErrors()) {
-                handleErrors(clubUserListResult, clubUserList, redirectAttributes);
-            }
-            int result = boardService.write(board, files);
-
-            List<ClubUserList> userClubs = clubUserListService.findByUserId(userId);
-            for(ClubUserList userClub : userClubs){
-                Club userClubEntity = userClub.getClub();
-                if (userClubEntity != null){
-                    System.out.println("Club name : " + userClubEntity.getName());
+                        try {
+                            Path path = Paths.get(imgPath);
+                            Files.createDirectories(path.getParent());
+                            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break; // 첫 번째 파일만 처리하고 루프 종료
+                    }
                 }
             }
-            model.addAttribute("userclubs", userClubs);
+
+            if (clubUserListResult.hasErrors()) {
+                handleClubUserListErrors(clubUserListResult, clubUserList, redirectAttributes);
+                return "redirect:/board/write?boardType=" + boardTypeId;
+            }
+            Club club = clubService.getClubById(clubId.get());
+//            System.out.println("club의 정보 : " + club);
+
+            board.setClub(club);
+
+            int result = boardService.write(board, files);
+
             model.addAttribute("result", result);
-
-            System.out.println("userClubs : " + userClubs);
         }
-
+//        System.out.println("clubID : " + clubUserList);
         return "board/writeOk";
     }
 
-    private void handleErrors(BindingResult result, Object target, RedirectAttributes redirectAttributes) {
-        if (target instanceof Board) {
-            Board board = (Board) target;
-            redirectAttributes.addFlashAttribute("user", board.getUser());
-            redirectAttributes.addFlashAttribute("title", board.getTitle());
-            redirectAttributes.addFlashAttribute("content", board.getContent());
+    private void handleErrors(BindingResult result, Board board, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("board", board);
+        for(FieldError err : result.getFieldErrors()){
+            redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
         }
-        List<FieldError> errList = result.getFieldErrors();
-        for (FieldError err : errList) {
+    }
+
+    private void handleClubUserListErrors(BindingResult result, ClubUserList clubUserList, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("clubUserList", clubUserList);
+        for(FieldError err : result.getFieldErrors()){
             redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
         }
     }
@@ -140,7 +169,7 @@ public class BoardController {
         Board board = boardService.detail(id);
         model.addAttribute("board", board);
 //        디버깅 용도
-//        System.out.println("board : " +board.toString());
+        System.out.println("board : " +board.toString());
 
         Club club = board.getClub() != null ? clubService.getClubById(board.getClub().getId()) : null;
         model.addAttribute("club", club);
@@ -179,6 +208,7 @@ public class BoardController {
         model.addAttribute("boards", boards);
         model.addAttribute("clubs", clubs);
 
+        System.out.println("boards : " + boards);
         // 디버깅용
 //        for (int i = 1; i < boards.size(); i++) {
 //            System.out.println("boards : " +boards.get(i).getClub().toString() + "\n");
@@ -235,6 +265,11 @@ public class BoardController {
     @InitBinder("board")
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(new BoardValidator());
+    }
+
+    @InitBinder("clubUserList")
+    public void initClubUserListBinder(WebDataBinder binder) {
+        binder.setValidator(new ClubUserListValidator());
     }
 
     // 페이징 관련

@@ -19,6 +19,17 @@ console.log('시작날짜 : ', minStr);
 
 
 $(document).ready(function () {
+    // venue 용
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const venueId = urlParams.get('venueId');
+    // const venueName = urlParams.get('venueName');
+
+    // const venue = document.getElementById('venueInfo');
+    // const venueId = venue.id;
+    //
+    // console.log('Venue ID:', venueId);
+    // console.log('Venue Name:', venueName);
+
     const detail_category = $('#detail_category');
     if ($("#category").val() == "") {
         $("#a").text("소분류 선택");
@@ -56,6 +67,14 @@ $(document).ready(function () {
     $('#fileInput').on('change', function () {
         const file = this.files[0];
         if (file) {
+            const fileType = file.type;
+            const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+            if (!validImageTypes.includes(fileType)) {
+                alert("이미지 파일만 업로드 가능합니다.");
+                $('#fileInput').val(''); // 입력 필드를 리셋
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 var previewImage = document.getElementById("previewImage");

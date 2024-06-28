@@ -39,12 +39,7 @@ public interface ClubService {
     // 특정 클럽 조회
     Club getClubById(Long club_id);
 
-    // 클럽 사용자 목록 조회
-    List<ClubUserList> getClubMemberList(Long club_id);
 
-
-    // 특정 사용자의 클럽 목록 조회
-    List<ClubUserList> getUserClubs(Long user_id);
 
     // 클럽 인원수 조회
     int getClubMemberCount(Long club_id);
