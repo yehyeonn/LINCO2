@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(paymentData),
-                    credentials: 'include'  // 세션 쿠키를 포함하여 요청
+                    body: JSON.stringify(paymentData)
+                    // credentials: 'include'  // 세션 쿠키를 포함하여 요청
                 })
                     .then(response => response.text())
                     .then(data => {
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // alert("과연 db에 저장됏을까요?");
 
                         const venueId = paymentData.venue.id;
-                        window.location.href =  `/socializing/write?venueId=${venueId}`;
+                        window.location.href =  `/socializing/write?venueId=${venueId}&totalPrice=${totalPrice}&reserveDate=${reserveDate}&reserveST=${reserveStartTime}&reserveET=${reserveEndTime}`;
                     })
                     .catch(error => {
                         console.error('Error saving payment data:', error);

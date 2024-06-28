@@ -6,6 +6,7 @@ import com.lec.spring.domain.Socializing;
 import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.domain.UserSocializing;
 import com.lec.spring.domain.Venue;
+import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserSocializingService;
 import com.lec.spring.service.VenueService;
@@ -32,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 @Controller
@@ -52,10 +55,17 @@ public class SocializingController {
     @Autowired
     private VenueService venueService;
 
+    @Autowired
+    private ReservationService reservationService;
+
 
     @GetMapping("/write")
     public String write(@RequestParam(name = "venueId", required = false) Long venueId
-            ,Model model) {
+            , @RequestParam(name = "totalPrice", required = false) Long totalPrice
+            , @RequestParam(name = "reserveDate", required = false)LocalDate reserveDate
+            , @RequestParam(name = "reserveST", required = false) LocalTime reserveST
+            , @RequestParam(name = "reserveET", required = false)LocalTime reserveET
+            , Model model) {
 
         Venue venue = null;
         if (venueId != null) {
@@ -71,6 +81,10 @@ public class SocializingController {
 
 
         model.addAttribute("venue", venue);
+        model.addAttribute("total_price", totalPrice);
+        model.addAttribute("reserveDate", reserveDate);
+        model.addAttribute("reserveST", reserveST);
+        model.addAttribute("reserveET", reserveET);
         model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
         model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
 

@@ -3,6 +3,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.PublicReservationDTO;
 import com.lec.spring.domain.Venue;
+import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class VenueController {
     private VenueService venueService;
 
     @Autowired
-    public VenueController(VenueService venueService) {
+    public VenueController(VenueService venueService, ReservationService reservationService) {
         this.venueService = venueService;
     }
 
@@ -55,7 +56,7 @@ public class VenueController {
             venue.setLimit_num(30);
             venue.setVenue_category(reservation.getVenue_category());
             venue.setInfo_tel(reservation.getInfo_tel());
-            venue.setPrice(10L);
+            venue.setPrice(100L);
             venue.setPosible_start_date("2024-07-09");
             venue.setPosible_end_date("2025-07-09");
             venue.setOpen_time("09:00");

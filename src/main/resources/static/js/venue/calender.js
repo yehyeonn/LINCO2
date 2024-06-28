@@ -138,8 +138,9 @@ function buildCalendar() {
 
     emptyCells();
     pastDate(nowYear, nowMonth);
-
 }
+
+
 
 function emptyCells() {
     var calendarTable = document.getElementById("calendar");
@@ -163,7 +164,7 @@ function pastDate(nowYear, nowMonth) {
 
     // console.log('currentM : ' + currentMonth);
 
-    console.log(cells.length)
+    // console.log(cells.length)
     for (var i = 0; i < cells.length; i++) {
         var cell = cells[i];
         // var cellDate = new Date(currentYear, currentMonth, parseInt(cell.textContent)); // 셀의 날짜를 나타내는 Date 객체

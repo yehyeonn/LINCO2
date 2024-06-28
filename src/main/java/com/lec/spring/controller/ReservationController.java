@@ -64,7 +64,6 @@ public class ReservationController {
 //        }
         model.addAttribute("reservations", reservations);
 
-
         return "reservation/write";
     }
 

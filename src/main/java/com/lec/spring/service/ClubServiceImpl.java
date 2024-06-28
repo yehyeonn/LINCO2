@@ -20,6 +20,8 @@ import java.util.List;
 @Service
 public class ClubServiceImpl implements ClubService {
 
+
+
     // 첨부파일 업로드
     @Value("upload")
     private String uploadDir;
@@ -33,6 +35,11 @@ public class ClubServiceImpl implements ClubService {
     private final ClubRepository clubRepository;
     private final ClubUserListRepository clubUserListRepository;
 
+    @Override
+    public int deleteById(Long club_id) {
+        int result = clubRepository.deleteById(club_id);
+        return result;
+    }
     @Override
     public boolean isClubNameExists(String clubName) {
         // 클럽 이름이 이미 존재하는지 확인하는 로직
@@ -75,12 +82,13 @@ public class ClubServiceImpl implements ClubService {
     @Override
     @Transactional
     // 클럽 가입 (유저가 member 가 됨)
-    public void addMemberToClub(Long user_id, Long club_id) {
+    public int addMemberToClub(Long user_id, Long club_id) {
         ClubUserList clubUserList = new ClubUserList();
         clubUserList.setUser_id(user_id);
         clubUserList.setClub_id(club_id);
         clubUserList.setRole("MEMBER");
-        clubUserListRepository.save(clubUserList);
+        int result = clubUserListRepository.save(clubUserList);
+        return result;
     }
 
     @Override

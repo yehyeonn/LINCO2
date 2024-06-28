@@ -11,8 +11,11 @@ public interface ClubService {
     // 클럽 생성 (유저가 master 가 됨)
     int createClub(Club club);
 
+    // 클럽 삭제
+    int deleteById(Long club_id);
+
     // 클럽 가입 (유저가 member 가 됨)
-    void addMemberToClub(Long user_id, Long club_id);
+    int addMemberToClub(Long user_id, Long club_id);
 
     // 클럽 사용자 삭제 (MASTER만 가능)
     void deleteClubMember(Long user_id, Long club_id);

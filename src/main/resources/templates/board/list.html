@@ -27,13 +27,19 @@
 
         <div class="menu-1">
             <form action="/board/list" method="get">
-                <button type="submit" class="title" name="boardTypeId" id="board-list" th:value="2" >자유게시판</button>
+                <button type="submit" class="title board-title-1 custom-title" name="boardTypeId" id="board-list" th:value="2" >
+                    <span>GOGO!</span><span>자유게시판</span>
+                </button>
             </form>
             <form action="/board/list" method="get">
-                <button type="submit" class="title" name="boardTypeId" id="board-club" th:value="3">클럽홍보</button>
+                <button type="submit" class="title board-title-2 custom-title" name="boardTypeId" id="board-club" th:value="3">
+                    <span>Let's Go!</span><span>클럽홍보</span>
+                </button>
             </form>
             <form action="/board/list" method="get">
-                <button type="submit" class="title" name="boardTypeId" id="board-notices"  th:value="1">공지사항</button>
+                <button type="submit" class="title board-title-3 custom-title" name="boardTypeId" id="board-notices"  th:value="1">
+                    <span>GOGO!</span><span>공지사항</span>
+                </button>
             </form>
         </div>
 
@@ -109,7 +115,11 @@
 
         <div class="write">
             <div>          <!-- sec:authorize="hasAuthority('MEMBER')" -->
-                <a class="button" th:href="@{/board/write}"  >글쓰기</a>       <!-- th:value="${2}" -->
+                <a class="button" th:href="@{/board/write}">
+                    <button class="board-title-1 custom-title">
+                        <span>Let's GO!</span><span>글쓰기</span>
+                    </button>
+                </a>       <!-- th:value="${2}" -->
             </div>
 <!--            <div th:if="">-->
 <!--                <a class="button" th:href="@{/board/write}" th:value="${3}">작성하기</a>-->
