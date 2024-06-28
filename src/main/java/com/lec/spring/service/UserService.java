@@ -17,4 +17,9 @@ public interface UserService {
 
     List<ClubUserList> getUserClubs(Long user_id);
     List<UserSocializing> getUserSocializings(Long user_id);
+
+    int save(User user);
+
+    int update(User user);
+
 }

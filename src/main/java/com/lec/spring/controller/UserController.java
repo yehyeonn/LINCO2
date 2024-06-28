@@ -1,16 +1,14 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalDetails;
-import com.lec.spring.domain.Club;
-import com.lec.spring.domain.ClubUserList;
-import com.lec.spring.domain.User;
-import com.lec.spring.domain.UserSocializing;
+import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.service.ClubService;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -25,6 +24,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    @Value("${app.upload.path}")
+    private String uploadDir;
 
     private UserService userService;
 
@@ -94,10 +96,40 @@ public class UserController {
         User user = principalDetails.getUser();
         List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
         List<UserSocializing> userSocializings = userService.getUserSocializings(user.getId());
-        System.out.println(userSocializings);
+
+        // 마이페이지 클럽목록 기본이미지
+        for (ClubUserList clubUserList : userClubs) {
+            Club club = clubUserList.getClub();
+            if ("upload/Default.png".equals(club.getRepresentative_picture())) {
+                String imgPath = "upload/no_img.jpg";
+                club.setRepresentative_picture(imgPath);
+            }
+        }
+
+        // 마이페이지 소셜라이징 기본이미지
+        for (UserSocializing userSocializing : userSocializings) {
+            Socializing socializing = userSocializing.getSocializing();
+            if ("upload/Default.img".equals(socializing.getImg())) {
+                String imgPath = "upload/no_img.jpg";
+                socializing.setImg(imgPath);
+            }
+        }
+
         model.addAttribute("userClubs", userClubs);
         model.addAttribute("userSocializings", userSocializings);
+        model.addAttribute("user", user);
 
         return "user/my_page";
+    }
+
+    @PostMapping("/update")
+    public String update(User user, Model model) {
+        userService.update(user);
+        User users = userService.findByUserId(user.getId());
+
+//        if (user.getProfile_picture())
+
+        model.addAttribute("user", users);
+        return "/user/my_page";
     }
 }

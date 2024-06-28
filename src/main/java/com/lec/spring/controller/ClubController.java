@@ -186,7 +186,6 @@ public class ClubController {
         return "club/deleteOk";
     }
 
-    @InitBinder("club")
     @GetMapping( "/update/{id}")
     public String update(@PathVariable Long id, Model model){
         Club club = clubService.getClubById(id);
