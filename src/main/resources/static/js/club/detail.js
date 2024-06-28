@@ -8,6 +8,11 @@ $('.outBtn').click(function (){
     answer && $("form[name = 'frmOut']").submit();
 });
 
+$('#leaveBtn').click(function (){
+    let answer = confirm("정말 탈퇴하시겠습니까?");
+    answer && $("form[name = 'frmLeave']").submit();
+});
+
 $('#backBtn').click(function (){
-    window.location.href = localStorage.getItem("backUrl")
+    history.back();
 })
