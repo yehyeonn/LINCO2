@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,6 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -101,7 +107,7 @@ public class UserController {
         for (ClubUserList clubUserList : userClubs) {
             Club club = clubUserList.getClub();
             if ("upload/Default.png".equals(club.getRepresentative_picture())) {
-                String imgPath = "upload/no_img.jpg";
+                String imgPath = "no_img.jpg";
                 club.setRepresentative_picture(imgPath);
             }
         }
@@ -123,12 +129,34 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(User user, Model model) {
+    public String update(
+            @RequestParam("files") MultipartFile file,
+            User user,
+            Model model) throws IOException {
+        // 기본 이미지 경로 설정
+        String imgPath = "upload/profile_img.jpg"; // 기본 이미지 경로
+
+        // 파일이 비어있지 않으면 업로드 처리
+        if (!file.isEmpty()) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            imgPath = "upload/" + fileName;
+
+            try {
+                Path path = Paths.get(imgPath);
+                Files.createDirectories(path.getParent());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 이미지 경로를 Socializing 객체에 설정
+        user.setProfile_picture(imgPath);
+
+        System.out.println(user.getProfile_picture());
+
         userService.update(user);
         User users = userService.findByUserId(user.getId());
-
-//        if (user.getProfile_picture())
-
         model.addAttribute("user", users);
         return "/user/my_page";
     }

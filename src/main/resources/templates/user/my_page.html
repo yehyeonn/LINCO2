@@ -15,9 +15,9 @@
     <div class="sidebar">
         <div class="profile">
             <div class="profile-pic">
-                <img th:src="${user.profile_picture}" alt="프로필 사진">
+                <img id="profile-photo" th:src="@{'/' + ${user.profile_picture}}" alt="프로필 사진">
             </div>
-            <div class="profile-name">닉네임</div>
+            <div class="profile-name" th:text="${user.name}">닉네임</div>
         </div>
         <div class="menu">
             <div class="menu-item" onclick="showContent('tabs')">내 모임</div>
@@ -35,7 +35,7 @@
             <div th:each="club : ${userClubs}">
             <a th:href="@{/club/detail/{id}(id=${club.club_id})}"><div class="club-item">
                 <div class="club-pic">
-                    <img th:src="${club.club.representative_picture}" alt="클럽 사진">
+                    <img th:src="@{'/upload/' + ${club.club.representative_picture}}" alt="클럽 사진">
                 </div>
                 <div class="club-title" th:text="${club.club.name}">아이언맨 클럽</div>
             </div>
@@ -164,10 +164,11 @@
                 <div class="profile-edit">
                     <form id="profile-form" class="profile-edit-form mt-3" th:action="@{/user/update}" th:method="post" enctype="multipart/form-data">
                     <div class="profile-pic-edit">
-                        <img th:src="${user.profile_picture}" alt="프로필 사진" id="profile-photo" class="rounded-circle">
+                        <img th:src="@{'/' + ${user.profile_picture}}" alt="프로필 사진" id="profile-photo-edit" class="rounded-circle">
                     </div>
                     <div class="profile-edit-buttons">
                         <button class="btn btn-secondary" id="change-photo-btn">사진변경</button>
+                        <input type="file" id="fileInput" name="files" accept="image/*" style="display:none;">
                         <button class="btn btn-secondary" id="delete-photo-btn">사진삭제</button>
                     </div>
                         <input name="id" th:value="${user.id}" style="display: none">

@@ -88,9 +88,37 @@ $(document).ready(function() {
         }
     });
 
+
     // 프로필 편집 사진 삭제
-    $('#delete-photo-btn').click(function() {
-        $('#profile-photo').remove();
+    $('#delete-photo-btn').click(function(event) {
+        event.preventDefault();
+        $('#profile-photo-edit').attr('src', '/upload/profile_img.jpg'); // 기본 이미지 경로로 변경
+    });
+
+    // 사진 변경 버튼 클릭 시 파일 입력 필드 클릭
+    $('#change-photo-btn').on('click', function (event) {
+        event.preventDefault();
+        $('#fileInput').click();
+    });
+
+    // 파일 선택 시 미리보기 표시
+    $('#fileInput').on('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const fileType = file.type;
+            const validImageTypes = ["image/gif", "image/jpeg", "image/png", "image/jpg"];
+            if (!validImageTypes.includes(fileType)) {
+                alert("이미지 파일만 업로드 가능합니다.");
+                $('#fileInput').val(''); // 입력 필드를 리셋
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $('#profile-photo-edit').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
     });
 
     // // 프로필 편집 내용 저장
