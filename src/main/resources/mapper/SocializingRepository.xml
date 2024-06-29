@@ -107,7 +107,7 @@
     </select>
 
 
-    <!-- 특정 id 글 내용 읽기 -->
+    <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
     <select id="findById" resultType="com.lec.spring.domain.Socializing">
         <include refid="SELECT_SOCIALIZING"/>
         AND id = #{id};

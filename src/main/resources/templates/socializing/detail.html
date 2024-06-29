@@ -46,6 +46,7 @@
                     <span class="social-info"> | [[${detailsocializing.getMeeting_time()}]]</span>
                     <p id="social-cnt">참여인원: [[${membercnt}]] / [[${detailsocializing.getLimit_num()}]]</p>
                     <p id="social-price">입장료: [[${detailsocializing.getTotal_price()}]]원</p>
+                    <p id="venue-name">대관명:</p>
                 </div>
                 <div class="details-buttons">
                     <a th:href="@{'/socializing/update/' + ${detailsocializing.id}}" th:if="${logged_user.id == Master.User.id}">
