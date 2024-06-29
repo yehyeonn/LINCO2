@@ -287,7 +287,7 @@ public class ClubController {
                 imgPath = fileName;
 
                 try{
-                    Path path = Paths.get(imgPath);
+                    Path path = Paths.get("/upload/"+imgPath);
                     Files.createDirectories(path.getParent());
                     Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
 

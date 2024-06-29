@@ -90,14 +90,12 @@
         <result column="u_birthday" property="birthday"/>
         <result column="u_profile_picture" property="profile_picture"/>
         <result column="u_regdate" property="regdate"/>
-
-
     </resultMap>
-
 
     <resultMap id="mapusersocializing" type="com.lec.spring.domain.UserSocializing">
         <result column="us_role" property="role"/>
         <result column="us_user_id" property="user_id"/>
+        <result column="us_subscription" property="subscription"/>
         <result column="us_socializing_id" property="socializing_id"/>
         <collection property="socializing" resultMap="mapSocializing"/>
         <collection property="user" resultMap="mapuser"/>
@@ -109,7 +107,7 @@
     </select>
 
 
-    <!-- 특정 id 글 내용 읽기 -->
+    <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
     <select id="findById" resultType="com.lec.spring.domain.Socializing">
         <include refid="SELECT_SOCIALIZING"/>
         AND id = #{id};
@@ -175,6 +173,7 @@
             u.providerId            "u_providerId",
             us.user_id              "us_user_id",
             us.socializing_id       "us_socializing_id",
+            us.subscription         "us_subscription",
             s.id                    "s_id",
             s.venue_id              "s_venue_id",
             s.socializing_title     "s_socializing_title",
@@ -193,6 +192,7 @@
         FROM user_socializing us, user u , socializing s
         where us.user_id = u.id AND us.socializing_id = s.id
         AND us.socializing_id = ${param1}
+        order by us_subscription ASC
     </select>
 
     <select id="findBySocializingMaster" resultMap="mapusersocializing">
