@@ -146,15 +146,15 @@ public class ClubController {
     public String detail(@PathVariable Long id, Model model) {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
-        System.out.println("club: " + club);
+//        System.out.println("club: " + club);
 
         // 클럽의 멤버 리스트 -> user_id, club_id, role, user
         List<ClubUserList> clubMemberList = clubUserListService.clubuserlist(id);
-        System.out.println("clubMemberList: " + clubMemberList);
+//        System.out.println("clubMemberList: " + clubMemberList);
 
         // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
-        System.out.println("clubMaster :" + clubMaster);
+//        System.out.println("clubMaster :" + clubMaster);
 
         // clubMemberList에서 user_id만 추출하여 리스트로 만들기 (클럽장 제외)
         List<Long> userIds = clubMemberList.stream()
@@ -162,19 +162,19 @@ public class ClubController {
                 .filter(user_id -> !user_id.equals(clubMaster.getUser_id())) // 클럽장 제외
                 .collect(Collectors.toList());
 
-        System.out.println("userIds: " + userIds);
+//        System.out.println("userIds: " + userIds);
 
         // 클럽장과 동일한 user_id를 가진 항목을 제외한 리스트 만들기
         List<ClubUserList> filteredClubMemberList = clubMemberList.stream()
                 .filter(clubUserList -> !clubUserList.getUser().getId().equals(clubMaster.getUser().getId()))
                 .collect(Collectors.toList());
 
-        System.out.println("filteredClubMemberList: " + filteredClubMemberList);
+//        System.out.println("filteredClubMemberList: " + filteredClubMemberList);
 
 
         // 멤버 수 -> 현재인원
         int memberCount = clubService.getClubMemberCount(id);
-        System.out.println("memberCount: " + memberCount);
+//        System.out.println("memberCount: " + memberCount);
 
         model.addAttribute("club", club);
         model.addAttribute("filteredClubMemberList", filteredClubMemberList);
@@ -327,12 +327,16 @@ public class ClubController {
     }
 
     // 클럽 사진첩 리스트
-//    @GetMapping("/gallery/{id}")
-//    public String galleryList(@PathVariable Long id, Model model) {
-//        Club club = clubService.getClubById(id);
-//
-//
-//        return "/club/gallery";
-//    }
+    @GetMapping("/gallery/{id}")
+    public String galleryList(@PathVariable Long id, Model model) {
+
+        Club club = clubService.getClubById(id);
+
+        System.out.println(club);
+
+        model.addAttribute("club", club);
+
+        return "club/gallery";
+    }
 }
 

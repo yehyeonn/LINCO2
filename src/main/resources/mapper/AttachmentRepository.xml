@@ -45,16 +45,6 @@
         ORDER BY id ASC
     </select>
 
-    <select id="countByClubId" resultType="com.lec.spring.domain.Attachment">
-        select count(*)
-        from ATTACHMENT
-        WHERE club_id = #{clubId}
-    </select>
-
-    <select id="findByClubId" resultType="com.lec.spring.domain.Attachment">
-
-    </select>
-
     <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
         DELETE FROM ATTACHMENT
         WHERE id in (<foreach collection="array" item="e" separator=",">
