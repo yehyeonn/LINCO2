@@ -19,17 +19,5 @@ $(document).ready(function() {
         $('.board-type-3').hide();
     }
 });
-document.addEventListener('DOMContentLoaded', function () {
-    // imgPath 가져오기
-    var imgPath = document.getElementById('imgPath').value;
-
-    // 이미지 경로가 있는 경우 이미지를 추가
-    if (imgPath) {
-        var imageElement = document.getElementById('img');
-        imageElement.src = imgPath;
-        imageElement.style.maxWidth = '100%'; // 이미지 최대 너비 설정 (옵션)
-        document.getElementById('imageContainer').appendChild(imageElement);
-    }
-});
 
 // ----------------------------------------------------------------
