@@ -38,7 +38,7 @@
     </insert>
     
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">
-        UPDATE user SET name = #{name}, address = #{address}, gender = #{gender}, profile_picture = #{profile_picture}
+        UPDATE user SET name = #{name}, address = #{address}, tel = #{tel}, profile_picture = #{profile_picture}
         WHERE id = #{id}
     </update>
 

@@ -61,6 +61,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(User user) {
+
+        // 기본 이미지 설정
+        if (user.getProfile_picture() == null || user.getProfile_picture().isEmpty()) {
+            String defaultProfileImage = "upload/profile_img.jpg";
+            user.setProfile_picture(defaultProfileImage);
+        }
+
         user.setTel(user.getTel());
         user.setUsername(user.getUsername().toUpperCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));  // password 는 암호화 하여 저장
@@ -92,6 +99,18 @@ public class UserServiceImpl implements UserService {
     // 유저가 참여한 소셜라이징 리스트
     @Override
     public List<UserSocializing> getUserSocializings(Long user_id) {
-        return userSocializingRepository.findBySocializingId(user_id);
+        return userSocializingRepository.findByUserSocializingId(user_id);
+    }
+
+    // 유저 정보저장
+    @Override
+    public int save(User user) {
+        userRepository.save(user);
+        return 1;
+    }
+
+    @Override
+    public int update(User user) {
+        return userRepository.update(user);
     }
 }

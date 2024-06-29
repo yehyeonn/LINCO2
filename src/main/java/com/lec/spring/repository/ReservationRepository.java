@@ -21,4 +21,6 @@ public interface ReservationRepository {
 
     List<Reservation> findByUserId(Long userId);
 
+    List<Reservation> findExpiredReservation();
+
 }

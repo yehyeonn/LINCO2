@@ -15,9 +15,9 @@
     <div class="sidebar">
         <div class="profile">
             <div class="profile-pic">
-                <img th:src="@{/img/face01.png}" alt="프로필 사진">
+                <img id="profile-photo" th:src="@{'/' + ${user.profile_picture}}" alt="프로필 사진">
             </div>
-            <div class="profile-name">닉네임</div>
+            <div class="profile-name" th:text="${user.name}">닉네임</div>
         </div>
         <div class="menu">
             <div class="menu-item" onclick="showContent('tabs')">내 모임</div>
@@ -33,11 +33,11 @@
 
         <div class="club-list active">
             <div th:each="club : ${userClubs}">
-            <a th:href="@{/club/list(id=${club.club_id})}"><div class="club-item">
+            <a th:href="@{/club/detail/{id}(id=${club.club_id})}"><div class="club-item">
                 <div class="club-pic">
-                    <img th:src="@{#}" alt="클럽 사진">
+                    <img th:src="@{'/upload/' + ${club.club.representative_picture}}" alt="클럽 사진">
                 </div>
-                <div class="club-title" th:text="@{#}">아이언맨 클럽</div>
+                <div class="club-title" th:text="${club.club.name}">아이언맨 클럽</div>
             </div>
             </a>
             </div>
@@ -74,11 +74,11 @@
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tbody>
                         <tr th:each="reservation, iterStat : ${userReservations}">
-                            <td class="reservation-number" th:text="${iterStat.count}">1</td>
-                            <td class="venue-name" th:text="${reservation.venue.venue_name}">세진이집</td>
-                            <td class="reservation-ellipsis" th:text="${reservation.reserve_date}">2024-06-18</td>
-                            <td class="reservation-ellipsis" th:text="${reservation.paydate}">2024-06-01</td>
-                            <td th:text="${reservation.total_price} + 원">1,000원</td>
+                            <td class="reservation-number" th:text="${iterStat.count}"></td>
+                            <td class="venue-name" th:text="${reservation.venue.venue_name}"></td>
+                            <td class="reservation-ellipsis" th:text="${reservation.reserve_date}"></td>
+                            <td class="reservation-ellipsis" th:text="${#temporals.format(reservation.paydate, 'yyyy-MM-dd')}">2024-06-01</td>
+                            <td th:text="${reservation.total_price} + 원"></td>
                             <td th:text="${reservation.status}">결제완료 <button class="cancel-button">취소</button></td>
                         </tr>
                         </tbody>
@@ -90,36 +90,37 @@
         <div class="edit-container">
             <div class="edit-profile d-flex justify-content-center align-items-center">
                 <div class="profile-edit">
+                    <form id="profile-form" class="profile-edit-form mt-3" th:action="@{/user/update}" th:method="post" enctype="multipart/form-data">
                     <div class="profile-pic-edit">
-                        <img th:src="@{/img/face01.png}" alt="프로필 사진" class="rounded-circle">
+                        <img th:src="@{'/' + ${user.profile_picture}}" alt="프로필 사진" id="profile-photo-edit" class="rounded-circle">
                     </div>
                     <div class="profile-edit-buttons">
-                        <button class="btn btn-secondary">사진변경</button>
-                        <button class="btn btn-secondary">사진삭제</button>
+                        <button class="btn btn-secondary" id="change-photo-btn">사진변경</button>
+                        <input type="file" id="fileInput" name="files" accept="image/*" style="display:none;">
+                        <button class="btn btn-secondary" id="delete-photo-btn">사진삭제</button>
                     </div>
-                    <form class="profile-edit-form mt-3">
+                        <input name="id" th:value="${user.id}" style="display: none">
                         <div class="form-group">
                             <label for="name">이름</label>
-                            <input type="text" class="form-control" id="name" placeholder="이름">
+                            <input th:value="${user.name}" type="text" class="form-control" id="name" placeholder="이름" name="name">
                         </div>
                         <div class="form-group">
                             <label for="phone">전화번호</label>
-                            <input type="text" class="form-control" id="phone" placeholder="전화번호">
+                            <input th:value="${user.tel}" type="text" class="form-control" id="phone" placeholder="전화번호" name="tel">
                         </div>
                         <div class="form-group">
-                            <label for="gender">성별</label>
-                            <select class="form-select" id="gender">
-                                <option selected>성별</option>
-                                <option value="man">남자</option>
-                                <option value="woman">여자</option>
-                                <option value="other">기타</option>
-                            </select>
+                            <label>주소</label>
+                            <div class="input-group">
+                                <input th:value="${user.address}" type="text" class="form-control" id="sample4_roadAddress" name="address" placeholder="주소">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="sample4_execDaumPostcode()">검색</button>
+                            </div>
                         </div>
-                    </form>
+                        <div id="guide" style="display:none"></div>
                     <div class="profile-edit-buttons">
                         <button onclick="showContent('tabs')" class="btn before-button">이전</button>
-                        <button class="btn save-button">저장</button>
+                        <button type="submit" class="btn save-button" id="profile-submit">저장</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -129,6 +130,7 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 
