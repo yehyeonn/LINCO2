@@ -16,7 +16,7 @@ import java.time.LocalTime;
 public class Reservation {
 
     private Long id;
-//    private Long user_id;
+    private String merchantUid;
     private String reservation_name;
     private String email;
     private String tel;

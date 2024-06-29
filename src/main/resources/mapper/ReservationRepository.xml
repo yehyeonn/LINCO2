@@ -8,9 +8,9 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Reservation"
             keyColumn="id" keyProperty="id">
         insert into RESERVATION
-        (user_id, reservation_name, email, tel, venue_id, venue_name, status, reserve_date, reserve_start_time,
+        (user_id, reservation_name, email, merchantUid, tel, venue_id, venue_name, status, reserve_date, reserve_start_time,
          reserve_end_time, total_price)
-        values (#{user.id}, #{reservation_name}, #{email}, #{tel}, #{venue.id}, #{venue.venue_name}, #{status},
+        values (#{user.id}, #{reservation_name}, #{email}, #{merchantUid}, #{tel}, #{venue.id}, #{venue.venue_name}, #{status},
                 #{reserve_date}, #{reserve_start_time}, #{reserve_end_time},
                 #{total_price})
     </insert>
@@ -20,6 +20,13 @@
         from RESERVATION
         where 1 = 1;
     </select>
+
+    <select id="findByMerchant" resultType="com.lec.spring.domain.Reservation">
+        select *
+        from RESERVATION
+        where merchantUid = #{merchantUid};
+    </select>
+
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Reservation">
         update RESERVATION
@@ -51,6 +58,7 @@
         <result column="re_id" property="id"/>
         <result column="re_reservation_name" property="reservation_name"/>
         <result column="re_email" property="email"/>
+        <result column="re_merchantUid" property="merchantUid"/>
         <result column="re_tel" property="tel"/>
         <result column="re_reserve_date" property="reserve_date"/>
         <result column="re_reserve_start_time" property="reserve_start_time"/>
@@ -105,6 +113,7 @@
         select re.id                 "re_id",
                re.reservation_name   "re_reservation_name",
                re.email              "re_email",
+            re.merchantUid            "re_merchantUid",
                re.tel                "re_tel",
                re.reserve_date       "re_reserve_date",
                re.reserve_start_time "re_reserve_start_time",

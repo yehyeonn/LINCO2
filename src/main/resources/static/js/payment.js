@@ -1,17 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-
-    // function formatDate(date) {
-    //     const year = date.getFullYear();
-    //     const month = String(date.getMonth() + 1).padStart(2, '0');
-    //     const day = String(date.getDate()).padStart(2, '0');
-    //     const hours = String(date.getHours()).padStart(2, '0');
-    //     const minutes = String(date.getMinutes()).padStart(2, '0');
-    //     const seconds = String(date.getSeconds()).padStart(2, '0');
-    //
-    //     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    // }
-
     window.requestPay = function() {
         const container = document.querySelector('.container-wrapper');
         const userId = parseInt(document.querySelector('input[name="user_id"]').value, 10);
@@ -25,17 +13,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const reserveEndTime = localStorage.getItem('endTime');
         const totalPrice = parseInt(localStorage.getItem('totalPrice'), 10);
         const userName = $('.info-box .name').val();
-
+        const merchant = "merchant_" + new Date().getTime();
 
         window.IMP.init('imp28617244');
         window.IMP.request_pay({
             pg: 'html5_inicis',
             pay_method: "card",
-            merchant_uid: "merchant_" + new Date().getTime(),
+            merchant_uid: merchant,
             name: "Linco 대관 예약",
             amount: totalPrice,
             buyer_email: userEmail,
-            buyer_name: name,
+            buyer_name: userName,
             buyer_tel: userTel,
         }, function (rsp) {
             if (rsp.success) {
@@ -64,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     reserve_date: reserveDate,
                     reserve_start_time: reserveStartTime,
                     reserve_end_time: reserveEndTime,
-                    total_price: totalPrice
-                    // paydate: payDate
+                    total_price: totalPrice,
+                    merchantUid: merchant,
                 };
 
                 fetch('/reservation/savePayment', {
@@ -80,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(data => {
                         console.log('Payment data saved:', data);
                         // alert("과연 db에 저장됏을까요?");
-
+                        const merUid = paymentData.merchantUid;
+                        alert(merUid);
                         const venueId = paymentData.venue.id;
                         window.location.href =  `/socializing/write`;
                     })
