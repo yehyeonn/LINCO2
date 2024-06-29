@@ -1,8 +1,10 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.AttachmentRepository;
 import com.lec.spring.repository.ClubRepository;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.repository.UserRepository;
@@ -34,6 +36,16 @@ public class ClubServiceImpl implements ClubService {
 
     private final ClubRepository clubRepository;
     private final ClubUserListRepository clubUserListRepository;
+    private final UserRepository userRepository;
+    private AttachmentRepository attachmentRepository;
+
+    @Autowired
+    public ClubServiceImpl(SqlSession sqlSession) {
+        this.clubRepository = sqlSession.getMapper(ClubRepository.class);
+        this.clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
+        this.userRepository = sqlSession.getMapper(UserRepository.class);
+        this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+    }
 
     @Override
     public int deleteById(Long club_id) {
@@ -47,14 +59,59 @@ public class ClubServiceImpl implements ClubService {
         return club != null; // 클럽 객체가 null이 아니면 이미 존재하는 것으로 간주
     }
 
-    private final UserRepository userRepository;
+//    @Override
+//    public List<Club> galleryList(Integer page, Model model, Long clubId) {
+//
+//        WRITE_PAGES = 6;
+//        PAGE_ROWS = 5;
+//
+//        if (page == null || page < 1) {
+//            page = 1;
+//        }
+//
+//        HttpSession session = U.getSession();
+//        Integer writePages = (Integer) session.getAttribute("writePages");
+//        if(writePages == null) {
+//            writePages = WRITE_PAGES;
+//        }
+//        Integer pageRows=(Integer) session.getAttribute("pageRows");
+//        if(pageRows == null) {
+//            pageRows = PAGE_ROWS;
+//        }
+//        session.setAttribute("page", page);
+//
+//        long cnt = attachmentRepository.countByClubId(clubId);
+//        int totalPage = (int) Math.ceil(cnt / (double) pageRows);
+//
+//        int startPage = 0;
+//        int endPage = 0;
+//
+//        List<Attachment> list = null;
+//
+//        if (cnt > 0) {
+//            if (page > totalPage) page = totalPage;
+//
+//            int fromRow = (page - 1) * pageRows;
+//
+//            startPage = (((page - 1) / writePages) * writePages) + 1;
+//            endPage = startPage + writePages - 1;
+//
+//            if (endPage >= totalPage) endPage = totalPage;
+//
+////            list = clubRepository.selectFromRow(fromRow, pageRows, clubId);
+//
+//            model.addAttribute("list", list);
+//        } else {
+//            page = 0;
+//        }
+//
+//        return List.of();
+//
+//    }
 
-    @Autowired
-    public ClubServiceImpl(SqlSession sqlSession) {
-        this.clubRepository = sqlSession.getMapper(ClubRepository.class);
-        this.clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
-        this.userRepository = sqlSession.getMapper(UserRepository.class);
-    }
+
+
+
 
     @Override
     @Transactional

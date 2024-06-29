@@ -47,4 +47,6 @@ public interface ClubService {
 
     // 클럽 이름 중복확인
     boolean isClubNameExists(String clubName);
+
+//    List<Club> galleryList(Integer page, Model model, Long clubId);
 }

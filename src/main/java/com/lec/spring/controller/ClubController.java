@@ -129,9 +129,9 @@ public class ClubController {
     @GetMapping("/list")
     private String list(
             Integer page,
-            @RequestParam(name="clubCategory", required = false, defaultValue = "") String category,
-            @RequestParam(name= "detailCategory", required = false, defaultValue = "") String detailcategory,
-            Model model){
+            @RequestParam(name = "clubCategory", required = false, defaultValue = "") String category,
+            @RequestParam(name = "detailCategory", required = false, defaultValue = "") String detailcategory,
+            Model model) {
 
         List<Club> clubs = clubService.list(page, model, category, detailcategory);
 
@@ -143,14 +143,14 @@ public class ClubController {
     }
 
     @GetMapping("detail/{id}")
-    public String detail(@PathVariable Long id, Model model){
+    public String detail(@PathVariable Long id, Model model) {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
         System.out.println("club: " + club);
 
         // 클럽의 멤버 리스트 -> user_id, club_id, role, user
-        List<ClubUserList> clubMemberList= clubUserListService.clubuserlist(id);
-        System.out.println("clubMemberList: "+ clubMemberList);
+        List<ClubUserList> clubMemberList = clubUserListService.clubuserlist(id);
+        System.out.println("clubMemberList: " + clubMemberList);
 
         // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
@@ -186,14 +186,14 @@ public class ClubController {
     }
 
     @GetMapping("board/{id}")
-    public String board(@PathVariable Long id, Model model){
+    public String board(@PathVariable Long id, Model model) {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
         System.out.println("club: " + club);
 
         // 클럽의 멤버 리스트 -> user_id, club_id, role, user
-        List<ClubUserList> clubMemberList= clubUserListService.clubuserlist(id);
-        System.out.println("clubMemberList: "+ clubMemberList);
+        List<ClubUserList> clubMemberList = clubUserListService.clubuserlist(id);
+        System.out.println("clubMemberList: " + clubMemberList);
 
         // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
@@ -230,42 +230,43 @@ public class ClubController {
 
     @PostMapping("/join")
     public String join(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
-            ,@RequestParam(name = "club_id",required = false,defaultValue = "") Long club_id
-            , Model model){
+            , @RequestParam(name = "club_id", required = false, defaultValue = "") Long club_id
+            , Model model) {
         int result = clubService.addMemberToClub(user_id, club_id);
-        model.addAttribute("result",result);
-        model.addAttribute("club_id",club_id);
+        model.addAttribute("result", result);
+        model.addAttribute("club_id", club_id);
         return "/club/joinOk";
     }
+
     @PostMapping("/delete")
-    public String deleteOk(Long id, Model model){
-        model.addAttribute("result",clubService.deleteById(id));
+    public String deleteOk(Long id, Model model) {
+        model.addAttribute("result", clubService.deleteById(id));
         return "/club/deleteOk";
     }
 
 
     @PostMapping("/out")
-    public String outOk(Long user_id, Long club_id, Model model){
+    public String outOk(Long user_id, Long club_id, Model model) {
         System.out.println("user_id: " + user_id);
         System.out.println("club_id: " + club_id);
-        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
+        model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
         return "/club/outOk";
     }
 
     @PostMapping("/leave")
-    public String leaveOk(Long user_id, Long club_id, Model model){
+    public String leaveOk(Long user_id, Long club_id, Model model) {
         System.out.println("user_id: " + user_id);
         System.out.println("club_id: " + club_id);
-        model.addAttribute("result",clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
+        model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
         return "/club/leaveOk";
     }
 
 
-//    @InitBinder("club") // 에러남
-    @GetMapping( "/update/{id}")
-    public String update(@PathVariable Long id, Model model){
+    //    @InitBinder("club") // 에러남
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id, Model model) {
         Club club = clubService.getClubById(id);
         model.addAttribute("club", club);
         return "club/update";
@@ -275,31 +276,31 @@ public class ClubController {
     public String updateOk(
             @Valid Club club
             , BindingResult result
-            , @RequestParam(name="files", required = false, defaultValue = "")MultipartFile file
-            ,Model model
-            ,RedirectAttributes redirectAttributes
-            ) throws IOException {
-            String imgPath = club.getRepresentative_picture();
+            , @RequestParam(name = "files", required = false, defaultValue = "") MultipartFile file
+            , Model model
+            , RedirectAttributes redirectAttributes
+    ) throws IOException {
+        String imgPath = club.getRepresentative_picture();
 
 
-        if(!file.isEmpty()){
-                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-                imgPath = fileName;
+        if (!file.isEmpty()) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            imgPath = fileName;
 
-                try{
-                    Path path = Paths.get(imgPath);
-                    Files.createDirectories(path.getParent());
-                    Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+            try {
+                Path path = Paths.get(imgPath);
+                Files.createDirectories(path.getParent());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            club.setRepresentative_picture(imgPath);
+        }
+        club.setRepresentative_picture(imgPath);
         System.out.println("이미지경로: " + imgPath);
         System.out.println(club);
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("intro", club.getIntro());
             redirectAttributes.addFlashAttribute("content", club.getContent());
             List<FieldError> errList = result.getFieldErrors();
@@ -314,7 +315,6 @@ public class ClubController {
     }
 
 
-
     @InitBinder("club")
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");
@@ -323,7 +323,16 @@ public class ClubController {
 
     // 클럽 글 작성
     @GetMapping("/write")
-        private void clubWrite(){}
+    private void clubWrite() {
+    }
 
+    // 클럽 사진첩 리스트
+//    @GetMapping("/gallery/{id}")
+//    public String galleryList(@PathVariable Long id, Model model) {
+//        Club club = clubService.getClubById(id);
+//
+//
+//        return "/club/gallery";
+//    }
 }
 

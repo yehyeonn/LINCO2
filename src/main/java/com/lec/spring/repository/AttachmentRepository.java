@@ -20,4 +20,8 @@ public interface AttachmentRepository {
     int deleteByIds(Long [] ids);
 
     int delete(Attachment file);
+
+    Attachment findByClubId(Long clubId);
+
+    int countByClubId(Long clubId);
 }
