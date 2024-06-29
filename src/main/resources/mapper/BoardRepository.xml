@@ -22,6 +22,7 @@
                b.title                  "b_title",
                b.content                "b_content",
                b.viewcnt                "b_viewcnt",
+               b.viewcnt                "b_viewcnt",
                b.regdate                "b_regdate",
                b.club_id                "b_clubId",
                u.id                     "u_id",

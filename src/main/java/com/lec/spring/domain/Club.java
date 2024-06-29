@@ -1,9 +1,9 @@
 package com.lec.spring.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +17,8 @@ public class Club {
     private String intro;
     private String content;
     private String representative_picture;
+
+    @ToString.Exclude
+    @Builder.Default
+    private List<Attachment> fileList = new ArrayList<>();
 }
