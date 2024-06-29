@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserSocializingService {
     int addUserToSocializing(Long userId, Long socializingId, String role);
     List<UserSocializing> findBySocializingId(Long socializingId);
+    List<UserSocializing> findByUserSocializingId(Long userId);
 
     
 

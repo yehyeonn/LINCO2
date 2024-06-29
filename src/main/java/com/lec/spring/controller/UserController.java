@@ -3,10 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
-import com.lec.spring.service.ClubService;
-import com.lec.spring.service.ReservationService;
-import com.lec.spring.service.SocializingService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,12 +33,14 @@ public class UserController {
     private String uploadDir;
 
     private UserService userService;
+    private UserSocializingService userSocializingService;
     private ReservationService reservationService;
 
     @Autowired
-    public void setUserService(UserService userService, ReservationService reservationService) {
+    public void setUserService(UserService userService, ReservationService reservationService, UserSocializingService userSocializingService) {
         this.userService = userService;
         this.reservationService = reservationService;
+        this.userSocializingService = userSocializingService;
     }
 
     @GetMapping("/register")
@@ -104,7 +103,7 @@ public class UserController {
 
         User user = principalDetails.getUser();
         List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
-        List<UserSocializing> userSocializings = userService.getUserSocializings(user.getId());
+        List<UserSocializing> userSocializings = userSocializingService.findByUserSocializingId(user.getId());
         List<Reservation> userReservations = reservationService.findByUserId(user.getId());
         System.out.println(userSocializings);
 
@@ -117,17 +116,8 @@ public class UserController {
         for (ClubUserList clubUserList : userClubs) {
             Club club = clubUserList.getClub();
             if ("upload/Default.png".equals(club.getRepresentative_picture())) {
-                String imgPath = "no_img.jpg";
+                String imgPath = "noimg.png";
                 club.setRepresentative_picture(imgPath);
-            }
-        }
-
-        // 마이페이지 소셜라이징 기본이미지
-        for (UserSocializing userSocializing : userSocializings) {
-            Socializing socializing = userSocializing.getSocializing();
-            if ("upload/Default.img".equals(socializing.getImg())) {
-                String imgPath = "upload/no_img.jpg";
-                socializing.setImg(imgPath);
             }
         }
 
@@ -163,12 +153,22 @@ public class UserController {
 
         // 이미지 경로를 Socializing 객체에 설정
         user.setProfile_picture(imgPath);
-
-        System.out.println(user.getProfile_picture());
-
         userService.update(user);
-        User users = userService.findByUserId(user.getId());
-        model.addAttribute("user", users);
-        return "/user/my_page";
+
+        // 업데이트된 유저 정보 가져오기
+        User updateUser = userService.findByUserId(user.getId());
+
+        // 마이페이지에 필요한 데이터 다시 설정
+        List<ClubUserList> userClubs = userService.getUserClubs(updateUser.getId());
+        List<Reservation> userReservations = reservationService.findByUserId(updateUser.getId());
+        List<UserSocializing> userSocializings = userSocializingService.findByUserSocializingId(updateUser.getId());
+
+        // 모델에 데이터 추가
+        model.addAttribute("userClubs", userClubs);
+        model.addAttribute("userReservations", userReservations);
+        model.addAttribute("userSocializings", userSocializings);
+        model.addAttribute("User", updateUser);
+
+        return "user/my_page";
     }
 }

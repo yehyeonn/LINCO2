@@ -35,4 +35,9 @@ public class UserSocializingServiceImpl implements UserSocializingService {
     public List<UserSocializing> findBySocializingId(Long socializingId) {
         return List.of();
     }
+
+    @Override
+    public List<UserSocializing> findByUserSocializingId(Long userId) {
+        return userSocializingRepository.findByUserSocializingId(userId);
+    }
 }

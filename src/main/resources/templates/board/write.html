@@ -17,32 +17,33 @@
     <form name="frmGeneral" id="generalForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data">
         <div class="title">
             <div class="form-group">
-                <div>
-                    <label>작성자:</label>
-                    <select name="boardType.id" id="lang" class="select-right">
-                        <option th:value="${2}" th:selected="${boardType == 2}">자유게시판</option>
-                        <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보</option>
-                        <option th:value="${1}" th:selected="${boardType == 1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
-                    </select>
-                    <span class="form-control" th:text="${user.name}"></span>
-                </div>
+                <label>작성자:</label>
+                <select name="boardType.id" id="lang" class="select-right">
+                    <option th:value="${2}" th:selected="${boardType == 2}">자유게시판</option>
+                    <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보
+                    </option>
+                    <option th:value="${1}" th:selected="${boardType == 1}" sec:authorize="hasAnyAuthority('ADMIN')">
+                        공지사항
+                    </option>
+                </select>
+                <span class="form-control" th:text="${user.name}"></span>
                 <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
-                <label for="title">게시글 제목:</label>
-
+            </div>
+            <div class="form-group">
+                <label for="title">자유게시판 제목:</label>
                 <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title"
                        th:value="${board?.title}">
+                <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
             </div>
-            <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
         </div>
         <hr>
 
         <div class="form-group">
-            <label for="content">내용:</label>
+            <label for="content">자유게시판 내용:</label>
             <textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
                       th:utext="${board?.content}"></textarea>
+            <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
         </div>
-        <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
-
 
         <div class="files">
             <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
@@ -58,37 +59,43 @@
                     첨부파일 추가
                 </button>
             </div>
-            <button type="button"  class="btn submit">     <!-- id="submit" -->
+            <button type="button" class="btn submit">     <!-- id="submit" -->
                 저장하기
             </button>
         </div>
     </form>
 
     <!-- 클럽 홍보 버튼을 누르면 나오는 페이지 -->
-    <form name="frmClub" id="clubForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data" style="display: none">
+    <form name="frmClub" id="clubForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data"
+          style="display: none">
         <div class="title">
             <div class="form-group">
-                <div>
-                    <label>작성자:</label>
-                    <select id="userclubs" name="clubId">
-                        <th:block th:each="clubUserList : ${userclubs}">
-                            <option th:value="${clubUserList.club.id}" th:text="${clubUserList.club.name}" th:selected="${clubUserList} == ${userclubs}">클럽리스트</option>
-                        </th:block>
-                    </select>
-                    <select name="boardType.id" id="clubWrite" class="select-right">
-                        <option th:value="${2}" th:selected="${boardType == 2}">자유게시판</option>
-                        <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보</option>
-                        <option th:value="${1}" th:selected="${boardType == 1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
-                    </select>
-                    <span class="form-control">[[${user.name}]]</span>
-                </div>
+                <label>작성자:</label>
+                <select name="boardType.id" id="clubWrite" class="select-right">
+                    <option th:value="${2}" th:selected="${boardType == 2}">자유게시판</option>
+                    <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보
+                    </option>
+                    <option th:value="${1}" th:selected="${boardType == 1}"
+                            sec:authorize="hasAnyAuthority('ADMIN')">공지사항
+                    </option>
+                </select>
+                <select id="userclubs" name="clubId" class="select-left">
+                    <th:block th:each="clubUserList : ${userclubs}">
+                        <option th:value="${clubUserList.club.id}" th:text="${clubUserList.club.name}"
+                                th:selected="${clubUserList} == ${userclubs}">클럽리스트
+                        </option>
+                    </th:block>
+                </select>
+                <span class="form-control" th:text="${user.name}"></span>
                 <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
-                <label for="title">클럽홍보 제목:</label>
+            </div>
 
+            <div class="form-group">
+                <label for="title">클럽홍보 제목:</label>
                 <input type="text" class="form-control" id="clubTitle" placeholder="제목을 입력하세요" name="title"
                        th:value="${clubUserList?.title}">
+                <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
             </div>
-            <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
         </div>
         <hr>
 
@@ -96,13 +103,8 @@
             <label for="content">클럽홍보 내용:</label>
             <textarea class="form-control" rows="5" id="clubContent" placeholder="내용을 입력하세요" name="content"
                       th:utext="${clubUserList?.content}"></textarea>
+            <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
         </div>
-        <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
-<!--        <div class="form-group">-->
-<!--            <label for="attachment">첨부파일:</label>-->
-<!--            <input type="file" id="attachment" name="attachment" accept="image/*" required>-->
-<!--        </div>-->
-<!--        <div><span class="text-danger" th:if="${error_attachment}" th:utext="${error_attachment}"></span></div>-->
 
         <div class="files">
             <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
@@ -113,13 +115,11 @@
                 <a class="btn" th:href="@{/board/list(page = ${session.page})}">
                     목록
                 </a>
-
                 <button type="button" class="btn btnAdd">
                     첨부파일 추가
                 </button>
             </div>
-
-            <button type="button"  class="btn clubSubmit">     <!-- id="clubSubmit" -->
+            <button type="button" class="btn clubSubmit">     <!-- id="clubSubmit" -->
                 저장하기
             </button>
         </div>
@@ -128,32 +128,34 @@
     <form name="frmNotice" id="noticeForm" th:action="@{/board/write}" method="post" enctype="multipart/form-data">
         <div class="title">
             <div class="form-group">
-                <div>
                     <label>작성자:</label>
                     <select name="boardType.id" id="noticeWrite" class="select-right">
                         <option th:value="${2}" th:selected="${boardType == 2}">자유게시판</option>
-                        <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보</option>
-                        <option th:value="${1}" th:selected="${boardType == 1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
+                        <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보
+                        </option>
+                        <option th:value="${1}" th:selected="${boardType == 1}"
+                                sec:authorize="hasAnyAuthority('ADMIN')">공지사항
+                        </option>
                     </select>
-                    <span class="form-control">[[${user.name}]]</span>
-                </div>
+                    <span class="form-control" th:text="${user.name}"></span>
                 <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
-                <label for="title">공지사항 제목:</label>
+            </div>
 
+            <div class="form-group">
+                <label for="title">공지사항 제목:</label>
                 <input type="text" class="form-control" id="noticeTitle" placeholder="제목을 입력하세요" name="title"
                        th:value="${board?.title}">
+                <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
             </div>
-            <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
         </div>
         <hr>
 
         <div class="form-group">
-            <label for="content">내용:</label>
+            <label for="content">공지사항 내용:</label>
             <textarea class="form-control" rows="5" id="noticeContent" placeholder="내용을 입력하세요" name="content"
                       th:utext="${board?.content}"></textarea>
+            <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
         </div>
-        <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
-
 
         <div class="files">
             <!--첨부파일 추가 버튼 누르면 해당 element 에 첨부파일 목록 생성-->
@@ -169,7 +171,7 @@
                     첨부파일 추가
                 </button>
             </div>
-            <button type="button"  class="btn noticeSubmit">     <!-- id="submit" -->
+            <button type="button" class="btn noticeSubmit">     <!-- id="submit" -->
                 저장하기
             </button>
         </div>
@@ -178,9 +180,9 @@
 </body>
 <script th:src="@{/js/board/write.js}"></script>
 
-<!--<footer th:replace="~{common/footer :: footer-body}"></footer>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"-->
-<!--        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"-->
-<!--        crossorigin="anonymous"></script>-->
-<!--<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>-->
+<footer th:replace="~{common/footer :: footer-body}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 </html>

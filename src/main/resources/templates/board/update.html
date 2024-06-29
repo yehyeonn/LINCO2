@@ -33,20 +33,23 @@
             <input type="hidden" name="id" th:value="${board.id}"/>
             <div>
                 <label>작성자 : </label>
-                <span class="form-control text" readonly th:text="${board.user.username}"></span>
+                <span class="form-control text readonly" readonly th:text="${board.user.username}"></span>
             </div>
             <div class="title">
                 <div class="form-group">
                     <label>게시글 제목 : </label>
-                    <input type="text" class="form-control text" id="title" placeholder="제목을 입력하세요" name="title" th:value="${title} ? ${title} : ${board.title}">
-                    <br>
+                    <input type="text" class="form-control text" id="title" placeholder="제목을 입력하세요" name="title"
+                           th:value="${title} ? ${title} : ${board.title}">
                     <span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span>
+                    <br>
                 </div>
             </div>
             <hr>
             <div class="form-group">
                 <label>내용 : </label>
-                <textarea class="form-control content" rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content} ? ${content} : ${board.content}"></textarea>
+                <textarea class="form-control content" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
+                          th:utext="${content} ? ${content} : ${board.content}"></textarea>
+                <span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span>
             </div>
             <div class="attachment">
                 <div id="delFiles"></div>
@@ -58,31 +61,28 @@
             </div>
 
             <div class="newAttachment">
-                <div>
-                    <label>첨부파일 추가하기 : </label>
-                    <div id="files">
+                <div id="files">
 
-                    </div>
-                    <button type="button" id="btnAdd" class="btn">추가</button>
                 </div>
+                <button type="button" id="btnAdd" class="btn">첨부파일 추가</button>
             </div>
 
             <div class="button">
                 <div class="left-buttons">
-                    <button type="submit" class="btn" th:if="${logged_user.id == board.user.id}">수정하기</button>
+                    <a class="btn" th:href="@{/board/list(page = ${session.page})}">목록</a>
                     <button type="button" class="btn" onclick="history.back()">돌아가기</button>
                 </div>
-                <a class="btn" th:href="@{/board/list(page = ${session.page})}">목록</a>
+                <button type="submit" class="btn" th:if="${logged_user.id == board.user.id}">수정하기</button>
             </div>
         </form>
     </div>
 
-        <th:block th:insert="/common/footer :: footer-body"></th:block>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                crossorigin="anonymous"></script>
+    <th:block th:insert="/common/footer :: footer-body"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
 
-        <th:block th:replace="/common/footer :: footer-scripts"></th:block>
+    <th:block th:replace="/common/footer :: footer-scripts"></th:block>
     </body>
 </th:block>
 </html>

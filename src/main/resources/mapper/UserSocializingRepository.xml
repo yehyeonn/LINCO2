@@ -60,7 +60,30 @@
         FROM SOCIALIZING s
         JOIN user_socializing us ON s.id = us.socializing_id
         WHERE us.socializing_id = #{socializing_id}
+    </select>
 
+    <select id="findByUserSocializingId" resultMap="mapUserSocializing">
+        SELECT
+            s.id                    "s_id"
+             , s.venue_id              "s_venue_id"
+             , s.socializing_title     "s_socializing_title"
+             , s.category              "s_category"
+             , s.detail_category       "s_detail_category"
+             , s.address               "s_address"
+             , s.place_name            "s_place_name"
+             , s.meeting_date          "s_meeting_date"
+             , s.meeting_time          "s_meeting_time"
+             , s.limit_num             "s_limit_num"
+             , s.content               "s_content"
+             , s.total_price           "s_total_price"
+             , s.img                   "s_img"
+             , s.regdate               "s_regdate"
+             , us.user_id "us_user_id"
+             , us.socializing_id "us_socializing_id"
+             , us.role "us_role"
+        FROM SOCIALIZING s
+                 JOIN user_socializing us ON s.id = us.socializing_id
+        WHERE us.user_id = #{user_id};
     </select>
 
     <insert id="addUserToSocializing" flushCache="true" parameterType="com.lec.spring.domain.UserSocializing">

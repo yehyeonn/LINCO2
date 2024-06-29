@@ -43,8 +43,6 @@ public class SecurityConfig {
                                 .requestMatchers("/socializing/write").authenticated()
                                 .requestMatchers("/club/detail/**", "/club/create/**").authenticated()
                                 .requestMatchers("/reservation/write").authenticated()
-                                .requestMatchers("/club/detail/**", "/club/create/**","/club/board/**" ).authenticated()
-//                                .requestMatchers("/reservation/write").authenticated()
                                 .requestMatchers("/board/write/**", "/board/update/**", "/board/delete").hasAnyAuthority("MEMBER", "ADMIN")
                                 .anyRequest().permitAll()
                 )
