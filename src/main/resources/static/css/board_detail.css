@@ -1,11 +1,23 @@
+body {
+    background-color: #f4f4f9;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
 .body {
     width: 90%;
     max-width: 1200px;
     margin: 150px auto;
     background-color: #fff;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
 }
 
 .title {
@@ -20,17 +32,28 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     color: #3A4D72; /* 제목 및 레이블 색상 */
 }
 
-label #cmt_cnt{
-    color: #3A4D72;
+.form-group span{
+    display: block;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fafafa;
+    line-height: 1.6;
+    margin-top: 15px;
+    border-radius: 5px;
 }
 
 .text {
-    font-size: 18px;
+    font-size: 16px;
     color: #333; /* 텍스트 색상 */
+}
+
+.title-text {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .content {
@@ -41,6 +64,8 @@ label #cmt_cnt{
     border-radius: 5px;
     font-size: 16px;
     line-height: 1.6;
+    overflow-y: auto; /* 스크롤 활성화 */
+    background-color: #fafafa;
 }
 
 .attachment {
@@ -48,12 +73,22 @@ label #cmt_cnt{
 }
 
 .attachment label {
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #3A4D72;
 }
 
 .attachment .text {
     font-size: 16px;
     color: #333; /* 첨부파일 텍스트 색상 */
+    margin-bottom: 10px;
+}
+
+img.img-thumbnail {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin-top: 10px;
 }
 
 .button {
@@ -80,10 +115,13 @@ label #cmt_cnt{
 
 .button .btn:hover {
     background-color: #D3374A; /* 버튼 호버 색상 */
+    color: #fff;
 }
 
 .comment {
     margin: 30px auto;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
 }
 
 .comment label {
@@ -91,9 +129,14 @@ label #cmt_cnt{
     font-weight: bold;
     font-size: 18px;
     color: #3A4D72; /* 댓글 레이블 색상 */
+    margin-bottom: 10px;
 }
 
-.comment input[type="text"] {
+.comment span#cmt_cnt{
+    color: #3A4D72;
+}
+
+.comment .comment-input {
     width: calc(100% - 100px);
     padding: 10px;
     font-size: 16px;
@@ -102,6 +145,11 @@ label #cmt_cnt{
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s, box-shadow 0.3s;
     outline: none;
+}
+
+.comment .comment-input:focus {
+    border-color: #3A4D72;
+    box-shadow: 0 0 5px rgba(58, 77, 114, 0.5);
 }
 
 .comment button {
@@ -113,12 +161,36 @@ label #cmt_cnt{
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-left: 10px;
 }
 
 .comment button:hover {
     background-color: #D3374A; /* 댓글 등록 버튼 호버 색상 */
+    color: #fff;
 }
 
-tr td.text span{
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.table th {
+    background-color: #3A4D72;
+    color: #fff;
+    font-weight: bold;
+}
+
+.table td.text {
+    color: #333;
+}
+
+tr td.text span {
     color: #3A4D72;
 }

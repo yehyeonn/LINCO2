@@ -17,6 +17,7 @@ public class Board {
     private Long viewcnt;
     private LocalDateTime regdate;
 
+    private String imagePath;
     private User user;
     private Club club;
     private BoardType boardType;
