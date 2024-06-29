@@ -82,12 +82,12 @@ $(document).ready(function() {
         $('.tbl-header').css({'padding-right': scrollWidth});
     }).resize();
 
-    // // 취소버튼 결제완료일때만 생김
-    // $('td').each(function () {
-    //     if ($(this).text().includes('결제완료')) {
-    //         $(this).find('.cancel-button').css('display', 'inline-block');
-    //     }
-    // });
+    // 취소버튼 결제완료일때만 생김
+    $('td').each(function () {
+        if ($(this).text().includes('결제완료')) {
+            $(this).find('.cancel-button').css('display', 'inline-block');
+        }
+    });
 
     // $('.cancel-button').onclick (function cancelPay() {
     //     jQuery.ajax({

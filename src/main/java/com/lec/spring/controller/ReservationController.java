@@ -4,6 +4,7 @@ import com.lec.spring.domain.Reservation;
 import com.lec.spring.domain.ReservationValidator;
 import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.domain.Venue;
+import com.lec.spring.service.IamportService;
 import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.VenueService;
 import com.lec.spring.util.U;
@@ -33,24 +34,17 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
 
-    @Value("${imp.api.key}")
-    private String apiKey;
 
-    @Value("${imp.api.secretkey}")
-    private String secretKey;
+    private final IamportService iamportService;
+    private final ReservationService reservationService;
+    private final VenueService venueService;
 
-    private IamportClient iamportClient;
-
-    @PostConstruct
-    public void init() {
-        this.iamportClient = new IamportClient(apiKey, secretKey);
+    @Autowired
+    public ReservationController(IamportService iamportService, ReservationService reservationService, VenueService venueService) {
+        this.iamportService = iamportService;
+        this.reservationService = reservationService;
+        this.venueService = venueService;
     }
-
-    @Autowired
-    private ReservationService reservationService;
-    @Autowired
-    private VenueService venueService;
-
     @GetMapping("/write")
     public String write(@RequestParam("venue_id") Long venueId
             , @RequestParam("selectedDate") String selectedDate
@@ -85,6 +79,7 @@ public class ReservationController {
         session.setAttribute("reserveDate", reservation.getReserve_date());
         session.setAttribute("reserveST", reservation.getReserve_start_time());
         session.setAttribute("reserveET", reservation.getReserve_end_time());
+        session.setAttribute("merUid", reservation.getMerchantUid());
         System.out.println("베뉴 정보가 들어올까요~?" + reservation.getVenue());
 
         return ResponseEntity.ok("디비디비딥!");

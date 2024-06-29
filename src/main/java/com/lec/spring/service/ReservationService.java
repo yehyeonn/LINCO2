@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Board;
 import com.lec.spring.domain.Reservation;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface ReservationService {
     List<Reservation> findByUserId(Long user_id);
 
     void updateExpiredReservationStatus();
+
+    Reservation findById(Long id);
+
+    Reservation findByMerchant(String MerchantId);
 }
