@@ -27,6 +27,7 @@
                b.club_id                "b_clubId",
                u.id                     "u_id",
                u.tel                    "u_tel",
+               u.name                   "u_name",
                u.username               "u_username",
                u.password               "u_password",
                u.address                "u_address",

@@ -54,6 +54,9 @@ public class BoardServiceImpl implements BoardService{
     private ClubRepository clubRepository;
 
     @Autowired
+    private AttachmentService attachmentService;
+
+    @Autowired
     public BoardServiceImpl(SqlSession sqlSession){
         boardRepository = sqlSession.getMapper(BoardRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
@@ -68,9 +71,9 @@ public class BoardServiceImpl implements BoardService{
 
         user = userRepository.findById(user.getId());
         board.setUser(user);
-        // 디버깅용
-        System.out.println("userID : " + user.getId());
-        System.out.println("Saving Board : " + board);
+//        디버깅용
+//        System.out.println("userID : " + user.getId());
+//        System.out.println("Saving Board : " + board);
 
         // 클럽 정보 설정
         if(board.getBoardType() != null && board.getBoardType().getId() == 3){
@@ -85,7 +88,7 @@ public class BoardServiceImpl implements BoardService{
 
         int cnt = boardRepository.save(board);
 
-        System.out.println("Saving cnt : " + cnt);
+//        System.out.println("Saving cnt : " + cnt);
 
         addFiles(files, board.getId());
 
@@ -99,7 +102,7 @@ public class BoardServiceImpl implements BoardService{
             if (!e.getKey().startsWith("upfile"))
                 continue;
 
-            System.out.println("\n첨부파일 정보 : " + e.getKey());
+//            System.out.println("\n첨부파일 정보 : " + e.getKey());
             U.printFileInfo(e.getValue());
             Attachment file = upload(e.getValue());
 
@@ -116,27 +119,27 @@ public class BoardServiceImpl implements BoardService{
         String originalFilename = multipartFile.getOriginalFilename();
         if (originalFilename == null || originalFilename.isEmpty()) return null;
 
-        String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        String fileName = sourceName;
+        String sourcename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String filename = sourcename;
 
-        File file = new File(uploadDir, fileName);
+        File file = new File(uploadDir, filename);
         if (file.exists()){
-            int pos = fileName.lastIndexOf(".");
+            int pos = filename.lastIndexOf(".");
             if (pos > -1){
-                String name = fileName.substring(0, pos);
-                String ext = fileName.substring(pos + 1);
+                String name = filename.substring(0, pos);
+                String ext = filename.substring(pos + 1);
 
-                fileName = name + "_" + System.currentTimeMillis() + "." + ext;
+                filename = name + "_" + System.currentTimeMillis() + "." + ext;
             }else {
-                fileName += "_" + System.currentTimeMillis();
+                filename += "_" + System.currentTimeMillis();
             }
         }
-        // 디버깅용
-        System.out.println("fileName : " + fileName);
+//        디버깅용
+//        System.out.println("filename : " + filename);
 
-        Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
-        // 경로 디버깅용
-        System.out.println("copyOfLocation : " + copyOfLocation);
+        Path copyOfLocation = Paths.get(new File(uploadDir, filename).getAbsolutePath());
+//         경로 디버깅용
+//        System.out.println("copyOfLocation : " + copyOfLocation);
 
         try {
             Files.copy(
@@ -147,12 +150,10 @@ public class BoardServiceImpl implements BoardService{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         attachment = Attachment.builder()
-                .filename(fileName)
-                .sourcename(sourceName)
+                .filename(filename)
+                .sourcename(sourcename)
                 .build();
-
         return attachment;
     }
 
@@ -167,7 +168,6 @@ public class BoardServiceImpl implements BoardService{
             setImage(fileList);
             board.setFileList(fileList);
         }
-
         return board;
     }
 
@@ -175,12 +175,14 @@ public class BoardServiceImpl implements BoardService{
         String realPath = new File(uploadDir).getAbsolutePath();
 
         for (Attachment attachment : fileList){
+            BufferedImage imgData = null;
             File f = new File(realPath, attachment.getFilename());
             try {
-                BufferedImage imgData = ImageIO.read(f);
-                if (imgData != null) attachment.setImage(true);
+                imgData = ImageIO.read(f);
+                if (imgData != null)
+                    attachment.setImage(true);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("파일 존재 안 함 : " + f.getAbsolutePath() + "[" + e.getMessage() + "]");
             }
         }
     }
@@ -193,8 +195,6 @@ public class BoardServiceImpl implements BoardService{
     // 페이지 네이션 관련
     @Override
     public List<Board> list(Integer page, Model model,Long boardTypeId, Long clubId) {
-//        System.out.println("boardId:" + boardTypeId);
-//        System.out.println("clubId: " + clubId);
         if (page == null || page < 1) page = 1;
 
         HttpSession session = U.getSession();
@@ -225,6 +225,18 @@ public class BoardServiceImpl implements BoardService{
 
             list = boardRepository.selectFromRow(fromRow, pageRows,boardTypeId, clubId);
 
+            // 새로 추가
+            for (Board board : list){
+                List<Attachment> attachments = attachmentService.findByAttachment(board.getId());
+                board.setFileList(attachments);
+//                System.out.println("BOARD File List : " + board.getFileList());
+                if (board.getFileList() != null && !board.getFileList().isEmpty()){
+                    board.setImagePath("/upload/" + board.getFileList().get(0).getFilename());
+                }else {
+                    board.setImagePath("/upload/DefaultImg.jpg");
+                }
+            }
+
 //            디버깅용
 //            for (int i = 0; i < list.size(); i++) {
 //                System.out.println(list.get(i).toString()+"\n");
@@ -236,7 +248,6 @@ public class BoardServiceImpl implements BoardService{
         } else {
             page = 0;
         }
-
         model.addAttribute("cnt", cnt);
         model.addAttribute("page", page);
         model.addAttribute("totalPage", totalPage);
@@ -249,7 +260,6 @@ public class BoardServiceImpl implements BoardService{
 
         return list;
     }
-
 
     @Override
     public Board findById(Long id) {

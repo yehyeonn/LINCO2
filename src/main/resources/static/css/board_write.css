@@ -28,6 +28,7 @@ span.form-control {
 
 .form-group {
     margin-bottom: 15px;
+    height: auto;
 }
 
 label {
@@ -39,6 +40,20 @@ label {
 }
 
 .select-right {
+    float: right;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.select-left {
     float: right;
     padding: 10px 20px;
     font-size: 16px;
@@ -69,8 +84,9 @@ input[type="text"]:focus, textarea:focus {
 }
 
 textarea {
-    height: 150px; /* 고정 높이 설정 */
+    max-height: 300px; /* 고정 높이 설정 */
     line-height: 1.5; /* 줄 간격 설정 */
+    overflow-y: auto;
 }
 
 hr {

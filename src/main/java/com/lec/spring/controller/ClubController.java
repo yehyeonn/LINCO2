@@ -68,7 +68,7 @@ public class ClubController {
             RedirectAttributes redirectAttrs   // redirect 시 넘겨줄 값들을 담는 객체
     ) throws IOException {
         // 기본 이미지 경로 설정
-        String imgPath = "no_img.jpg"; // 기본 이미지 경로
+        String imgPath = "noimg.png"; // 기본 이미지 경로
 
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {

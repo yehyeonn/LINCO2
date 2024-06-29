@@ -1,3 +1,10 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
 .body {
     width: 90%;
     max-width: 1200px;
@@ -14,7 +21,7 @@
 }
 
 .title .form-group {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 label {
@@ -30,6 +37,10 @@ label {
     font-size: 20px;
     color: #333; /* 텍스트 색상 */
     font-weight: bolder;
+}
+
+span.readonly{
+    background-color: #f1f3f5;
 }
 
 .content {
@@ -50,6 +61,9 @@ label {
     font-size: 20px;
 }
 
+.attachment .input-group{
+    margin-bottom: 10px;
+}
 .attachment .text {
     font-size: 16px;
     color: #333; /* 첨부파일 텍스트 색상 */
@@ -64,6 +78,10 @@ label {
 .button .left-buttons{
     display: flex;
     gap: 10px;
+}
+.button .right-buttons{
+    float: right;
+    margin-left: 10px;
 }
 
 .button .btn {
