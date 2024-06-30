@@ -16,10 +16,10 @@ DELETE
 FROM USER_AUTHORITY;
 DELETE
 FROM CLUB_USER_LIST;
-DELETE
-FROM ATTACHMENT;
-ALTER TABLE ATTACHMENT
-    AUTO_INCREMENT = 1;
+# DELETE
+# FROM ATTACHMENT;
+# ALTER TABLE ATTACHMENT
+#     AUTO_INCREMENT = 1;
 DELETE
 FROM RESERVATION;
 ALTER TABLE RESERVATION
@@ -42,10 +42,10 @@ DELETE
 FROM BOARD_TYPE;
 ALTER TABLE BOARD_TYPE
     AUTO_INCREMENT = 1;
-DELETE
-FROM CLUB;
-ALTER TABLE CLUB
-    AUTO_INCREMENT = 1;
+# DELETE
+# FROM CLUB;
+# ALTER TABLE CLUB
+#     AUTO_INCREMENT = 1;
 DELETE
 FROM USER;
 ALTER TABLE USER
@@ -89,22 +89,22 @@ values (1, 1),
 
 # select * from USER_AUTHORITY;
 
-insert into CLUB(name, category, detail_category, intro, content, representative_picture)
-values ('부리부리부리부리', '운동', '축구', '어서왕~~~~', '부리부리부리부리 축구하쟝', 'face03.png'),
-       ('디컨', '스터디', '컴퓨터', '하기 시러', '집에 가고 싶어, 자고 싶어', 'face04.png'),
-       ('공부할 사람2', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람1', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람3', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람4', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람5', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람6', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람7', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람8', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람9', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('공부할 사람10', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-       ('영화볼 사람', '문화예술', '여가', '인사이드아웃2', '인사이드아웃2 볼거야', 'face02.png'),
-       ('군산 갈 사람', '여행', '여행', '군산여행', '군산여행', 'face03.png')
-       ;
+# insert into CLUB(name, category, detail_category, intro, content, representative_picture)
+# values ('부리부리부리부리', '운동', '축구', '어서왕~~~~', '부리부리부리부리 축구하쟝', 'face03.png'),
+#        ('디컨', '스터디', '컴퓨터', '하기 시러', '집에 가고 싶어, 자고 싶어', 'face04.png'),
+#        ('공부할 사람2', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람1', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람3', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람4', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람5', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람6', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람7', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람8', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람9', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('공부할 사람10', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+#        ('영화볼 사람', '문화예술', '여가', '인사이드아웃2', '인사이드아웃2 볼거야', 'face02.png'),
+#        ('군산 갈 사람', '여행', '여행', '군산여행', '군산여행', 'face03.png')
+# ;
 
 # select * from CLUB;
 
@@ -189,17 +189,27 @@ values (1, 1),
 # select * from BOARD_LIKE;
 
 insert into ATTACHMENT (board_id, club_id, sourcename, filename)
-values (null, 1, 'face01.png', 'face01.png'),
-       (null, 1, 'face02.png', 'face01.png'),
-       (null, 1, 'face03.png', 'face01.png'),
-       (null, 1, 'face04.png', 'face01.png'),
-       (null, 1, 'face05.png', 'face01.png'),
-       (1, 1, 'face01.png', 'face01.png'),
-       (1, 2, 'face02.png', 'face02.png'),
-       (2, null, 'face03.png', 'face03.png'),
-       (1, null, 'face04.png', 'face04.png'),
-       (3, null, 'face06.png', 'face06.png'),
-       (4, null, 'face07.png', 'face07.png')
+values
+#     (null, 1, 'face01.png', 'face01.png'),
+#        (null, 1, 'face02.png', 'face01.png'),
+#        (null, 1, 'face03.png', 'face01.png'),
+#        (null, 1, 'face04.png', 'face01.png'),
+#        (null, 1, 'face05.png', 'face01.png'),
+#        (1, 1, 'face01.png', 'face01.png'),
+#        (1, 2, 'face02.png', 'face02.png'),
+#        (2, null, 'face03.png', 'face03.png'),
+#        (1, null, 'face04.png', 'face04.png'),
+#        (3, null, 'face06.png', 'face06.png'),
+#        (null, 1, 'face07.png', 'face07.png'),
+#        (null, 2, 'face07.png', 'face07.png'),
+#        (null, 3, 'face07.png', 'face07.png'),
+       (null, 15, 'face07.png', 'face07.png'),
+       (null, 15, 'face06.png', 'face06.png'),
+       (null, 15, 'face05.png', 'face05.png'),
+       (null, 15, 'face04.png', 'face04.png'),
+       (null, 15, 'face03.png', 'face03.png'),
+       (null, 15, 'face02.png', 'face02.png'),
+       (null, 15, 'face01.png', 'face01.png')
 ;
 
 # select * from ATTACHMENT;
@@ -219,7 +229,7 @@ values (1, 1, 1, '재미없쪙', null),
        (3, 3, null, '이것도 출력되니???', null),
        (4, 3, null, '댓글1', null),
        (2, 3, null, '댓글2', null)
-       ;
+;
 
 # select * from COMMENT;
 

@@ -16,12 +16,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ClubServiceImpl implements ClubService {
-
 
 
     // 첨부파일 업로드
@@ -52,6 +60,7 @@ public class ClubServiceImpl implements ClubService {
         int result = clubRepository.deleteById(club_id);
         return result;
     }
+
     @Override
     public boolean isClubNameExists(String clubName) {
         // 클럽 이름이 이미 존재하는지 확인하는 로직
@@ -59,58 +68,78 @@ public class ClubServiceImpl implements ClubService {
         return club != null; // 클럽 객체가 null이 아니면 이미 존재하는 것으로 간주
     }
 
-//    @Override
-//    public List<Club> galleryList(Integer page, Model model, Long clubId) {
-//
-//        WRITE_PAGES = 6;
-//        PAGE_ROWS = 5;
-//
-//        if (page == null || page < 1) {
-//            page = 1;
-//        }
-//
-//        HttpSession session = U.getSession();
-//        Integer writePages = (Integer) session.getAttribute("writePages");
-//        if(writePages == null) {
-//            writePages = WRITE_PAGES;
-//        }
-//        Integer pageRows=(Integer) session.getAttribute("pageRows");
-//        if(pageRows == null) {
-//            pageRows = PAGE_ROWS;
-//        }
-//        session.setAttribute("page", page);
-//
-//        long cnt = attachmentRepository.countByClubId(clubId);
-//        int totalPage = (int) Math.ceil(cnt / (double) pageRows);
-//
-//        int startPage = 0;
-//        int endPage = 0;
-//
-//        List<Attachment> list = null;
-//
-//        if (cnt > 0) {
-//            if (page > totalPage) page = totalPage;
-//
-//            int fromRow = (page - 1) * pageRows;
-//
-//            startPage = (((page - 1) / writePages) * writePages) + 1;
-//            endPage = startPage + writePages - 1;
-//
-//            if (endPage >= totalPage) endPage = totalPage;
-//
-////            list = clubRepository.selectFromRow(fromRow, pageRows, clubId);
-//
-//            model.addAttribute("list", list);
-//        } else {
-//            page = 0;
-//        }
-//
-//        return List.of();
-//
-//    }
+    @Override
+    public List<Attachment> findByClubId(Long club_id) {
+        return attachmentRepository.findByClubId(club_id);
+    }
 
+    @Override
+    public int uploadImg(Long club_id, MultipartFile file) {
+        User user = U.getLoggedUser();
 
+        int cnt = addFiles(file, club_id);
 
+        return cnt;
+    }
+
+    private int addFiles(MultipartFile files, Long club_id) {
+        if (files == null) return 0;
+
+        Attachment file = upload(files);
+
+            if (file != null) {
+                file.setClub_id(club_id);
+                attachmentRepository.save(file);
+            }
+
+        return 1;
+    }
+
+    private Attachment upload(MultipartFile multipartFile) {
+        Attachment attachment = null;
+
+        String originalFilename = multipartFile.getOriginalFilename();
+        if (originalFilename == null || originalFilename.isEmpty()) return null;
+
+        String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String fileName = sourceName;
+
+        System.out.println(sourceName);
+
+        File file = new File(uploadDir, fileName);
+        if (file.exists()) {
+            int pos = fileName.lastIndexOf(".");
+            if (pos > -1) {    // 확장자가 있는경우
+                String name = fileName.substring(0, pos);
+                String ext = fileName.substring(pos + 1);
+
+                fileName = name + "_" + System.currentTimeMillis() + "." + ext;
+            } else {
+                fileName += "_" + System.currentTimeMillis();
+            }
+        }
+        System.out.println(fileName);
+
+        Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
+        System.out.println(copyOfLocation);
+
+        try{
+            Files.copy(
+                    multipartFile.getInputStream(),
+                    copyOfLocation,
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+        }catch(IOException e){
+            throw new RuntimeException(e);
+        }
+
+        attachment = Attachment.builder()
+                .filename(fileName)
+                .sourcename(sourceName)
+                .build();
+
+        return attachment;
+    }
 
 
     @Override
@@ -122,7 +151,7 @@ public class ClubServiceImpl implements ClubService {
 
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다.
         user = userRepository.findById(user.getId());
-        System.out.println("유저의 id는?? "+ user.getId());
+        System.out.println("유저의 id는?? " + user.getId());
         int result = clubRepository.save(club);
         System.out.println("클럽의 id는?? " + club.getId());
         if (result > 0) {
@@ -219,9 +248,8 @@ public class ClubServiceImpl implements ClubService {
     }
 
 
-
     @Override
-    public ClubUserList findClubMaster(Long club_id){
+    public ClubUserList findClubMaster(Long club_id) {
         return clubUserListRepository.findClubMaster(club_id);
     }
 
@@ -232,11 +260,8 @@ public class ClubServiceImpl implements ClubService {
     }
 
 
-
-
-
     @Override
-    public int getClubMemberCount(Long club_id){
+    public int getClubMemberCount(Long club_id) {
         return clubUserListRepository.getClubMemberCount(club_id);
     }
 }

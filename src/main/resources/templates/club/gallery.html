@@ -61,14 +61,12 @@
         <ul class="club-menu-list">
             <li class="club-category-search">
                 <label class="search-club-category">
-                    <button id="mainBtn" class="custom-button button-1" clubId="${club.getId()}">
-                        <span>메인</span><span>메인</span></button>
+                    <a class="custom-button button-1" th:href="@{'/club/detail/' + ${club.id}}"><span>메인</span><span>메인</span></a>
                 </label>
             </li>
             <li>
                 <label class="search-club-category">
-                    <button class="custom-button button-2" type="submit" name="clubCategory" th:value="문화예술">
-                        <span>게시판</span><span>게시판</span></button>
+                    <a class="custom-button button-2" th:href="@{'/club/board/' + ${club.id}}"><span>게시판</span><span>게시판</span></a>
                 </label>
             </li>
             <li>
@@ -79,26 +77,12 @@
         </ul>
     </div>
     <div class="img-btn-div">
-        <button class="add-img">사진추가</button>
+        <a class="add-img" th:href="@{'/club/galleryUpload'}">사진추가</a>
     </div>
+
     <div class="imgs">
-        <div class="img-box">
-            <img src="/upload/지능모자라.png" alt="Sample Image">
-        </div>
-        <div class="img-box">
-            <img src="/upload/지능모자라.png" alt="Sample Image">
-        </div>
-        <div class="img-box">
-            <img src="/upload/지능모자라.png" alt="Sample Image">
-        </div>
-        <div class="img-box">
-            <img src="/upload/지능모자라.png" alt="Sample Image">
-        </div>
-        <div class="img-box">
-            <img src="/upload/지능모자라.png" alt="Sample Image">
-        </div>
-        <div class="img-box">
-            <img src="/upload/지능모자라.png" alt="Sample Image">
+        <div th:each="imgList:${imgList}" class="img-box">
+            <img th:src="@{'/upload/' + ${imgList.filename}}" alt="Club Image" class="club-img">
         </div>
     </div>
 </main>
