@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface SocializingRepository {
     int save(Socializing socializing);
+
     Socializing findById(Long id);
+
     int update(Socializing socializing);
 
     int delete(Socializing socializing);
@@ -18,7 +20,9 @@ public interface SocializingRepository {
             , @Param("param4") String selectcategory
             , @Param("param5") String selectdetailcategory
     );
+
     int membercnt(Long id);
+
     int countSelectAddress(String address
             , String catetory
             , String selectdetailcategory);

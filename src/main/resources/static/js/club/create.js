@@ -34,6 +34,9 @@ $(document).ready(function () {
 
 
     function checkDuplicate() {
+        if (clubName == null || clubName == ""){
+            $("#duplicateMessage").html('<span class="text-danger">클럽 이름을 작성해주세요.</span>');
+        }else{
             $.ajax({
                 url: "/club/checkDuplicate",
                 type: "POST",
@@ -54,6 +57,7 @@ $(document).ready(function () {
                     // 에러 발생 시 처리
                 }
             });
+        }
 
     }
         $('#submitbtn').click(function (event){

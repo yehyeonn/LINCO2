@@ -26,6 +26,7 @@
                b.club_id                "b_clubId",
                u.id                     "u_id",
                u.tel                    "u_tel",
+               u.name                   "u_name",
                u.username               "u_username",
                u.password               "u_password",
                u.address                "u_address",
@@ -167,5 +168,12 @@
             join user u on b.user_id = u.id
             join BOARD_TYPE bt on b.board_type_id = bt.id
     </select>
+    
+    <!--해당 클럽내 게시판 목록-->
+<!--    <select id="findbyClubPost" resultMap="mapBoard">-->
+<!--        <include refid=""></include>-->
+<!--          AND b.board_type_id = 1-->
+<!--          AND b.club_id = #{clubId}-->
+<!--    </select>-->
 
 </mapper>

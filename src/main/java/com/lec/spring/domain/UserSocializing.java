@@ -2,6 +2,8 @@ package com.lec.spring.domain;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,5 +14,6 @@ public class UserSocializing {
     private Long user_id; // 참가자 id
     private Long socializing_id; // 참여글 아이디
     private String role;  // master, member
+    private LocalDateTime subscription;
 
 }
