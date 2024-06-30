@@ -175,3 +175,5 @@ FROM CLUB_USER_LIST cul
 WHERE club_id = 1;
 
 
+
+
