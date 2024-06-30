@@ -1,10 +1,13 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ClubService {
 
@@ -48,5 +51,7 @@ public interface ClubService {
     // 클럽 이름 중복확인
     boolean isClubNameExists(String clubName);
 
-//    List<Club> galleryList(Integer page, Model model, Long clubId);
+    List<Attachment> findByClubId(Long club_id);
+
+    int uploadImg(Long club_id, MultipartFile file);
 }
