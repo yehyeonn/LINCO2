@@ -1,8 +1,9 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Board;
 import com.lec.spring.domain.Reservation;
+import com.siot.IamportRestClient.exception.IamportResponseException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ReservationService {
@@ -23,5 +24,7 @@ public interface ReservationService {
 
     Reservation findById(Long id);
 
-    Reservation findByMerchant(String MerchantId);
+    Reservation findByImpUid(String impUid);
+
+//    public void cancelPayment(String merchantId) throws IamportResponseException, IOException;
 }

@@ -4,6 +4,7 @@ function cancelPay(event) {
     var merchantUid = row.getAttribute('data-merchant');
     var totalPrice = parseInt(row.getAttribute('data-total-price'));
     var reason = "결제 취소";
+    var impId = row.getAttribute('data-impId');
 
     console.log(merchantUid);
     console.log(totalPrice)
@@ -14,8 +15,9 @@ function cancelPay(event) {
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
+            "imp_uid": impId,
             "merchant_uid": merchantUid,
-            "cancel_request_amount": totalPrice,
+            "total_price": totalPrice,
             "reason": reason
         }),
         dataType: "text",

@@ -76,31 +76,17 @@ $(document).ready(function() {
     showContent('tabs');  // 기본적으로 tabs를 표시
 
 // 결제내역
-$(document).ready(function() {
-    $(window).on("load resize", function () {
-        var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-        $('.tbl-header').css({'padding-right': scrollWidth});
-    }).resize();
+    $(document).ready(function () {
+        $(window).on("load resize", function () {
+            var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+            $('.tbl-header').css({'padding-right': scrollWidth});
+        }).resize();
 
-    // 취소버튼 결제완료일때만 생김
-    $('td').each(function () {
-        if ($(this).text().includes('결제완료')) {
-            $(this).find('.cancel-button').css('display', 'inline-block');
-        }
+        // 취소버튼 결제완료일때만 생김
+        $('td').each(function () {
+            if ($(this).text().includes('결제완료')) {
+                $(this).find('.cancel-button').css('display', 'inline-block');
+            }
+        });
     });
-
-    // $('.cancel-button').onclick (function cancelPay() {
-    //     jQuery.ajax({
-    //         // 예: http://www.myservice.com/payments/cancel
-    //         "url": "{환불정보를 수신할 가맹점 서비스 URL}",
-    //         "type": "POST",
-    //         "contentType": "application/json",
-    //         "data": JSON.stringify({
-    //             "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
-    //             "cancel_request_amount": 2000, // 환불금액
-    //             "reason": "결제 취소", // 환불사유
-    //         }),
-    //         "dataType": "json"
-    //     });
-    // });
 });

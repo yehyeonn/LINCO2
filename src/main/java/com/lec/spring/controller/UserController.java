@@ -7,17 +7,20 @@ import com.lec.spring.service.*;
 import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.AuthData;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.Schedule;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -55,8 +59,7 @@ public class UserController {
     private ReservationService reservationService;
 
     @Autowired
-    public void setUserService(UserService userService, ReservationService reservationService, UserSocializingService userSocializingService) {
-    public void setUserService(UserService userService, ReservationService reservationService, IamportService iamportService) {
+    public void setUserService(UserService userService, ReservationService reservationService, UserSocializingService userSocializingService, IamportService iamportService) {
         this.userService = userService;
         this.reservationService = reservationService;
         this.userSocializingService = userSocializingService;
@@ -195,63 +198,83 @@ public class UserController {
     }
 
     @PostMapping("/cancel")
-    public ResponseEntity<String> cancel(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> cancelPayment(@RequestBody Reservation reservation, @RequestParam String canReason) {
         try {
-            // Payload에서 데이터 추출
-            String merchantUid = payload.get("merchant_uid").toString();
-            Long totalPrice = Long.parseLong(payload.get("cancel_request_amount").toString());
-            String reason = payload.get("reason").toString();
+            // 여기서 cancelRequest 객체를 사용하여 결제 취소 처리를 수행
+            String impUid = reservation.getImpUid();
+            String merchantUid = reservation.getMerchantUid();;
+            Long total_price = reservation.getTotal_price();
+            String reason = canReason;
 
-            // 예약 정보를 DB에서 가져옵니다.
-            Reservation existingReservation = reservationService.findByMerchant(merchantUid);
 
-            if (existingReservation != null) {
-                // 아임포트 클라이언트 초기화
-                IamportClient iamportClient = iamportService.getIamportClient();
-
-                // 결제 정보 조회
-                IamportResponse<Payment> paymentResponse = iamportClient.paymentByImpUid(merchantUid);
-
-                if (paymentResponse.getResponse() != null) {
-                    Payment payment = paymentResponse.getResponse();
-
-                    // 결제 상태 확인
-                    if ("paid".equals(payment.getStatus())) {
-                        // 결제 취소 요청 데이터 생성
-                        CancelData cancelData = new CancelData(merchantUid, true, BigDecimal.valueOf(totalPrice));
-                        cancelData.setReason(reason);
-
-                        // 아임포트 API를 사용하여 결제 취소 요청
-                        IamportResponse<Payment> iamportResponse = iamportClient.cancelPaymentByImpUid(cancelData);
-
-                        if (iamportResponse.getResponse() != null) {
-                            // 결제 취소 성공 시 예약 상태 업데이트
-                            existingReservation.setStatus("CANCELED");
-                            reservationService.update(existingReservation);
-
-                            return ResponseEntity.ok("결제 취소 완료");
-                        } else {
-                            // 결제 취소 실패 시
-                            return ResponseEntity.status(500).body("결제 취소 중 오류 발생: " + iamportResponse.getMessage());
-                        }
-                    } else {
-                        // 이미 취소된 상태이거나 취소할 수 없는 상태인 경우
-                        return ResponseEntity.status(400).body("취소할 수 없는 결제 상태입니다: " + payment.getStatus());
-                    }
-                } else {
-                    // 결제 정보 조회 실패 시
-                    return ResponseEntity.status(500).body("결제 정보 조회 실패: " + paymentResponse.getMessage());
-                }
-            } else {
-                // 예약 정보를 찾을 수 없는 경우
-                return ResponseEntity.status(404).body("예약을 찾을 수 없습니다.");
-            }
-        } catch (NumberFormatException e) {
-            // 숫자 변환 오류 처리
-            return ResponseEntity.status(400).body("숫자 변환 오류: " + e.getMessage());
+            // 결제 취소 로직을 수행하고 성공적인 응답을 반환
+            // 예를 들어, 결제 취소가 성공적으로 이루어졌다면
+            return ResponseEntity.ok().body("결제 취소가 완료되었습니다.");
         } catch (Exception e) {
-            // 기타 예외 처리
-            return ResponseEntity.status(500).body("결제 취소 중 오류 발생: " + e.getMessage());
+            // 결제 취소 과정에서 예외가 발생하면 실패 응답을 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 취소 중 오류가 발생했습니다.");
         }
     }
 }
+
+
+//    public ResponseEntity<String> cancel(@RequestBody Map<String, Object> payload) {
+//        try {
+//            // Payload에서 데이터 추출
+//            String merchantUid = payload.get("merchant_uid").toString();
+//            Long totalPrice = Long.parseLong(payload.get("cancel_request_amount").toString());
+//            String reason = payload.get("reason").toString();
+//
+//            // 예약 정보를 DB에서 가져옵니다.
+//            Reservation existingReservation = reservationService.findByMerchant(merchantUid);
+//
+//            if (existingReservation != null) {
+//                // 아임포트 클라이언트 초기화
+//                IamportClient iamportClient = iamportService.getIamportClient();
+//
+//                // 결제 정보 조회
+//                IamportResponse<Payment> paymentResponse = iamportClient.paymentByImpUid(merchantUid);
+//
+//                if (paymentResponse.getResponse() != null) {
+//                    Payment payment = paymentResponse.getResponse();
+//
+//                    // 결제 상태 확인
+//                    if ("paid".equals(payment.getStatus())) {
+//                        // 결제 취소 요청 데이터 생성
+//                        CancelData cancelData = new CancelData(merchantUid, true, BigDecimal.valueOf(totalPrice));
+//                        cancelData.setReason(reason);
+//
+//                        // 아임포트 API를 사용하여 결제 취소 요청
+//                        IamportResponse<Payment> iamportResponse = iamportClient.cancelPaymentByImpUid(cancelData);
+//
+//                        if (iamportResponse.getResponse() != null) {
+//                            // 결제 취소 성공 시 예약 상태 업데이트
+//                            existingReservation.setStatus("CANCELED");
+//                            reservationService.update(existingReservation);
+//
+//                            return ResponseEntity.ok("결제 취소 완료");
+//                        } else {
+//                            // 결제 취소 실패 시
+//                            return ResponseEntity.status(500).body("결제 취소 중 오류 발생: " + iamportResponse.getMessage());
+//                        }
+//                    } else {
+//                        // 이미 취소된 상태이거나 취소할 수 없는 상태인 경우
+//                        return ResponseEntity.status(400).body("취소할 수 없는 결제 상태입니다: " + payment.getStatus());
+//                    }
+//                } else {
+//                    // 결제 정보 조회 실패 시
+//                    return ResponseEntity.status(500).body("결제 정보 조회 실패: " + paymentResponse.getMessage());
+//                }
+//            } else {
+//                // 예약 정보를 찾을 수 없는 경우
+//                return ResponseEntity.status(404).body("예약을 찾을 수 없습니다.");
+//            }
+//        } catch (NumberFormatException e) {
+//            // 숫자 변환 오류 처리
+//            return ResponseEntity.status(400).body("숫자 변환 오류: " + e.getMessage());
+//        } catch (Exception e) {
+//            // 기타 예외 처리
+//            return ResponseEntity.status(500).body("결제 취소 중 오류 발생: " + e.getMessage());
+//        }
+//    }
+//}

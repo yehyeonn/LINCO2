@@ -23,6 +23,6 @@ public interface ReservationRepository {
 
     List<Reservation> findExpiredReservation();
 
-    Reservation findByMerchant(String MerchantId);
+    Reservation findByImpUid(String impUid);
 
 }

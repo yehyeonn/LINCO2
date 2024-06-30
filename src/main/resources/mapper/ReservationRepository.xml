@@ -8,9 +8,9 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Reservation"
             keyColumn="id" keyProperty="id">
         insert into RESERVATION
-        (user_id, reservation_name, email, merchantUid, tel, venue_id, venue_name, status, reserve_date, reserve_start_time,
+        (user_id, reservation_name, email, merchantUid, impUid, tel, venue_id, venue_name, status, reserve_date, reserve_start_time,
          reserve_end_time, total_price)
-        values (#{user.id}, #{reservation_name}, #{email}, #{merchantUid}, #{tel}, #{venue.id}, #{venue.venue_name}, #{status},
+        values (#{user.id}, #{reservation_name}, #{email}, #{merchantUid}, #{impUid}, #{tel}, #{venue.id}, #{venue.venue_name}, #{status},
                 #{reserve_date}, #{reserve_start_time}, #{reserve_end_time},
                 #{total_price})
     </insert>
@@ -21,10 +21,10 @@
         where 1 = 1;
     </select>
 
-    <select id="findByMerchant" resultType="com.lec.spring.domain.Reservation">
+    <select id="findByImpUid" resultType="com.lec.spring.domain.Reservation">
         select *
         from RESERVATION
-        where merchantUid = #{merchantUid};
+        where impUid = #{impUid};
     </select>
 
 

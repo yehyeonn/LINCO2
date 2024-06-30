@@ -6,8 +6,10 @@ import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.domain.Venue;
 import com.lec.spring.service.IamportService;
 import com.lec.spring.service.ReservationService;
+import com.lec.spring.service.UserService;
 import com.lec.spring.service.VenueService;
 import com.lec.spring.util.U;
+import com.nimbusds.oauth2.sdk.Response;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import com.siot.IamportRestClient.IamportClient;
@@ -86,10 +88,15 @@ public class ReservationController {
     }
 
 
-//    @PostMapping("/update")
-//    public String updateOk() {
-//
-//        return "reservation/update";
-//    }
+
+    @GetMapping("/validate/{imp_uid}")
+    public ResponseEntity<String> validatePayment(@PathVariable String imp_uid,
+                                             @RequestParam String merchant_uid,
+                                             @RequestParam Long amount) {
+
+        // 결제 검증 로직
+        // 결제 정보 조회 및 검증
+        return ResponseEntity.ok().body("결제 정보 검증 성공");
+    }
 }
 
