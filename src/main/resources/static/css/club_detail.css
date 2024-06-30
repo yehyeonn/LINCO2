@@ -78,6 +78,10 @@ main {
     border-radius: 10px;
 }
 
+.club-members li {
+    list-style: none;
+}
+
 .footer-btn {
     width: 100%;
     display: flex;

@@ -3,6 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,5 +171,20 @@ public class UserController {
         model.addAttribute("User", updateUser);
 
         return "user/my_page";
+    }
+
+    @GetMapping("/additional_info")
+    public String additionalInfoForm(Model model) {
+        model.addAttribute("user", new User());
+        return "user/additional_info";
+    }
+
+    @PostMapping("/additional_info")
+    public String saveAdditionalInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam String name, @RequestParam String tel) {
+        User user = principalDetails.getUser();
+        user.setName(name);
+        user.setTel(tel);
+        userService.update(user);
+        return "redirect:/";
     }
 }

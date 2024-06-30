@@ -79,11 +79,34 @@
         <result column="s_img" property="img"/>
         <result column="s_regdate" property="regdate"/>
     </resultMap>
+    <resultMap id="mapSocializingVenue" type="com.lec.spring.domain.Socializing">
+        <result column="s_id" property="id"/>
+        <result column="s_venue_id" property="venue_id"/>
+        <result column="s_socializing_title" property="socializing_title"/>
+        <result column="s_category" property="category"/>
+        <result column="s_detail_category" property="detail_category"/>
+        <result column="s_address" property="address"/>
+        <result column="s_place_name" property="place_name"/>
+        <result column="s_meeting_date" property="meeting_date"/>
+        <result column="s_meeting_time" property="meeting_time"/>
+        <result column="s_limit_num" property="limit_num"/>
+        <result column="s_content" property="content"/>
+        <result column="s_total_price" property="total_price"/>
+        <result column="s_img" property="img"/>
+        <result column="s_regdate" property="regdate"/>
+        <collection property="venue" resultMap="mapvenue"/>
+    </resultMap>
+
+    <resultMap id="mapvenue" type="com.lec.spring.domain.Venue">
+        <result column="v_id" property="id"/>
+        <result column="v_venue_name" property="venue_name"/>
+    </resultMap>
 
     <resultMap id="mapuser" type="com.lec.spring.domain.User">
         <id column="u_id" property="id"/>
         <result column="u_tel" property="tel"/>
         <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
         <result column="u_password" property="password"/>
         <result column="u_address" property="address"/>
         <result column="u_gender" property="gender"/>
@@ -108,9 +131,28 @@
 
 
     <!-- 특정 id 글 내용 읽기(조회수 증가도!)-->
-    <select id="findById" resultType="com.lec.spring.domain.Socializing">
-        <include refid="SELECT_SOCIALIZING"/>
-        AND id = #{id};
+    <select id="findById" resultMap="mapSocializingVenue">
+        SELECT
+            s.id                    "s_id",
+            s.venue_id              "s_venue_id",
+            s.socializing_title     "s_socializing_title",
+            s.category              "s_category",
+            s.detail_category       "s_detail_category",
+            s.address               "s_address",
+            s.place_name            "s_place_name",
+            s.meeting_date          "s_meeting_date",
+            s.meeting_time          "s_meeting_time",
+            s.limit_num             "s_limit_num",
+            s.content               "s_content",
+            s.total_price           "s_total_price",
+            s.img                   "s_img",
+            s.regdate               "s_regdate",
+            v.id                    "v_id",
+            v.venue_name            "v_venue_name"
+        FROM socializing s left join venue v on s.venue_id = v.id
+        WHERE
+            1 = 1
+        AND s.id = #{id};
     </select>
 
 <!--    특정 소셜에 가입한 사용자의 수-->

@@ -46,7 +46,7 @@
                     <span class="social-info"> | [[${detailsocializing.getMeeting_time()}]]</span>
                     <p id="social-cnt">참여인원: [[${membercnt}]] / [[${detailsocializing.getLimit_num()}]]</p>
                     <p id="social-price">입장료: [[${detailsocializing.getTotal_price()}]]원</p>
-                    <p id="venue-name">대관명:</p>
+                    <p id="venue-name">대관명: [[${detailsocializing.getVenue().getVenue_name()}]]</p>
                 </div>
                 <div class="details-buttons">
                     <a th:href="@{'/socializing/update/' + ${detailsocializing.id}}" th:if="${logged_user.id == Master.User.id}">
@@ -85,7 +85,8 @@
         <section class="participants">
             <h1>참여자 리스트</h1>
             <div class="social-list" th:each="member : ${members}" th:if="${#lists.contains(Listnum,logged_user.id)}">
-                <span>[[${member.User.username}]]</span>
+                <img th:src="@{'/upload/'+ ${member.getUser().getProfile_picture()}}" style="display: inline;">
+                <span>[[${member.User.name}]]</span>
                 <span th:if="${logged_user.id == Master.user.getId()}">[[${member.User.tel}]]</span>
                 <span>[[${member.role}]] </span>
             </div>
