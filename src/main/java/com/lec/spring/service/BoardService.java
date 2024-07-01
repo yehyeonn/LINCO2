@@ -34,4 +34,7 @@ public interface BoardService {
 
     // 삭제
     int deleteById(Long id);
+
+    //클럽의 게시클 목록
+    List<Board> clubPostList(Long id, Integer page ,Model model, String title);
 }

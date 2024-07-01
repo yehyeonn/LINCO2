@@ -41,7 +41,7 @@ main {
     width: 90%;
     max-width: 1200px;
     background-color: #fff;
-    margin: 150px auto 190px;
+    margin: 150px auto 250px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -489,3 +489,24 @@ h2{
     border-bottom: none;
 }
 
+#searchbox{
+    text-align: end;
+}
+
+#btn {
+    background-color: #B3B49E;
+    color: #EDEBDA;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+#search {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #B3B49E;
+    border-radius: 5px;
+    outline: none;
+
+}

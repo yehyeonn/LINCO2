@@ -67,6 +67,19 @@ public class SocializingController {
             , @RequestParam(name = "reserveET", required = false)LocalTime reserveET
             , Model model, HttpSession session) {
 
+        // 새로운 작성 요청 시 세션 정보 초기화
+        if (venueId == null) {
+            session.removeAttribute("venue");
+            session.removeAttribute("totalPrice");
+            session.removeAttribute("reserveDate");
+            session.removeAttribute("reserveST");
+            session.removeAttribute("reserveET");
+
+            // 세션이 초기화되었음을 확인하는 로그 추가
+            System.out.println("세션 정보 초기화 완료");
+        }
+
+
         Venue venue = (Venue) session.getAttribute("venue");
         if (venue == null && venueId != null) {
             venue = venueService.getVenueById(venueId);
@@ -85,17 +98,7 @@ public class SocializingController {
         }
 
 
-        // 새로운 작성 요청 시 세션 정보 초기화
-        if (venueId == null) {
-            session.removeAttribute("venue");
-            session.removeAttribute("totalPrice");
-            session.removeAttribute("reserveDate");
-            session.removeAttribute("reserveST");
-            session.removeAttribute("reserveET");
 
-            // 세션이 초기화되었음을 확인하는 로그 추가
-            System.out.println("세션 정보 초기화 완료");
-        }
 
 
         List<String> category = socializingService.getAllCategories();
@@ -113,6 +116,8 @@ public class SocializingController {
         model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
         model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
 
+
+
         return "socializing/write";
     }
 
@@ -126,7 +131,6 @@ public class SocializingController {
         socializingService.list(page, model, address, category, detailcategory);
     }
 
-
     @PostMapping("/write")
     public String writeOk(
             @Valid Socializing socializing
@@ -135,6 +139,7 @@ public class SocializingController {
             , UserSocializing userSocializing
             , Model model
             , RedirectAttributes redirectAttributes
+
     ) throws IOException {
         // 기본 이미지 경로 설정
         String imgPath = "upload/noimg.png"; // 기본 이미지 경로
