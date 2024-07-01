@@ -10,6 +10,7 @@ import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.*;
+import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -70,12 +71,14 @@ public class ClubServiceImpl implements ClubService {
         int result = clubRepository.deleteById(club_id);
         return result;
     }
+
     @Override
     public boolean isClubNameExists(String clubName) {
         // 클럽 이름이 이미 존재하는지 확인하는 로직
         Club club = clubRepository.findByName(clubName);
         return club != null; // 클럽 객체가 null이 아니면 이미 존재하는 것으로 간주
     }
+
     @Override
     public List<Attachment> findByClubId(Long club_id) {
         return attachmentRepository.findByClubId(club_id);
@@ -95,10 +98,10 @@ public class ClubServiceImpl implements ClubService {
 
         Attachment file = upload(files);
 
-            if (file != null) {
-                file.setClub_id(club_id);
-                attachmentRepository.save(file);
-            }
+        if (file != null) {
+            file.setClub_id(club_id);
+            attachmentRepository.save(file);
+        }
 
         return 1;
     }
@@ -131,15 +134,16 @@ public class ClubServiceImpl implements ClubService {
         Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
         System.out.println(copyOfLocation);
 
-        try{
+        try {
             Files.copy(
                     multipartFile.getInputStream(),
                     copyOfLocation,
                     StandardCopyOption.REPLACE_EXISTING
             );
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         attachment = Attachment.builder()
                 .filename(fileName)
                 .sourcename(sourceName)
@@ -147,6 +151,7 @@ public class ClubServiceImpl implements ClubService {
 
         return attachment;
 }
+
     @Override
     @Transactional
     // 클럽 생성 (유저가 master 가 됨)
@@ -296,9 +301,6 @@ public class ClubServiceImpl implements ClubService {
     public Club getClubById(Long club_id) {
         return clubRepository.findById(club_id);
     }
-
-
-
 
 
     @Override
