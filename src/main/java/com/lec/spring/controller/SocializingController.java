@@ -204,6 +204,11 @@ public class SocializingController {
         for (UserSocializing e : socializingMemberList) {
             membersid.add(e.getUser().getId());
         }
+        if(socializing.getVenue() == null){
+            Venue venue = new Venue();
+            venue.setVenue_name("없음");
+            socializing.setVenue(venue);
+        }
 
         model.addAttribute("detailsocializing",socializing);
         model.addAttribute("membercnt",socializingcnt);

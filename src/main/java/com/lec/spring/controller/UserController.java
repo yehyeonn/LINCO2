@@ -3,6 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.*;
 import com.lec.spring.service.*;
 import com.lec.spring.util.U;
@@ -67,8 +68,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public void register() {
-    }
+    public void register(){}
 
     @PostMapping("/register")
     public String registerOk(@Valid User user,
@@ -107,8 +107,7 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public void login() {
-    }
+    public void login(){}
 
     // onAuthenticationFailure 에서 로그인 실패시 forwarding 용
     // request 에 담겨진 attribute 는 Thymeleaf 에서 그대로 표현 가능.
@@ -196,6 +195,22 @@ public class UserController {
 
         return "user/my_page";
     }
+
+    @GetMapping("/additional_info")
+    public String additionalInfoForm(Model model) {
+        model.addAttribute("user", new User());
+        return "user/additional_info";
+    }
+
+    @PostMapping("/additional_info")
+    public String saveAdditionalInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam String name, @RequestParam String tel) {
+        User user = principalDetails.getUser();
+        user.setName(name);
+        user.setTel(tel);
+        userService.update(user);
+        return "redirect:/";
+    }
+}
 
     @PostMapping("/cancel")
     @ResponseBody
