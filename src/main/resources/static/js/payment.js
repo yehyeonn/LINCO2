@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     reserve_end_time: reserveEndTime,
                     total_price: totalPrice,
                     merchantUid: merchant,
+                    impUid: rsp.imp_uid
                 };
 
                 fetch('/reservation/savePayment', {
@@ -74,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 // 추가 로직을 여기에 추가할 수 있습니다.
                                 const merUid = paymentData.merchantUid;
                                 alert(merUid);
+                                alert(impUid)
                                 const venueId = paymentData.venue.id;
                                 window.location.href = `/socializing/write`;
                             })

@@ -59,6 +59,7 @@
         <result column="re_reservation_name" property="reservation_name"/>
         <result column="re_email" property="email"/>
         <result column="re_merchantUid" property="merchantUid"/>
+        <result column="re_impUid" property="impUid"/>
         <result column="re_tel" property="tel"/>
         <result column="re_reserve_date" property="reserve_date"/>
         <result column="re_reserve_start_time" property="reserve_start_time"/>
@@ -113,7 +114,8 @@
         select re.id                 "re_id",
                re.reservation_name   "re_reservation_name",
                re.email              "re_email",
-            re.merchantUid            "re_merchantUid",
+               re.merchantUid        "re_merchantUid",
+               re.impUid             "re_impUid",
                re.tel                "re_tel",
                re.reserve_date       "re_reserve_date",
                re.reserve_start_time "re_reserve_start_time",

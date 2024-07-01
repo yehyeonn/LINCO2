@@ -41,6 +41,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -198,23 +199,52 @@ public class UserController {
     }
 
     @PostMapping("/cancel")
-    public ResponseEntity<String> cancelPayment(@RequestBody Reservation reservation, @RequestParam String canReason) {
+    @ResponseBody
+    public String cancelPayment(@RequestBody Map<String, Object> request) {
+        String impUid = (String) request.get("imp_uid");
+        String merchantUid = (String) request.get("merchant_uid");
+        int amount = (int) request.get("total_price");
+        String reason = (String) request.get("reason");
+
+        System.out.println("impUid : " + impUid);
+        Reservation reservation = reservationService.findByImpUid(impUid);
+        if (reservation != null) {
+            reservation.setStatus("CANCELED");
+            reservationService.update(reservation);
+        } else {
+            return "예약 정보를 찾을 수 없습니다.";
+        }
+    // 여기까지는 됐는데 try-catch에서 실패 뜸 => cancelPayment 가 문제?
         try {
-            // 여기서 cancelRequest 객체를 사용하여 결제 취소 처리를 수행
-            String impUid = reservation.getImpUid();
-            String merchantUid = reservation.getMerchantUid();;
-            Long total_price = reservation.getTotal_price();
-            String reason = canReason;
-
-
-            // 결제 취소 로직을 수행하고 성공적인 응답을 반환
-            // 예를 들어, 결제 취소가 성공적으로 이루어졌다면
-            return ResponseEntity.ok().body("결제 취소가 완료되었습니다.");
+            boolean isSuccess = iamportService.cancelPayment(impUid, merchantUid, amount, reason);
+            if (isSuccess) {
+                return "결제 취소가 완료되었습니다.";
+            } else {
+                return "결제 취소 실패";
+            }
         } catch (Exception e) {
-            // 결제 취소 과정에서 예외가 발생하면 실패 응답을 반환
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 취소 중 오류가 발생했습니다.");
+            e.printStackTrace();
+            return "서버 오류가 발생했습니다.";
         }
     }
+//    @PostMapping("/cancel")
+//    public ResponseEntity<String> cancelPayment(@RequestBody Reservation reservation, @RequestParam String canReason) {
+//        try {
+//            // 여기서 cancelRequest 객체를 사용하여 결제 취소 처리를 수행
+//            String impUid = reservation.getImpUid();
+//            String merchantUid = reservation.getMerchantUid();;
+//            Long total_price = reservation.getTotal_price();
+//            String reason = canReason;
+//
+//
+//            // 결제 취소 로직을 수행하고 성공적인 응답을 반환
+//            // 예를 들어, 결제 취소가 성공적으로 이루어졌다면
+//            return ResponseEntity.ok().body("결제 취소가 완료되었습니다.");
+//        } catch (Exception e) {
+//            // 결제 취소 과정에서 예외가 발생하면 실패 응답을 반환
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 취소 중 오류가 발생했습니다.");
+//        }
+//    }
 }
 
 
