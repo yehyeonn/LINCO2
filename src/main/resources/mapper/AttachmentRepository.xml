@@ -30,6 +30,13 @@
         ORDER BY id ASC
     </select>
 
+    <select id="findByClub" resultType="com.lec.spring.domain.Attachment">
+        <include refid="SELECTFILE"/>
+        AND
+        club_id = #{param1} AND board_id = 1
+        ORDER BY id ASC
+    </select>
+
     <select id="findById" resultType="com.lec.spring.domain.Attachment">
         <include refid="SELECTFILE"/>
         AND id = #{id}

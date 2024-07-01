@@ -1,9 +1,7 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.*;
-import com.lec.spring.service.ClubService;
-import com.lec.spring.service.ClubUserListService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import jakarta.validation.Valid;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.MutablePropertyValues;
@@ -45,6 +43,15 @@ public class ClubController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private AttachmentService attachmentService;
+
+    @Autowired
+    private BoardService boardService;
 
 
     public ClubController() {
@@ -227,6 +234,32 @@ public class ClubController {
 
         return "/club/board";
     }
+
+    @GetMapping("board/detail/{id}")
+    public String boardDetail(@PathVariable Long id, Model model){
+        Club club = clubService.detail(id);
+
+        Board board = boardService.detail(id);
+
+        String content = club.getContent().replace("\n", "<br>");
+
+        List<Comment> comments = commentService.list(id).getList();
+
+        int cnt = commentService.list(id).getCount();
+
+        List<Attachment> attachments = attachmentService.findByAttachment(id);
+
+        model.addAttribute("club", club);
+        model.addAttribute("board", board);
+        model.addAttribute("attachments", attachments);
+        model.addAttribute("cnt", cnt);
+        model.addAttribute("comments", comments);
+        model.addAttribute("content", content);
+
+        System.out.println("clud-board : " + board.toString());
+        return "club/boardDetail";
+    }
+
 
     @PostMapping("/join")
     public String join(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
