@@ -32,8 +32,8 @@ ALTER TABLE SOCIALIZING
     AUTO_INCREMENT = 1;
 # DELETE
 # FROM VENUE;
-ALTER TABLE VENUE
-    AUTO_INCREMENT = 1;
+# ALTER TABLE VENUE
+#     AUTO_INCREMENT = 1;
 DELETE
 FROM BOARD;
 ALTER TABLE BOARD
@@ -42,10 +42,10 @@ DELETE
 FROM BOARD_TYPE;
 ALTER TABLE BOARD_TYPE
     AUTO_INCREMENT = 1;
-DELETE
-FROM CLUB;
-ALTER TABLE CLUB
-    AUTO_INCREMENT = 1;
+# DELETE
+# FROM CLUB;
+# ALTER TABLE CLUB
+#     AUTO_INCREMENT = 1;
 DELETE
 FROM USER;
 ALTER TABLE USER
@@ -134,6 +134,10 @@ values (1, 1, 'MASTER','2024-06-27 16:42:15'),
        (2, 14, 'MASTER','2024-06-27 16:42:26'),
        (1, 14, 'MEMBER','2024-06-27 16:42:26')
 ;
+insert into CLUB_USER_LIST(user_id, club_id, role, regdate)
+values (5, 15, 'MASTER','2024-06-27 16:42:15'),
+       (5, 16, 'MASTER','2024-06-27 16:42:16')
+;
 
 
 # select * from CLUB_USER_LIST;
@@ -141,7 +145,9 @@ values (1, 1, 'MASTER','2024-06-27 16:42:15'),
 insert into BOARD_TYPE(name)
 values ('공지사항'),
        ('자유게시판'),
-       ('클럽홍보');
+       ('클럽홍보'),
+       ('클럽 게시판'),
+       ('클럽 공지사항');
 
 
 # select * from BOARD_TYPE;
@@ -152,29 +158,37 @@ values
        (2, null, 1, '야 나두1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
        (3, null, 1, '너두?!1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
        (2, null, 2, '이거 되려나', '야 이거 뜨냐?', 1),
-       (3, null, 2, '게시글2', '게시글2',1),
-       (4, null, 2, '자유게시판1', '자유게시판1',1),
-       (4, null, 2, '자유게시판2', '자유게시판2',1),
-       (4, null, 2, '자유게시판3', '자유게시판3',1),
-       (4, null, 2, '자유게시판4', '자유게시판4',1),
-       (4, null, 2, '자유게시판5', '자유게시판5',1),
-       (4, null, 2, '자유게시판6', '자유게시판6',1),
-       (4, null, 2, '자유게시판7', '자유게시판7',1),
-       (4, null, 2, '자유게시판8', '자유게시판8',1),
-       (4, null, 2, '자유게시판9', '자유게시판9',1),
-       (4, null, 2, '자유게시판10', '자유게시판10',1),
-       (1, null, 1, '공지사항1', '공지사항1',1),
-       (1, null, 1, '공지사항2', '공지사항1',2),
-       (1, null, 1, '공지사항3', '공지사항1',3),
-       (1, null, 1, '공지사항4', '공지사항1',4),
-       (1, null, 1, '공지사항5', '공지사항1',5),
-       (1, null, 1, '공지사항6', '공지사항1',6),
-       (1, null, 1, '공지사항7', '공지사항1',7),
-       (1, null, 1, '공지사항8', '공지사항1',8),
-       (1, null, 1, '공지사항9', '공지사항1',9),
-       (1, null, 1, '공지사항10', '공지사항1',10),
+       (3, null, 2, '게시글2', '게시글2', 1),
+       (4, null, 2, '자유게시판1', '자유게시판1', 1),
+       (4, null, 2, '자유게시판2', '자유게시판2', 1),
+       (4, null, 2, '자유게시판3', '자유게시판3', 1),
+       (4, null, 2, '자유게시판4', '자유게시판4', 1),
+       (4, null, 2, '자유게시판5', '자유게시판5', 1),
+       (4, null, 2, '자유게시판6', '자유게시판6', 1),
+       (4, null, 2, '자유게시판7', '자유게시판7', 1),
+       (4, null, 2, '자유게시판8', '자유게시판8', 1),
+       (4, null, 2, '자유게시판9', '자유게시판9', 1),
+       (4, null, 2, '자유게시판10', '자유게시판10', 1),
+       (1, null, 1, '공지사항1', '공지사항1', 1),
+       (1, null, 1, '공지사항2', '공지사항1', 2),
+       (1, null, 1, '공지사항3', '공지사항1', 3),
+       (1, null, 1, '공지사항4', '공지사항1', 4),
+       (1, null, 1, '공지사항5', '공지사항1', 5),
+       (1, null, 1, '공지사항6', '공지사항1', 6),
+       (1, null, 1, '공지사항7', '공지사항1', 7),
+       (1, null, 1, '공지사항8', '공지사항1', 8),
+       (1, null, 1, '공지사항9', '공지사항1', 9),
+       (1, null, 1, '공지사항10', '공지사항1', 10),
        (3, 1, 3, '이건?', '되려나?', 1),
-       (2, 2, 3, '과연', '두둥',1)
+       (2, 2, 3, '과연', '두둥', 1),
+       (2, 2, 3, '과연', '두둥',1),
+       (2, 1, 4, '클럽공지사항1', '클럽공지사항1',1),
+       (2, 1, 4, '클럽공지사항2', '클럽공지사항2',1),
+       (2, 1, 4, '클럽공지사항3', '클럽공지사항3',1),
+       (2, 1, 4, '클럽공지사항4', '클럽공지사항4',1),
+       (2, 1, 4, '클럽공지사항5', '클럽공지사항5',1),
+       (2, 1, 4, '클럽공지사항6', '클럽공지사항6',1),
+       (2, 1, 4, '클럽공지사항7', '클럽공지사항7',1)
        ;
 
 # select * from BOARD;
@@ -186,13 +200,28 @@ values (1, 1),
 # select * from BOARD_LIKE;
 
 insert into ATTACHMENT (board_id, club_id, sourcename, filename)
-values (1, 1, 'face01.png', 'face01.png'),
-       (1, 2, 'face02.png', 'face02.png'),
-       (2, null, 'face03.png', 'face03.png'),
-       (1, null, 'face04.png', 'face04.png'),
-       (3, null, 'face06.png', 'face06.png'),
-       (4, null, 'face07.png', 'face07.png')
-       ;
+values
+#     (null, 1, 'face01.png', 'face01.png'),
+#        (null, 1, 'face02.png', 'face01.png'),
+#        (null, 1, 'face03.png', 'face01.png'),
+#        (null, 1, 'face04.png', 'face01.png'),
+#        (null, 1, 'face05.png', 'face01.png'),
+#        (1, 1, 'face01.png', 'face01.png'),
+#        (1, 2, 'face02.png', 'face02.png'),
+#        (2, null, 'face03.png', 'face03.png'),
+#        (1, null, 'face04.png', 'face04.png'),
+#        (3, null, 'face06.png', 'face06.png'),
+#        (null, 1, 'face07.png', 'face07.png'),
+#        (null, 2, 'face07.png', 'face07.png'),
+#        (null, 3, 'face07.png', 'face07.png'),
+       (null, 15, 'face07.png', 'face07.png'),
+       (null, 15, 'face06.png', 'face06.png'),
+       (null, 15, 'face05.png', 'face05.png'),
+       (null, 15, 'face04.png', 'face04.png'),
+       (null, 15, 'face03.png', 'face03.png'),
+       (null, 15, 'face02.png', 'face02.png'),
+       (null, 15, 'face01.png', 'face01.png')
+;
 
 # select * from ATTACHMENT;
 

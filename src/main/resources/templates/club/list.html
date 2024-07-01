@@ -60,14 +60,17 @@
         </div>
     </div>
 
-    <th:block th:insert="~{club/clubPagination :: pagination}"></th:block>
+    <div class="pagination-container2">
+        <div class="pagination-block2">
+            <th:block th:insert="~{club/clubPagination :: pagination}"></th:block>
+        </div>
 
-    <div class="button-container">
-        <a href="/club/create" sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">
-            <button class="custom-button button-2"><span>Let's Go!</span><span>클럽 생성</span></button>
-        </a>
+        <div class="button-container">
+            <a th:href="@{/club/create}">
+                <button class="custom-button button-2"><span>Let's Go!</span><span>클럽 생성</span></button>
+            </a>
+        </div>
     </div>
-
 
 </div>
 </body>

@@ -4,19 +4,35 @@ body {
     color: #3A4D72;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-/*main {*/
-/*    padding: 20px;*/
-/*}*/
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+
+main {
+    padding: 20px;
+}
 
 .container1 {
-    width: 100%;
+    width: 90%;
+    height: auto;
     max-width: 1200px;
     background-color: #fff;
-    margin: 150px auto 200px;
-    flex: 1;
+    margin: 150px auto 190px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -33,131 +49,15 @@ body {
     border-radius: 10px;
 }
 
-.container2 {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.club-description {
-    width: 68%;
-    padding: 20px;
-    border: 1px solid #B3B49E;
-    border-radius: 10px;
-}
-
-.club-description h2 {
-    border-bottom: 2px solid #333;
-    padding: 10px 0;
-}
-
-.club-members h2 span,
-.club-description h2 span{
-    position: relative;
-    display: inline-block;
-    text-shadow: 0 1px 0 #CCC,
-    0 2px 0 #CCC,
-    0 3px 0 #CCC,
-    0 4px 0 #CCC,
-    0 5px 0 #CCC,
-    0 6px 0 transparent,
-    0 7px 0 transparent,
-    0 8px 0 transparent,
-    0 9px 0 transparent,
-    0 10px 10px rgba(0, 0, 0, .4);;
-    color: #3A4D72;
-}
-
-.club-members {
-    width: 30%;
-    padding: 20px;
-    border: 1px solid #B3B49E;
-    border-radius: 10px;
-}
-
-.club-members ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.club-members li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #333;
-    padding: 10px 0;
-}
-
-.member-info {
-    display: flex;
-    align-items: center;
-}
-
-.member-info img {
-    margin-right: 10px;
-    display: block;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background-color: #EDEBDA;
-    object-fit: contain;
-}
-
-.member-item form {
-    margin: 0;
-}
-
-.member-info span {
-    color: #333;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.outBtn {
-    margin-left: 10px;
-    background-color: #D3374A;
-    color: #EDEBDA;
-    transition: all 0.3s;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-}
-
-.outBtn:hover {
-    transform: scale(1.1);
-}
-
-.club-master, .member-info {
-    justify-content: center;
-}
-
-.club-master-label {
-    background-color: #f0ad4e;
-    color: #EDEBDA;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-left: 10px;
-}
-
-.footer-btn {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-}
-
 .event-image {
-    width: 250px;
-    height: auto;
+    width: 328px;
+    height: 150px;
     object-fit: contain;
+    background-color: #EDEBDA;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    border-radius: 20px;
 }
 
 .event-details {
@@ -172,8 +72,25 @@ body {
     margin: 5px 0;
 }
 
-h2{
-    font-weight: bolder;
+.event-details button {
+    background-color: #3A4D72;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.event-details .delete-button {
+    background-color: #D3374A;
+}
+
+
+footer {
+    background-color: #3A4D72;
+    color: white;
+    text-align: center;
+    padding: 20px;
 }
 
 .event-details {
@@ -181,70 +98,29 @@ h2{
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
+    margin-left: 20px;
     position: relative;
 }
 
 .details-header {
-    padding: 20px;
-}
-
-.details-header h1 {
-    font-size: 2.5em; /* 제목 크기 조정 */
-    margin-bottom: 20px; /* 아래 여백 추가 */
-    color: #3A4D72; /* 제목 텍스트 색상 */
-    gap: 10px; /* 제목과 버튼 사이의 간격 */
-    font-weight: bold;
-}
-
-.category-button {
-    text-align: start;
-    background-color: #73B9C9; /* 버튼 배경색 */
-    color: #EDEBDA; /* 버튼 텍스트 색상 */
-    padding: 5px 10px; /* 버튼 패딩 */
-    margin-left: 15px; /* 왼쪽 여백 */
-    border-radius: 5px; /* 버튼 모서리 둥글게 */
-    font-size: 20px;
-    vertical-align: middle;
-}
-
-#club-intro{
-    font-size: 1.5em; /* 본문 텍스트 크기 */
-    font-weight: 500;
-    margin-top: 50px; /* 위 여백 추가 */
-    color: #333; /* 텍스트 색상 */
+    flex: 1;
 }
 
 .details-buttons {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     position: absolute;
     right: 0;
     bottom: 0;
 }
 
-.btn-primary {
-    border-radius: 1rem;
-    border: none;
-    padding: 10px 20px;
-    margin-right: 5px;
-    cursor: pointer;
-    background-color: #3A4D72;
-    color: #EDEBDA;
-    transition: all 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #D3374A;
-    transform: scale(1.1);
-}
-
-.hidden{
+.hidden {
     display: none;
 }
 
 .club-menu-area {
-    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .club-menu-list {
@@ -268,9 +144,9 @@ h2{
 }
 
 .custom-button {
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     outline: none;
     border-radius: 5px;
     padding: 10px 15px;
@@ -284,7 +160,7 @@ h2{
     height: 40px;
 }
 
-.button-1, .button-2, .button-3{
+.button-1, .button-2, .button-3, .button-4 {
     position: relative;
     right: 20px; /* 초기 값으로 변경 */
     bottom: 20px; /* 초기 값으로 변경 */
@@ -298,31 +174,17 @@ h2{
     font-size: 18px;
 }
 
-.button-4 {
-    position: relative;
-    right: 10px; /* 초기 값으로 변경 */
-    bottom: 20px; /* 초기 값으로 변경 */
-    border: none;
-    box-shadow: none;
-    width: 130px;
-    height: 40px;
-    line-height: 42px;
-    -webkit-perspective: 230px;
-    perspective: 230px;
-    font-size: 18px;
-}
-
-
+/* 운동 버튼 */
 .button-1 span {
-    background: rgb(251,33,117);
-    background: linear-gradient(0deg, rgba(251,33,117,1) 0%, rgba(234,76,137,1) 100%);
+    background: rgb(251, 33, 117);
+    background: linear-gradient(0deg, rgba(251, 33, 117, 1) 0%, rgba(234, 76, 137, 1) 100%);
     display: block;
     position: absolute;
     width: 130px;
     height: 40px;
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     border-radius: 5px;
     margin: 0;
     text-align: center;
@@ -332,6 +194,7 @@ h2{
     -webkit-transition: all .3s;
     transition: all .3s;
 }
+
 .button-1 span:nth-child(1) {
     box-shadow: -7px -7px 20px 0px #fff9,
     -4px -4px 5px 0px #fff9,
@@ -344,6 +207,7 @@ h2{
     -moz-transform-origin: 50% 50% -20px;
     transform-origin: 50% 50% -20px;
 }
+
 .button-1 span:nth-child(2) {
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
@@ -352,36 +216,37 @@ h2{
     -moz-transform-origin: 50% 50% -20px;
     transform-origin: 50% 50% -20px;
 }
+
 .button-1:hover span:nth-child(1) {
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
     transform: rotateX(0deg);
 }
+
 .button-1:hover span:nth-child(2) {
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     color: transparent;
     -webkit-transform: rotateX(-90deg);
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
 }
 
-
-.button-2 span,
-.button-4 span{
-    background: rgb(0,172,238);
-    background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+/* 문화예술 */
+.button-2 span {
+    background: rgb(0, 172, 238);
+    background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%);
     display: block;
     position: absolute;
     width: 130px;
     height: 40px;
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     border-radius: 5px;
     margin: 0;
     text-align: center;
@@ -391,8 +256,8 @@ h2{
     -webkit-transition: all .3s;
     transition: all .3s;
 }
-.button-2 span:nth-child(1),
-.button-4 span:nth-child(1){
+
+.button-2 span:nth-child(1) {
     box-shadow: -7px -7px 20px 0px #fff9,
     -4px -4px 5px 0px #fff9,
     7px 7px 20px 0px #0002,
@@ -404,8 +269,8 @@ h2{
     -moz-transform-origin: 50% 50% -20px;
     transform-origin: 50% 50% -20px;
 }
-.button-2 span:nth-child(2),
-.button-4 span:nth-child(2){
+
+.button-2 span:nth-child(2) {
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
     transform: rotateX(0deg);
@@ -413,27 +278,27 @@ h2{
     -moz-transform-origin: 50% 50% -20px;
     transform-origin: 50% 50% -20px;
 }
-.button-2:hover span:nth-child(1),
-.button-4:hover span:nth-child(1){
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+
+.button-2:hover span:nth-child(1) {
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
     transform: rotateX(0deg);
 }
-.button-2:hover span:nth-child(2),
-.button-4:hover span:nth-child(2){
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+
+.button-2:hover span:nth-child(2) {
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     color: transparent;
     -webkit-transform: rotateX(-90deg);
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
 }
 
-
+/* 여행 */
 .button-3 span {
     background: rgb(150, 0, 200);
     background: linear-gradient(0deg, rgba(234, 76, 231, 0.88) 0%, rgba(205, 76, 234, 0.88) 100%);
@@ -441,9 +306,9 @@ h2{
     position: absolute;
     width: 130px;
     height: 40px;
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     border-radius: 5px;
     margin: 0;
     text-align: center;
@@ -453,6 +318,7 @@ h2{
     -webkit-transition: all .3s;
     transition: all .3s;
 }
+
 .button-3 span:nth-child(1) {
     box-shadow: -7px -7px 20px 0px #fff9,
     -4px -4px 5px 0px #fff9,
@@ -465,6 +331,7 @@ h2{
     -moz-transform-origin: 50% 50% -20px;
     transform-origin: 50% 50% -20px;
 }
+
 .button-3 span:nth-child(2) {
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
@@ -473,33 +340,122 @@ h2{
     -moz-transform-origin: 50% 50% -20px;
     transform-origin: 50% 50% -20px;
 }
+
 .button-3:hover span:nth-child(1) {
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
     transform: rotateX(0deg);
 }
+
 .button-3:hover span:nth-child(2) {
-    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
     color: transparent;
     -webkit-transform: rotateX(-90deg);
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
 }
 
-.btn-success {
-    background-color: #3A4D72;
-    color: #EDEBDA;
-    border-radius: 1rem;
-    transition: all 0.3s;
+.imgs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.btn-success:hover {
-    background-color: #D3374A;
-    color: #EDEBDA;
-    transform: scale(1.1);
+.img-box {
+    width: calc(25% - 10px);
+    height: 200px; /* Set a fixed height for the image box */
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure content outside the box is hidden */
+    background-color: #fff;
 }
+
+.imgs img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the image fits within the box without being cut off */
+    border-radius: 10px;
+}
+
+.img-btn-div {
+    float: right;
+    margin-right: 50px;
+}
+
+.add-img {
+    width: 120px;
+    padding: 15px 20px;
+    font-size: 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+
+    text-decoration: none;
+}
+
+.add-img:hover {
+    cursor: pointer;
+}
+
+
+/* 모달 전체 */
+#myModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 닫기 버튼 */
+.btn-close {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* 이미지 */
+#modalImage {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    height: 80%;
+    border-radius: 8px;
+}
+
+
+.btn-close:hover,
+.btn-close:focus {
+    color: #ccc;
+    text-decoration: none;
+}
+
+
+
+
+

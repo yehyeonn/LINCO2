@@ -113,25 +113,40 @@
             </table>
         </div>
 
-        <div class="write">
-            <div>          <!-- sec:authorize="hasAuthority('MEMBER')" -->
+        <div class="pagination-container">
+            <div class="pagination-block">
+                <th:block th:insert="~{board/boardPagination :: pagination}"></th:block>
+            </div>
+            <div class="write">
                 <a class="button" th:href="@{/board/write}">
                     <button class="board-title-1 custom-title">
                         <span>Let's GO!</span><span>글쓰기</span>
                     </button>
-                </a>       <!-- th:value="${2}" -->
+                </a>
             </div>
-<!--            <div th:if="">-->
-<!--                <a class="button" th:href="@{/board/write}" th:value="${3}">작성하기</a>-->
-<!--            </div>-->
-
-<!--            <div sec:authorize="hasAuthority('ADMIN')">-->
-<!--                <a class="button" th:href="@{/board/write}" th:value="${1}">작성하기</a>-->
-<!--            </div>-->
         </div>
-
-        <th:block th:insert="~{board/boardPagination :: pagination}"></th:block>
     </section>
+
+<!--        <th:block th:insert="~{board/boardPagination :: pagination}"></th:block>-->
+
+<!--        <div class="write">-->
+<!--            <div>          &lt;!&ndash; sec:authorize="hasAuthority('MEMBER')" &ndash;&gt;-->
+<!--                <a class="button" th:href="@{/board/write}">-->
+<!--                    <button class="board-title-1 custom-title">-->
+<!--                        <span>Let's GO!</span><span>글쓰기</span>-->
+<!--                    </button>-->
+<!--                </a>       &lt;!&ndash; th:value="${2}" &ndash;&gt;-->
+<!--            </div>-->
+<!--            &lt;!&ndash;            <div th:if="">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <a class="button" th:href="@{/board/write}" th:value="${3}">작성하기</a>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+
+<!--            &lt;!&ndash;            <div sec:authorize="hasAuthority('ADMIN')">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <a class="button" th:href="@{/board/write}" th:value="${1}">작성하기</a>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        </div>-->
+        <!--        <th:block th:insert="~{board/boardPagination :: pagination}"></th:block>-->
+
 
 </main>
 <script th:src="@{/js/board/board.js}"></script>

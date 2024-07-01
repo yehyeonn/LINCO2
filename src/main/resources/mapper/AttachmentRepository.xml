@@ -13,9 +13,14 @@
     </insert>
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Attachment">
-        INSERT INTO ATTACHMENT(sourcename, filename, board_id)
-        VALUES (#{sourcename}, #{filename}, #{board_id})
+        INSERT INTO ATTACHMENT(sourcename, filename, board_id, club_id)
+        VALUES (#{sourcename}, #{filename}, #{board_id}, #{club_id})
     </insert>
+
+<!--    <insert id = "saveClubImgs" flushCache="true" parameterType="com.lec.spring.domain.Attachment">-->
+<!--        INSERT INTO ATTACHMENT(sourcename, filename, club_id)-->
+<!--        VALUES (#{sourcename}, #{filename}, #{club_id})-->
+<!--    </insert>-->
 
     <sql id="SELECTFILE">
         SELECT id, sourcename, filename, board_id, club_id
@@ -27,6 +32,13 @@
         <include refid="SELECTFILE"/>
         AND
         board_id = #{param1} AND club_id IS NULL
+        ORDER BY id ASC
+    </select>
+
+    <select id="findByClub" resultType="com.lec.spring.domain.Attachment">
+        <include refid="SELECTFILE"/>
+        AND
+        club_id = #{param1} AND board_id = 1
         ORDER BY id ASC
     </select>
 
@@ -45,6 +57,34 @@
         ORDER BY id ASC
     </select>
 
+    <resultMap id="mapClub" type="com.lec.spring.domain.Club">
+        <result column="c_id" property="id"/>
+        <result column="c_name" property="name"/>
+        <result column="c_category" property="category"/>
+        <result column="c_detail_category" property="detail_category"/>
+    </resultMap>
+
+    <resultMap id="mpaAttachment" type="com.lec.spring.domain.Attachment">
+        <result column="att_id" property="id"/>
+        <result column="att_sourcename" property="sourcename"/>
+        <result column="att_filename" property="filename"/>
+        <collection property="club" resultMap="mapClub"/>
+    </resultMap>
+
+    <select id="findByClubId" resultMap="mpaAttachment">
+        select
+            att.id "att_id",
+            att.sourcename "att_sourcename",
+            att.filename "att_filename",
+            c.id "c_id",
+            c.name "c_name",
+            c.category "c_category",
+            c.detail_category "c_detail_category"
+        from ATTACHMENT att
+        join club c on att.club_id = c.id
+        where club_id = #{id}
+    </select>
+
     <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
         DELETE FROM ATTACHMENT
         WHERE id in (<foreach collection="array" item="e" separator=",">
@@ -55,6 +95,7 @@
     <delete id="delete" flushCache="true">
         DELETE
         FROM ATTACHMENT
+
         WHERE id = #{id}
     </delete>
 

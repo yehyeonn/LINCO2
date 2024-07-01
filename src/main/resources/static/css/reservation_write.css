@@ -12,7 +12,6 @@ body {
     font-family: var(--font-family);
     margin: 0;
     padding: 0;
-
     display: flex;
     align-items: center;
 }
@@ -22,17 +21,15 @@ body {
     justify-content: center;
     padding: 20px;
     gap: 20px;
-
     width: 1500px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-
-    margin-top: 140px;
+    margin-top: 60px;
 }
 
 .reservation-box {
-    /*outline: 3px solid red;*/
+    outline: 3px solid red;
     width: 40%;
     height: 80%;
 
@@ -88,6 +85,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     padding: 20px;
     cursor: pointer;
 }
@@ -159,11 +157,9 @@ td #sat {
 }
 
 .info-box {
-
     display: flex;
     flex-direction: column;
-
-    width: 50%;
+    width: 60%;
     height: 80%;
     padding: 20px;
     border: 1px solid #ddd;
@@ -214,7 +210,21 @@ td #sat {
     color: black;
 }
 
-.pay-box , .info-box{
+.info-box{
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 15px;
+    color: var(--navy);
+    position: sticky;
+    top: 20px;
+}
+
+.pay-box {
     width: 100%;
     background-color: #fff;
     padding: 10px;
@@ -252,23 +262,6 @@ td #sat {
     text-align: right;
 }
 
-.pay-btn {
-    width: 30%;
-    padding: 10px;
-    background-color: var(--navy);
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-right: 0;
-}
-
-.pay-btn:hover {
-    background-color: var(--red);
-}
-
 .reserved {
     pointer-events: none;
     background-color: gray;
@@ -278,3 +271,94 @@ td #sat {
     color: white;
 }
 
+.pay-box span {
+    color: #fff;
+}
+
+.custom-button {
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    color: #fff;
+    width: 130px;
+    height: 40px;
+}
+
+.button-2{
+    position: relative;
+    right: 20px; /* 초기 값으로 변경 */
+    bottom: 20px; /* 초기 값으로 변경 */
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+    font-size: 18px;
+}
+
+.button-2 span{
+    background: rgb(0,172,238);
+    background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+    display: block;
+    position: absolute;
+    width: 130px;
+    height: 40px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    border-radius: 5px;
+    margin: 0;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+.button-2 span:nth-child(1){
+    box-shadow: -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+    -webkit-transform: rotateX(90deg);
+    -moz-transform: rotateX(90deg);
+    transform: rotateX(90deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+.button-2 span:nth-child(2){
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+.button-2:hover span:nth-child(1){
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+.button-2:hover span:nth-child(2){
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    color: transparent;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+}

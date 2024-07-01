@@ -70,7 +70,7 @@
                     </li>
                     <li>
                         <label class="search-club-category">
-                            <a class="custom-button button-3" th:href="@{'/club/album/' + ${club.id}}"><span>사진첩</span><span>사진첩</span></a>
+                            <a class="custom-button button-3" th:href="@{'/club/gallery/' + ${club.id}}"><span>사진첩</span><span>사진첩</span></a>
                         </label>
                     </li>
                 </ul>
@@ -102,7 +102,7 @@
                 <tbody class="tbody">
                 <tr th:each="post : ${posts}">
                     <td th:text="${post.user.getName()}"></td>
-                    <td><a th:href="@{'/board/detail/' + ${post.getId()}}" th:text="${post.getTitle()}"></a></td>
+                    <td><a th:href="@{'/club/board/detail/' + ${post.getId()}}" th:text="${post.getTitle()}"></a></td>
                     <td th:text="${#temporals.format(post.getRegdate(), 'yyyy-MM-dd')}"></td>
                 </tr>
                 </tbody>

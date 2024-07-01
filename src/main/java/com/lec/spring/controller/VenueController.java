@@ -28,7 +28,8 @@ public class VenueController {
 
 
     @GetMapping("/list")
-    public void venueList(Integer page, Model model, @RequestParam(name = "venue_category", required = false, defaultValue = "") String venue_category) {
+    public void venueList(Integer page, Model model
+            , @RequestParam(name = "venue_category", required = false, defaultValue = "") String venue_category) {
         venueService.list(page, model, venue_category);
     }
 

@@ -42,7 +42,7 @@ public class ReservationController {
     private final VenueService venueService;
 
     @Autowired
-    public ReservationController( IamportService iamportService, ReservationService reservationService, VenueService venueService) {
+    public ReservationController(IamportService iamportService, ReservationService reservationService, VenueService venueService) {
         this.iamportService = iamportService;
         this.reservationService = reservationService;
         this.venueService = venueService;
@@ -58,9 +58,7 @@ public class ReservationController {
 
 
         List<Reservation> reservations = reservationService.findByVenueAndDate(venueId, selectedDate);
-//        for (int i = 0; i < reservations.size(); i++) {
-//            System.out.println(reservations.get(i));
-//        }
+
         model.addAttribute("reservations", reservations);
 
         return "reservation/write";

@@ -24,20 +24,20 @@
         <form th:action="@{/socializing/update}" method="post" enctype="multipart/form-data">
             <div class="form-group social-title">
             <input type="hidden" name="id" th:value="${updatesocializing.id}"/>
-            <label for="socializing_title">소셜라이징 이름</label>
+            <label for="socializing_title">소셜라이징 이름: </label>
             <input type="text" id="socializing_title" name="socializing_title" placeholder="제목을 입력하세요"
                    th:value="${socializing_title} ? ${socializing_title} : ${updatesocializing.socializing_title}"/>
             <div><span class="text-danger" th:if="${error_socializing_title}" th:utext="${error_socializing_title}"></span></div>
             </div>
 
             <div class="form-group select-container">
-                <label for="category">카테고리</label>
+                <label for="category">카테고리: </label>
                 <select id="category" name="category" disabled>
                     <option th:value="${updatesocializing.category}" th:text="${updatesocializing.category}" selected readonly></option>
                 </select>
                 <input type="hidden" name="category" th:value="${updatesocializing.category}">
 
-                <label for="detail_category">소분류</label>
+                <label for="detail_category">소분류: </label>
                 <select id="detail_category" name="detail_category" disabled>
                     <option th:text="${updatesocializing.detail_category}" readonly></option>
                 </select>
@@ -50,20 +50,20 @@
             </div>
 
             <div class="form-group">
-                <label for="meeting_date">날짜</label>
+                <label for="meeting_date">날짜: </label>
                 <input type="date" id="meeting_date" name="meeting_date" th:value="${updatesocializing.meeting_date}" readonly/>
-                <label for="meeting_time">시간</label>
+                <label for="meeting_time">시간: </label>
                 <input type="time" id="meeting_time" name="meeting_time" th:value="${updatesocializing.meeting_time}" readonly/>
             </div>
 
             <div class="form-group">
-                <label for="limit_num">인원</label>
+                <label for="limit_num">인원: </label>
                 <input type="number" id="limit_num" name="limit_num" th:value="${updatesocializing.limit_num}" readonly/>
             </div>
 
             <div class="form-group">
-                <label for="total_price">가격</label>
-                <input type="text" id="total_price" name="total_price" th:value="${updatesocializing.total_price}" readonly/>
+                <label for="total_price">가격: </label>
+                <input type="text" id="total_price" name="total_price" th:value="${updatesocializing.total_price + '원'}" readonly/>
             </div>
 
             <div class="form-img">
@@ -73,9 +73,22 @@
             </div>
 
             <div class="form-group">
-                <label for="placeName">위치</label>
+                <label for="placeName">위치: </label>
                 <input type="hidden" id="placeName" name="placeName" th:value="${updatesocializing.place_name}">
                 <input type="text" id="address" name="address" th:value="${updatesocializing.getAddress()}" readonly>
+            </div>
+            <div th:if="${updatesocializing.getVenue() != null}">
+                <div class="form-group">
+                    <label for="reservation">대관명: </label>
+                    <input type="text" id="reservation" name="reservation" th:value="${updatesocializing.getVenue().getVenue_name()}" readonly>
+                </div>
+            </div>
+
+            <div th:if="${updatesocializing.getVenue() != null}">
+                <div class="form-group">
+                    <label for="reservation">대관명: </label>
+                    <input type="text" id="reservation" name="reservation" th:value="${updatescicalizing.getVenue().getVenue_name()}" readonly>
+                </div>
             </div>
 
             <div class="map_wrap">
@@ -86,13 +99,21 @@
 
             <div class="social-button-container">
                     <a class="button-list" th:href="@{/socializing/list(page=${session.page})}">
-                        목록
+                        <button class="custom-button button-2">
+                            <span>LIST!</span><span>목록</span>
+                        </button>
                     </a>
 
                 <div class="right-button">
-                        <a class="button-back" onclick="history.back()">이전으로</a>
+                        <a class="button-back" onclick="history.back()">
+                            <button class="custom-button button-2">
+                                <span>BACK!</span><span>이전</span>
+                            </button>
+                        </a>
 
-                        <button type="submit" class="button-submit">수정완료</button>
+                        <button type="submit" class="button-submit custom-button button-2">
+                            <span>Edit Finish!</span><span>수정완료</span>
+                        </button>
                 </div>
             </div>
         </form>
