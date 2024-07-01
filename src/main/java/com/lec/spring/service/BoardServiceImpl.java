@@ -168,6 +168,7 @@ public class BoardServiceImpl implements BoardService{
             setImage(fileList);
             board.setFileList(fileList);
         }
+        System.out.println("Board = " + board.toString());
         return board;
     }
 

@@ -118,6 +118,7 @@
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_tel" property="tel"/>
+        <result column="u_name" property="name"/>
         <result column="u_username" property="username"/>
         <result column="u_password" property="password"/>
         <result column="u_address" property="address"/>
