@@ -168,12 +168,23 @@ select *
 from club_user_list;
 
 
-SELECT cul.user_id, cul.club_id, cul.role, c.id, c.name, u.id, u.name, u.username
+SELECT cul.user_id,
+       cul.club_id,
+       cul.role,
+       c.id,
+       c.name,
+       u.id,
+       u.name,
+       u.username
 FROM CLUB_USER_LIST cul
          JOIN CLUB c ON cul.club_id = c.id
          JOIN USER u ON cul.user_id = u.id
-WHERE club_id = 1;
+WHERE cul.user_id = 2;
 
-
+SELECT c.id, c.name, c.category, c.detail_category, c.intro, c.content, c.representative_picture
+FROM CLUB c
+         JOIN BOARD b ON c.id = b.club_id
+WHERE c.id = 1
+  AND b.board_type_id = 1
 
 

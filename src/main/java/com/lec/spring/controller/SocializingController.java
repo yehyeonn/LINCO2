@@ -1,11 +1,8 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.MvcConfiguration;
-import com.lec.spring.domain.Socializing;
+import com.lec.spring.domain.*;
 //import com.lec.spring.repository.UserSocializingRepository;
-import com.lec.spring.domain.SocializingValidator;
-import com.lec.spring.domain.UserSocializing;
-import com.lec.spring.domain.Venue;
 import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserSocializingService;
@@ -60,17 +57,31 @@ public class SocializingController {
 
 
     @GetMapping("/write")
-    public String write(@RequestParam(name = "venueId", required = false) Long venueId
-            , @RequestParam(name = "totalPrice", required = false) Long totalPrice
-            , @RequestParam(name = "reserveDate", required = false)LocalDate reserveDate
-            , @RequestParam(name = "reserveST", required = false) LocalTime reserveST
-            , @RequestParam(name = "reserveET", required = false)LocalTime reserveET
+    public String write(@RequestParam(name = "venue_id", required = false) Long venue_id
+            , @RequestParam(name = "reservation", required = false, defaultValue = "") String reservation
+            , @RequestParam(name = "total_price", required = false) Long totalPrice
+            , @RequestParam(name = "reservationDate", required = false) LocalDate reserveDate
+            , @RequestParam(name = "reservationST", required = false) LocalTime reserveST
+            , @RequestParam(name = "reserveET", required = false) LocalTime reserveET
+            , @RequestParam(name = "merchantUid", required = false) String merchantUid
             , Model model, HttpSession session) {
 
-        Venue venue = (Venue) session.getAttribute("venue");
-        if (venue == null && venueId != null) {
-            venue = venueService.getVenueById(venueId);
+        if (merchantUid != null) {
+            merchantUid = (String) session.getAttribute("merchantUid");
         }
+
+        Venue venue = (Venue) session.getAttribute("venue");
+//        if (venue == null && venueId != null) {
+//            venue = venueService.getVenueById(venueId);
+//        }
+        if (venue == null) {
+            venue_id = null;
+
+        } else {
+            venue_id = venue.getId();
+            reservation = venue.getVenue_name();
+        }
+
         if (totalPrice == null) {
             totalPrice = (Long) session.getAttribute("totalPrice");
         }
@@ -86,12 +97,13 @@ public class SocializingController {
 
 
         // 새로운 작성 요청 시 세션 정보 초기화
-        if (venueId == null) {
+        if (venue_id == null) {
             session.removeAttribute("venue");
             session.removeAttribute("totalPrice");
             session.removeAttribute("reserveDate");
             session.removeAttribute("reserveST");
             session.removeAttribute("reserveET");
+            session.removeAttribute("merchantUid");
 
             // 세션이 초기화되었음을 확인하는 로그 추가
             System.out.println("세션 정보 초기화 완료");
@@ -105,11 +117,13 @@ public class SocializingController {
         detail_category.put("공부", Arrays.asList("컴퓨터", "영어", "수학"));
 
 
-        model.addAttribute("venue", venue);
+        model.addAttribute("venue_id", venue_id);
+        model.addAttribute("venue_name", reservation);
         model.addAttribute("total_price", totalPrice);
         model.addAttribute("reserveDate", reserveDate);
         model.addAttribute("reserveST", reserveST);
         model.addAttribute("reserveET", reserveET);
+        model.addAttribute("merchantUid", merchantUid);
         model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
         model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
 
@@ -132,6 +146,13 @@ public class SocializingController {
             @Valid Socializing socializing
             , BindingResult result
             , @RequestParam("files") MultipartFile file
+            , @RequestParam(name = "venue_id", required = false) Long venue_id
+            , @RequestParam(name = "reservation", required = false) String reservation
+            , @RequestParam(name = "total_price", required = false) Long total_price
+            , @RequestParam(name = "reservationDate", required = false) LocalDate reservationDate
+            , @RequestParam(name = "reservationST", required = false) LocalTime reservationST
+            , @RequestParam(name = "reservationET", required = false) LocalTime reservationET
+            , @RequestParam(name = "merchantUid", required = false, defaultValue = "") String merchantUid
             , UserSocializing userSocializing
             , Model model
             , RedirectAttributes redirectAttributes
@@ -151,6 +172,13 @@ public class SocializingController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        if (socializing.getTotal_price() == null) {
+            if(total_price > 0) {
+                socializing.setTotal_price(total_price);
+            } else {
+                socializing.setTotal_price(0L);
+                }
         }
 
         // 이미지 경로를 Socializing 객체에 설정
@@ -173,7 +201,11 @@ public class SocializingController {
             redirectAttributes.addFlashAttribute("content", socializing.getContent());
             redirectAttributes.addFlashAttribute("total_price", socializing.getTotal_price());
             redirectAttributes.addFlashAttribute("img", socializing.getImg());
-            redirectAttributes.addFlashAttribute("venue", socializing.getVenue());
+            redirectAttributes.addFlashAttribute("venue_name", reservation);
+            redirectAttributes.addFlashAttribute("reserveDate", reservationDate);
+            redirectAttributes.addFlashAttribute("reserveST", reservationST);
+            redirectAttributes.addFlashAttribute("reserveET", reservationET);
+            redirectAttributes.addFlashAttribute("merchantUid", merchantUid);
 
             List<FieldError> errList = result.getFieldErrors();
             for (FieldError err : errList) {
@@ -184,52 +216,61 @@ public class SocializingController {
             return "redirect:/socializing/write";
         }
 
-    model.addAttribute("result", socializingService.write(socializing));
+        model.addAttribute("result", socializingService.write(socializing));
         userSocializingService.addUserToSocializing(userSocializing.getUser_id(), socializing.getId(), "MASTER");
         return "socializing/writeOk";
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model){
+    public String detail(@PathVariable Long id, Model model, HttpSession session) {
+        session.removeAttribute("venue");
+        session.removeAttribute("totalPrice");
+        session.removeAttribute("reserveDate");
+        session.removeAttribute("reserveST");
+        session.removeAttribute("reserveET");
+        session.removeAttribute("merchantUid");
         List<UserSocializing> socializingMemberList = socializingService.socializingMemberList(id);
         List<Long> membersid = new ArrayList<>();
         UserSocializing socializingMaster = socializingService.findBySocializingMaster(id);
         Socializing socializing = socializingService.detail(id);
         int socializingcnt = socializingService.membercnt(id);
-        String content = socializing.getContent().replace("\n","<br>");
+        String content = socializing.getContent().replace("\n", "<br>");
         for (UserSocializing e : socializingMemberList) {
             membersid.add(e.getUser().getId());
         }
-        if(socializing.getVenue() == null){
+        if (socializing.getVenue() == null) {
             Venue venue = new Venue();
             venue.setVenue_name("없음");
             socializing.setVenue(venue);
         }
 
-        model.addAttribute("detailsocializing",socializing);
-        model.addAttribute("membercnt",socializingcnt);
-        model.addAttribute("members",socializingMemberList);
-        model.addAttribute("content",content);
-        model.addAttribute("Master",socializingMaster);
-        model.addAttribute("Listnum",membersid);
+        model.addAttribute("detailsocializing", socializing);
+        model.addAttribute("membercnt", socializingcnt);
+        model.addAttribute("members", socializingMemberList);
+        model.addAttribute("content", content);
+        model.addAttribute("Master", socializingMaster);
+        model.addAttribute("Listnum", membersid);
         return "/socializing/detail";
     }
 
     @PostMapping("/detail")
     public String detailOk(@RequestParam(name = "user_id", required = false, defaultValue = "") Long userId
-                            ,@RequestParam(name = "socializing_id",required = false,defaultValue = "") Long socializingId
-                            , Model model){
-        int result = userSocializingService.addUserToSocializing(userId,socializingId, "MEMBER");
-        model.addAttribute("result",result);
-        model.addAttribute("userSocializing",socializingId);
+            , @RequestParam(name = "socializing_id", required = false, defaultValue = "") Long socializingId
+            , Model model) {
+        int result = userSocializingService.addUserToSocializing(userId, socializingId, "MEMBER");
+        model.addAttribute("result", result);
+        model.addAttribute("userSocializing", socializingId);
         return "socializing/detailOk";
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable Long id, Model model){
+    public String update(@PathVariable Long id
+            , Model model){
 //        Socializing socializing = socializingService.selectById(id);
 //        System.out.println(socializing);
         model.addAttribute("updatesocializing", socializingService.selectById(id));
+        model.addAttribute("updatescicalizing", socializingService.detail(id)); // venue 정보도 가져오는 거
+
         return "socializing/update";
     }
 
@@ -251,18 +292,19 @@ public class SocializingController {
             return "redirect:/socializing/update/" + socializing.getId();
         }
 
+
         model.addAttribute("result", socializingService.update(socializing));
         return "socializing/updateOk";
     }
 
     @PostMapping("delete")
-    public String deleteOk(Long id, Model model){
-         model.addAttribute("result",socializingService.deleteById(id));
+    public String deleteOk(Long id, Model model) {
+        model.addAttribute("result", socializingService.deleteById(id));
         return "socializing/deleteOk";
     }
 
     @InitBinder("socializing")
-    public void initBinder(WebDataBinder binder){
+    public void initBinder(WebDataBinder binder) {
         System.out.println("SocializingController.initBinder() 호출");
         binder.setValidator(new SocializingValidator());
     }

@@ -3,11 +3,27 @@ package com.lec.spring.controller;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
+import com.lec.spring.repository.ReservationRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.*;
+import com.lec.spring.service.*;
+import com.lec.spring.util.U;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.request.AuthData;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.Schedule;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +34,20 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static java.lang.Long.parseLong;
 
 @Controller
 @RequestMapping("/user")
@@ -33,15 +56,17 @@ public class UserController {
     @Value("${app.upload.path}")
     private String uploadDir;
 
+    private IamportService iamportService;
     private UserService userService;
     private UserSocializingService userSocializingService;
     private ReservationService reservationService;
 
     @Autowired
-    public void setUserService(UserService userService, ReservationService reservationService, UserSocializingService userSocializingService) {
+    public void setUserService(UserService userService, ReservationService reservationService, UserSocializingService userSocializingService, IamportService iamportService) {
         this.userService = userService;
         this.reservationService = reservationService;
         this.userSocializingService = userSocializingService;
+        this.iamportService = iamportService;
     }
 
     @GetMapping("/register")
@@ -51,10 +76,10 @@ public class UserController {
     public String registerOk(@Valid User user,
                              BindingResult result,
                              Model model,
-                             RedirectAttributes redirectAttrs){
+                             RedirectAttributes redirectAttrs) {
 
         // 검증 에러가 있었다면 redirect 한다
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
 //            redirectAttrs.addFlashAttribute("username", user.getUsername());
 //            redirectAttrs.addFlashAttribute("name", user.getName());
 //            redirectAttrs.addFlashAttribute("email", user.getEmail());
@@ -96,9 +121,9 @@ public class UserController {
 
     // 마이페이지
     @GetMapping("/my_page")
-    public String my_page(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
+    public String my_page(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 
-        if(principalDetails == null){ // 인증되지 않은 사용자 로그인 페이지로 리다이렉션
+        if (principalDetails == null) { // 인증되지 않은 사용자 로그인 페이지로 리다이렉션
             return "redirect:/user/login";
         }
 
@@ -173,6 +198,7 @@ public class UserController {
         return "user/my_page";
     }
 
+
     @GetMapping("/additional_info")
     public String additionalInfoForm(Model model) {
         model.addAttribute("user", new User());
@@ -187,4 +213,100 @@ public class UserController {
         userService.update(user);
         return "redirect:/";
     }
+
+    @PostMapping("/cancel")
+    @ResponseBody
+    public String cancelPayment(@RequestBody Map<String, Object> request) {
+        String impUid = (String) request.get("imp_uid");
+        String merchantUid = (String) request.get("merchant_uid");
+        int amount = (int) request.get("total_price");
+        String reason = (String) request.get("reason");
+
+        System.out.println("impUid : " + impUid);
+        Reservation reservation = reservationService.findByImpUid(impUid);
+
+    // 여기까지는 됐는데 try-catch에서 실패 뜸 => cancelPayment 가 문제?
+
+        try {
+            // 서비스 단에서 토큰을 생성하고 결제 취소 요청을 처리
+            String accessToken = iamportService.getToken();
+            boolean isSuccess = iamportService.cancelPayment(accessToken, impUid, merchantUid, amount, reason);
+            if (isSuccess) {
+                if (reservation != null) {
+                    reservation.setStatus("CANCELED");
+                    reservationService.update(reservation);
+                }
+            }
+            return isSuccess ? "결제 취소가 완료되었습니다." : "결제 취소 실패";
+
+        } catch (Exception e) {
+            System.err.println("예외 발생: " + e.getMessage());
+            e.printStackTrace();
+            return "서버 오류가 발생했습니다.";
+        }
+    }
 }
+
+
+
+
+//    public ResponseEntity<String> cancel(@RequestBody Map<String, Object> payload) {
+//        try {
+//            // Payload에서 데이터 추출
+//            String merchantUid = payload.get("merchant_uid").toString();
+//            Long totalPrice = Long.parseLong(payload.get("cancel_request_amount").toString());
+//            String reason = payload.get("reason").toString();
+//
+//            // 예약 정보를 DB에서 가져옵니다.
+//            Reservation existingReservation = reservationService.findByMerchant(merchantUid);
+//
+//            if (existingReservation != null) {
+//                // 아임포트 클라이언트 초기화
+//                IamportClient iamportClient = iamportService.getIamportClient();
+//
+//                // 결제 정보 조회
+//                IamportResponse<Payment> paymentResponse = iamportClient.paymentByImpUid(merchantUid);
+//
+//                if (paymentResponse.getResponse() != null) {
+//                    Payment payment = paymentResponse.getResponse();
+//
+//                    // 결제 상태 확인
+//                    if ("paid".equals(payment.getStatus())) {
+//                        // 결제 취소 요청 데이터 생성
+//                        CancelData cancelData = new CancelData(merchantUid, true, BigDecimal.valueOf(totalPrice));
+//                        cancelData.setReason(reason);
+//
+//                        // 아임포트 API를 사용하여 결제 취소 요청
+//                        IamportResponse<Payment> iamportResponse = iamportClient.cancelPaymentByImpUid(cancelData);
+//
+//                        if (iamportResponse.getResponse() != null) {
+//                            // 결제 취소 성공 시 예약 상태 업데이트
+//                            existingReservation.setStatus("CANCELED");
+//                            reservationService.update(existingReservation);
+//
+//                            return ResponseEntity.ok("결제 취소 완료");
+//                        } else {
+//                            // 결제 취소 실패 시
+//                            return ResponseEntity.status(500).body("결제 취소 중 오류 발생: " + iamportResponse.getMessage());
+//                        }
+//                    } else {
+//                        // 이미 취소된 상태이거나 취소할 수 없는 상태인 경우
+//                        return ResponseEntity.status(400).body("취소할 수 없는 결제 상태입니다: " + payment.getStatus());
+//                    }
+//                } else {
+//                    // 결제 정보 조회 실패 시
+//                    return ResponseEntity.status(500).body("결제 정보 조회 실패: " + paymentResponse.getMessage());
+//                }
+//            } else {
+//                // 예약 정보를 찾을 수 없는 경우
+//                return ResponseEntity.status(404).body("예약을 찾을 수 없습니다.");
+//            }
+//        } catch (NumberFormatException e) {
+//            // 숫자 변환 오류 처리
+//            return ResponseEntity.status(400).body("숫자 변환 오류: " + e.getMessage());
+//        } catch (Exception e) {
+//            // 기타 예외 처리
+//            return ResponseEntity.status(500).body("결제 취소 중 오류 발생: " + e.getMessage());
+//        }
+//    }
+//}

@@ -1,11 +1,16 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.AttachmentRepository;
 import com.lec.spring.repository.ClubRepository;
 import com.lec.spring.repository.ClubUserListRepository;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.domain.*;
+import com.lec.spring.repository.*;
+import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -14,8 +19,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ClubServiceImpl implements ClubService {
@@ -34,12 +52,26 @@ public class ClubServiceImpl implements ClubService {
 
     private final ClubRepository clubRepository;
     private final ClubUserListRepository clubUserListRepository;
+    private final UserRepository userRepository;
+    private final AttachmentRepository attachmentRepository;
+    private final BoardRepository boardRepository;
+
+
+    @Autowired
+    public ClubServiceImpl(SqlSession sqlSession) {
+        this.clubRepository = sqlSession.getMapper(ClubRepository.class);
+        this.clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
+        this.userRepository = sqlSession.getMapper(UserRepository.class);
+        this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+        this.boardRepository = sqlSession.getMapper(BoardRepository.class);
+    }
 
     @Override
     public int deleteById(Long club_id) {
         int result = clubRepository.deleteById(club_id);
         return result;
     }
+
     @Override
     public boolean isClubNameExists(String clubName) {
         // 클럽 이름이 이미 존재하는지 확인하는 로직
@@ -47,14 +79,78 @@ public class ClubServiceImpl implements ClubService {
         return club != null; // 클럽 객체가 null이 아니면 이미 존재하는 것으로 간주
     }
 
-    private final UserRepository userRepository;
-
-    @Autowired
-    public ClubServiceImpl(SqlSession sqlSession) {
-        this.clubRepository = sqlSession.getMapper(ClubRepository.class);
-        this.clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
-        this.userRepository = sqlSession.getMapper(UserRepository.class);
+    @Override
+    public List<Attachment> findByClubId(Long club_id) {
+        return attachmentRepository.findByClubId(club_id);
     }
+
+    @Override
+    public int uploadImg(Long club_id, MultipartFile file) {
+        User user = U.getLoggedUser();
+
+        int cnt = addFiles(file, club_id);
+
+        return cnt;
+    }
+
+    private int addFiles(MultipartFile files, Long club_id) {
+        if (files == null) return 0;
+
+        Attachment file = upload(files);
+
+        if (file != null) {
+            file.setClub_id(club_id);
+            attachmentRepository.save(file);
+        }
+
+        return 1;
+    }
+
+    private Attachment upload(MultipartFile multipartFile) {
+        Attachment attachment = null;
+
+        String originalFilename = multipartFile.getOriginalFilename();
+        if (originalFilename == null || originalFilename.isEmpty()) return null;
+
+        String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String fileName = sourceName;
+
+        System.out.println(sourceName);
+
+        File file = new File(uploadDir, fileName);
+        if (file.exists()) {
+            int pos = fileName.lastIndexOf(".");
+            if (pos > -1) {    // 확장자가 있는경우
+                String name = fileName.substring(0, pos);
+                String ext = fileName.substring(pos + 1);
+
+                fileName = name + "_" + System.currentTimeMillis() + "." + ext;
+            } else {
+                fileName += "_" + System.currentTimeMillis();
+            }
+        }
+        System.out.println(fileName);
+
+        Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
+        System.out.println(copyOfLocation);
+
+        try {
+            Files.copy(
+                    multipartFile.getInputStream(),
+                    copyOfLocation,
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        attachment = Attachment.builder()
+                .filename(fileName)
+                .sourcename(sourceName)
+                .build();
+
+        return attachment;
+}
 
     @Override
     @Transactional
@@ -65,7 +161,7 @@ public class ClubServiceImpl implements ClubService {
 
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다.
         user = userRepository.findById(user.getId());
-        System.out.println("유저의 id는?? "+ user.getId());
+        System.out.println("유저의 id는?? " + user.getId());
         int result = clubRepository.save(club);
         System.out.println("클럽의 id는?? " + club.getId());
         if (result > 0) {
@@ -161,10 +257,42 @@ public class ClubServiceImpl implements ClubService {
         return list;
     }
 
+    @Override
+    @Transactional
+    public Board detail(Long id) {
+        Board board = boardRepository.findById(id);
 
+        if (board != null){
+            List<Attachment> fileList = attachmentRepository.findByClub(board.getId());
+            setImage(fileList);
+            board.setFileList(fileList);
+        }
+        System.out.println("club 게시판 상세페이지 : " + board);
+        return board;
+    }
 
     @Override
-    public ClubUserList findClubMaster(Long club_id){
+    public List<Board> getClubBoard(Long clubId) {
+        return clubRepository.findBoardByClubIdAndType(clubId);
+    }
+
+    private void setImage(List<Attachment> fileList) {
+        String realPath = new File(uploadDir).getAbsolutePath();
+
+        for (Attachment attachment : fileList){
+            BufferedImage imgData = null;
+            File f = new File(realPath, attachment.getFilename());
+            try {
+                imgData = ImageIO.read(f);
+                if (imgData != null) attachment.setImage(true);
+            } catch (IOException e) {
+                System.out.println("클럽 게시판에 파일 존재 안 함 : " + f.getAbsolutePath() + "[" + e.getMessage() + "]");
+            }
+        }
+    }
+
+    @Override
+    public ClubUserList findClubMaster(Long club_id) {
         return clubUserListRepository.findClubMaster(club_id);
     }
 
@@ -173,9 +301,6 @@ public class ClubServiceImpl implements ClubService {
     public Club getClubById(Long club_id) {
         return clubRepository.findById(club_id);
     }
-
-
-
 
 
     @Override

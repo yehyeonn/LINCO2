@@ -13,7 +13,7 @@
 
 <th:block th:insert="/common/header :: header-body"></th:block>
 
-<div class="write container1" th:with="user=${#authentication.getPrincipal().getUser()}">
+<!--<div class="write container1" th:with="user=${#authentication.getPrincipal().getUser()}">-->
     <form th:action="@{/club/write}" method="post" enctype="multipart/form-data">
         <div class="title">
             <div class="form-group">
@@ -24,9 +24,9 @@
                         <option th:value="${3}">클럽홍보</option>
                         <option th:value="${1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
                     </select>
-                    <span class="form-control">[[${user.name}]]</span>
+<!--                    <span class="form-control">[[${user.name}]]</span>-->
                 </div>
-                <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
+<!--                <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>-->
                 <label for="title">게시글 제목:</label>
 
                 <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title"

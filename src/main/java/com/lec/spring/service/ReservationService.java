@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Reservation;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ReservationService {
@@ -19,4 +20,10 @@ public interface ReservationService {
     List<Reservation> findByUserId(Long user_id);
 
     void updateExpiredReservationStatus();
+
+    Reservation findById(Long id);
+
+    Reservation findByImpUid(String impUid);
+
+//    public void cancelPayment(String merchantId) throws IamportResponseException, IOException;
 }

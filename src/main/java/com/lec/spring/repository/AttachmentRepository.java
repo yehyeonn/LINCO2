@@ -13,11 +13,17 @@ public interface AttachmentRepository {
 
     List<Attachment> findByBoard(Long boardId);
 
+    List<Attachment> findByClub(Long clubId);
+
     Attachment findById(Long id);
 
-    List<Attachment> findByIds(Long [] ids);
+    List<Attachment> findByIds(Long[] ids);
 
-    int deleteByIds(Long [] ids);
+    int deleteByIds(Long[] ids);
 
     int delete(Attachment file);
+
+    List<Attachment> findByClubId(Long clubId);
+
+//    int saveClubImgs(Attachment file);
 }

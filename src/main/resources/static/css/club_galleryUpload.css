@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #EDEBDA;
+    color: #3A4D72;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.container1 {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    margin: 150px auto 190px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-placeholder {
+    outline: 1px dashed #3A4D72;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5F5F5;
+    position: relative;
+}
+
+#img_txt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #3A4D72;
+    font-weight: bold;
+}
+
+#previewImage {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+}
+
+.fileBtn {
+    margin-top: 10px;
+}
+
+#fileSelect {
+    background-color: #3A4D72;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#fileSelect:hover {
+    background-color: #2A3657;
+}
+
+.button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.left-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.left-buttons .btn,
+.button .btn {
+    background-color: #3A4D72;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.left-buttons .btn:hover,
+.button .btn:hover {
+    background-color: #2A3657;
+}
+
+footer {
+    background-color: #3A4D72;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.hidden {
+    display: none;
+}

@@ -41,7 +41,7 @@ public class AttachmentController {
 
         String sourceName = file.getSourcename();   // 원본 파일 명
         String fileName = file.getFilename();       // 저장된 파일 명
-        Long clubId = file.getClub_id();
+//        Long clubId = file.getClub_id();
 
         String path = new File(uploadDir, fileName).getAbsolutePath();      // 저장된 파일의 절대경로
 

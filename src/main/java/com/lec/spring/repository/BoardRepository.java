@@ -26,4 +26,10 @@ public interface BoardRepository {
 
     // 전체 글 갯수
     int countAll(Long boardTypeId, Long clubId);
+
+    //클럽 게시판
+    List<Board> findbyClubPosts(@Param("clubId")Long id,@Param("from") int from, @Param("rows") int rows, @Param("title") String title);
+
+    //클럽 게시판 전체 개수
+    int clubPostsListAll(@Param("clubId") Long id, @Param("title") String title);
 }
