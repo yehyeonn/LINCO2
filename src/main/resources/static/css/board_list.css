@@ -13,8 +13,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin: 30px auto 50px auto;
-    padding: 20px;
+    margin: auto;
+    /*padding: 20px;*/
 }
 
 .custom-title {
@@ -232,7 +232,7 @@ body {
 .post-list {
     width: 90%;
     max-width: 1200px;
-    margin: 80px auto;
+    margin: 80px auto 200px;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -242,7 +242,7 @@ body {
 
 .title-center {
     text-align: center;
-    margin: 0 auto 40px auto;
+    margin: 20px;
     font-weight: bolder;
 }
 
@@ -343,10 +343,19 @@ body {
     font-size: 20px;
 }
 
-/* 글쓰기 버튼 스타일 */
-.write {
+.pagination-container {
     display: flex;
-    justify-content: flex-end;
-    padding: 10px 0 20px 0;
-    font-size: 18px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-block {
+    flex: 1;
+    display: flex;
+    margin-left: 130px;
+    justify-content: center; /* 페이지네이션을 중앙에 배치 */
+}
+
+.write {
+    margin-left: auto; /* 글쓰기 버튼을 오른쪽 끝으로 이동 */
 }
