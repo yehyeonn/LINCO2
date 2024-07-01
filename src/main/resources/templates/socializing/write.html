@@ -75,7 +75,8 @@
         <div><span class="text-danger" th:if="${error_limit_num}" th:utext="${error_limit_num}"></span></div>
         <div class="form-group">
             <label for="total_price">가격</label>
-            <input type="text" id="total_price" name="total_price" th:value="${total_price != null ? total_price : ''}" />원
+            <input type="text" id="total_price" name="total_price" th:if="${total_price}" th:value="${total_price}" readonly/>
+            <input type="text" name="total_price" th:unless="${total_price}" th:value="${total_price}" />원
         </div>
         <div class="form-img">
             <div class="form-group image-placeholder">
@@ -86,6 +87,8 @@
                 <button type="button" id="fileSelect">파일선택</button>
                 <input type="file" id="fileInput" name="files" accept="image/*" style="display:none;">
             </div>
+        </div>
+        <div class="form-group" th:if="${venue != null and venue.id != null}" th:value="${merchantUid}">
         </div>
 
         <div class="form-group" th:if="${venue != null and venue.id != null}">

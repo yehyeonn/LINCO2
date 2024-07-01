@@ -1,17 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-
-    // function formatDate(date) {
-    //     const year = date.getFullYear();
-    //     const month = String(date.getMonth() + 1).padStart(2, '0');
-    //     const day = String(date.getDate()).padStart(2, '0');
-    //     const hours = String(date.getHours()).padStart(2, '0');
-    //     const minutes = String(date.getMinutes()).padStart(2, '0');
-    //     const seconds = String(date.getSeconds()).padStart(2, '0');
-    //
-    //     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    // }
-
     window.requestPay = function() {
         const container = document.querySelector('.container-wrapper');
         const userId = parseInt(document.querySelector('input[name="user_id"]').value, 10);
@@ -25,29 +13,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const reserveEndTime = localStorage.getItem('endTime');
         const totalPrice = parseInt(localStorage.getItem('totalPrice'), 10);
         const userName = $('.info-box .name').val();
-
+        const merchant = "merchant_" + new Date().getTime();
 
         window.IMP.init('imp28617244');
         window.IMP.request_pay({
             pg: 'html5_inicis',
             pay_method: "card",
-            merchant_uid: "merchant_" + new Date().getTime(),
+            merchant_uid: merchant,
             name: "Linco 대관 예약",
             amount: totalPrice,
             buyer_email: userEmail,
-            buyer_name: name,
+            buyer_name: userName,
             buyer_tel: userTel,
         }, function (rsp) {
             if (rsp.success) {
                 // 결제 성공 시 로직
                 console.log('Payment succeeded');
-
-                // alert(userName);
-                // alert(reserveStartTime);
-                // alert(reserveEndTime);
-                // const payDate = formatDate(new Date());
-                // alert(payDate)
-
                 // 서버에 결제 정보 저장
                 const paymentData = {
                     user: {
@@ -64,8 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     reserve_date: reserveDate,
                     reserve_start_time: reserveStartTime,
                     reserve_end_time: reserveEndTime,
-                    total_price: totalPrice
-                    // paydate: payDate
+                    total_price: totalPrice,
+                    merchantUid: merchant,
+                    impUid: rsp.imp_uid
                 };
 
                 fetch('/reservation/savePayment', {
@@ -74,15 +56,32 @@ document.addEventListener('DOMContentLoaded', function () {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(paymentData)
-                    // credentials: 'include'  // 세션 쿠키를 포함하여 요청
                 })
                     .then(response => response.text())
                     .then(data => {
                         console.log('Payment data saved:', data);
-                        // alert("과연 db에 저장됏을까요?");
 
-                        const venueId = paymentData.venue.id;
-                        window.location.href =  `/socializing/write`;
+                        const impUid = rsp.imp_uid;
+                        // 결제 정보 가져오기
+                        fetch(`/reservation/validate/${rsp.imp_uid}?merchant_uid=${rsp.merchant_uid}&amount=${rsp.paid_amount}`, {
+                            method: "GET",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(response => response.text())
+                            .then(validationData => {
+                                console.log('Validation data:', validationData);
+                                // 추가 로직을 여기에 추가할 수 있습니다.
+                                const merUid = paymentData.merchantUid;
+                                alert(merUid);
+                                alert(impUid)
+                                const venueId = paymentData.venue.id;
+                                window.location.href = `/socializing/write`;
+                            })
+                            .catch(error => {
+                                console.error('Error validating payment data:', error);
+                            });
                     })
                     .catch(error => {
                         console.error('Error saving payment data:', error);

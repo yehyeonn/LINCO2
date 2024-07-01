@@ -1,9 +1,6 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
-import com.lec.spring.domain.Board;
-import com.lec.spring.domain.Club;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.*;
 import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
@@ -326,5 +323,69 @@ public class BoardServiceImpl implements BoardService{
             return boardRepository.delete(board);
         }
         return 0;
+    }
+
+
+    //클럽 게시판 리스트
+    @Override
+    public List<Board> clubPostList(Long id, Integer page ,Model model, String title) {
+
+        // 현재페이지
+        if (page == null || page < 1) page = 1; //디폴트 1page
+        // 페이징
+        // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
+        // pageRows: 한 '페이지'에 몇개의 글을 리스트 할것인가?
+        HttpSession session = U.getSession();
+        Integer writePages = (Integer) session.getAttribute("writePages");
+        if (writePages == null) writePages = WRITE_PAGES;
+        Integer pageRows = (Integer) session.getAttribute("pageRows");
+        if (pageRows == null) pageRows = PAGE_ROWS;
+        session.setAttribute("page", page); // 현재 페이지 번호 -> session 에 저장한다.
+
+        long cnt = boardRepository.clubPostsListAll(id , title);   //글 목록 전체의 개수
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);  // 총 몇 페이지인지 분량
+
+        //[페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
+        int startPage = 0;
+        int endPage = 0;
+
+        // 해당 '페이지'의 글 목록
+        List<Board> list = null;
+
+        if (cnt > 0) {  // 데이터가 최소 1개 이상 있는 경우만 페이징
+            // page 값 보정
+            if (page > totalPage) {
+                page = totalPage;
+            }
+
+            // fromRow : 몇번째 데이터부터
+            int fromRow = (page - 1) * pageRows;
+
+            // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지' 계산
+            startPage = (((page - 1) / writePages) * writePages) + 1;
+            endPage = startPage + writePages - 1;
+            if (endPage >= totalPage) endPage = totalPage;
+
+            // 해당 페이지의 글 목록 읽어오기
+            list = boardRepository.findbyClubPosts(id, fromRow, pageRows, title);
+            model.addAttribute("posts", list);
+            model.addAttribute("title",title);
+        } else {
+            page = 0;
+        }
+
+        model.addAttribute("cnt", cnt);  // 전체 글 개수
+        model.addAttribute("page", page); // 현재 페이지
+        model.addAttribute("totalPage", totalPage);  // 총 '페이지' 수
+        model.addAttribute("pageRows", pageRows);  // 한 '페이지' 에 표시할 글 개수
+
+
+        // [페이징]
+        model.addAttribute("url", U.getRequest().getRequestURI());  // 목록 url
+        model.addAttribute("writePages", writePages); // [페이징] 에 표시할 숫자 개수
+        model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
+        model.addAttribute("endPage", endPage);   // [페이징] 에 표시할 마지막 페이지
+
+        return list;
     }
 }

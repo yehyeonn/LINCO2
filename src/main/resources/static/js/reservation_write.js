@@ -104,7 +104,8 @@ function selectDateOnCalendar(selectedDate) {
             }
 
             var fullMonth = month < 10 ? '0' + month : month; // 한 자리 숫자인 경우 앞에 0을 붙임
-            var fullDate = `${year}-${fullMonth}-${day}`;
+            var fullDay = day < 10 ? '0' + day : day;
+            var fullDate = `${year}-${fullMonth}-${fullDay}`;
 
             // 예약 날짜 업데이트
             $('.pay-box li:nth-child(4) div').text(fullDate);
@@ -257,7 +258,7 @@ $(document).on('click', '.pay-btn', function () {
     console.log('이메일' + localStorage.getItem('email'));
     console.log('전화번호' + localStorage.getItem('tell'));
     console.log('베뉴아이디' + localStorage.getItem('venue_id'));
-    console.log('전체날짜' + localStorage.getItem('fullDate'));
+    // console.log('전체날짜' + localStorage.getItem('fullDate'));
     console.log('베뉴 이름' + document.querySelector('.venue_name').textContent);
 
 });
