@@ -1,11 +1,7 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Club;
-import com.lec.spring.domain.ClubUserList;
-import com.lec.spring.domain.User;
-import com.lec.spring.repository.ClubRepository;
-import com.lec.spring.repository.ClubUserListRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.domain.*;
+import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -15,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -34,6 +34,8 @@ public class ClubServiceImpl implements ClubService {
 
     private final ClubRepository clubRepository;
     private final ClubUserListRepository clubUserListRepository;
+    private final AttachmentRepository attachmentRepository;
+    private final BoardRepository boardRepository;
 
     @Override
     public int deleteById(Long club_id) {
@@ -54,6 +56,8 @@ public class ClubServiceImpl implements ClubService {
         this.clubRepository = sqlSession.getMapper(ClubRepository.class);
         this.clubUserListRepository = sqlSession.getMapper(ClubUserListRepository.class);
         this.userRepository = sqlSession.getMapper(UserRepository.class);
+        this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+        this.boardRepository = sqlSession.getMapper(BoardRepository.class);
     }
 
     @Override
@@ -161,7 +165,39 @@ public class ClubServiceImpl implements ClubService {
         return list;
     }
 
+    @Override
+    @Transactional
+    public Board detail(Long id) {
+        Board board = boardRepository.findById(id);
 
+        if (board != null){
+            List<Attachment> fileList = attachmentRepository.findByClub(board.getId());
+            setImage(fileList);
+            board.setFileList(fileList);
+        }
+        System.out.println("club 게시판 상세페이지 : " + board);
+        return board;
+    }
+
+    @Override
+    public List<Board> getClubBoard(Long clubId) {
+        return clubRepository.findBoardByClubIdAndType(clubId);
+    }
+
+    private void setImage(List<Attachment> fileList) {
+        String realPath = new File(uploadDir).getAbsolutePath();
+
+        for (Attachment attachment : fileList){
+            BufferedImage imgData = null;
+            File f = new File(realPath, attachment.getFilename());
+            try {
+                imgData = ImageIO.read(f);
+                if (imgData != null) attachment.setImage(true);
+            } catch (IOException e) {
+                System.out.println("클럽 게시판에 파일 존재 안 함 : " + f.getAbsolutePath() + "[" + e.getMessage() + "]");
+            }
+        }
+    }
 
     @Override
     public ClubUserList findClubMaster(Long club_id){
