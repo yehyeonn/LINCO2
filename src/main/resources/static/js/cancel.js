@@ -6,6 +6,7 @@ function cancelPay(event) {
     var reason = "결제 취소";
     var impId = row.getAttribute('data-impId'); // imp_uid
 
+    console.log(impId)
     console.log(merchantUid);
     console.log(totalPrice);
     console.log(reason);

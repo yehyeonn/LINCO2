@@ -7,7 +7,6 @@ import com.lec.spring.service.*;
 import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.AuthData;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.AccessToken;
@@ -208,24 +207,27 @@ public class UserController {
 
         System.out.println("impUid : " + impUid);
         Reservation reservation = reservationService.findByImpUid(impUid);
-        if (reservation != null) {
-            reservation.setStatus("CANCELED");
-            reservationService.update(reservation);
-        } else {
-            return "예약 정보를 찾을 수 없습니다.";
-        }
+
     // 여기까지는 됐는데 try-catch에서 실패 뜸 => cancelPayment 가 문제?
+
         try {
-            boolean isSuccess = iamportService.cancelPayment(impUid, merchantUid, amount, reason);
-            if (isSuccess) {
-                return "결제 취소가 완료되었습니다.";
-            } else {
-                return "결제 취소 실패";
+            // 서비스 단에서 토큰을 생성하고 결제 취소 요청을 처리
+            String accessToken = iamportService.getToken();
+            boolean isSuccess = iamportService.cancelPayment(accessToken, impUid, merchantUid, amount, reason);
+            if(isSuccess) {
+                if(reservation != null) {
+                    reservation.setStatus("CANCELED");
+                    reservationService.update(reservation);
+                }
             }
+            return isSuccess ? "결제 취소가 완료되었습니다." : "결제 취소 실패";
+
         } catch (Exception e) {
+            System.err.println("예외 발생: " + e.getMessage());
             e.printStackTrace();
             return "서버 오류가 발생했습니다.";
         }
+    }
     }
 //    @PostMapping("/cancel")
 //    public ResponseEntity<String> cancelPayment(@RequestBody Reservation reservation, @RequestParam String canReason) {
@@ -245,7 +247,7 @@ public class UserController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 취소 중 오류가 발생했습니다.");
 //        }
 //    }
-}
+
 
 
 //    public ResponseEntity<String> cancel(@RequestBody Map<String, Object> payload) {

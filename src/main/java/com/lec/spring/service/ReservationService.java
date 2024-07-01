@@ -1,7 +1,6 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Reservation;
-import com.siot.IamportRestClient.exception.IamportResponseException;
 
 import java.io.IOException;
 import java.util.List;

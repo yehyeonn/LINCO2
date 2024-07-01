@@ -79,22 +79,53 @@ public class IamportService {
         return token;
     }
 
-    public boolean cancelPayment(String impUid, String merchantUid, int amount, String reason) throws IamportResponseException, IOException {
+    public boolean cancelPayment(String token, String impUid, String merchantUid, int amount, String reason) throws IOException {
+        URL url = new URL("https://api.iamport.kr/payments/cancel");
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
-        try {
-            String token = getToken();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("Authorization", token);
+        conn.setDoOutput(true);
+
+        JsonObject json = new JsonObject();
+        json.addProperty("imp_uid", impUid);
+        json.addProperty("merchant_uid", merchantUid);
+        json.addProperty("amount", amount);
+        json.addProperty("reason", reason);
+
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()))) {
+            bw.write(json.toString());
+            bw.flush();
         }
-        CancelData cancelData = new CancelData(impUid, false); // impUid를 기반으로 취소합니다.
-        cancelData.setChecksum(BigDecimal.valueOf(amount));
-        cancelData.setReason(reason);
+        int responseCode = conn.getResponseCode();
+        System.out.println("Response Code: " + responseCode);
 
-        IamportResponse<Payment> cancelResponse = iamportClient.cancelPaymentByImpUid(cancelData);
-
-        return cancelResponse != null && cancelResponse.getResponse() != null;
+        if (responseCode == 200) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    response.append(line);
+                }
+                System.out.println("Response: " + response.toString());
+                return true;
+            }
+        } else {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()))) {
+                StringBuilder errorResponse = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    errorResponse.append(line);
+                }
+                System.err.println("Error Response: " + errorResponse.toString());
+                return false;
+            } finally {
+                conn.disconnect();
+            }
+        }
     }
-
     private void authenticate() {
         IamportResponse<AccessToken> authResponse = null;
         try {
