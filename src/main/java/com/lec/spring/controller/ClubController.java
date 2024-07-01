@@ -5,6 +5,7 @@ import com.lec.spring.service.BoardService;
 import com.lec.spring.service.ClubService;
 import com.lec.spring.service.ClubUserListService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,9 +24,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -186,7 +189,7 @@ public class ClubController {
         return "/club/detail";
     }
 
-    @GetMapping("board/{id}")
+    @GetMapping("board/list/{id}")
     public String board(@PathVariable Long id
             , @RequestParam(name = "title", required = false, defaultValue = "") String title
             , Integer page
@@ -330,9 +333,54 @@ public class ClubController {
     }
 
     // 클럽 글 작성
-    @GetMapping("/write")
-    private void clubWrite() {
+    @GetMapping("/board/write/{id}")
+    public String write(@PathVariable Long id,Model model) {
+        Club club = clubService.getClubById(id);
+
+        // 클럽장 -> user_id, club_id, role, user
+        ClubUserList clubMaster = clubService.findClubMaster(id);
+        System.out.println("clubMaster :" + clubMaster);
+
+        model.addAttribute("club", club);
+        model.addAttribute("clubMaster", clubMaster);
+        return "club/board/write";
     }
 
+    @PostMapping("/board/write")
+    public String writeOk(
+            @RequestParam Map<String, MultipartFile> files,
+//            @Valid Board board,
+            Board board,
+            @RequestParam("boardType.id") int boardTypeId,
+//            BindingResult boardResult,
+            @RequestParam(name = "clubid",required = false) Long clubid,
+            Model model
+//            RedirectAttributes redirectAttributes
+    ) throws IOException {
+        // 기본 이미지 경로 설정
+        String imgPath = "no_img.png"; // 기본 이미지 경로
+        Club club1 = new Club();
+        club1.setId(clubid);
+        board.setClub(club1);
+        int result = boardService.write(board, files);
+        System.out.println("board : "+board.getClub().getId());
+        model.addAttribute("result", result);
+        model.addAttribute("clubid",clubid);
+        return "club/board/writeOk";
+    }
+
+    private void handleErrors(BindingResult result, Board board, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("board", board);
+        for(FieldError err : result.getFieldErrors()){
+            redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+        }
+    }
+
+    private void handleClubUserListErrors(BindingResult result, ClubUserList clubUserList, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("clubUserList", clubUserList);
+        for(FieldError err : result.getFieldErrors()){
+            redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+        }
+    }
 }
 

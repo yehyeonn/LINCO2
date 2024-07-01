@@ -1,6 +1,8 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Board;
+import com.lec.spring.domain.Club;
+import com.lec.spring.domain.User;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BoardService {
+
 
     // 글 쓰기
     int write(Board board, Map<String, MultipartFile> files);

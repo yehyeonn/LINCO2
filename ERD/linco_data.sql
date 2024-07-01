@@ -143,6 +143,7 @@ values ('공지사항'),
        ('자유게시판'),
        ('클럽홍보');
 
+
 # select * from BOARD_TYPE;
 
 insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
@@ -338,4 +339,5 @@ values
 select *
 from board_type;
 
-insert into board_type values (4, '클럽게시판');
+insert into board_type values (4, '클럽공지사항');
+insert into board_type values (5, '클럽게시판');

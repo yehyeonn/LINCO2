@@ -14,16 +14,17 @@
 <th:block th:insert="/common/header :: header-body"></th:block>
 
 <div class="write container1" th:with="logged_user=${#authentication.principal.user}">
-    <form th:action="@{/club/write}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/club/board/write}" method="post" enctype="multipart/form-data">
         <div class="title">
             <div class="form-group">
                 <div>
+                    <input type="text" name="clubid" th:value="${club.id}">
                     <label>클럽 게시물 작성</label><br>
                     <label>작성자:</label>
                     <select name="boardType.id" id="lang" class="select-right">
 <!--                        공지사항은 클럽장만 보이게-->
-                        <option th:value="${1}" th:if="${logged_user.id == clubMaster.user_id}">공지사항</option>
-                        <option th:value="${4}">클럽게시판</option>
+                        <option th:value="${4}" th:selected="${boardType == 4}" th:if="${logged_user.id == clubMaster.user_id}">클럽 공지사항</option>
+                        <option th:value="${5}" th:selected="${boardType == 5}">클럽게시판</option>
                     </select>
                     <span class="form-control">[[${logged_user.name}]]</span>
                 </div>

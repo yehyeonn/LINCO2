@@ -60,17 +60,17 @@
                 <ul class="club-menu-list">
                     <li class="club-category-search">
                         <label class="search-club-category">
-                            <button id="mainBtn" class="custom-button button-1" clubId="${club.getId()}" ><span>메인</span><span>메인</span></button>
+                            <a class="custom-button button-1" th:href="@{'/club/detail/' + ${club.id}}"><span>메인</span><span>메인</span></a>
                         </label>
                     </li>
                     <li>
                         <label class="search-club-category">
-                            <button class="custom-button button-2" type="submit" name="clubCategory"><span>게시판</span><span>게시판</span></button>
+                            <a class="custom-button button-2" th:href="@{'/club/board/list/' + ${club.id}}"><span>게시판</span><span>게시판</span></a>
                         </label>
                     </li>
                     <li>
                         <label class="search-club-category">
-                            <button class="custom-button button-3" type="submit" name="clubCategory"><span>사진첩</span><span>사진첩</span></button>
+                            <a class="custom-button button-3" th:href="@{'/club/album/' + ${club.id}}"><span>사진첩</span><span>사진첩</span></a>
                         </label>
                     </li>
                 </ul>
@@ -116,10 +116,12 @@
         <div class="footer-btn">
             <button id="backBtn" class="btn btn-success">이전</button>
 
-            <a class="button" th:href="@{/club/write}">
-                <button class="btn btn-success">
-                    글쓰기
-                </button>
+            <a class="button">
+                <form th:action="@{'/club/board/write/'+${club.getId()}}" method="get">
+                    <button class="btn btn-success" type="submit">
+                        글쓰기
+                    </button>
+                </form>
             </a>
         </div>
     </main>
