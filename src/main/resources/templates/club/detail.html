@@ -86,11 +86,14 @@
                 <h2>멤버 리스트</h2>
                 <ul>
                     <li>
-                        클럽장: [[${clubMaster.user.getUsername()}]]
+                        <img th:src="@{'/upload/'+${clubMaster.getUser().getProfile_picture()}}" style="display: inline">
+                        클럽장: [[${clubMaster.user.getName()}]]
                     </li>
 
                     <li th:each="member : ${filteredClubMemberList}">
-                        멤버: [[${member.user.getUsername()}]]
+                        <img th:src="@{'/upload/'+${member.getUser().getProfile_picture()}}" style="display: inline">
+
+                        멤버: [[${member.user.getName()}]]
                         <!-- 내보내기 기능-->
                         <form name="frmOut" th:action="@{/club/out}" method="post">
                             <input type="text" class="hidden" name="user_id" th:value="${member.user.getId()}">
