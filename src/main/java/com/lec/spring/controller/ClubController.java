@@ -259,6 +259,7 @@ public class ClubController {
         List<Attachment> attachments = attachmentService.findByAttachment(id);
 
         model.addAttribute("board", board);
+        System.out.println("club board 정보 : " + board);
         model.addAttribute("clubBoards", clubBoards);
         model.addAttribute("attachments", attachments);
         model.addAttribute("cnt", cnt);
