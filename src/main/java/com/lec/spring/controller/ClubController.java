@@ -7,12 +7,9 @@ import com.lec.spring.service.BoardService;
 import com.lec.spring.service.ClubService;
 import com.lec.spring.service.ClubUserListService;
 import com.lec.spring.service.UserService;
-import com.lec.spring.service.*;
-import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -23,17 +20,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -249,7 +243,7 @@ public class ClubController {
         model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
-        return "/club/board/list";
+        return "club/boardList";
     }
 
     @GetMapping("board/detail/{id}")
@@ -420,7 +414,7 @@ public class ClubController {
 
         model.addAttribute("club", club);
         model.addAttribute("clubMaster", clubMaster);
-        return "club/board/write";
+        return "club/boardWrite";
     }
 
     @PostMapping("/board/write")
@@ -443,7 +437,7 @@ public class ClubController {
         System.out.println("board : "+board.getClub().getId());
         model.addAttribute("result", result);
         model.addAttribute("clubid",clubid);
-        return "club/board/writeOk";
+        return "club/boardWriteOk";
     }
 
     private void handleErrors(BindingResult result, Board board, RedirectAttributes redirectAttributes) {
