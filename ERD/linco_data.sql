@@ -59,20 +59,15 @@ ALTER TABLE AUTHORITY
 SET FOREIGN_KEY_CHECKS = 1;
 
 insert into USER (tel, username, password, name, address, gender, birthday, profile_picture, regdate)
-values ('010-0000-0000', 'yee@gmail.com', '$2a$10$VEAsTnm2FApO.iJBYGf8wOiL2dzr9kk3IXIMbVcDLTO0BZMiLndS6', '김예현',
-        '서울시 관악구 신림동', 'FEMALE', '1999-05-14', 'face04.png', null),
-       ('010-1111-1111', 'seye@gmail.com', '$2a$10$2NL.gbL4ZcawpKGTQzgdeuZU/.aeS7V7i5r7CRuM8NgpEf6XoYByq', '김세현',
-        '서울시 관악구 사당동', 'FEMALE', '1998-05-14', 'face01.png',
+values ('010-0000-0000', 'yee@gmail.com', '$2a$10$VEAsTnm2FApO.iJBYGf8wOiL2dzr9kk3IXIMbVcDLTO0BZMiLndS6', '김예현', '서울시 관악구 신림동', 'FEMALE', '1999-05-14', 'face04.png', null),
+       ('010-1111-1111', 'seye@gmail.com', '$2a$10$2NL.gbL4ZcawpKGTQzgdeuZU/.aeS7V7i5r7CRuM8NgpEf6XoYByq', '김세현', '서울시 관악구 사당동', 'FEMALE', '1998-05-14', 'face01.png',
         null),
-       ('010-2222-3333', 'sejin@gmail.com', '$2a$10$tjrJus3ojRXGngNQDQFn6OW.6ii6QE5gzhgnJtbQ5vqtJ9ui0p6ku', '김세진',
-        '서울시 관악구 역삼동', 'MALE', '1999-01-01', 'face02.png',
+       ('010-2222-3333', 'sejin@gmail.com', '$2a$10$tjrJus3ojRXGngNQDQFn6OW.6ii6QE5gzhgnJtbQ5vqtJ9ui0p6ku', '김세진', '서울시 관악구 역삼동', 'MALE', '1999-01-01', 'face02.png',
         null),
-       ('010-4444-4444', 'so@gmail.com', '$2a$10$tjrJus3ojRXGngNQDQFn6OW.6ii6QE5gzhgnJtbQ5vqtJ9ui0p6ku', '김소소',
-        '서울시 강남구 역삼동', 'MALE', '1999-12-31', 'face03.png', null);
+       ('010-4444-4444', 'so@gmail.com', '$2a$10$tjrJus3ojRXGngNQDQFn6OW.6ii6QE5gzhgnJtbQ5vqtJ9ui0p6ku', '김소소', '서울시 강남구 역삼동', 'MALE', '1999-12-31', 'face03.png', null);
 
 
-# select *
-# from USER;
+# select * from USER;
 
 
 insert into AUTHORITY (name)
@@ -89,22 +84,22 @@ values (1, 1),
 
 # select * from USER_AUTHORITY;
 
-# insert into CLUB(name, category, detail_category, intro, content, representative_picture)
-# values ('부리부리부리부리', '운동', '축구', '어서왕~~~~', '부리부리부리부리 축구하쟝', 'face03.png'),
-#        ('디컨', '스터디', '컴퓨터', '하기 시러', '집에 가고 싶어, 자고 싶어', 'face04.png'),
-#        ('공부할 사람2', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람1', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람3', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람4', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람5', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람6', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람7', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람8', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람9', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('공부할 사람10', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
-#        ('영화볼 사람', '문화예술', '여가', '인사이드아웃2', '인사이드아웃2 볼거야', 'face02.png'),
-#        ('군산 갈 사람', '여행', '여행', '군산여행', '군산여행', 'face03.png')
-# ;
+insert into CLUB(name, category, detail_category, intro, content, representative_picture)
+values ('부리부리부리부리', '운동', '축구', '어서왕~~~~', '부리부리부리부리 축구하쟝', 'face03.png'),
+       ('디컨', '스터디', '컴퓨터', '하기 시러', '집에 가고 싶어, 자고 싶어', 'face04.png'),
+       ('공부할 사람2', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람1', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람3', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람4', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람5', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람6', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람7', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람8', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람9', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('공부할 사람10', '스터디', '컴퓨터', '하고 싶지 않아', '집 언제 가?', 'face01.png'),
+       ('영화볼 사람', '문화예술', '여가', '인사이드아웃2', '인사이드아웃2 볼거야', 'face02.png'),
+       ('군산 갈 사람', '여행', '여행', '군산여행', '군산여행', 'face03.png')
+       ;
 
 # select * from CLUB;
 
@@ -150,12 +145,15 @@ values (5, 15, 'MASTER','2024-06-27 16:42:15'),
 insert into BOARD_TYPE(name)
 values ('공지사항'),
        ('자유게시판'),
-       ('클럽홍보');
+       ('클럽홍보'),
+       ('클럽 게시판'),
+       ('클럽 공지사항');
 
 # select * from BOARD_TYPE;
 
 insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
-values (1, null, 2, '야 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+values
+       (1, null, 2, '야 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
        (2, null, 1, '야 나두1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
        (3, null, 1, '너두?!1', '야 너두? 맛없쪙? 나두 맛없쪙1', 1),
        (2, null, 2, '이거 되려나', '야 이거 뜨냐?', 1),
@@ -181,7 +179,15 @@ values (1, null, 2, '야 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1
        (1, null, 1, '공지사항9', '공지사항1', 9),
        (1, null, 1, '공지사항10', '공지사항1', 10),
        (3, 1, 3, '이건?', '되려나?', 1),
-       (2, 2, 3, '과연', '두둥', 1)
+       (2, 2, 3, '과연', '두둥', 1),
+       (2, 2, 3, '과연', '두둥',1),
+       (2, 1, 4, '클럽공지사항1', '클럽공지사항1',1),
+       (2, 1, 4, '클럽공지사항2', '클럽공지사항2',1),
+       (2, 1, 4, '클럽공지사항3', '클럽공지사항3',1),
+       (2, 1, 4, '클럽공지사항4', '클럽공지사항4',1),
+       (2, 1, 4, '클럽공지사항5', '클럽공지사항5',1),
+       (2, 1, 4, '클럽공지사항6', '클럽공지사항6',1),
+       (2, 1, 4, '클럽공지사항7', '클럽공지사항7',1)
        ;
 
 # select * from BOARD;
@@ -244,7 +250,7 @@ values (1, 1, 1, '재미없쪙', null),
 #        ('연가', '서울특별시 강남구 논현로85길 5-13', 6, '밥집', '070-1234-5678', 0, '2024-06-14', '2025-06-20', '10:00:00', '20:00:00', 'face03.png'),
 #        ('긴자료코', '서울 강남구 테헤란로20길 19 1동 106호', 6, '돈가스집', '070-2315-1313', 0, '2024-06-14', '2025-07-14', '10:00:00', '21:30:00', 'face04.png'),
 #        ('킹콩부대찌개', '서울 강남구 논현로87길 15-8 종합빌딩 1층', 6, '부대찌개', '070-6776-5656', 0, '2024-06-14', '2025-06-30', '10:00:00', '22:00:00', 'face02.png');
-#
+
 # select * from VENUE;
 
 insert into RESERVATION (user_id, reservation_name, email, merchantUid, impUid, tel, venue_id, venue_name, status, reserve_date, reserve_start_time, reserve_end_time, total_price)
@@ -256,8 +262,7 @@ values (1, '김예현', 'yee0514@gamil.com', 'merchant_1658987765533', 'imp_9868
        (1, '김예현', 'yee0514@gamil.com', 'merchant_1658987765554', 'imp_986822455831', '010-0000-0000', 2, '서울역사박물관 야주개홀(강당) (24. 6월)', 'CANCELED', '2024-07-12', '09:00:00',  '18:00:00', 900),
        (1, '김예현', 'yee0514@gamil.com','merchant_1658987765573','imp_986842555831' , '010-0000-0000', 2, '서울역사박물관 야주개홀(강당) (24. 6월)', 'PAYED', '2024-07-05', '09:00:00',  '10:00:00', 100),
        (1, '김예현', 'yee0514@gamil.com','merchant_1658987766553', 'imp_986822255831', '010-0000-0000', 2, '서울역사박물관 야주개홀(강당) (24. 6월)', 'CANCELED', '2024-07-05', '11:00:00',  '12:00:00', 100)
-;
-
+   ;
 
 # select * from RESERVATION;
 

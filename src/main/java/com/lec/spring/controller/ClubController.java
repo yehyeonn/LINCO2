@@ -266,6 +266,7 @@ public class ClubController {
         List<Attachment> attachments = attachmentService.findByAttachment(id);
 
         model.addAttribute("board", board);
+        System.out.println("club board 정보 : " + board);
         model.addAttribute("clubBoards", clubBoards);
         model.addAttribute("attachments", attachments);
         model.addAttribute("cnt", cnt);
@@ -275,6 +276,39 @@ public class ClubController {
         return "club/boardDetail";
     }
 
+    @GetMapping("/board/update/{id}")
+    public String boardUpdate(@PathVariable Long id, Model model) {
+        List<Attachment> attachments = attachmentService.findByAttachment(id);
+
+        model.addAttribute("attachments", attachments);
+        model.addAttribute("board", boardService.detail(id));
+        return "club/boardUpdate";
+    }
+
+    @PostMapping("/board/update")
+    public String boardUpdateOk(
+            @RequestParam Map<String, MultipartFile> files,
+            @Valid Board board,
+            BindingResult result,
+            Long[] delfile,
+            Model model,
+            RedirectAttributes redirectAttrs
+    ){
+        if (result.hasErrors()){
+            redirectAttrs.addFlashAttribute("title", board.getTitle());
+            redirectAttrs.addFlashAttribute("content", board.getContent());
+
+            List<FieldError> errList = result.getFieldErrors();
+            for (FieldError err : errList){
+                redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/club/board/update/" + board.getId();
+        }
+        int updateResult = boardService.update(board, files, delfile);
+        model.addAttribute("result", updateResult);
+
+        return "club/boardUpdateOk";
+    }
 
     @PostMapping("/join")
     public String join(@RequestParam(name = "user_id", required = false, defaultValue = "") Long user_id
@@ -367,6 +401,11 @@ public class ClubController {
     public void initBinder(WebDataBinder binder) {
         System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());
+    }
+
+    @InitBinder("board")
+    public void initClubNoticeBinder(WebDataBinder binder) {
+        binder.setValidator(new BoardValidator());
     }
 
     // 클럽 글 작성
