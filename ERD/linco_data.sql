@@ -274,3 +274,8 @@ from club;
 #        (5, 20, 'MEMBER', '2024-6-27 17:33:01'),
 #        (4, 20, 'MEMBER','2024-6-27 17:33:02');
 # select * from club_user_list;
+
+select *
+from board_type;
+
+insert into board_type values (4, '클럽게시판');

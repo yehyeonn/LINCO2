@@ -5,8 +5,6 @@ import com.lec.spring.service.ClubService;
 import com.lec.spring.service.ClubUserListService;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,7 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +83,7 @@ public class ClubController {
 
         // 이미지 경로를 Socializing 객체에 설정
         club.setRepresentative_picture(imgPath);
-        System.out.println("이미지 경sh로: " + imgPath); // 디버깅을 위한 로그 출력
+        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
 
 
         // 유효성 검사에서 에러가 발생한 경우
@@ -185,8 +182,8 @@ public class ClubController {
         return "/club/detail";
     }
 
-    @GetMapping("board/{id}")
-    public String board(@PathVariable Long id, Model model){
+    @GetMapping("board/list/{id}")
+    public String boardList(@PathVariable Long id, Model model){
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
         System.out.println("club: " + club);
@@ -225,7 +222,7 @@ public class ClubController {
         model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
-        return "/club/board";
+        return "/club/board/list";
     }
 
     @PostMapping("/join")
