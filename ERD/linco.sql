@@ -139,6 +139,8 @@ CREATE TABLE RESERVATION
     id                 INT                                NOT NULL AUTO_INCREMENT,
     user_id            INT                                NOT NULL,
     reservation_name   VARCHAR(20)                        NOT NULL,
+    merchantUid        VARCHAR(100)                       NOT NULL,
+    impUid             VARCHAR(100)                       NULL,
     email              VARCHAR(50)                        NOT NULL,
     tel                VARCHAR(20)                        NOT NULL,
     venue_id           INT                                NOT NULL,
@@ -185,6 +187,7 @@ CREATE TABLE USER_SOCIALIZING
     user_id        INT                       NOT NULL,
     socializing_id INT                       NOT NULL,
     role           ENUM ('MASTER', 'MEMBER') NOT NULL DEFAULT 'MEMBER',
+    subscription   DATETIME                      NULL DEFAULT NOW(),
     PRIMARY KEY (user_id, socializing_id)
 );
 

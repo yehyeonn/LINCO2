@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/board")
 public class BoardController {
 
-    @Value("upload")
-    private String uploadDir;
+//    @Value("upload")
+//    private String uploadDir;
 
     @Autowired
     private BoardService boardService;
@@ -111,27 +111,8 @@ public class BoardController {
             model.addAttribute("result", result);
         // boardType 이 클럽홍보 일 경우
         } else if (boardTypeId == 3) {
-            // 기본 이미지 경로 설정
-            String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
-
-            // 파일이 비어있지 않으면 첫 번째 파일을 업로드 처리
-            if (!files.isEmpty()) {
-                for (MultipartFile file : files.values()) {
-                    if (!file.isEmpty()) {
-                        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-                        imgPath = "upload/" + fileName;
-
-                        try {
-                            Path path = Paths.get(imgPath);
-                            Files.createDirectories(path.getParent());
-                            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break; // 첫 번째 파일만 처리하고 루프 종료
-                    }
-                }
-            }
+//            // 기본 이미지 경로 설정
+//            String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
 
             if (clubUserListResult.hasErrors()) {
                 handleClubUserListErrors(clubUserListResult, clubUserList, redirectAttributes);
@@ -169,10 +150,12 @@ public class BoardController {
         Board board = boardService.detail(id);
         model.addAttribute("board", board);
 //        디버깅 용도
-        System.out.println("board : " +board.toString());
+//        System.out.println("board : " +board.toString());
 
         Club club = board.getClub() != null ? clubService.getClubById(board.getClub().getId()) : null;
         model.addAttribute("club", club);
+
+        String content = board.getContent().replace("\n", "<br>");
 
         List<Comment> comments = commentService.list(id).getList();  // 게시물의 댓글 목록을 가져옴
 
@@ -184,6 +167,7 @@ public class BoardController {
         List<Attachment> attachments = attachmentService.findByAttachment(id);
 
         model.addAttribute("attachments", attachments);
+        model.addAttribute("content", content);
         model.addAttribute("cnt", cnt);
         model.addAttribute("comments", comments);
 
@@ -199,22 +183,17 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String list(Integer page, Model model, @RequestParam(name = "boardTypeId", required = false, defaultValue = "2") Long boardTypeId, @RequestParam(name = "clubId", required = false, defaultValue = "") Long clubId) {      // @RequestParam(required = false, defaultValue = "1") Integer page
+    public String list(Integer page, Model model, @RequestParam(name = "boardTypeId", required = false, defaultValue = "2") Long boardTypeId, @RequestParam(name = "clubId", required = false, defaultValue = "") Long clubId) {
 //        boardService.list(page, model);
 
         List<Board> boards = boardService.list(page, model, boardTypeId, clubId);
         List<Club> clubs = clubService.getAllClubs();
+//        Attachment attachment = attachmentService.findByAttachment();
 
         model.addAttribute("boards", boards);
         model.addAttribute("clubs", clubs);
 
-        System.out.println("boards : " + boards);
-        // 디버깅용
-//        for (int i = 1; i < boards.size(); i++) {
-//            System.out.println("boards : " +boards.get(i).getClub().toString() + "\n");
-//        }
-//        System.out.println("boardType : " +boardTypeId + "\n");
-
+//        System.out.println("boards : " + boards);
         return "board/list";
     }
 
@@ -244,14 +223,14 @@ public class BoardController {
             for (FieldError err : errList) {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
-            System.out.println("ErrList" + errList);
+//            System.out.println("ErrList" + errList);
             return "redirect:/board/update/" + board.getId();
         }
 
         int updateResult = boardService.update(board, files, delfile);
         model.addAttribute("result", updateResult);
 
-        System.out.println("Update result : " + updateResult);
+//        System.out.println("Update result : " + updateResult);
         return "board/updateOk";
     }
 

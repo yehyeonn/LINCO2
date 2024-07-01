@@ -75,76 +75,18 @@ $(document).ready(function() {
     // console.log('DOM fully loaded and parsed');  // Debugging line
     showContent('tabs');  // 기본적으로 tabs를 표시
 
-    // 결제내역
-    $(window).on("load resize", function() {
-        var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-        $('.tbl-header').css({'padding-right': scrollWidth});
-    }).resize();
+// 결제내역
+    $(document).ready(function () {
+        $(window).on("load resize", function () {
+            var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+            $('.tbl-header').css({'padding-right': scrollWidth});
+        }).resize();
 
-    // 취소버튼 결제완료일때만 생김
-    $('td').each(function() {
-        if ($(this).text().includes('결제완료')) {
-            $(this).find('.cancel-button').css('display', 'inline-block');
-        }
-    });
-
-
-    // 프로필 편집 사진 삭제
-    $('#delete-photo-btn').click(function(event) {
-        event.preventDefault();
-        $('#profile-photo-edit').attr('src', '/upload/profile_img.jpg'); // 기본 이미지 경로로 변경
-    });
-
-    // 사진 변경 버튼 클릭 시 파일 입력 필드 클릭
-    $('#change-photo-btn').on('click', function (event) {
-        event.preventDefault();
-        $('#fileInput').click();
-    });
-
-    // 파일 선택 시 미리보기 표시
-    $('#fileInput').on('change', function () {
-        const file = this.files[0];
-        if (file) {
-            const fileType = file.type;
-            const validImageTypes = ["image/gif", "image/jpeg", "image/png", "image/jpg"];
-            if (!validImageTypes.includes(fileType)) {
-                alert("이미지 파일만 업로드 가능합니다.");
-                $('#fileInput').val(''); // 입력 필드를 리셋
-                return;
+        // 취소버튼 결제완료일때만 생김
+        $('td').each(function () {
+            if ($(this).text().includes('결제완료')) {
+                $(this).find('.cancel-button').css('display', 'inline-block');
             }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                $('#profile-photo-edit').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(file);
-        }
+        });
     });
-
-    // // 프로필 편집 내용 저장
-    // $('#profile-submit').on('submit', function(event) {
-    //     event.preventDefault(); // 기본 폼 제출 동작 방지
-    //
-    //     // 폼 데이터를 직렬화
-    //     var formData = new FormData(this);
-    //
-    //     // 서버에 폼 데이터를 제출하는 AJAX 요청
-    //     $.ajax({
-    //         type: 'POST',
-    //         // url: 'http://localhost:8080/user/save', // 실제 서버 URL로 변경
-    //         url: '/user/save',
-    //         contentType: 'application/json',
-    //         data: JSON.stringify(formData),
-    //         success: function(response) {
-    //             // 성공적으로 저장되었을 때의 처리
-    //             console.log('저장 성공:', response);
-    //             alert('내용이 성공적으로 저장되었습니다.');
-    //         },
-    //         error: function(error) {
-    //             // 저장 실패 시의 처리
-    //             console.error('저장 실패:', error);
-    //             alert('내용 저장에 실패했습니다. 다시 시도해 주세요.');
-    //         }
-    //     });
-    // });
 });

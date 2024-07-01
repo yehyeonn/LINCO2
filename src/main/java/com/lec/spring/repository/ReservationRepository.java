@@ -11,7 +11,7 @@ public interface ReservationRepository {
     int save(Reservation reservation);
 
 
-    List<Reservation> findById(Long id);
+    Reservation findById(Long id);
 
     int update(Reservation reservation);
 
@@ -22,5 +22,7 @@ public interface ReservationRepository {
     List<Reservation> findByUserId(Long userId);
 
     List<Reservation> findExpiredReservation();
+
+    Reservation findByImpUid(String impUid);
 
 }

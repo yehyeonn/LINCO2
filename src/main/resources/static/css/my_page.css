@@ -51,10 +51,9 @@ body {
 }
 
 .profile-pic img {
-    width: 100%;
-    height: auto; /* 수정 */
+    width: 100px;
+    height: 100px; /* 수정 */
     border-radius: 50%;
-    object-fit: cover; /* 추가 */
 }
 .profile-name {
     margin-top: 10px;
@@ -308,7 +307,7 @@ tbody button {
     border: none;
     border-radius: 5px;
     transition: 0.3s background-color;
-    display: none;
+    /*display: none;*/
     margin-top: 5px;
     padding: 5px 10px;
 }

@@ -1,5 +1,6 @@
 package com.lec.spring.config;
 
+import com.lec.spring.config.oauth.CustomAuthenticationSuccessHandler;
 import com.lec.spring.config.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,9 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -30,6 +29,12 @@ public class SecurityConfig {
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
 
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+    @Autowired
+    private ClientRegistrationRepository clientRegistrationRepository;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -43,8 +48,6 @@ public class SecurityConfig {
                                 .requestMatchers("/socializing/write").authenticated()
                                 .requestMatchers("/club/detail/**", "/club/create/**").authenticated()
                                 .requestMatchers("/reservation/write").authenticated()
-                                .requestMatchers("/club/detail/**", "/club/create/**","/club/board/**" ).authenticated()
-//                                .requestMatchers("/reservation/write").authenticated()
                                 .requestMatchers("/board/write/**", "/board/update/**", "/board/delete").hasAnyAuthority("MEMBER", "ADMIN")
                                 .anyRequest().permitAll()
                 )
@@ -69,6 +72,7 @@ public class SecurityConfig {
                         .loginPage("/user/login")    // 로그인 페이지를 기존과 동일한 url 로 지정
                         // ↑ 구글 로그인 완료된 뒤에 후처리가 필요하다!
 
+                        .successHandler(customAuthenticationSuccessHandler)
                         // code 를 받아오는 것이 아니라, 'AccessToken' 과 사용자 '프로필정보'를 한번에 받아온다
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                                 // 인증서버의 userinfo endpoint 설정

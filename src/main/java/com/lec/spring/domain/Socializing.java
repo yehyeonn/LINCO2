@@ -25,9 +25,9 @@ public class Socializing {
     private Long total_price;
     private String img;
     private LocalDateTime regdate;
-
-    private Venue venue;
     private Long venue_id;
+    private Venue venue;
+
     private User user;
 //    public Long getVenue_id() {
 //        return venue != null ? venue.getId() : null;

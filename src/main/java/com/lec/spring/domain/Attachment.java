@@ -19,6 +19,7 @@ public class Attachment {
     private Board board;
     private Club club;
     private Long board_id;
+    private Long club_id;
 
     public void setBoard(Board board){
         this.board = board;

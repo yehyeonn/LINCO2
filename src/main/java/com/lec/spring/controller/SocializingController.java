@@ -1,11 +1,8 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.MvcConfiguration;
-import com.lec.spring.domain.Socializing;
+import com.lec.spring.domain.*;
 //import com.lec.spring.repository.UserSocializingRepository;
-import com.lec.spring.domain.SocializingValidator;
-import com.lec.spring.domain.UserSocializing;
-import com.lec.spring.domain.Venue;
 import com.lec.spring.service.ReservationService;
 import com.lec.spring.service.SocializingService;
 import com.lec.spring.service.UserSocializingService;
@@ -65,7 +62,12 @@ public class SocializingController {
             , @RequestParam(name = "reserveDate", required = false)LocalDate reserveDate
             , @RequestParam(name = "reserveST", required = false) LocalTime reserveST
             , @RequestParam(name = "reserveET", required = false)LocalTime reserveET
+            , @RequestParam(name = "merchantUid", required = false)String merchantUid
             , Model model, HttpSession session) {
+
+        if(merchantUid != null) {
+            merchantUid = (String) session.getAttribute("merchantUid");
+        }
 
         Venue venue = (Venue) session.getAttribute("venue");
         if (venue == null && venueId != null) {
@@ -92,6 +94,7 @@ public class SocializingController {
             session.removeAttribute("reserveDate");
             session.removeAttribute("reserveST");
             session.removeAttribute("reserveET");
+            session.removeAttribute("merchantUid");
 
             // 세션이 초기화되었음을 확인하는 로그 추가
             System.out.println("세션 정보 초기화 완료");
@@ -110,6 +113,7 @@ public class SocializingController {
         model.addAttribute("reserveDate", reserveDate);
         model.addAttribute("reserveST", reserveST);
         model.addAttribute("reserveET", reserveET);
+        model.addAttribute("merchantUid", merchantUid);
         model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
         model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
 
@@ -137,7 +141,7 @@ public class SocializingController {
             , RedirectAttributes redirectAttributes
     ) throws IOException {
         // 기본 이미지 경로 설정
-        String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
+        String imgPath = "upload/noimg.png"; // 기본 이미지 경로
 
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
@@ -199,6 +203,11 @@ public class SocializingController {
         String content = socializing.getContent().replace("\n","<br>");
         for (UserSocializing e : socializingMemberList) {
             membersid.add(e.getUser().getId());
+        }
+        if(socializing.getVenue() == null){
+            Venue venue = new Venue();
+            venue.setVenue_name("없음");
+            socializing.setVenue(venue);
         }
 
         model.addAttribute("detailsocializing",socializing);
