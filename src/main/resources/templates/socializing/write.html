@@ -11,7 +11,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script th:src="@{/js/payment.js}"></script>
 </head>
-<!-- // TODO : venue 값 불러서 찍어보고 그걸로 위치 표시하기 사진이랑.. ... 대관장소 이름 -->
 <body>
 <header th:replace="~{common/header :: header-body}"></header>
 
@@ -39,16 +38,16 @@
         </div>
 
         <div class="form-group select-container">
-            <label for="category">카테고리</label>
+            <label for="category">대분류: </label>
             <select id="category" name="category">
-                <option value="">카테고리 선택</option>
+                <option value="">카테고리</option>
                 <th:block th:each="cat : ${category}">
                     <option th:value="${cat}" th:text="${cat}" th:selected="${cat} == ${category1}" th:if="${category1}"></option>
                     <option th:value="${cat}" th:text="${cat}" th:unless="${category1}"></option>
                 </th:block>
             </select>
 
-            <label for="detail_category">소분류</label>
+            <label for="detail_category">소분류: </label>
             <select id="detail_category" name="detail_category" text="">
                 <option id="a" text="" value="">소분류 선택</option>
             </select>
@@ -57,24 +56,24 @@
         <div><span class="text-danger" th:if="${error_detail_category}" th:utext="${error_detail_category}"></span>
         </div>
         <div class="form-group">
-            <label for="content" class="content1">내용</label>
+            <label for="content" class="content1">내용: </label>
             <textarea id="content" name="content" rows="5" th:utext="${content}"></textarea>
         </div>
         <div class="form-group">
-            <label for="meeting_date">날짜</label>
+            <label for="meeting_date">날짜: </label>
             <input type="date" id="meeting_date" name="meeting_date" th:value="${meeting_date}"/>
-            <label for="meeting_time">시간</label>
+            <label for="meeting_time">시간: </label>
             <input type="time" id="meeting_time" name="meeting_time" th:value="${meeting_time}"/>
         </div>
         <div><span class="text-danger" th:if="${error_meeting_date} or ${error_meeting_time}"
                    th:utext="${error_meeting_date}"></span></div>
         <div class="form-group">
-            <label for="limit_num">인원</label>
+            <label for="limit_num">인원: </label>
             <input type="number" id="limit_num" name="limit_num" th:value="${limit_num}"/>
         </div>
         <div><span class="text-danger" th:if="${error_limit_num}" th:utext="${error_limit_num}"></span></div>
         <div class="form-group">
-            <label for="total_price">가격</label>
+            <label for="total_price">가격: </label>
             <input type="text" id="total_price" name="total_price" th:if="${total_price}" th:value="${total_price}" readonly/>
             <input type="text" name="total_price" th:unless="${total_price}" th:value="${total_price}" />원
         </div>
@@ -92,21 +91,21 @@
         </div>
 
         <div class="form-group" th:if="${venue != null and venue.id != null}">
-            <label for="reservation">예약장소</label>
+            <label for="reservation">예약장소: </label>
             <input type="text" id="reservation" name="reservation" th:value="${venue.venue_name != null ? venue.venue_name : ''}">
             <input type="text" name="venue_id" th:value="${venue.getId()}" style="display: none">
         </div>
         <div class="form-group" th:if="${venue != null and venue.id != null}">
-            <label for="reservationDate">예약날짜</label>
+            <label for="reservationDate">예약날짜: </label>
             <input type="text" id="reservationDate" name="reservationDate" th:value="${reserveDate != null ? reserveDate : ''}">
         </div>
         <div class="form-group" th:if="${venue != null and venue.id != null}">
-            <label for="reservationTime">예약시간</label>
+            <label for="reservationTime">예약시간: </label>
             <input type="text" id="reservationTime" name="reservationST" th:value="${reserveST != null ? reserveST : ''}"> ~
             <input type="text" name="reservationET" th:value="${reserveET != null ? reserveET : ''}">
         </div>
         <div class="form-group">
-            <label for="location">위치</label>
+            <label for="location">위치: </label>
             <input type="text" id="location" name="location"/>
             <button type="button" id="mapSearch">검색하기</button>
             <input type="text" id="placeName" name="place_name" style="display: none">

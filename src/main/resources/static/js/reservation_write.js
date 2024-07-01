@@ -24,6 +24,13 @@ document.addEventListener('DOMContentLoaded', function () {
     disableReservedTimes(); // 선택한 날짜에 예약 불가능한 시간 표시(이미 예약된 시간)
     localStorage.setItem('startTime', '');
     localStorage.setItem('endTime', '');
+
+    var selectedDate = localStorage.getItem('selectedDate');
+    if (selectedDate) {
+        document.getElementById("selectedDate").value = selectedDate;
+        selectDateOnCalendar(new Date(selectedDate));
+        $('#displaySelectedDate').text(selectedDate);
+    }
 });
 
 

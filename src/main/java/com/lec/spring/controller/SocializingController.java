@@ -157,6 +157,10 @@ public class SocializingController {
             }
         }
 
+        if(socializing.getTotal_price() == null) {
+            socializing.setTotal_price(0L);
+        }
+
         // 이미지 경로를 Socializing 객체에 설정
         socializing.setImg(imgPath);
         System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
@@ -230,10 +234,13 @@ public class SocializingController {
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable Long id, Model model){
+    public String update(@PathVariable Long id
+            , Model model){
 //        Socializing socializing = socializingService.selectById(id);
 //        System.out.println(socializing);
         model.addAttribute("updatesocializing", socializingService.selectById(id));
+        model.addAttribute("updatescicalizing", socializingService.detail(id)); // venue 정보도 가져오는 거
+
         return "socializing/update";
     }
 
@@ -254,6 +261,7 @@ public class SocializingController {
             }
             return "redirect:/socializing/update/" + socializing.getId();
         }
+
 
         model.addAttribute("result", socializingService.update(socializing));
         return "socializing/updateOk";
