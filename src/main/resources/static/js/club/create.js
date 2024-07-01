@@ -16,6 +16,14 @@ $(document).ready(function () {
     $('#fileInput').on('change', function () {
         const file = this.files[0];
         if (file) {
+            const fileType = file.type;
+            const validImgTypes = ["image/gif", "image/jpeg", "image/png"];
+            if(!validImgTypes.includes(fileType)) {
+                alert("이미지 파일만 업로드 가능합니다.")
+                $('#fileInput').val('');
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 var previewImage = document.getElementById("previewImage");

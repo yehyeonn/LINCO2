@@ -4,9 +4,12 @@ import com.lec.spring.domain.Reservation;
 import com.lec.spring.domain.ReservationValidator;
 import com.lec.spring.domain.SocializingValidator;
 import com.lec.spring.domain.Venue;
+import com.lec.spring.service.IamportService;
 import com.lec.spring.service.ReservationService;
+import com.lec.spring.service.UserService;
 import com.lec.spring.service.VenueService;
 import com.lec.spring.util.U;
+import com.nimbusds.oauth2.sdk.Response;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import com.siot.IamportRestClient.IamportClient;
@@ -33,24 +36,17 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
 
-    @Value("${imp.api.key}")
-    private String apiKey;
 
-    @Value("${imp.api.secretkey}")
-    private String secretKey;
+    private final IamportService iamportService;
+    private final ReservationService reservationService;
+    private final VenueService venueService;
 
-    private IamportClient iamportClient;
-
-    @PostConstruct
-    public void init() {
-        this.iamportClient = new IamportClient(apiKey, secretKey);
+    @Autowired
+    public ReservationController(IamportService iamportService, ReservationService reservationService, VenueService venueService) {
+        this.iamportService = iamportService;
+        this.reservationService = reservationService;
+        this.venueService = venueService;
     }
-
-    @Autowired
-    private ReservationService reservationService;
-    @Autowired
-    private VenueService venueService;
-
     @GetMapping("/write")
     public String write(@RequestParam("venue_id") Long venueId
             , @RequestParam("selectedDate") String selectedDate
@@ -83,16 +79,23 @@ public class ReservationController {
         session.setAttribute("reserveDate", reservation.getReserve_date());
         session.setAttribute("reserveST", reservation.getReserve_start_time());
         session.setAttribute("reserveET", reservation.getReserve_end_time());
+        session.setAttribute("merUid", reservation.getMerchantUid());
+        session.setAttribute("impUid", reservation.getImpUid());
         System.out.println("베뉴 정보가 들어올까요~?" + reservation.getVenue());
 
         return ResponseEntity.ok("디비디비딥!");
     }
 
 
-//    @PostMapping("/update")
-//    public String updateOk() {
-//
-//        return "reservation/update";
-//    }
+
+    @GetMapping("/validate/{imp_uid}")
+    public ResponseEntity<String> validatePayment(@PathVariable String imp_uid,
+                                             @RequestParam String merchant_uid,
+                                             @RequestParam Long amount) {
+
+        // 결제 검증 로직
+        // 결제 정보 조회 및 검증
+        return ResponseEntity.ok().body("결제 정보 검증 성공");
+    }
 }
 

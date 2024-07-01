@@ -13,6 +13,8 @@ public interface AttachmentRepository {
 
     List<Attachment> findByBoard(Long boardId);
 
+    List<Attachment> findByClub(Long clubId);
+
     Attachment findById(Long id);
 
     List<Attachment> findByIds(Long[] ids);

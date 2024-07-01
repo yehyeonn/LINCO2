@@ -1,8 +1,10 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Attachment;
+import com.lec.spring.domain.Board;
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +36,11 @@ public interface ClubService {
                     Model model,
                     String selectcategory,
                     String selectdetailcategory);
+
+    @Transactional
+    Board detail(Long id);
+
+    List<Board> getClubBoard(Long clubId);
 
 
     // 클럽장 조회

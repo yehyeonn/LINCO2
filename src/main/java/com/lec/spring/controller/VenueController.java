@@ -57,7 +57,7 @@ public class VenueController {
             venue.setLimit_num(30);
             venue.setVenue_category(reservation.getVenue_category());
             venue.setInfo_tel(reservation.getInfo_tel());
-            venue.setPrice(100L);
+            venue.setPrice(1000L);
             venue.setPosible_start_date("2024-07-09");
             venue.setPosible_end_date("2025-07-09");
             venue.setOpen_time("09:00");
