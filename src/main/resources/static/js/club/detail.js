@@ -4,7 +4,7 @@ $('#deleteBtn').click(function (){
 });
 
 $('.outBtn').click(function (){
-    let answer = confirm("내보내시겠습니까?");
+    let answer = confirm("강퇴하시겠습니까?");
     answer && $("form[name = 'frmOut']").submit();
 });
 

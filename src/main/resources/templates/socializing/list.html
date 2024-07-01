@@ -144,17 +144,22 @@
                 <p th:text="${social.address}" id="address"></p>
             </a>
         </div>
-    </div>
-    <th:block th:insert="~{socializing/listPagination::pagination}"></th:block>
 
-    <div class="create-button">
-        <a th:href="@{/socializing/write}">
-            <button class="custom-button1 create-button1">
-                <span>Let's Go!</span><span>같이놀자!</span>
-            </button>
-        </a>
+        <section class="pagination-container1">
+                <div class="pagination-block1">
+                    <th:block th:insert="~{socializing/listPagination::pagination}"></th:block>
+                </div>
+                <div class="create-button">
+                    <a th:href="@{/socializing/write}">
+                        <button class="custom-button1 create-button1">
+                            <span>Let's Go!</span><span>같이놀자!</span>
+                        </button>
+                    </a>
+                </div>
+        </section>
     </div>
 </div>
+
 
 
 

@@ -86,13 +86,21 @@
 
             <div class="social-button-container">
                     <a class="button-list" th:href="@{/socializing/list(page=${session.page})}">
-                        목록
+                        <button class="custom-button button-2">
+                            <span>LIST!</span><span>목록</span>
+                        </button>
                     </a>
 
                 <div class="right-button">
-                        <a class="button-back" onclick="history.back()">이전으로</a>
+                        <a class="button-back" onclick="history.back()">
+                            <button class="custom-button button-2">
+                                <span>BACK!</span><span>이전</span>
+                            </button>
+                        </a>
 
-                        <button type="submit" class="button-submit">수정완료</button>
+                        <button type="submit" class="button-submit custom-button button-2">
+                            <span>Edit Finish!</span><span>수정완료</span>
+                        </button>
                 </div>
             </div>
         </form>

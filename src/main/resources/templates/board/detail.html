@@ -85,15 +85,24 @@
             <!-- 버튼 -->
             <div class="button">
                 <div class="left-buttons">
-                    <a class="btn" th:href="@{/board/list(page=${session.page})}">목록</a>
-                    <a class="btn" th:href="@{'/board/update/' + ${board.id}}"
-                       th:if="${logged_user.id == board.user.id}">수정</a>
-                    <a class="btn" th:href="@{/board/write}" sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">글쓰기</a>
+                    <a class="custom-button button-2" th:href="@{/board/list(page=${session.page})}">
+                            <span>LIST!</span><span>목록</span>
+                    </a>
+                    <a class="custom-button button-2" th:href="@{'/board/update/' + ${board.id}}"
+                       th:if="${logged_user.id == board.user.id}">
+                            <span>EDIT!</span><span>수정</span>
+                    </a>
+                    <a class="custom-button button-2" th:href="@{/board/write}" sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">
+                            <span>Go Write!</span><span>글쓰기</span>
+                    </a>
                 </div>
                 <div class="right-buttons">
-                    <a class="btn" id="clubDetail" th:if="${board.boardType.id == 3}"
-                       th:href="@{'/club/detail/' + ${club.id}}">클럽 상세페이지</a>
-                    <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기
+                    <a class="custom-button button-3" id="clubDetail" th:if="${board.boardType.id == 3}"
+                       th:href="@{'/club/detail/' + ${club.id}}">
+                        <span>Go Club!</span><span>클럽 상세페이지</span>
+                    </a>
+                    <button type="button" class="custom-button button-2" id="btnDel" th:if="${logged_user.id == board.user.id}">
+                        <span>DELETE!</span><span>삭제</span>
                     </button>
                 </div>
             </div>

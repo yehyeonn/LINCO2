@@ -10,7 +10,7 @@ body {
 .list-container {
     width: 90%;
     max-width: 1200px;
-    margin: 180px auto;
+    margin: 150px auto 200px;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -405,4 +405,23 @@ p.club-category{
     -webkit-transform: rotateX(-90deg);
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
+}
+
+.pagination-container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* 상대적 위치 설정 */
+}
+
+.pagination-block2 {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* 페이지네이션을 중앙에 배치 */
+}
+
+.button-container {
+    position: absolute; /* 절대적 위치 설정 */
+    right: 20px; /* 오른쪽 끝에 배치 */
+    bottom: 15px;
 }

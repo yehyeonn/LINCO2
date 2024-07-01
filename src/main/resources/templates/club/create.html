@@ -46,10 +46,12 @@
             <div class="col-md-6 text-center form-img">
                 <div class="bordered-image form-group image-placeholder" id="club-representative-picture">
                     <span id="img_txt">대표 이미지</span>
-                    <img id="previewImage" style="display:block; max-width: 180px; height: auto;">
+                    <img id="previewImage" style="">
                 </div>
                 <div class="fileBtn mt-2">
-                    <button type="button" id="fileSelect" class="btn btn-primary">파일선택</button>
+                    <button type="button" id="fileSelect" class="btn-primary custom-button button-2">
+                        <span>File Select!</span><span>파일선택</span>
+                    </button>
                     <input type="file" id="fileInput" name="files" style="display:none;">
                 </div>
             </div>
@@ -66,8 +68,12 @@
             <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
         </div>
         <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-secondary" onclick="history.back()">이전으로</button>
-            <button type="button" id="submitbtn" class="btn btn-primary">클럽 생성</button>
+            <button type="button" class="btn-secondary custom-button button-3" onclick="history.back()">
+                <span>BACK!</span><span>이전</span>
+            </button>
+            <button type="button" id="submitbtn" class="btn-primary custom-button button-3">
+                <span>Club Create!</span><span>클럽생성</span>
+            </button>
         </div>
     </form>
 </div>

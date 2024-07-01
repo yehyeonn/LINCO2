@@ -41,9 +41,11 @@
             <div class="col-md-6 text-center">
                 <label for="club-representative-picture" class="form-label"></label>
                 <div class="bordered-image" id="club-representative-picture">
-                    <img th:src="@{'/upload/'+${club.getRepresentative_picture()}}" id="previewImage" style="display:block; max-width: 180px; height: auto;">
+                    <img th:src="@{'/upload/'+${club.getRepresentative_picture()}}" id="previewImage" style="display:block; width: 660px; height: 200px;">
                 </div>
-                <button type="button" id="fileSelect" class="btn btn-primary btn-file mt-2">파일선택 </button>
+                <button type="button" id="fileSelect" class="btn-primary btn-file custom-button button-2">
+                    <span>File Select!</span><span>파일선택</span>
+                </button>
                 <input type="file" id="fileInput" class="d-none" name="files">
                 <input type="text" id="filename" name="representative_picture" th:value="${club.getRepresentative_picture()}" style="display: none">
             </div>
@@ -60,8 +62,12 @@
             <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
         </div>
         <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-secondary" onclick="history.back()">이전으로</button>
-            <button type="submit" class="btn btn-primary">수정 완료</button>
+            <button type="button" class="btn-secondary custom-button button-3" onclick="history.back()">
+                <span>BACK!</span><span>이전</span>
+            </button>
+            <button type="submit" class="btn-primary custom-button button-3">
+                <span>Edit Finish!</span><span>수정완료</span>
+            </button>
         </div>
         </div>
     </form>

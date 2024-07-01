@@ -29,10 +29,12 @@
             <img th:src="@{'/upload/' + ${club.representative_picture}}" class="event-image" alt="Club Image">
             <div class="event-details">
                 <div class="details-header">
-                    <h1 th:text="${club.name}">클럽 이름</h1>
-                    <span class="club-info">[[${club.detail_category}]]</span>
+                    <h1>
+                        [[${club.name}]]
+                        <span class="category-button">상세: [[${club.detail_category}]]</span>
+                        <span id="club-member-count" class="category-button">인원: [[${memberCount}]]명</span>
+                    </h1>
                     <p id="club-intro">[[${club.intro}]]</p>
-                    <p id="club-member-count">현재 인원: [[${memberCount}]]명</p>
                 </div>
 
                 <div class="details-buttons">
@@ -61,17 +63,17 @@
                 <ul class="club-menu-list">
                     <li class="club-category-search">
                         <label class="search-club-category">
-                            <a class="custom-button button-1" th:href="@{'/club/detail/' + ${club.id}}"><span>메인</span><span>메인</span></a>
+                            <a class="custom-button button-1" th:href="@{'/club/detail/' + ${club.id}}"><span>MAIN</span><span>메인</span></a>
                         </label>
                     </li>
                     <li>
                         <label class="search-club-category">
-                            <a class="custom-button button-2" th:href="@{'/club/board/' + ${club.id}}"><span>게시판</span><span>게시판</span></a>
+                            <a class="custom-button button-2" th:href="@{'/club/board/' + ${club.id}}"><span>Club Board</span><span>게시판</span></a>
                         </label>
                     </li>
                     <li>
                         <label class="search-club-category">
-                            <a class="custom-button button-3" th:href="@{'/club/album/' + ${club.id}}"><span>사진첩</span><span>사진첩</span></a>
+                            <a class="custom-button button-3" th:href="@{'/club/album/' + ${club.id}}"><span>Club Photo</span><span>사진첩</span></a>
                         </label>
                     </li>
                 </ul>
@@ -79,46 +81,65 @@
 
         <div class="container2">
             <section class="club-description">
-                <h2>상세설명</h2>
+                <h2>
+                    <span>클</span>
+                    <span>럽</span>
+                    <span>소</span>
+                    <span>개</span>
+                </h2>
                 <p th:utext="${club.content}"></p>
             </section>
             <section class="club-members">
-                <h2>멤버 리스트</h2>
+                <h2>
+                    <span>M</span>
+                    <span>E</span>
+                    <span>M</span>
+                    <span>B</span>
+                    <span>E</span>
+                    <span>R</span>
+                </h2>
                 <ul>
-                    <li>
-                        <img th:src="@{'/upload/'+${clubMaster.getUser().getProfile_picture()}}" style="display: inline">
-                        클럽장: [[${clubMaster.user.getName()}]]
+                    <li class="club-master">
+                        <div class="member-info">
+                            <img th:src="@{'/upload/'+${clubMaster.getUser().getProfile_picture()}}">
+                            <span>[[${clubMaster.user.getName()}]]</span>
+                        </div>
+                        <div class="club-master-label">Master</div>
                     </li>
 
-                    <li th:each="member : ${filteredClubMemberList}">
-                        <img th:src="@{'/upload/'+${member.getUser().getProfile_picture()}}" style="display: inline">
+                    <li th:each="member : ${filteredClubMemberList}" class="member-item">
+                        <div class="member-info">
+                            <img th:src="@{'/upload/'+${member.getUser().getProfile_picture()}}">
+                            <span>[[${member.user.getName()}]]</span>
+                        </div>
 
-                        멤버: [[${member.user.getName()}]]
-                        <!-- 내보내기 기능-->
+                        <!-- 내보내기 기능 -->
                         <form name="frmOut" th:action="@{/club/out}" method="post">
                             <input type="text" class="hidden" name="user_id" th:value="${member.user.getId()}">
                             <input type="text" class="hidden" name="club_id" th:value="${club.getId()}">
+                            <button class="outBtn btn-warning" th:if="${logged_user.id == clubMaster.user_id}">
+                                강퇴
+                            </button>
                         </form>
-                        <button class="outBtn btn btn-warning" th:if="${logged_user.id == clubMaster.user_id}">
-                            내보내기
-                        </button>
-
                     </li>
                 </ul>
             </section>
         </div>
         <div class="footer-btn">
-            <button id="backBtn" class="btn btn-success">이전</button>
+            <button id="backBtn" class=" btn-asd custom-button button-4">
+                <span>BACK!</span><span>이전</span>
+            </button>
             <!-- 탈퇴 기능-->
             <form name="frmLeave" th:action="@{/club/leave}" method="post">
                 <input type="text" class="hidden" name="user_id" th:value="${logged_user.id}">
                 <input type="text" class="hidden" name="club_id" th:value="${club.getId()}">
             </form>
 
-            <button id="leaveBtn" class="btn btn-warning"
+            <button id="leaveBtn" class="btn-warning custom-button button-1"
                     th:if="${logged_user.id != clubMaster.user_id and #lists.contains(userIds, logged_user.id)}">
-                탈퇴
+                <span>EXIT!</span><span>탈퇴</span>
             </button>
+
         </div>
     </main>
 
