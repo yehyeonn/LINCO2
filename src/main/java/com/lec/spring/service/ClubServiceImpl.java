@@ -4,10 +4,7 @@ import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
 import com.lec.spring.domain.User;
-import com.lec.spring.repository.AttachmentRepository;
-import com.lec.spring.repository.ClubRepository;
-import com.lec.spring.repository.ClubUserListRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -82,15 +79,16 @@ public class ClubServiceImpl implements ClubService {
         return cnt;
     }
 
+
     private int addFiles(MultipartFile files, Long club_id) {
         if (files == null) return 0;
 
         Attachment file = upload(files);
 
-            if (file != null) {
-                file.setClub_id(club_id);
-                attachmentRepository.save(file);
-            }
+        if (file != null) {
+            file.setClub_id(club_id);
+            attachmentRepository.save(file);
+        }
 
         return 1;
     }
@@ -123,13 +121,13 @@ public class ClubServiceImpl implements ClubService {
         Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
         System.out.println(copyOfLocation);
 
-        try{
+        try {
             Files.copy(
                     multipartFile.getInputStream(),
                     copyOfLocation,
                     StandardCopyOption.REPLACE_EXISTING
             );
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 

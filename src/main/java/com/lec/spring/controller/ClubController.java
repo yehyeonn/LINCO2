@@ -1,15 +1,13 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.*;
-import com.lec.spring.service.AttachmentService;
-import com.lec.spring.service.ClubService;
-import com.lec.spring.service.ClubUserListService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import jakarta.validation.Valid;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,16 +40,18 @@ public class ClubController {
     private ClubService clubService;
     private ClubUserListService clubUserListService;
     private UserService userService;
+    private AttachmentLikeService attachmentLikeService;
 
     @Autowired
     public ClubController(ClubService clubService
             , ClubUserListService clubUserListService
             , UserService userService
-            , AttachmentService attachmentService) {
+            , AttachmentLikeService attachmentLikeService) {
         System.out.println("ClubController() 생성");
         this.clubService = clubService;
         this.clubUserListService = clubUserListService;
         this.userService = userService;
+        this.attachmentLikeService = attachmentLikeService;
     }
 
     // 클럽 생성 페이지를 표시
@@ -335,7 +336,8 @@ public class ClubController {
         Club club = clubService.getClubById(id);
         List<Attachment> imgList = clubService.findByClubId(id);
 
-//        System.out.println("imgList: " + imgList);
+        System.out.println("clubId: " + id);
+        System.out.println("imgList: " + imgList);
         model.addAttribute("club", club);
         model.addAttribute("imgList", imgList);
 
@@ -343,19 +345,25 @@ public class ClubController {
     }
 
     @GetMapping("/galleryUpload")
-    public void galleryUpload() {
+    public void galleryUpload(@RequestParam(name = "id", required = false, defaultValue = "") Long id, Model model) {
+
+        model.addAttribute("id", id);
     }
 
-    @PostMapping("/galleryUpload/{id}")
+    @PostMapping("/galleryUpload")
     public String galleryUploadOk(
-            @RequestParam("file") MultipartFile file,
-            @PathVariable Long id
+            @RequestParam("file") MultipartFile file
+            , @RequestParam(name = "id", required = false, defaultValue = "") Long id
             , Model model
     ) {
         System.out.println("club_id: " + id);
 
         model.addAttribute("result", clubService.uploadImg(id, file));
+        model.addAttribute("id", id);
         return "club/galleryuploadOk";
     }
+
+//    @PostMapping("/like")
+
 }
 

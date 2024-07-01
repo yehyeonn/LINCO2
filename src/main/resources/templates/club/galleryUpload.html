@@ -14,10 +14,10 @@
 <body>
 
 <div class="write container1">
-    <form action="/club/galleryUpload" method="post" enctype="multipart/form-data">
-
+    <form th:action="@{'/club/galleryUpload'}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id", th:value="${id}">
         <div class="form-img">
-            <div class="form-group image-placeholder">
+            <div class="form-group image-placeholder" >
                 <span id="img_txt">이미지 미리보기</span>
                 <img id="previewImage">
             </div>

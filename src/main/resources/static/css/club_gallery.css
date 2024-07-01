@@ -369,25 +369,30 @@ footer {
 
 .img-box {
     width: calc(25% - 10px);
+    height: 200px; /* Set a fixed height for the image box */
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure content outside the box is hidden */
+    background-color: #fff;
 }
 
 .imgs img {
     width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
+    height: 100%;
+    object-fit: contain; /* Ensures the image fits within the box without being cut off */
     border-radius: 10px;
 }
 
-.img-btn-div{
+.img-btn-div {
     float: right;
     margin-right: 50px;
 }
 
-.add-img{
+.add-img {
     width: 120px;
     padding: 15px 20px;
     font-size: 1rem;
@@ -401,6 +406,56 @@ footer {
 
     text-decoration: none;
 }
+
+.add-img:hover {
+    cursor: pointer;
+}
+
+
+/* 모달 전체 */
+#myModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 닫기 버튼 */
+.btn-close {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* 이미지 */
+#modalImage {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    height: 80%;
+    border-radius: 8px;
+}
+
+
+.btn-close:hover,
+.btn-close:focus {
+    color: #ccc;
+    text-decoration: none;
+}
+
+
 
 
 
