@@ -3,6 +3,8 @@ package com.lec.spring.controller;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.ClubUserListRepository;
+import com.lec.spring.repository.ReservationRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.*;
 import com.lec.spring.service.*;
@@ -196,6 +198,7 @@ public class UserController {
         return "user/my_page";
     }
 
+
     @GetMapping("/additional_info")
     public String additionalInfoForm(Model model) {
         model.addAttribute("user", new User());
@@ -210,7 +213,6 @@ public class UserController {
         userService.update(user);
         return "redirect:/";
     }
-}
 
     @PostMapping("/cancel")
     @ResponseBody
@@ -229,8 +231,8 @@ public class UserController {
             // 서비스 단에서 토큰을 생성하고 결제 취소 요청을 처리
             String accessToken = iamportService.getToken();
             boolean isSuccess = iamportService.cancelPayment(accessToken, impUid, merchantUid, amount, reason);
-            if(isSuccess) {
-                if(reservation != null) {
+            if (isSuccess) {
+                if (reservation != null) {
                     reservation.setStatus("CANCELED");
                     reservationService.update(reservation);
                 }
@@ -243,25 +245,8 @@ public class UserController {
             return "서버 오류가 발생했습니다.";
         }
     }
-    }
-//    @PostMapping("/cancel")
-//    public ResponseEntity<String> cancelPayment(@RequestBody Reservation reservation, @RequestParam String canReason) {
-//        try {
-//            // 여기서 cancelRequest 객체를 사용하여 결제 취소 처리를 수행
-//            String impUid = reservation.getImpUid();
-//            String merchantUid = reservation.getMerchantUid();;
-//            Long total_price = reservation.getTotal_price();
-//            String reason = canReason;
-//
-//
-//            // 결제 취소 로직을 수행하고 성공적인 응답을 반환
-//            // 예를 들어, 결제 취소가 성공적으로 이루어졌다면
-//            return ResponseEntity.ok().body("결제 취소가 완료되었습니다.");
-//        } catch (Exception e) {
-//            // 결제 취소 과정에서 예외가 발생하면 실패 응답을 반환
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 취소 중 오류가 발생했습니다.");
-//        }
-//    }
+}
+
 
 
 
