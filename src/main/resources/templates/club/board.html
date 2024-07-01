@@ -102,7 +102,7 @@
                 <tbody class="tbody">
                 <tr th:each="post : ${posts}">
                     <td th:text="${post.user.getName()}"></td>
-                    <td><a th:href="@{'/board/detail/' + ${post.getId()}}" th:text="${post.getTitle()}"></a></td>
+                    <td><a th:href="@{'/club/board/detail/' + ${post.getId()}}" th:text="${post.getTitle()}"></a></td>
                     <td th:text="${#temporals.format(post.getRegdate(), 'yyyy-MM-dd')}"></td>
                 </tr>
                 </tbody>
@@ -116,7 +116,7 @@
         <div class="footer-btn">
             <button id="backBtn" class="btn btn-success">이전</button>
 
-            <a class="button" th:href="@{/board/write}">
+            <a class="button" th:href="@{/club/write}">
                 <button class="board-title-1 custom-title">
                     <span>Let's GO!</span><span>글쓰기</span>
                 </button>

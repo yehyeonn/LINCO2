@@ -77,5 +77,10 @@
         AND (#{param2} IS NULL OR #{param2} = '' OR detail_category LIKE CONCAT('%', #{param2}, '%'))
     </select>
 
+    <select id="findBoardByClubIdAndType" resultType="com.lec.spring.domain.Board">
+        select b.id, b.title, b.content, b.viewcnt, b.regdate, b.club_id, b.user_id, b.board_type_id
+        from BOARD b
+        where b.club_id = #{clubId} and b.board_type_id = 1
+    </select>
 
 </mapper>

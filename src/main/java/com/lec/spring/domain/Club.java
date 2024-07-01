@@ -18,6 +18,8 @@ public class Club {
     private String content;
     private String representative_picture;
 
+    private Board board;
+
     @ToString.Exclude
     @Builder.Default
     private List<Attachment> fileList = new ArrayList<>();

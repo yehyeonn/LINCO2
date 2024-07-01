@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Board;
 import com.lec.spring.domain.Club;
 import com.lec.spring.domain.ClubUserList;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,10 @@ public interface ClubService {
                     String selectdetailcategory);
 
     @Transactional
-    Club detail(Long id);
+    Board detail(Long id);
+
+    List<Board> getClubBoard(Long clubId);
+
 
     // 클럽장 조회
     ClubUserList findClubMaster(Long club_id);

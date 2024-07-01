@@ -1,5 +1,6 @@
 package com.lec.spring.repository;
 
+import com.lec.spring.domain.Board;
 import com.lec.spring.domain.Club;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
@@ -38,6 +39,5 @@ public interface ClubRepository {
 
     int countSelect(String category, String detailcategory);
 
-
-
+    List<Board> findBoardByClubIdAndType(@Param("clubId") Long clubId);
 }

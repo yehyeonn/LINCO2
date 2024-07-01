@@ -247,11 +247,10 @@ public class ClubController {
 
     @GetMapping("board/detail/{id}")
     public String boardDetail(@PathVariable Long id, Model model){
-        Club club = clubService.detail(id);
-
         Board board = boardService.detail(id);
+        List<Board> clubBoards = clubService.getClubBoard(id);
 
-        String content = club.getContent().replace("\n", "<br>");
+//        String content = club.getContent().replace("\n", "<br>");
 
         List<Comment> comments = commentService.list(id).getList();
 
@@ -259,14 +258,13 @@ public class ClubController {
 
         List<Attachment> attachments = attachmentService.findByAttachment(id);
 
-        model.addAttribute("club", club);
         model.addAttribute("board", board);
+        model.addAttribute("clubBoards", clubBoards);
         model.addAttribute("attachments", attachments);
         model.addAttribute("cnt", cnt);
         model.addAttribute("comments", comments);
-        model.addAttribute("content", content);
+//        model.addAttribute("content", content);
 
-        System.out.println("clud-board : " + board.toString());
         return "club/boardDetail";
     }
 

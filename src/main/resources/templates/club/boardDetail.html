@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>club_board_detail</title>
@@ -9,12 +9,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/board_detail.css}">
+    <link rel="stylesheet" th:href="@{/css/club_detail.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://kit.fontawesome.com/21b1be2aba.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/board/detail.js}"></script>
+    <script th:src="@{/js/club/detail.js}"></script>
 
     <script th:inline="javascript">
       const logged_id = [[${logged_user.id}]]
@@ -30,15 +30,15 @@
     <section>
       <!--삭제 기능을 위해 만든 폼-->
       <form name="frmDelete" th:action="@{/club/board/delete}" method="post">
-        <input type="hidden" name="id" th:value="${club.id}">
+        <input type="hidden" name="id" th:value="${board.id}">
       </form>
 
       <div class="form-group">
         <label>작성자 : </label>
-        <span th:text="${club.user.name}" class="text"></span>
+        <span th:text="${board.user.name}" class="text"></span>
       </div>
 
-      <div class="form-group" th:if="${board.boardType.id == 3} and ${board.club.id != null}">
+      <div class="form-group" th:if="${board.boardType.id == 1} and ${board.club.id != null}">
         <label>클럽명 : </label>
         <span th:text="${board.club.name}" class="text"></span>
       </div>
@@ -98,7 +98,7 @@
       <div class="comment">
         <label>댓글 : <span id="cmt_cnt" th:text="${cnt}"> 0 </span> 개</label>
 
-        <div sec:authorize="hasAnyAuthority('MEMBER', 'ADMIN')">  <!-- 회원만 댓글 작성 가능하도록 설정 -->
+        <div>  <!-- 회원만 댓글 작성 가능하도록 설정 -->
           <input type="text" id="input_comment" class="comment-input">
           <button type="button" class="btn" id="btn_comment">등록</button>
         </div>
