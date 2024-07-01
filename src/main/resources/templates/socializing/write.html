@@ -88,19 +88,19 @@
                 <input type="file" id="fileInput" name="files" accept="image/*" style="display:none;">
             </div>
         </div>
-        <div class="form-group" th:if="${venue != null and venue.id != null}" th:value="${merchantUid}">
+        <div class="form-group" name="merchantUid" th:if="${venue_id != null}" th:value="${merchantUid}">
         </div>
 
-        <div class="form-group" th:if="${venue != null and venue.id != null}">
+        <div class="form-group" th:if="${venue_id != null}">
             <label for="reservation">예약장소</label>
-            <input type="text" id="reservation" name="reservation" th:value="${venue.venue_name != null ? venue.venue_name : ''}">
-            <input type="text" name="venue_id" th:value="${venue.getId()}" style="display: none">
+            <input type="text" id="reservation" name="reservation" th:value="${venue_name != null ? venue_name : ''}">
+            <input type="text" name="venue_id" th:value="${venue_id}" style="display: none">
         </div>
-        <div class="form-group" th:if="${venue != null and venue.id != null}">
+        <div class="form-group" th:if="${venue_id != null}">
             <label for="reservationDate">예약날짜</label>
             <input type="text" id="reservationDate" name="reservationDate" th:value="${reserveDate != null ? reserveDate : ''}">
         </div>
-        <div class="form-group" th:if="${venue != null and venue.id != null}">
+        <div class="form-group" th:if="${venue_id != null}">
             <label for="reservationTime">예약시간</label>
             <input type="text" id="reservationTime" name="reservationST" th:value="${reserveST != null ? reserveST : ''}"> ~
             <input type="text" name="reservationET" th:value="${reserveET != null ? reserveET : ''}">
