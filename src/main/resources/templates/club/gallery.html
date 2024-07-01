@@ -79,7 +79,7 @@
     </div>
     <form th:action="@{'/club/galleryUpload'}">
         <div class="img-btn-div">
-            <input type="hidden" name="id" th:value="${club.id}">
+            <input type="hidden" id="id" name="id" th:value="${club.id}">
             <button type="submit" class="add-img">사진추가</button>
         </div>
     </form>
@@ -93,7 +93,7 @@
         <div th:each="imgList:${imgList}" class="img-box">
             <img th:src="@{'/upload/' + ${imgList.filename}}" alt="Club Image" class="club-img" onclick="openModal(this)">
             <div class="like-section">
-                <button class="like-btn" data-img-id="${imgList.id}">
+                <button class="like-btn" name="attachmentId" th:value="${imgList.id}">
                     <i class="fas fa-thumbs-up">좋아요</i>
                 </button>
                 <span id="like-count-[[${attachment.id}]]"></span> 좋아요
