@@ -23,15 +23,17 @@
     <body th:with="logged_user=${#authentication.getPrincipal().getUser()}">
     <header th:replace="~{common/header :: header-body}"></header>
 
-    <main class="container1">
+    <main class="container-1">
         <section class="event-info">
             <img th:src="@{'/upload/' + ${club.representative_picture}}" class="event-image" alt="Club Image">
             <div class="event-details">
                 <div class="details-header">
-                    <h1 th:text="${club.name}">클럽 이름</h1>
-                    <span class="club-info">[[${club.detail_category}]]</span>
+                    <h1>
+                        [[${club.name}]]
+                        <span class="category-button">상세: [[${club.detail_category}]]</span>
+                        <span id="club-member-count" class="category-button">인원: [[${memberCount}]]명</span>
+                    </h1>
                     <p id="club-intro">[[${club.intro}]]</p>
-                    <p id="club-member-count">현재 인원: [[${memberCount}]]명</p>
                 </div>
 
                 <div class="details-buttons">
@@ -65,7 +67,7 @@
                     </li>
                     <li>
                         <label class="search-club-category">
-                            <a class="custom-button button-2" th:href="@{'/club/board/list/' + ${club.id}}"><span>게시판</span><span>게시판</span></a>
+                            <button class="custom-button button-2" type="submit" name="clubCategory"><span>게시판</span><span>게시판</span></button>
                         </label>
                     </li>
                     <li>
@@ -83,7 +85,6 @@
         </form>
         <!--  클럽 게시판 -->
         <div class="board-type-2">
-
 
             <table class="post">
                 <colgroup>

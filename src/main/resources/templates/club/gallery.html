@@ -29,10 +29,12 @@
         <img th:src="@{'/upload/' + ${club.representative_picture}}" class="event-image" alt="Club Image">
         <div class="event-details">
             <div class="details-header">
-                <h1 th:text="${club.name}">클럽 이름</h1>
-                <span class="club-info">[[${club.detail_category}]]</span>
+                <h1>
+                    [[${club.name}]]
+                    <span class="category-button">상세: [[${club.detail_category}]]</span>
+                    <span id="club-member-count" class="category-button">인원: [[${memberCount}]]명</span>
+                </h1>
                 <p id="club-intro">[[${club.intro}]]</p>
-                <!--                    <p id="club-member-count">현재 인원: [[${memberCount}]]명</p>-->
             </div>
 
             <div class="details-buttons">
@@ -81,7 +83,9 @@
     <form th:action="@{'/club/galleryUpload'}">
         <div class="img-btn-div">
             <input type="hidden" id="id" name="id" th:value="${club.id}">
-            <button type="submit" class="add-img">사진추가</button>
+            <button type="submit" class="add-img custom-button button-4">
+                <span>Add Photo!</span><span>사진추가</span>
+            </button>
         </div>
     </form>
 
@@ -96,19 +100,17 @@
                  onclick="openModal(this)">
             <div class="like-section">
                 <button class="like-btn" name="attachmentId" th:value="${imgList.id}">
-                    <i class="fa-regular fa-heart" style="color: #000000;"></i>
-                    <i class="fa-solid fa-heart" style="color: #ff0000; display: none;"></i>
+                    <i class="fa-regular fa-heart heart-outline" style="color: #000000;"></i>
+                    <i class="fa-solid fa-heart heart-filled" style="color: #ff0000; display: none;"></i>
                 </button>
             </div>
         </div>
     </div>
 </main>
 
-<!--    <footer th:replace="~{common/footer :: footer-body}"></footer>-->
+    <footer th:replace="~{common/footer :: footer-body}"></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+
 <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 
 <script type="text/javascript"
