@@ -302,7 +302,7 @@ public class BoardServiceImpl implements BoardService{
     private void delFile(Attachment file) {
         String saveDirectory = new File(uploadDir).getAbsolutePath();       // 파일의 저장 경로를 절대경로로 가져오기
         File f = new File(saveDirectory, file.getFilename());
-        System.out.println("삭제시도 : " + f.getAbsolutePath());
+//        System.out.println("삭제시도 : " + f.getAbsolutePath());
 
         if (f.exists()){
             if (f.delete()){
