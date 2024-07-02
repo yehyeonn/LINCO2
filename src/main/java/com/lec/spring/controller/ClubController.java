@@ -12,6 +12,7 @@ import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -405,11 +406,15 @@ public class ClubController {
         binder.setValidator(new BoardValidator());
     }
 
+
+
+
+
+
     // 클럽 글 작성
     @GetMapping("/board/write/{id}")
     public String write(@PathVariable Long id,Model model) {
         Club club = clubService.getClubById(id);
-
         // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
         System.out.println("clubMaster :" + clubMaster);
@@ -422,39 +427,50 @@ public class ClubController {
     @PostMapping("/board/write")
     public String writeOk(
             @RequestParam Map<String, MultipartFile> files,
-//            @Valid Board board,
-            Board board,
-            @RequestParam("boardType.id") int boardTypeId,
-//            BindingResult boardResult,
             @RequestParam(name = "clubid",required = false) Long clubid,
-            Model model
-//            RedirectAttributes redirectAttributes
+            @RequestParam("boardType.id") int boardTypeId,
+            @Valid Board board,
+            BindingResult boardResult,
+            Model model,
+            RedirectAttributes redirectAttrs
     ) throws IOException {
+
+        if (boardResult.hasErrors()) {
+            redirectAttrs.addFlashAttribute("title", board.getTitle());
+            redirectAttrs.addFlashAttribute("content", board.getContent());
+
+            List<FieldError> errList = boardResult.getFieldErrors();
+            for (FieldError err : errList) {
+                redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/club/board/write/" + clubid;
+        }
+        System.out.println("클럽아이디 !!"+clubid);
         // 기본 이미지 경로 설정
         String imgPath = "no_img.png"; // 기본 이미지 경로
         Club club1 = new Club();
         club1.setId(clubid);
         board.setClub(club1);
+        System.out.println("board.getBoardType(): " + board.getBoardType());
         int result = boardService.write(board, files);
-        System.out.println("board : "+board.getClub().getId());
+        System.out.println("board : " +board.getClub().getId());
         model.addAttribute("result", result);
         model.addAttribute("clubid",clubid);
+//        System.out.println("boardService.detail(id): " + boardService.detail(id));
+//        model.addAttribute("board", boardService.detail(id));
         return "club/boardWriteOk";
     }
 
-    private void handleErrors(BindingResult result, Board board, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("board", board);
-        for(FieldError err : result.getFieldErrors()){
-            redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
-        }
+
+    @PostMapping("/board/delete")
+    public String boardDeleteOk(Long id, Model model) {
+
+        Board board = boardService.findById(id);
+        model.addAttribute("board", board);
+        model.addAttribute("result", boardService.deleteById(id));
+        return "/club/boardDeleteOk";
     }
 
-    private void handleClubUserListErrors(BindingResult result, ClubUserList clubUserList, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("clubUserList", clubUserList);
-        for(FieldError err : result.getFieldErrors()){
-            redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
-        }
-    }
     // 클럽 사진첩 리스트
     @GetMapping("/gallery/{id}")
     public String galleryList(@PathVariable Long id, Model model) {

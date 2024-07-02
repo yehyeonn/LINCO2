@@ -141,13 +141,13 @@ values (5, 15, 'MASTER','2024-06-27 16:42:15'),
 
 
 # select * from CLUB_USER_LIST;
-
-insert into BOARD_TYPE(name)
-values ('공지사항'),
-       ('자유게시판'),
-       ('클럽홍보'),
-       ('클럽 게시판'),
-       ('클럽 공지사항');
+delete from board_type;
+insert into BOARD_TYPE(id, name)
+values (1, '공지사항'),
+       (2, '자유게시판'),
+       (3, '클럽홍보'),
+       (4, '클럽 공지사항'),
+       (5, '클럽 게시판');
 
 
 # select * from BOARD_TYPE;
@@ -368,5 +368,3 @@ values
 select *
 from board_type;
 
-insert into board_type values (4, '클럽공지사항');
-insert into board_type values (5, '클럽게시판');
