@@ -11,11 +11,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AttachmentLikeServiceImpl implements AttachmentLikeService {
-
-    private AttachmentLikeRepository attachmentLikeRepository;
-
-    @Autowired
-    public AttachmentLikeServiceImpl(SqlSession sqlSession) {
-        this.attachmentLikeRepository = sqlSession.getMapper(AttachmentLikeRepository.class);
-    }
 }

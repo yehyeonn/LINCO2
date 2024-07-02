@@ -96,7 +96,7 @@
                 <button class="like-btn" name="attachmentId" th:value="${imgList.id}">
                     <i class="fas fa-thumbs-up">좋아요</i>
                 </button>
-                <span id="like-count-[[${attachment.id}]]"></span> 좋아요
+                <span id="like-count-[[${attachment.id}]]" th:text="${likeCount}"></span> 좋아요
             </div>
         </div>
     </div>
