@@ -23,4 +23,10 @@
         FROM attachment_like
         WHERE user_id = #{user.id} AND attachment_id = #{attachment.id}
     </select>
+
+    <select id="findByUserId" resultMap="mapSelect">
+        select attachment_id
+        from attachment_like
+        where user_id = #{user.id}
+    </select>
 </mapper>

@@ -5,7 +5,7 @@
     alert("해당 정보가 삭제되거나 없습니다.");
     history.back();
 </script>
-<!--<th:block th:if="${club}" th:with="logged_user=${#authentication.principal.user}">-->
+<th:block th:if="${club}" th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,7 @@
 </head>
 
 <body th:with="logged_user=${#authentication.getPrincipal().getUser()}" th:attr="data-user-id=${logged_user.id}">
+<input type="hidden" th:attr="data-club-id=${club.id}">
 <header th:replace="~{common/header :: header-body}"></header>
 
 <main class="container1">
@@ -88,6 +89,12 @@
     <div id="myModal">
         <span class="btn-close" onclick="closeModal()"></span>
         <img id="modalImage">
+    </div>
+
+    <div class="likedAttachment" style="display: none">
+        <th:block th:each="likedAttachmentId:${likedAttachmentIds}">
+            <span class="attachmentIds" th:text="${likedAttachmentId}"></span>
+        </th:block>
     </div>
 
     <div class="imgs">
