@@ -3,5 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.repository.AttachmentLikeRepository">
+    <insert id="addPostLikes" parameterType="com.lec.spring.domain.AttachmentLike">
+        INSERT INTO attachment_like (user_id, attachment_id)
+        VALUES (#{user.id}, #{attachment.id})
+    </insert>
 
+    <delete id="deletePostLikes" parameterType="com.lec.spring.domain.AttachmentLike" flushCache="true">
+        DELETE FROM attachment_like
+        WHERE user_id = #{user.id} AND attachment_id = #{attachment.id}
+    </delete>
+
+    <resultMap id="mapSelect" type="com.lec.spring.domain.AttachmentLike">
+        <result property="user.id" column="user_id" />
+        <result property="attachment.id" column="attachment_id" />
+    </resultMap>
+
+    <select id="selectPostLikes" resultMap="mapSelect">
+        SELECT user_id, attachment_id
+        FROM attachment_like
+        WHERE user_id = #{user.id} AND attachment_id = #{attachment.id}
+    </select>
 </mapper>
