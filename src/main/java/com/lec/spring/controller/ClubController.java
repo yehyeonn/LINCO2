@@ -293,13 +293,13 @@ public class ClubController {
             Long[] delfile,
             Model model,
             RedirectAttributes redirectAttrs
-    ){
-        if (result.hasErrors()){
+    ) {
+        if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("title", board.getTitle());
             redirectAttrs.addFlashAttribute("content", board.getContent());
 
             List<FieldError> errList = result.getFieldErrors();
-            for (FieldError err : errList){
+            for (FieldError err : errList) {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
             return "redirect:/club/board/update/" + board.getId();
@@ -428,8 +428,33 @@ public class ClubController {
         return "club/gallery";
     }
 
-//    @PostMapping("/gallery")
-//    public void galleryLike(@RequestParam (name = "id"))
+    @PostMapping("/galleryLike")
+    public ResponseEntity<String> toggleLike(@RequestBody Map<String, Long> data) {
+        Long userId = data.get("userId");
+        Long attachmentId = data.get("attachmentId");
+
+        System.out.println("galleryLike 지롱~");
+        System.out.println("userId: " + userId);
+        System.out.println("attachId: " + attachmentId);
+
+        User user = new User();
+        user.setId(userId);
+        Attachment attachment = new Attachment();
+        attachment.setId(attachmentId);
+
+        AttachmentLike existingLike = attachmentLikeService.selectPostLikes(user, attachment);
+
+        if (existingLike == null) {
+            AttachmentLike newLike = new AttachmentLike();
+            newLike.setUser(user);
+            newLike.setAttachment(attachment);
+            attachmentLikeService.addPostLikes(newLike);
+            return ResponseEntity.ok("좋아요했지롱~");
+        } else {
+            attachmentLikeService.deletePostLikes(existingLike);
+            return ResponseEntity.ok("좋아요 취소했지롱~");
+        }
+    }
 
     @GetMapping("/galleryUpload")
     public void galleryUpload(@RequestParam(name = "id", required = false, defaultValue = "") Long id, Model model) {
