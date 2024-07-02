@@ -13,7 +13,7 @@
 <script th:if="${result > 0}" th:inline="javascript">
     alert("삭제 성공")
     //
-    location.href = "list";
+    location.href = "/club/board/list/[[${board.club.getId()}]]";
 </script>
 
 </html>
