@@ -19,7 +19,7 @@ body {
     width: 90%;
     max-width: 1200px;
     background-color: #fff;
-    margin: 150px auto;
+    margin: 150px auto 200px;
     padding: 40px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
@@ -129,48 +129,130 @@ label {
 }
 
 #fileSelect {
-    background-color: #B3B49E;
-    color: #EDEBDA;
-    border-radius: 1rem;
-    border: none;
-    padding: 10px 20px;
     margin-right: 85px;
-    transition: all 0.3s;
 }
 
 .button-group {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    transition: all 0.3s;
-}
-
-#mapSearch {
-    background-color: #B3B49E;
-    color: #EDEBDA;
-    border-radius: 1rem;
-    border: none;
-    padding: 10px 20px;
-    transition: all 0.3s;
-}
-
-#prevButton, #createButton {
-    background-color: #B3B49E;
-    color: #EDEBDA;
-    border-radius: 1rem;
-    border: none;
-    padding: 10px 20px;
 }
 
 #prevButton {
     margin-right: 20px;
 }
 
-#fileSelect:hover, #mapSearch:hover, #prevButton:hover, #createButton:hover {
-    background-color: #D3374A;
-    transform: scale(1.1);
+#mapSearch {
+    bottom: 16px;
+    margin-left: 5px;
 }
 
 .hidden{
     display: none;
+}
+
+.custom-button {
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    color: #fff;
+    width: 130px;
+    height: 40px;
+}
+
+.button-2 {
+    position: relative;
+    right: 0px; /* 초기 값으로 변경 */
+    bottom: 20px; /* 초기 값으로 변경 */
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+    font-size: 18px;
+}
+
+.button-3 {
+    position: relative;
+    right: 20px; /* 초기 값으로 변경 */
+    bottom: 20px; /* 초기 값으로 변경 */
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+    font-size: 18px;
+}
+
+.button-2 span, .button-3 span {
+    background: rgb(0,172,238);
+    background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+    display: block;
+    position: absolute;
+    width: 130px;
+    height: 40px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    border-radius: 5px;
+    margin: 0;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+.button-2 span:nth-child(1),
+.button-3 span:nth-child(1){
+    box-shadow: -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+    -webkit-transform: rotateX(90deg);
+    -moz-transform: rotateX(90deg);
+    transform: rotateX(90deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+.button-2 span:nth-child(2),
+.button-3 span:nth-child(2){
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+.button-2:hover span:nth-child(1),
+.button-3:hover span:nth-child(1){
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+.button-2:hover span:nth-child(2),
+.button-3:hover span:nth-child(2){
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    color: transparent;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
 }

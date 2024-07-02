@@ -51,16 +51,16 @@
 
         <div class="button">
             <div class="left-buttons">
-                <a class="btn" th:href="@{/board/list(page = ${session.page})}">
-                    목록
+                <a class="custom-button button-2" th:href="@{/board/list(page = ${session.page})}">
+                    <span>LIST!</span><span>목록</span>
                 </a>
 
-                <button type="button" class="btn btnAdd">
-                    첨부파일 추가
+                <button type="button" class="btnAdd custom-button button-2">
+                    <span>Add File!</span><span>첨부파일</span>
                 </button>
             </div>
-            <button type="button" class="btn submit">     <!-- id="submit" -->
-                저장하기
+            <button type="button" class="submit custom-button button-2">     <!-- id="submit" -->
+                <span>SAVE!</span><span>등록</span>
             </button>
         </div>
     </form>
@@ -112,15 +112,16 @@
 
         <div class="button">
             <div class="left-buttons">
-                <a class="btn" th:href="@{/board/list(page = ${session.page})}">
-                    목록
+                <a class="custom-button button-2" th:href="@{/board/list(page = ${session.page})}">
+                    <span>LIST!</span><span>목록</span>
                 </a>
-                <button type="button" class="btn btnAdd">
-                    첨부파일 추가
+
+                <button type="button" class="btnAdd custom-button button-2">
+                    <span>Add File!</span><span>첨부파일</span>
                 </button>
             </div>
-            <button type="button" class="btn clubSubmit">     <!-- id="clubSubmit" -->
-                저장하기
+            <button type="button" class="clubSubmit custom-button button-2">     <!-- id="clubSubmit" -->
+                    <span>SAVE!</span><span>등록</span>
             </button>
         </div>
     </form>
@@ -163,16 +164,16 @@
 
         <div class="button">
             <div class="left-buttons">
-                <a class="btn" th:href="@{/board/list(page = ${session.page})}">
-                    목록
+                <a class="custom-button button-2" th:href="@{/board/list(page = ${session.page})}">
+                    <span>LIST!</span><span>목록</span>
                 </a>
 
-                <button type="button" class="btn btnAdd">
-                    첨부파일 추가
+                <button type="button" class="btnAdd custom-button button-2">
+                    <span>Add File!</span><span>첨부파일</span>
                 </button>
             </div>
-            <button type="button" class="btn noticeSubmit">     <!-- id="submit" -->
-                저장하기
+            <button type="button" class="noticeSubmit custom-button button-2">     <!-- id="submit" -->
+                <span>SAVE!</span><span>등록</span>
             </button>
         </div>
     </form>

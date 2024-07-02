@@ -83,31 +83,35 @@
                 <img id="previewImage">
             </div>
             <div class="form-group fileBtn">
-                <button type="button" id="fileSelect">파일선택</button>
+                <button type="button" id="fileSelect" class="custom-button button-2">
+                    <span>File Select!</span><span>파일선택</span>
+                </button>
                 <input type="file" id="fileInput" name="files" accept="image/*" style="display:none;">
             </div>
         </div>
-        <div class="form-group" th:if="${venue != null and venue.id != null}" th:value="${merchantUid}">
+        <div class="form-group" name="merchantUid" th:if="${venue_id != null}" th:value="${merchantUid}">
         </div>
 
-        <div class="form-group" th:if="${venue != null and venue.id != null}">
-            <label for="reservation">예약장소: </label>
-            <input type="text" id="reservation" name="reservation" th:value="${venue.venue_name != null ? venue.venue_name : ''}">
-            <input type="text" name="venue_id" th:value="${venue.getId()}" style="display: none">
+        <div class="form-group" th:if="${venue_id != null}">
+            <label for="reservation">예약장소</label>
+            <input type="text" id="reservation" name="reservation" th:value="${venue_name != null ? venue_name : ''}">
+            <input type="text" name="venue_id" th:value="${venue_id}" style="display: none">
         </div>
-        <div class="form-group" th:if="${venue != null and venue.id != null}">
-            <label for="reservationDate">예약날짜: </label>
+        <div class="form-group" th:if="${venue_id != null}">
+            <label for="reservationDate">예약날짜</label>
             <input type="text" id="reservationDate" name="reservationDate" th:value="${reserveDate != null ? reserveDate : ''}">
         </div>
-        <div class="form-group" th:if="${venue != null and venue.id != null}">
-            <label for="reservationTime">예약시간: </label>
+        <div class="form-group" th:if="${venue_id != null}">
+            <label for="reservationTime">예약시간</label>
             <input type="text" id="reservationTime" name="reservationST" th:value="${reserveST != null ? reserveST : ''}"> ~
             <input type="text" name="reservationET" th:value="${reserveET != null ? reserveET : ''}">
         </div>
         <div class="form-group">
             <label for="location">위치: </label>
             <input type="text" id="location" name="location"/>
-            <button type="button" id="mapSearch">검색하기</button>
+            <button type="button" id="mapSearch"  class="custom-button button-3">
+                <span>Map Search!</span><span>검색</span>
+            </button>
             <input type="text" id="placeName" name="place_name" style="display: none">
             <input type="text" id="address" name="address" th:value="${address}">
         </div>
@@ -127,9 +131,13 @@
 
         <div class="form-group button-group">
             <a th:href="@{/socializing/list}">
-                <button type="button" id="prevButton">이전으로</button>
+                <button type="button" id="prevButton" class="custom-button button-3">
+                    <span>BACK!</span><span>이전</span>
+                </button>
             </a>
-            <button type="submit" id="createButton">만들기</button>
+            <button type="submit" id="createButton" class="custom-button button-3">
+                <span>CREAT!</span><span>소셜라이징 생성</span>
+            </button>
         </div>
     </form>
 </div>
