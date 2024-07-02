@@ -28,4 +28,5 @@ public class Attachment {
     public void setClub(Club club){
         this.club = club;
     }
+
 }

@@ -8,6 +8,7 @@ import com.lec.spring.service.ClubService;
 import com.lec.spring.service.ClubUserListService;
 import com.lec.spring.service.UserService;
 import com.lec.spring.service.*;
+import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.MutablePropertyValues;
@@ -59,7 +60,7 @@ public class ClubController {
             , CommentService commentService
             , AttachmentService attachmentService
             , AttachmentLikeService attachmentLikeService) {
-        System.out.println("ClubController() 생성");
+//        System.out.println("ClubController() 생성");
         this.clubService = clubService;
         this.clubUserListService = clubUserListService;
         this.userService = userService;
@@ -104,7 +105,7 @@ public class ClubController {
 
         // 이미지 경로를 Socializing 객체에 설정
         club.setRepresentative_picture(imgPath);
-        System.out.println("이미지 경sh로: " + imgPath); // 디버깅을 위한 로그 출력
+//        System.out.println("이미지 경sh로: " + imgPath); // 디버깅을 위한 로그 출력
 
 
         // 유효성 검사에서 에러가 발생한 경우
@@ -154,8 +155,8 @@ public class ClubController {
         List<Club> clubs = clubService.list(page, model, category, detailcategory);
 
         model.addAttribute("clubs", clubs);
-        System.out.println("clubs 갯수 : " + clubs.size());
-        System.out.println("clubs : " + clubs.toString());
+//        System.out.println("clubs 갯수 : " + clubs.size());
+//        System.out.println("clubs : " + clubs.toString());
 
         return "club/list";
     }
@@ -210,14 +211,14 @@ public class ClubController {
             , Model model) {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
-        System.out.println("club: " + club);
+//        System.out.println("club: " + club);
 
         //게시판의 리스트 및 페이지
         boardService.clubPostList(id, page, model, title);
 
         // 클럽의 멤버 리스트 -> user_id, club_id, role, user
         List<ClubUserList> clubMemberList = clubUserListService.clubuserlist(id);
-        System.out.println("clubMemberList: " + clubMemberList);
+//        System.out.println("clubMemberList: " + clubMemberList);
 
         // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
@@ -229,19 +230,19 @@ public class ClubController {
                 .filter(user_id -> !user_id.equals(clubMaster.getUser_id())) // 클럽장 제외
                 .collect(Collectors.toList());
 
-        System.out.println("userIds: " + userIds);
+//        System.out.println("userIds: " + userIds);
 
         // 클럽장과 동일한 user_id를 가진 항목을 제외한 리스트 만들기
         List<ClubUserList> filteredClubMemberList = clubMemberList.stream()
                 .filter(clubUserList -> !clubUserList.getUser().getId().equals(clubMaster.getUser().getId()))
                 .collect(Collectors.toList());
 
-        System.out.println("filteredClubMemberList: " + filteredClubMemberList);
+//        System.out.println("filteredClubMemberList: " + filteredClubMemberList);
 
 
         // 멤버 수 -> 현재인원
         int memberCount = clubService.getClubMemberCount(id);
-        System.out.println("memberCount: " + memberCount);
+//        System.out.println("memberCount: " + memberCount);
 
         model.addAttribute("club", club);
         model.addAttribute("filteredClubMemberList", filteredClubMemberList);
@@ -266,7 +267,7 @@ public class ClubController {
         List<Attachment> attachments = attachmentService.findByAttachment(id);
 
         model.addAttribute("board", board);
-        System.out.println("club board 정보 : " + board);
+//        System.out.println("club board 정보 : " + board);
         model.addAttribute("clubBoards", clubBoards);
         model.addAttribute("attachments", attachments);
         model.addAttribute("cnt", cnt);
@@ -293,13 +294,13 @@ public class ClubController {
             Long[] delfile,
             Model model,
             RedirectAttributes redirectAttrs
-    ){
-        if (result.hasErrors()){
+    ) {
+        if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("title", board.getTitle());
             redirectAttrs.addFlashAttribute("content", board.getContent());
 
             List<FieldError> errList = result.getFieldErrors();
-            for (FieldError err : errList){
+            for (FieldError err : errList) {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
             return "redirect:/club/board/update/" + board.getId();
@@ -329,8 +330,8 @@ public class ClubController {
 
     @PostMapping("/out")
     public String outOk(Long user_id, Long club_id, Model model) {
-        System.out.println("user_id: " + user_id);
-        System.out.println("club_id: " + club_id);
+//        System.out.println("user_id: " + user_id);
+//        System.out.println("club_id: " + club_id);
         model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
         return "/club/outOk";
@@ -338,8 +339,8 @@ public class ClubController {
 
     @PostMapping("/leave")
     public String leaveOk(Long user_id, Long club_id, Model model) {
-        System.out.println("user_id: " + user_id);
-        System.out.println("club_id: " + club_id);
+//        System.out.println("user_id: " + user_id);
+//        System.out.println("club_id: " + club_id);
         model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
         return "/club/leaveOk";
@@ -379,8 +380,8 @@ public class ClubController {
             }
         }
         club.setRepresentative_picture(imgPath);
-        System.out.println("이미지경로: " + imgPath);
-        System.out.println(club);
+//        System.out.println("이미지경로: " + imgPath);
+//        System.out.println(club);
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("intro", club.getIntro());
@@ -420,16 +421,41 @@ public class ClubController {
         Club club = clubService.getClubById(id);
         List<Attachment> imgList = clubService.findByClubId(id);
 
-        System.out.println("clubId: " + id);
-        System.out.println("imgList: " + imgList);
+//        System.out.println("clubId: " + id);
+//        System.out.println("imgList: " + imgList);
         model.addAttribute("club", club);
         model.addAttribute("imgList", imgList);
 
         return "club/gallery";
     }
 
-//    @PostMapping("/gallery")
-//    public void galleryLike(@RequestParam (name = "id"))
+    @PostMapping("/galleryLike")
+    public ResponseEntity<String> toggleLike(@RequestBody Map<String, Long> data) {
+        Long userId = data.get("userId");
+        Long attachmentId = data.get("attachmentId");
+
+        System.out.println("galleryLike 지롱~");
+        System.out.println("userId: " + userId);
+        System.out.println("attachId: " + attachmentId);
+
+        User user = new User();
+        user.setId(userId);
+        Attachment attachment = new Attachment();
+        attachment.setId(attachmentId);
+
+        AttachmentLike existingLike = attachmentLikeService.selectPostLikes(user, attachment);
+
+        if (existingLike == null) {
+            AttachmentLike newLike = new AttachmentLike();
+            newLike.setUser(user);
+            newLike.setAttachment(attachment);
+            attachmentLikeService.addPostLikes(newLike);
+            return ResponseEntity.ok("좋아요했지롱~");
+        } else {
+            attachmentLikeService.deletePostLikes(existingLike);
+            return ResponseEntity.ok("좋아요 취소했지롱~");
+        }
+    }
 
     @GetMapping("/galleryUpload")
     public void galleryUpload(@RequestParam(name = "id", required = false, defaultValue = "") Long id, Model model) {
@@ -443,7 +469,7 @@ public class ClubController {
             , @RequestParam(name = "id", required = false, defaultValue = "") Long id
             , Model model
     ) {
-        System.out.println("club_id: " + id);
+//        System.out.println("club_id: " + id);
 
         model.addAttribute("result", clubService.uploadImg(id, file));
         model.addAttribute("id", id);
