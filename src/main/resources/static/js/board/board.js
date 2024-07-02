@@ -3,7 +3,6 @@
 // ------------------------------------------------------------------------
 $(document).ready(function() {
     var uri = new URL(window.location.href).searchParams.get("boardTypeId");
-    console.log("uri: "  + uri);
 
     if(uri == 3){
         $('.board-type-3').show();
