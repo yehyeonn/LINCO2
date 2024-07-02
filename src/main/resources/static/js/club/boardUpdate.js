@@ -6,11 +6,10 @@ $(function (){
     $("#btnAdd").click(function (){
         $("#files").append(`
             <div class="input-group">
-                <input class="form-control" type="file" name="upfile${i}" accept="image/*"/>
+                <input class="form-control" type="file" name="upfile${i}"/>
                 <button type="button" class="btn" onclick="$(this).parent().remove()">삭제</button>
             </div>
         `);
-        i++;
     })
 
     // 삭제
