@@ -23,7 +23,7 @@
     <body th:with="logged_user=${#authentication.getPrincipal().getUser()}">
     <header th:replace="~{common/header :: header-body}"></header>
 
-    <main class="container1">
+    <main class="container-1">
         <section class="event-info">
             <img th:src="@{'/upload/' + ${club.representative_picture}}" class="event-image" alt="Club Image">
             <div class="event-details">

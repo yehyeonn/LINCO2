@@ -4,14 +4,10 @@ body {
     color: #3A4D72;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-nav ul {
-    list-style-type: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
+
 .social-info{
     color: black;
     font-size: 25px;
@@ -33,11 +29,11 @@ header nav ul li a {
     text-decoration: none;
 }
 
-
 main {
     padding: 20px;
 }
-.container1 {
+
+.container-1 {
     width: 90%;
     max-width: 1200px;
     background-color: #fff;
