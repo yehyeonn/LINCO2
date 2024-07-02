@@ -27,30 +27,30 @@ spring:
       client:
         registration:
           google:
-            client-id: aaaa
-            client-secret: aaaa
+            client-id: ${rds.googleid}
+            client-secret: ${rds.googlesecret}
             scope:
               - email
               - profile
 
           naver:
-            client-id: aaaaaa
-            client-secret: aaaaa
+            client-id: ${rds.naverid}
+            client-secret: ${rds.naversecret}
             scope:
               - name
               - email
             client-name: Naver
             authorization-grant-type: authorization_code
-            redirect-uri: aaaaaa
+            redirect-uri: ${rds.naveruri}
 
           kakao:
-            client-id: aaaaaa
+            client-id: ${rds.kakaoid}
             client-secret: ""  # 카카오는 client-secret을 사용하지 않음
             scope:
               - profile_nickname
             client-name: Kakao
             authorization-grant-type: authorization_code
-            redirect-uri: aaaaaa
+            redirect-uri: ${rds.kakakouri}
 
 
         # provider 제공
@@ -88,12 +88,12 @@ app:
     password: 1234
 
 openapi:
-  url: http://openapi.seoul.go.kr:8088/476753474c73777338374b73494b4b/json/ListPublicReservationInstitution/1/520/
+  url: http://openapi.seoul.go.kr:8088/${rds.openapikey}/json/ListPublicReservationInstitution/1/520/
 
 imp:
   client:
-    code: imp28617244
+    code: ${rds.impcode}
 
   api:
-    key: 1353857757624268
-    secretkey: DZvJ20jHqADUui53lg5IifYF0fWXMwBtQq9ahbAABIRvAMaeSRjeCxOUVWNFkMC18jSBHfe92PlEOoiP
+    key: ${rds.impapikey}
+    secretkey: ${rds.impapisecretkey}
