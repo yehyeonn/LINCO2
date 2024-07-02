@@ -115,7 +115,7 @@ public class ClubServiceImpl implements ClubService {
         String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         String fileName = sourceName;
 
-        System.out.println(sourceName);
+//        System.out.println(sourceName);
 
         File file = new File(uploadDir, fileName);
         if (file.exists()) {
@@ -129,7 +129,7 @@ public class ClubServiceImpl implements ClubService {
                 fileName += "_" + System.currentTimeMillis();
             }
         }
-        System.out.println(fileName);
+//        System.out.println(fileName);
 
         Path copyOfLocation = Paths.get(new File(uploadDir, fileName).getAbsolutePath());
         System.out.println(copyOfLocation);
@@ -161,9 +161,9 @@ public class ClubServiceImpl implements ClubService {
 
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다.
         user = userRepository.findById(user.getId());
-        System.out.println("유저의 id는?? " + user.getId());
+//        System.out.println("유저의 id는?? " + user.getId());
         int result = clubRepository.save(club);
-        System.out.println("클럽의 id는?? " + club.getId());
+//        System.out.println("클럽의 id는?? " + club.getId());
         if (result > 0) {
             ClubUserList clubUserList = new ClubUserList();
             clubUserList.setUser_id(user.getId());
@@ -207,8 +207,8 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public List<Club> list(Integer page, Model model, String selectcategory, String selectdetailcategory) {
-        System.out.println("selectcategory:" + selectcategory);
-        System.out.println("selectdetailcategory:" + selectdetailcategory);
+//        System.out.println("selectcategory:" + selectcategory);
+//        System.out.println("selectdetailcategory:" + selectdetailcategory);
 
         if (page == null || page < 1) page = 1;
 
@@ -267,7 +267,7 @@ public class ClubServiceImpl implements ClubService {
             setImage(fileList);
             board.setFileList(fileList);
         }
-        System.out.println("club 게시판 상세페이지 : " + board);
+//        System.out.println("club 게시판 상세페이지 : " + board);
         return board;
     }
 

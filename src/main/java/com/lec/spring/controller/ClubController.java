@@ -222,7 +222,7 @@ public class ClubController {
 
         // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
-        System.out.println("clubMaster :" + clubMaster);
+//        System.out.println("clubMaster :" + clubMaster);
 
         // clubMemberList에서 user_id만 추출하여 리스트로 만들기 (클럽장 제외)
         List<Long> userIds = clubMemberList.stream()
@@ -400,7 +400,7 @@ public class ClubController {
 
     @InitBinder("club")
     public void initBinder(WebDataBinder binder) {
-        System.out.println("ClubController.initBinder() 호출");
+//        System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());
     }
 
