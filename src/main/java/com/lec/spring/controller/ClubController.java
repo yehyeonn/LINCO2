@@ -159,7 +159,7 @@ public class ClubController {
         return "club/list";
     }
 
-    @GetMapping("detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
@@ -202,7 +202,7 @@ public class ClubController {
         return "/club/detail";
     }
 
-    @GetMapping("board/list/{id}")
+    @GetMapping("/board/list/{id}")
     public String board(@PathVariable Long id
             , @RequestParam(name = "title", required = false, defaultValue = "") String title
             , Integer page
@@ -252,7 +252,7 @@ public class ClubController {
         return "club/boardList";
     }
 
-    @GetMapping("board/detail/{id}")
+    @GetMapping("/board/detail/{id}")
     public String boardDetail(@PathVariable Long id, Model model) {
         Board board = boardService.detail(id);
         List<Board> clubBoards = clubService.getClubBoard(id);
