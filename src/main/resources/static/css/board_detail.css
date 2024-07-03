@@ -146,7 +146,7 @@ img.img-thumbnail {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
-    margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 .comment button:hover {
@@ -201,7 +201,7 @@ tr td.text span {
 .button-2 {
     position: relative;
     right: 15px; /* 초기 값으로 변경 */
-    bottom: 20px; /* 초기 값으로 변경 */
+    bottom: 10px; /* 초기 값으로 변경 */
     border: none;
     box-shadow: none;
     width: 130px;
@@ -214,8 +214,22 @@ tr td.text span {
 
 .button-3 {
     position: relative;
-    right: 100px; /* 초기 값으로 변경 */
-    bottom: 10px; /* 초기 값으로 변경 */
+    right: 120px; /* 초기 값으로 변경 */
+    bottom: 0; /* 초기 값으로 변경 */
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+    font-size: 18px;
+}
+
+.button-4 {
+    position: relative;
+    right: 15px; /* 초기 값으로 변경 */
+    bottom: 20px; /* 초기 값으로 변경 */
     border: none;
     box-shadow: none;
     width: 130px;
@@ -339,4 +353,74 @@ tr td.text span {
     -webkit-transform: rotateX(-90deg);
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
+}
+
+.button-4 span {
+    background: rgb(0,172,238);
+    background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+    display: block;
+    position: absolute;
+    width: 130px;
+    height: 40px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    border-radius: 5px;
+    margin: 0;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+.button-4 span:nth-child(1){
+    box-shadow: -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+    -webkit-transform: rotateX(90deg);
+    -moz-transform: rotateX(90deg);
+    transform: rotateX(90deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+.button-4 span:nth-child(2){
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+.button-4:hover span:nth-child(1){
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+.button-4:hover span:nth-child(2){
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    color: transparent;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+}
+
+
+#del-button {
+    background-color: #D3374A;
+    color: #EDEBDA;
+    transition: all 0.3s;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+#del-button:hover {
+    transform: scale(1.1);
 }

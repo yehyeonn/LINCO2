@@ -94,19 +94,17 @@ function buildComment(comments) {
         console.log("userName : " + username);
         console.log("name : " + name);
         let user_id = parseInt(comment.user.id);
-        let delBtn = (logged_id === user_id) ? `<i class="btn" data-cmtdel-id="${id}" title="삭제">댓글 삭제</i>` : '';
+        let delBtn = (logged_id === user_id) ? `<button class="btn" id="del-button" data-cmtdel-id="${id}" title="삭제">삭제</button>` : '';
 
         // 댓글 row 생성
         let row = `
             <tr>
                 <td class="text">
-                    <span><strong>${username}</strong><br>
-                    <small class="text-secondary">(${name})</small></span>
+                    <span><strong>${username}&nbsp;&nbsp;(${name})</strong></span>
                 </td>
                 <td class="text"><span>${content}</span></td>
                 <td class="text">
-                    <span><small class="text-secondary">${regdate}</small></span>
-                    ${delBtn}
+                    <span class="text-secondary">${regdate}</span>&nbsp;&nbsp;${delBtn}
                 </td>
             </tr>
         `;

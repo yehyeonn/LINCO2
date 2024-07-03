@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>club_board_detail</title>
+    <title>LINCO</title>
 </head>
 <th:block th:if="${board}" th:with="logged_user=${#authentication.principal.user}">
 
@@ -22,7 +22,8 @@
       const logged_id = [[${logged_user.id}]]
     </script>
     <th:block th:insert="/common/header :: header-head"></th:block>
-    <title>club_board_detail</title>
+    <title>LINCO</title>
+    <link rel="shortcut icon" th:href="@{/img/linco_ico.png}" type="image/png">
   </head>
 
   <body>
