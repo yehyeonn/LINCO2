@@ -104,7 +104,7 @@ function buildComment(comments) {
                 </td>
                 <td class="text"><span>${content}</span></td>
                 <td class="text">
-                    <span class="text-secondary">${regdate}</span>&nbsp;&nbsp;${delBtn}
+                    <span class="text-secondary" style="font-size: 18px;">${regdate}</span>&nbsp;&nbsp;${delBtn}
                 </td>
             </tr>
         `;
