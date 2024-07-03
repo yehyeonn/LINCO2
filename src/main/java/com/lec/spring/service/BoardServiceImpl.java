@@ -28,7 +28,7 @@ import java.util.Map;
 public class BoardServiceImpl implements BoardService{
 
     // 첨부파일 업로드
-    @Value("upload")
+    @Value("${app.upload.path}")
     private String uploadDir;
 
     // 페이징 갯수
@@ -233,9 +233,9 @@ public class BoardServiceImpl implements BoardService{
                 board.setFileList(attachments);
 //                System.out.println("BOARD File List : " + board.getFileList());
                 if (board.getFileList() != null && !board.getFileList().isEmpty()){
-                    board.setImagePath("/upload/" + board.getFileList().get(0).getFilename());
+                    board.setImagePath(uploadDir + "/" + board.getFileList().get(0).getFilename());
                 }else {
-                    board.setImagePath("/upload/DefaultImg.jpg");
+                    board.setImagePath(uploadDir + "/DefaultImg.jpg");
                 }
             }
 
