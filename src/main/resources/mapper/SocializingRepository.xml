@@ -9,7 +9,7 @@
     <insert id="save" flushCache="true"
             parameterType="com.lec.spring.domain.Socializing"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-    INSERT INTO socializing
+    INSERT INTO SOCIALIZING
         (venue_id, socializing_title, category, detail_category, address, place_name , meeting_date, meeting_time, limit_num, content, total_price, img)
     VALUES
         (#{venue_id}, #{socializing_title}, #{category}, #{detail_category}, #{address}, #{place_name}, #{meeting_date}, #{meeting_time}, #{limit_num}, #{content}, #{total_price},
@@ -37,7 +37,7 @@
             , s.img
             , s.regdate
         FROM
-            user u, socializing s
+            USER u, SOCIALIZING s
         WHERE
             1 = 1
     </sql>
@@ -59,7 +59,7 @@
             img,
             regdate
 
-        FROM socializing
+        FROM SOCIALIZING
         WHERE
             1 = 1
     </sql>
