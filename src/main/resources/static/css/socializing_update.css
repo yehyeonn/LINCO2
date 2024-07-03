@@ -210,3 +210,7 @@ textarea {
     transform: rotateX(-90deg);
 }
 
+#total_price, #limit_num {
+    text-align: end;
+}
+
