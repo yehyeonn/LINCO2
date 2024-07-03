@@ -47,6 +47,7 @@ $(document).ready(function() {
         }
 
         const newCards = eventsToShow.map(event => {
+            const fee = event.IS_FREE === '무료' || !event.USE_FEE ? '무료' : event.USE_FEE;
             return `
                 <div class="card-article">
                     <img src="${event.MAIN_IMG}" alt="culture-image" class="card-img" style="width: 350px; height: 250px;">
@@ -56,7 +57,7 @@ $(document).ready(function() {
                             <li>시간: <span>${event.DATE}</span></li>
                             <li>장소: <span>${event.PLACE}</span></li>
                             <li>대상: <span>${event.USE_TRGT}</span></li>
-                            <li>요금: <span>${event.USE_FEE}</span></li>
+                            <li>요금: <span>${fee}</span></li>
                         </ul>
                         <div class="card-button-container">
                             <a href="${event.HMPG_ADDR}" class="custom-btn btn-1 card-button"><span>Let's GO!</span><span>상세</span></a>
