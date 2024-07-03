@@ -11,8 +11,6 @@ FROM COMMENT;
 ALTER TABLE COMMENT
     AUTO_INCREMENT = 1;
 DELETE
-FROM BOARD_LIKE;
-DELETE
 FROM USER_AUTHORITY;
 DELETE
 FROM CLUB_USER_LIST;
@@ -190,14 +188,6 @@ values
        (2, 1, 4, '클럽공지사항6', '클럽공지사항6',1),
        (2, 1, 4, '클럽공지사항7', '클럽공지사항7',1)
        ;
-
-# select * from BOARD;
-
-insert into BOARD_LIKE(user_id, board_id)
-values (1, 1),
-       (2, 2);
-
-# select * from BOARD_LIKE;
 
 insert into ATTACHMENT (board_id, club_id, sourcename, filename)
 values
