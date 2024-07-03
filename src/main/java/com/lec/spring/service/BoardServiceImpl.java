@@ -235,7 +235,7 @@ public class BoardServiceImpl implements BoardService{
                 if (board.getFileList() != null && !board.getFileList().isEmpty()){
                     board.setImagePath(uploadDir + "/" + board.getFileList().get(0).getFilename());
                 }else {
-                    board.setImagePath(uploadDir + "/DefaultImg.jpg");
+                    board.setImagePath(uploadDir + "/noimg.png");
                 }
             }
 
