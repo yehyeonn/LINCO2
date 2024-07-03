@@ -71,7 +71,7 @@
             <li>
                 <label class="search-club-category">
                     <a class="custom-button button-2"
-                       th:href="@{'/club/board/' + ${club.id}}"><span>게시판</span><span>게시판</span></a>
+                       th:href="@{'/club/board/list/' + ${club.id}}"><span>게시판</span><span>게시판</span></a>
                 </label>
             </li>
             <li>
@@ -84,7 +84,7 @@
     <form th:action="@{'/club/galleryUpload'}">
         <div class="img-btn-div">
             <input type="hidden" id="id" name="id" th:value="${club.id}">
-            <button type="submit" class="add-img custom-button button-4">
+            <button type="submit" class="add-img custom-button button-4" th:if="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}">
                 <span>Add Photo!</span><span>사진추가</span>
             </button>
         </div>

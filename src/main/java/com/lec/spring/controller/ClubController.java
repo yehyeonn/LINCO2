@@ -488,7 +488,17 @@ public class ClubController {
             likedAttachmentIds.add(likedAttachment.getAttachment().getId());
         }
 
-        System.out.println("likedAttachmentIds = " + likedAttachmentIds);
+//        System.out.println("likedAttachmentIds = " + likedAttachmentIds);
+        List<ClubUserList> clubMemberList = clubUserListService.clubuserlist(id);
+        ClubUserList clubMaster = clubService.findClubMaster(id);
+
+        List<Long> userIds = clubMemberList.stream()
+                .map(clubUserList -> clubUserList.getUser().getId())
+                .filter(user_id -> !user_id.equals(clubMaster.getUser_id())) // 클럽장 제외
+                .collect(Collectors.toList());
+
+        model.addAttribute("clubMaster", clubMaster);
+        model.addAttribute("userIds", userIds);
 
         model.addAttribute("club", club);
         model.addAttribute("imgList", imgList);
