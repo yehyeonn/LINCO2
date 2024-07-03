@@ -57,14 +57,15 @@ form input[type="text"] {
 }
 
 .search-bar button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px 15px;
+    font-size: 15px;
     color: #EDEBDA;
     background-color: #3A4D72;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
+    margin-left: 5px;
 }
 
 .search-bar button:hover {

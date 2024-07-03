@@ -24,7 +24,8 @@
             const logged_id = [[${logged_user.id}]]
         </script>
         <th:block th:insert="/common/header :: header-head"></th:block>
-        <title>board_detail</title>
+        <title>LINCO</title>
+        <link rel="shortcut icon" th:href="@{/img/linco_ico.png}" type="image/png">
     </head>
 
     <body>    <!-- 현재 로그인한 유저의 정보 -->
@@ -99,9 +100,9 @@
                 <div class="right-buttons">
                     <a class="custom-button button-3" id="clubDetail" th:if="${board.boardType.id == 3}"
                        th:href="@{'/club/detail/' + ${club.id}}">
-                        <span>Go Club!</span><span>클럽 상세페이지</span>
+                        <span>Go Club!</span><span>클럽상세</span>
                     </a>
-                    <button type="button" class="custom-button button-2" id="btnDel" th:if="${logged_user.id == board.user.id}">
+                    <button type="button" class="custom-button button-4" id="btnDel" th:if="${logged_user.id == board.user.id}">
                         <span>DELETE!</span><span>삭제</span>
                     </button>
                 </div>

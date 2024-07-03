@@ -18,8 +18,6 @@ from BOARD_TYPE;
 select *
 from BOARD;
 select *
-from BOARD_LIKE;
-select *
 from ATTACHMENT;
 select *
 from ATTACHMENT_LIKE;
