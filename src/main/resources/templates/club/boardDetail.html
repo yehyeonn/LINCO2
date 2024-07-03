@@ -14,18 +14,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://kit.fontawesome.com/21b1be2aba.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/club/detail.js}"></script>
+    <script th:src="@{/js/club/boardDetail.js}"></script>
 
     <script th:inline="javascript">
       const logged_id = [[${logged_user.id}]]
     </script>
-<!--    <th:block th:insert="/common/header :: header-head"></th:block>-->
+    <th:block th:insert="/common/header :: header-head"></th:block>
     <title>club_board_detail</title>
   </head>
 
-  <body>    <!-- 현재 로그인한 유저의 정보 -->
+  <body>
 
-<!--  <th:block th:insert="/common/header :: header-body"></th:block>-->
+  <th:block th:insert="/common/header :: header-body"></th:block>
   <div class="body">
     <section>
       <!--삭제 기능을 위해 만든 폼-->
@@ -33,7 +33,8 @@
         <input type="hidden" name="id" th:value="${board.id}">
       </form>
 
-      <h1>[[${board.club.name}]] 게시판</h1>
+      <label>[[${board.club.name}]] [[${board.boardType.name}]]</label>
+      <hr>
       <div class="form-group">
         <label>작성자 : </label>
         <span th:text="${board.user.name}" class="text"></span>
@@ -82,12 +83,19 @@
       <!-- 버튼 -->
       <div class="button">
         <div class="left-buttons">
-          <a class="btn" th:href="@{'/club/board/' + ${board.club.id}(page=${session.page})}">목록</a>
-          <a class="btn" th:href="@{'/club/board/update/' + ${board.id}}" th:if="${logged_user.id == board.user.id}">수정</a>
-          <a class="btn" th:href="@{/club/write}">글쓰기</a>
+          <a class="custom-button button-2" th:href="@{'/club/board/' + ${board.club.id}(page=${session.page})}">
+            <span>LIST!</span><span>목록</span>
+          </a>
+          <a class="custom-button button-2" th:href="@{'/club/board/update/' + ${board.id}}" th:if="${logged_user.id == board.user.id}">
+            <span>EDIT!</span><span>수정</span>
+          </a>
+          <a class="custom-button button-2" th:href="@{/club/board/write}">
+            <span>Go Write!</span><span>글쓰기</span>
+          </a>
         </div>
         <div class="right-buttons">
-          <button type="button" class="btn" id="btnDel" th:if="${logged_user.id == board.user.id}">삭제하기
+          <button type="button" class="custom-button button-2" id="btnDel" th:if="${logged_user.id == board.user.id}">
+            <span>DELETE!</span><span>삭제</span>
           </button>
         </div>
       </div>
@@ -96,7 +104,7 @@
       <div class="comment">
         <label>댓글 : <span id="cmt_cnt" th:text="${cnt}"> 0 </span> 개</label>
 
-        <div>  <!-- 회원만 댓글 작성 가능하도록 설정 -->
+        <div>
           <input type="text" id="input_comment" class="comment-input">
           <button type="button" class="btn" id="btn_comment">등록</button>
         </div>

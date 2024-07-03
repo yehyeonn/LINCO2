@@ -7,15 +7,11 @@ body {
     box-sizing: border-box;
 }
 
-/*main {*/
-/*    padding: 20px;*/
-/*}*/
-
 .container1 {
     width: 100%;
     max-width: 1200px;
     background-color: #fff;
-    margin: 150px auto 200px;
+    margin: 150px auto 250px;
     flex: 1;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

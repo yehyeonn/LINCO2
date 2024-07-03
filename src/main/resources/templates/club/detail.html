@@ -29,12 +29,10 @@
             <img th:src="@{'/upload/' + ${club.representative_picture}}" class="event-image" alt="Club Image">
             <div class="event-details">
                 <div class="details-header">
-                    <h1>
-                        [[${club.name}]]
-                        <span class="category-button">상세: [[${club.detail_category}]]</span>
-                        <span id="club-member-count" class="category-button">인원: [[${memberCount}]]명</span>
-                    </h1>
+                    <h1 th:text="${club.name}">클럽 이름</h1>
+                    <span class="club-info">[[${club.detail_category}]]</span>
                     <p id="club-intro">[[${club.intro}]]</p>
+                    <p id="club-member-count">현재 인원: [[${memberCount}]]명</p>
                 </div>
 
                 <div class="details-buttons">
@@ -68,7 +66,7 @@
                     </li>
                     <li>
                         <label class="search-club-category">
-                            <a class="custom-button button-2" th:href="@{'/club/board/' + ${club.id}}"><span>Club Board</span><span>게시판</span></a>
+                            <a class="custom-button button-2" th:href="@{'/club/board/list/' + ${club.id}}"><span>Club Board</span><span>게시판</span></a>
                         </label>
                     </li>
                     <li>
@@ -139,7 +137,6 @@
                     th:if="${logged_user.id != clubMaster.user_id and #lists.contains(userIds, logged_user.id)}">
                 <span>EXIT!</span><span>탈퇴</span>
             </button>
-
         </div>
     </main>
 

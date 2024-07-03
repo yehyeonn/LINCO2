@@ -40,6 +40,7 @@ public class BoardServiceImpl implements BoardService{
     // 글 작성 관련 정보 가져오기
     private BoardRepository boardRepository;
 
+
     // 로그인한 정보 가져오기
     private UserRepository userRepository;
 
@@ -73,7 +74,7 @@ public class BoardServiceImpl implements BoardService{
 //        System.out.println("Saving Board : " + board);
 
         // 클럽 정보 설정
-        if(board.getBoardType() != null && board.getBoardType().getId() == 3){
+        if(board.getBoardType() != null &&(board.getBoardType().getId() == 3)){
             Long clubId = board.getClub() != null ? board.getClub().getId() : null;
             if (clubId != null){
                 Club club = clubRepository.findById(clubId);
@@ -81,6 +82,9 @@ public class BoardServiceImpl implements BoardService{
                     board.setClub(club);
                 }
             }
+        } else if (board.getBoardType() != null && (board.getBoardType().getId() == 4 || board.getBoardType().getId() == 5)) {
+            Long clubId = board.getClub().getId();
+
         }
 
         int cnt = boardRepository.save(board);
@@ -298,7 +302,7 @@ public class BoardServiceImpl implements BoardService{
     private void delFile(Attachment file) {
         String saveDirectory = new File(uploadDir).getAbsolutePath();       // 파일의 저장 경로를 절대경로로 가져오기
         File f = new File(saveDirectory, file.getFilename());
-        System.out.println("삭제시도 : " + f.getAbsolutePath());
+//        System.out.println("삭제시도 : " + f.getAbsolutePath());
 
         if (f.exists()){
             if (f.delete()){

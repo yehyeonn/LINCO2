@@ -96,18 +96,18 @@ public class SocializingController {
         }
 
 
-        // 새로운 작성 요청 시 세션 정보 초기화
-        if (venue_id == null) {
-            session.removeAttribute("venue");
-            session.removeAttribute("totalPrice");
-            session.removeAttribute("reserveDate");
-            session.removeAttribute("reserveST");
-            session.removeAttribute("reserveET");
-            session.removeAttribute("merchantUid");
-
-            // 세션이 초기화되었음을 확인하는 로그 추가
-            System.out.println("세션 정보 초기화 완료");
-        }
+//        // 새로운 작성 요청 시 세션 정보 초기화
+//        if (venue_id == null) {
+//            session.removeAttribute("venue");
+//            session.removeAttribute("totalPrice");
+//            session.removeAttribute("reserveDate");
+//            session.removeAttribute("reserveST");
+//            session.removeAttribute("reserveET");
+//            session.removeAttribute("merchantUid");
+//
+//            // 세션이 초기화되었음을 확인하는 로그 추가
+//            System.out.println("세션 정보 초기화 완료");
+//        }
 
 
         List<String> category = socializingService.getAllCategories();
@@ -183,13 +183,13 @@ public class SocializingController {
 
         // 이미지 경로를 Socializing 객체에 설정
         socializing.setImg(imgPath);
-        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
+//        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
 
 
         if (result.hasErrors()) {
-            System.out.println("에러났지롱~");
-            System.out.println(socializing.getCategory() + "카테고리");
-            System.out.println(socializing.getDetail_category() + "디테일_카테고리");
+//            System.out.println("에러났지롱~");
+//            System.out.println(socializing.getCategory() + "카테고리");
+//            System.out.println(socializing.getDetail_category() + "디테일_카테고리");
 
             redirectAttributes.addFlashAttribute("socializing_title", socializing.getSocializing_title());
             redirectAttributes.addFlashAttribute("category1", socializing.getCategory());  // 대분류
@@ -305,7 +305,7 @@ public class SocializingController {
 
     @InitBinder("socializing")
     public void initBinder(WebDataBinder binder) {
-        System.out.println("SocializingController.initBinder() 호출");
+//        System.out.println("SocializingController.initBinder() 호출");
         binder.setValidator(new SocializingValidator());
     }
 
