@@ -537,9 +537,10 @@ public class ClubController {
     }
 
     @GetMapping("/galleryUpload")
-    public void galleryUpload(@RequestParam(name = "id", required = false, defaultValue = "") Long id, Model model) {
+    public String galleryUpload(@RequestParam(name = "id", required = false, defaultValue = "") Long id, Model model) {
 
         model.addAttribute("id", id);
+        return "club/galleryUpload";
     }
 
     @PostMapping("/galleryUpload")
