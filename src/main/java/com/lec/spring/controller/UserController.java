@@ -166,10 +166,10 @@ public class UserController {
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = fileName;
+            imgPath = "upload/" + fileName;
 
             try {
-                Path path = Paths.get("/upload/" + imgPath);
+                Path path = Paths.get(imgPath);
                 Files.createDirectories(path.getParent());
                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
