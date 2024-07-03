@@ -4,18 +4,16 @@ body {
     color: #3A4D72;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-main {
-    padding: 20px;
-}
 
 .container1 {
     width: 90%;
     height: auto;
     max-width: 1200px;
     background-color: #fff;
-    margin: 150px auto 190px;
+    margin: 200px auto 200px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -33,14 +31,14 @@ main {
 }
 
 .event-image {
-    width: 328px;
-    height: 150px;
+    width: 250px;
+    height: auto;
     object-fit: contain;
-    background-color: #EDEBDA;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
 }
 
 .event-details {
@@ -78,17 +76,42 @@ main {
     position: relative;
 }
 
-.details-header {
-    flex: 1;
+.event-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
 }
 
-.details-buttons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+.details-header {
+    padding: 20px;
+}
+
+.details-header h1 {
+    font-size: 2.5em; /* 제목 크기 조정 */
+    margin-bottom: 20px; /* 아래 여백 추가 */
+    color: #3A4D72; /* 제목 텍스트 색상 */
+    gap: 10px; /* 제목과 버튼 사이의 간격 */
+    font-weight: bold;
+}
+
+.category-button {
+    text-align: start;
+    background-color: #73B9C9; /* 버튼 배경색 */
+    color: #EDEBDA; /* 버튼 텍스트 색상 */
+    padding: 5px 10px; /* 버튼 패딩 */
+    margin-left: 15px; /* 왼쪽 여백 */
+    border-radius: 5px; /* 버튼 모서리 둥글게 */
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+#club-intro{
+    font-size: 1.5em; /* 본문 텍스트 크기 */
+    font-weight: 500;
+    margin-top: 50px; /* 위 여백 추가 */
+    color: #333; /* 텍스트 색상 */
 }
 
 .hidden {
@@ -137,6 +160,24 @@ main {
 }
 
 .button-1, .button-2, .button-3 {
+    position: relative;
+    right: 20px; /* 초기 값으로 변경 */
+    bottom: 10px; /* 초기 값으로 변경 */
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+    font-size: 18px;
+}
+
+.img-btn-div {
+    text-align: end;
+}
+
+.button-4 {
     position: relative;
     right: 20px; /* 초기 값으로 변경 */
     bottom: 20px; /* 초기 값으로 변경 */
@@ -336,57 +377,67 @@ main {
     transform: rotateX(-90deg);
 }
 
-.imgs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
-}
 
-.img-box {
-    width: calc(25% - 10px);
-    height: 200px; /* Set a fixed height for the image box */
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Ensure content outside the box is hidden */
-    background-color: #fff;
-}
-
-.imgs img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Ensures the image fits within the box without being cut off */
-    border-radius: 10px;
-}
-
-.img-btn-div {
-    float: right;
-    margin-right: 50px;
-}
-
-.add-img {
-    width: 120px;
-    padding: 15px 20px;
-    font-size: 1rem;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.button-4 span {
+    background: rgb(255, 151, 0);
+    background: linear-gradient(0deg, rgb(251, 164, 33) 0%, rgb(234, 184, 76) 100%);
+    display: block;
+    position: absolute;
+    width: 130px;
+    height: 40px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    margin: 0;
     text-align: center;
-
-    text-decoration: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s;
+    transition: all .3s;
 }
 
-.add-img:hover {
-    cursor: pointer;
+.button-4 span:nth-child(1) {
+    box-shadow: -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+    -webkit-transform: rotateX(90deg);
+    -moz-transform: rotateX(90deg);
+    transform: rotateX(90deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
 }
 
+.button-4 span:nth-child(2) {
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+
+.button-4:hover span:nth-child(1) {
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+
+.button-4:hover span:nth-child(2) {
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+    color: transparent;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+}
 
 /* 모달 전체 */
 #myModal {
@@ -415,6 +466,12 @@ main {
     cursor: pointer;
 }
 
+.btn-close:hover,
+.btn-close:focus {
+    color: #ccc;
+    text-decoration: none;
+}
+
 /* 이미지 */
 #modalImage {
     display: block;
@@ -424,13 +481,61 @@ main {
     border-radius: 8px;
 }
 
-
-.btn-close:hover,
-.btn-close:focus {
-    color: #ccc;
-    text-decoration: none;
+/* 좋아요 버튼 및 이미지 */
+.imgs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
 }
 
+.img-box {
+    width: calc(25% - 10px);
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    text-align: center; /* Center the content */
+}
+
+.club-img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-bottom: 1px solid #ccc;
+}
+
+
+.like-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 24px;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+}
+
+.like-btn:hover {
+    transform: scale(1.2);
+}
+
+.heart-icon {
+    color: #000000;
+    transition: color 0.2s ease-in-out;
+}
+
+.like-btn.liked .heart-icon {
+    color: #ff0000;
+}
 
 
 
