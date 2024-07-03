@@ -174,7 +174,7 @@ public class SocializingController {
             }
         }
         if (socializing.getTotal_price() == null) {
-            if(total_price > 0) {
+            if(total_price != null) {
                 socializing.setTotal_price(total_price);
             } else {
                 socializing.setTotal_price(0L);

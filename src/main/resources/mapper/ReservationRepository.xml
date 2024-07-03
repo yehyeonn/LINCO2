@@ -98,8 +98,8 @@
                v.open_time           "v_open_time",
                v.close_time          "v_close_time"
         from RESERVATION re
-                 join user u on re.user_id = u.id
-                 join venue v on re.venue_id = v.id
+                 join USER u on re.user_id = u.id
+                 join VENUE v on re.venue_id = v.id
         where re.venue_id = #{venue_id}
           and re.reserve_date = #{reserve_date};
     </select>
@@ -131,8 +131,8 @@
                v.venue_name          "v_venue_name",
                v.price               "v_price"
         from RESERVATION re
-                 join user u on re.user_id = u.id
-                 join venue v on re.venue_id = v.id
+                 join USER u on re.user_id = u.id
+                 join VENUE v on re.venue_id = v.id
         where re.user_id = #{userId}
     </select>
 

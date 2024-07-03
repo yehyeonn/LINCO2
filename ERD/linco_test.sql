@@ -35,7 +35,7 @@ select *
 from USER_SOCIALIZING;
 
 select u.user_id, a.name
-from user_authority u,
+from USER_AUTHORITY u,
      AUTHORITY a
 where u.authority_id = a.id;
 

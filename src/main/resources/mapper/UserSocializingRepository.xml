@@ -58,7 +58,7 @@
             , us.socializing_id "us_socializing_id"
             , us.role "us_role"
         FROM SOCIALIZING s
-        JOIN user_socializing us ON s.id = us.socializing_id
+        JOIN USER_SOCIALIZING us ON s.id = us.socializing_id
         WHERE us.socializing_id = #{socializing_id}
     </select>
 
@@ -82,12 +82,12 @@
              , us.socializing_id "us_socializing_id"
              , us.role "us_role"
         FROM SOCIALIZING s
-                 JOIN user_socializing us ON s.id = us.socializing_id
+                 JOIN USER_SOCIALIZING us ON s.id = us.socializing_id
         WHERE us.user_id = #{user_id};
     </select>
 
     <insert id="addUserToSocializing" flushCache="true" parameterType="com.lec.spring.domain.UserSocializing">
-        INSERT INTO user_socializing(user_id, socializing_id, role)
+        INSERT INTO USER_SOCIALIZING(user_id, socializing_id, role)
         VALUES(#{userId}, #{socializingId}, #{role})
     </insert>
 </mapper>

@@ -43,14 +43,14 @@
     <!-- 특정 클럽의 특정 사용자 조회 -->
     <select id="findByUserIdAndClubId" parameterType="map" resultType="com.lec.spring.domain.ClubUserList">
         SELECT user_id, club_id, role
-        FROM club_user_list
+        FROM CLUB_USER_LIST
         WHERE user_id = #{user_id} AND club_id = #{club_id}
     </select>
 
 
     <!-- 클럽의 멤버 삭제 -->
     <delete id="deleteByClubIdAndUserId" parameterType="long">
-        DELETE FROM club_user_list
+        DELETE FROM CLUB_USER_LIST
         WHERE user_id = #{user_id} AND club_id = #{club_id}
     </delete>
 
@@ -77,7 +77,7 @@
             u.birthday "u_birthday",
             u.profile_picture "u_profile_picture",
             u.regdate "u_regdate"
-        FROM club_user_list cs JOIN user u on u.id = cs.user_id
+        FROM CLUB_USER_LIST cs JOIN USER u on u.id = cs.user_id
         WHERE cs.club_id = #{club_id} AND cs.role = 'MASTER'
     </select>
 
@@ -97,7 +97,7 @@
             u.birthday "u_birthday",
             u.profile_picture "u_profile_picture",
             u.regdate "u_regdate"
-        FROM club_user_list cs JOIN user u on u.id = cs.user_id
+        FROM CLUB_USER_LIST cs JOIN USER u on u.id = cs.user_id
         WHERE cs.club_id = #{param1}
         order by cs_regdate asc
     </select>
@@ -197,7 +197,7 @@
             bt.name "bt_name"
             FROM CLUB_USER_LIST cs
                JOIN CLUB c ON cs.club_id = c.id
-                JOIN User u ON cs.user_id = u.id
+                JOIN USER u ON cs.user_id = u.id
                 JOIN BOARD b, BOARD_TYPE bt
             WHERE cs.club_id = c.id
               AND cs.user_id = u.id

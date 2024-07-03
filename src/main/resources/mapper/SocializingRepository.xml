@@ -149,7 +149,7 @@
             s.regdate               "s_regdate",
             v.id                    "v_id",
             v.venue_name            "v_venue_name"
-        FROM socializing s left join venue v on s.venue_id = v.id
+        FROM SOCIALIZING s left join VENUE v on s.venue_id = v.id
         WHERE
             1 = 1
         AND s.id = #{id};
@@ -158,14 +158,14 @@
 <!--    특정 소셜에 가입한 사용자의 수-->
     <select id="membercnt" resultType="int">
         SELECT count(*)
-        from user_socializing
+        from USER_SOCIALIZING
         WHERE socializing_id = #{param1};
     </select>
 
     <!-- 수정 -->
     <update id="update" flushCache="true"
             parameterType="com.lec.spring.domain.Socializing">
-    UPDATE socializing
+    UPDATE SOCIALIZING
     SET socializing_title = #{socializing_title}, content = #{content}
     WHERE id = #{id}
     </update>
@@ -174,7 +174,7 @@
     <!-- 삭제-->
     <delete id="delete" flushCache="true"
             parameterType="com.lec.spring.domain.Socializing">
-        DELETE FROM socializing
+        DELETE FROM SOCIALIZING
         WHERE id = #{id}
     </delete>
 
@@ -191,7 +191,7 @@
 
 <!--    페이지 계산을 위한 각각의 조건에 맞는 리스트 개수-->
     <select id="countSelectAddress" resultType="int">
-        SELECT count(*) FROM socializing
+        SELECT count(*) FROM SOCIALIZING
         where
             (#{param1} IS NULL OR #{param1} = '' OR address LIKE CONCAT('%', #{param1}, '%'))
             AND (#{param2} IS NULL OR #{param2} = '' OR category = #{param2})
@@ -231,7 +231,7 @@
             s.img                   "s_img",
             s.regdate               "s_regdate",
             us.role                 "us_role"
-        FROM user_socializing us, user u , socializing s
+        FROM USER_SOCIALIZING us, USER u , SOCIALIZING s
         where us.user_id = u.id AND us.socializing_id = s.id
         AND us.socializing_id = ${param1}
         order by us_subscription ASC
@@ -251,9 +251,9 @@
             s.id                    "s_id",
             s.socializing_title     "s_socializing_title",
             us.role                 "us_role"
-        FROM user_socializing us
-                 join user u on us.user_id = u.id
-                 join socializing s on us.socializing_id = s.id
+        FROM USER_SOCIALIZING us
+                 join USER u on us.user_id = u.id
+                 join SOCIALIZING s on us.socializing_id = s.id
         where us.socializing_id = #{param1} AND us.role = 'MASTER'
     </select>
 

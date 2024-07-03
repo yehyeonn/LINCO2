@@ -83,13 +83,13 @@
       <!-- 버튼 -->
       <div class="button">
         <div class="left-buttons">
-          <a class="custom-button button-2" th:href="@{'/club/board/' + ${board.club.id}(page=${session.page})}">
+          <a class="custom-button button-2" th:href="@{'/club/board/list/' + ${board.club.id}(page=${session.page})}">
             <span>LIST!</span><span>목록</span>
           </a>
           <a class="custom-button button-2" th:href="@{'/club/board/update/' + ${board.id}}" th:if="${logged_user.id == board.user.id}">
             <span>EDIT!</span><span>수정</span>
           </a>
-          <a class="custom-button button-2" th:href="@{/club/board/write}">
+          <a class="custom-button button-2" th:href="@{'/club/board/write/' + ${board.club.id}}">
             <span>Go Write!</span><span>글쓰기</span>
           </a>
         </div>
