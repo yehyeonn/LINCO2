@@ -77,17 +77,11 @@
                 <input type="hidden" id="placeName" name="placeName" th:value="${updatesocializing.place_name}">
                 <input type="text" id="address" name="address" th:value="${updatesocializing.getAddress()}" readonly>
             </div>
-            <div th:if="${updatesocializing.getVenue() != null}">
-                <div class="form-group">
-                    <label for="reservation">대관명: </label>
-                    <input type="text" id="reservation" name="reservation" th:value="${updatesocializing.getVenue().getVenue_name()}" readonly>
-                </div>
-            </div>
 
             <div th:if="${updatesocializing.getVenue() != null}">
                 <div class="form-group">
                     <label for="reservation">대관명: </label>
-                    <input type="text" id="reservation" name="reservation" th:value="${updatescicalizing.getVenue().getVenue_name()}" readonly>
+                    <input type="text" id="reservation" name="reservation" th:value="${updatescicalizing.getVenue().getVenue_name()}" style="width: 335px" readonly>
                 </div>
             </div>
 
