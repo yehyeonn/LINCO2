@@ -116,7 +116,7 @@
                         <li>시간: <span th:text="${event.DATE}"></span></li>
                         <li>장소: <span th:text="${event.PLACE}"></span></li>
                         <li>대상: <span th:text="${event.USE_TRGT}"></span></li>
-                        <li>요금: <span th:text="${event.USE_FEE}"></span></li>
+                        <li>요금: <span id="fee-${event.ID}"></span></li>
                     </ul>
                     <div class="card-button-container">
                         <a th:href="${event.HMPG_ADDR}"><button class="custom-btn btn-1 card-button"><span>Let's GO!</span><span>상세</span></button></a>
