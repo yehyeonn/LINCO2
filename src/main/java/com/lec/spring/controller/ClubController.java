@@ -450,7 +450,7 @@ public class ClubController {
         }
         System.out.println("클럽아이디 !!"+clubid);
         // 기본 이미지 경로 설정
-        String imgPath = "no_img.png"; // 기본 이미지 경로
+        String imgPath = "noimg.png"; // 기본 이미지 경로
         Club club1 = new Club();
         club1.setId(clubid);
         board.setClub(club1);
