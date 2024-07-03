@@ -29,7 +29,7 @@ body {
 }
 
 .reservation-box {
-    outline: 3px solid red;
+    /*outline: 3px solid red;*/
     width: 40%;
     height: 80%;
 
