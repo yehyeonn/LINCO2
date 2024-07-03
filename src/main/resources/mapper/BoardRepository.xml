@@ -189,7 +189,7 @@
                  JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
                  JOIN CLUB c ON b.club_id = c.id
         WHERE c.id = #{clubId}
-        AND bt.id = 4
+        AND (bt.id = 4 OR bt.id = 5)
         AND (#{title} IS NULL OR #{title} = '' OR b.title LIKE CONCAT('%', #{title}, '%'))
     </select>
 

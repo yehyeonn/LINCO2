@@ -7,7 +7,7 @@
 
     <!-- 새로운 클럽 사용자 추가 -->
     <insert id="save" parameterType="com.lec.spring.domain.ClubUserList">
-        INSERT INTO club_user_list (user_id, club_id, role)
+        INSERT INTO CLUB_USER_LIST (user_id, club_id, role)
         VALUES (#{user_id}, #{club_id}, #{role})
     </insert>
 
