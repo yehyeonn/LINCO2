@@ -35,7 +35,7 @@ public class BoardServiceImpl implements BoardService{
     private int WRITE_PAGES=5;
 
     // 페이징 안의 페이지 갯수
-    private int PAGE_ROWS=10;
+    private int PAGE_ROWS=12;
 
     // 글 작성 관련 정보 가져오기
     private BoardRepository boardRepository;
