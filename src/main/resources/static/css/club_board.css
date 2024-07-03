@@ -112,7 +112,7 @@ h2{
     bottom: 0;
 }
 
-.btn-primary {
+.btn-edit, .btn-delete {
     border-radius: 1rem;
     border: none;
     padding: 10px 20px;
@@ -123,12 +123,13 @@ h2{
     transition: all 0.3s;
 }
 
-.btn-primary:hover {
+.btn-edit:hover,
+.btn-delete:hover{
     background-color: #D3374A;
     transform: scale(1.1);
 }
 
-.btn-success {
+.btn-good {
     background-color: #3A4D72;
     color: #EDEBDA;
     border-radius: 1rem;
@@ -137,7 +138,7 @@ h2{
     border: none;
 }
 
-.btn-success:hover {
+.btn-good:hover {
     background-color: #D3374A;
     color: #EDEBDA;
     transform: scale(1.1);
