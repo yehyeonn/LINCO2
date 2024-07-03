@@ -76,8 +76,9 @@
     </div>
 </div>
 
-<th:block th:replace="/common/footer :: footer-body"></th:block>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<footer th:replace="~{common/footer :: footer-body}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
-</body>
+<script th:src="@{/js/home.js}"></script>
 </html>
