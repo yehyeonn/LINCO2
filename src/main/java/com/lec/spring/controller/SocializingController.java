@@ -313,7 +313,7 @@ public class SocializingController {
         return "socializing/updateOk";
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public String deleteOk(Long id, Model model) {
         model.addAttribute("result", socializingService.deleteById(id));
         return "socializing/deleteOk";
