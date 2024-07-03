@@ -15,7 +15,7 @@
 <header th:replace="~{common/header :: header-body}"></header>
 
 <div class="write container1">
-    <form th:action="@{'/club/galleryUpload'}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/club/galleryUpload}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" th:value="${id}">
         <div class="form-img">
             <div class="form-group image-placeholder" >
