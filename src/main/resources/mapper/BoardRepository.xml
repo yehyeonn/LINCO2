@@ -175,7 +175,7 @@
 <!--    해당 클럽내 게시판 목록-->
     <select id="findbyClubPosts" resultMap="mapBoard">
         <include refid="SELECT_BASE"/>
-        AND b.board_type_id = 4
+        AND (b.board_type_id = 4 OR b.board_type_id = 5)
         AND b.club_id = #{clubId}
         AND (#{title} IS NULL OR #{title} = '' OR b.title LIKE CONCAT('%', #{title}, '%'))
         ORDER BY b.id desc
@@ -189,7 +189,7 @@
                  JOIN BOARD_TYPE bt ON b.board_type_id = bt.id
                  JOIN CLUB c ON b.club_id = c.id
         WHERE c.id = #{clubId}
-        AND bt.id = 4
+        AND (bt.id = 4 OR bt.id = 5)
         AND (#{title} IS NULL OR #{title} = '' OR b.title LIKE CONCAT('%', #{title}, '%'))
     </select>
 

@@ -10,17 +10,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" th:href="@{/css/board_list.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <th:block th:replace="~{common/header :: header-head}"></th:block>
     <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-
-    <th:block th:replace="/common/header :: header-head"></th:block>
-
     <title>LINCO</title>
     <link rel="shortcut icon" th:href="@{/img/linco_ico.png}" type="image/png">
 </head>
 <body>
 
-<th:block th:replace="/common/header :: header-body"></th:block>
+<header th:replace="~{common/header :: header-body}"></header>
 
 <main class="container1 mt-5 pt-4">
 
@@ -127,36 +126,11 @@
             </div>
         </div>
     </section>
-
-<!--        <th:block th:insert="~{board/boardPagination :: pagination}"></th:block>-->
-
-<!--        <div class="write">-->
-<!--            <div>          &lt;!&ndash; sec:authorize="hasAuthority('MEMBER')" &ndash;&gt;-->
-<!--                <a class="button" th:href="@{/board/write}">-->
-<!--                    <button class="board-title-1 custom-title">-->
-<!--                        <span>Let's GO!</span><span>글쓰기</span>-->
-<!--                    </button>-->
-<!--                </a>       &lt;!&ndash; th:value="${2}" &ndash;&gt;-->
-<!--            </div>-->
-<!--            &lt;!&ndash;            <div th:if="">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <a class="button" th:href="@{/board/write}" th:value="${3}">작성하기</a>&ndash;&gt;-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-
-<!--            &lt;!&ndash;            <div sec:authorize="hasAuthority('ADMIN')">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <a class="button" th:href="@{/board/write}" th:value="${1}">작성하기</a>&ndash;&gt;-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--        </div>-->
-        <!--        <th:block th:insert="~{board/boardPagination :: pagination}"></th:block>-->
-
-
 </main>
 <script th:src="@{/js/board/board.js}"></script>
 
-<th:block th:replace="/common/footer :: footer-body"></th:block>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
-<th:block th:replace="/common/footer :: footer-scripts"></th:block>
+<footer th:replace="~{common/footer :: footer-body}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 </body>
 </html>

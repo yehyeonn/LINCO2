@@ -132,14 +132,14 @@ values (1, 1, 'MASTER','2024-06-27 16:42:15'),
        (2, 14, 'MASTER','2024-06-27 16:42:26'),
        (1, 14, 'MEMBER','2024-06-27 16:42:26')
 ;
-insert into CLUB_USER_LIST(user_id, club_id, role, regdate)
-values (5, 15, 'MASTER','2024-06-27 16:42:15'),
-       (5, 16, 'MASTER','2024-06-27 16:42:16')
-;
+# insert into CLUB_USER_LIST(user_id, club_id, role, regdate)
+# values (5, 15, 'MASTER','2024-06-27 16:42:15'),
+#        (5, 16, 'MASTER','2024-06-27 16:42:16')
+# ;
 
 
 # select * from CLUB_USER_LIST;
-delete from board_type;
+# delete from board_type;
 insert into BOARD_TYPE(id, name)
 values (1, '공지사항'),
        (2, '자유게시판'),
@@ -191,26 +191,20 @@ values
 
 insert into ATTACHMENT (board_id, club_id, sourcename, filename)
 values
-#     (null, 1, 'face01.png', 'face01.png'),
-#        (null, 1, 'face02.png', 'face01.png'),
-#        (null, 1, 'face03.png', 'face01.png'),
-#        (null, 1, 'face04.png', 'face01.png'),
-#        (null, 1, 'face05.png', 'face01.png'),
-#        (1, 1, 'face01.png', 'face01.png'),
-#        (1, 2, 'face02.png', 'face02.png'),
-#        (2, null, 'face03.png', 'face03.png'),
-#        (1, null, 'face04.png', 'face04.png'),
-#        (3, null, 'face06.png', 'face06.png'),
-#        (null, 1, 'face07.png', 'face07.png'),
-#        (null, 2, 'face07.png', 'face07.png'),
-#        (null, 3, 'face07.png', 'face07.png'),
-       (null, 15, 'face07.png', 'face07.png'),
-       (null, 15, 'face06.png', 'face06.png'),
-       (null, 15, 'face05.png', 'face05.png'),
-       (null, 15, 'face04.png', 'face04.png'),
-       (null, 15, 'face03.png', 'face03.png'),
-       (null, 15, 'face02.png', 'face02.png'),
-       (null, 15, 'face01.png', 'face01.png')
+    (null, 1, 'face01.png', 'face01.png'),
+       (null, 1, 'face02.png', 'face01.png'),
+       (null, 1, 'face03.png', 'face01.png'),
+       (null, 1, 'face04.png', 'face01.png'),
+       (null, 1, 'face05.png', 'face01.png'),
+       (1, 1, 'face01.png', 'face01.png'),
+       (1, 2, 'face02.png', 'face02.png'),
+       (2, null, 'face03.png', 'face03.png'),
+       (1, null, 'face04.png', 'face04.png'),
+       (3, null, 'face06.png', 'face06.png'),
+       (null, 1, 'face07.png', 'face07.png'),
+       (null, 2, 'face07.png', 'face07.png'),
+       (null, 3, 'face07.png', 'face07.png')
+
 ;
 
 # select * from ATTACHMENT;
@@ -312,9 +306,6 @@ values (1, 1, 'MASTER','2024-06-27 16:42:15'),
 
 select * from USER_SOCIALIZING;
 
-select *
-from club;
-
 # select * from user;
 # insert into club(id, name, category, detail_category, intro, content)
 # values (20, '클럽test1', '스터디', '코딩', '테스트', '제발 좀 되라~~ test test test');
@@ -325,36 +316,36 @@ from club;
 #        (4, 20, 'MEMBER','2024-6-27 17:33:02');
 # select * from club_user_list;
 
-insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
-values
-    (3, 1, 1, '야 나두1', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (2, 1, 1, '야 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (1, 1, 1, '야 나두3', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두4', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (4, 1, 1, '야 나두5', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (2, 1, 1, '야 나두6', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (4, 1, 1, '야 나두7', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (2, 1, 1, '야 나두8', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (1, 1, 1, '야 나두9', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (4, 1, 1, '야 나두10', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (2, 1, 1, '야 나두11', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두12', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두13', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두14', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두15', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두16', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두17', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두18', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (3, 1, 1, '야 나두19', '야 너두? 맛없쪙? 나두 맛없쪙2', 1)
-
-;
-
-insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
-values
-    (3, 1, 1, '야아아아아아아아아아아아아아아아아아아아아아 나 집가고 싶어 나두1', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (2, 1, 1, '야아아아아아아아아아아아아아아아아아아아아아 나 집가고 싶어 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
-    (1, 1, 1, '야아아아아아아아아아아아아아아아아아아아아아 나 집가고 싶어 나두3', '야 너두? 맛없쪙? 나두 맛없쪙2', 1);
-
-select *
-from board_type;
+# insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
+# values
+#     (3, 1, 1, '야 나두1', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (2, 1, 1, '야 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (1, 1, 1, '야 나두3', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두4', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (4, 1, 1, '야 나두5', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (2, 1, 1, '야 나두6', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (4, 1, 1, '야 나두7', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (2, 1, 1, '야 나두8', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (1, 1, 1, '야 나두9', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (4, 1, 1, '야 나두10', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (2, 1, 1, '야 나두11', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두12', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두13', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두14', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두15', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두16', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두17', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두18', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (3, 1, 1, '야 나두19', '야 너두? 맛없쪙? 나두 맛없쪙2', 1)
+#
+# ;
+#
+# insert into BOARD(user_id, club_id, board_type_id, title, content, viewcnt)
+# values
+#     (3, 1, 1, '야아아아아아아아아아아아아아아아아아아아아아 나 집가고 싶어 나두1', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (2, 1, 1, '야아아아아아아아아아아아아아아아아아아아아아 나 집가고 싶어 나두2', '야 너두? 맛없쪙? 나두 맛없쪙2', 1),
+#     (1, 1, 1, '야아아아아아아아아아아아아아아아아아아아아아 나 집가고 싶어 나두3', '야 너두? 맛없쪙? 나두 맛없쪙2', 1);
+#
+# select *
+# from board_type;
 

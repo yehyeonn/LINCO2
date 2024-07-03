@@ -5,14 +5,14 @@
     <link rel="stylesheet" th:href="@{/css/club_write.css}">
     <title>LINCO</title>
     <link rel="shortcut icon" th:href="@{/img/linco_ico.png}" type="image/png">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <th:block th:replace="~{common/header :: header-head}"></th:block>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-    <th:block th:insert="/common/header :: header-head"></th:block>
+    <script th:src="@{/js/club/boardWrite.js}"></script>
 </head>
 <body>
 
-<th:block th:insert="/common/header :: header-body"></th:block>
+<header th:replace="~{common/header :: header-body}"></header>
 
 <div class="write container1" th:with="logged_user=${#authentication.principal.user}">
     <form th:action="@{/club/board/write}" method="post" enctype="multipart/form-data">
@@ -53,9 +53,9 @@
 
         <div class="button">
             <div class="left-buttons">
-                <button id="backBtn" class="custom-button button-2">
+                <a th:href="@{'/club/board/list/' + ${club.id}}" id="backBtn" class="custom-button button-2">
                     <span>BACK!</span><span>이전</span>
-                </button>
+                </a>
 
                 <button type="button" class="custom-button button-2" id="btnAdd">
                     <span>Add File!</span><span>첨부파일</span>
@@ -69,11 +69,10 @@
     </form>
 </div>
 </body>
-<script th:src="@{/js/club/boardWrite.js}"></script>
 
-<!--<footer th:replace="~{common/footer :: footer-body}"></footer>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"-->
-<!--        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"-->
-<!--        crossorigin="anonymous"></script>-->
-<!--<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>-->
+
+<footer th:replace="~{common/footer :: footer-body}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 </html>
