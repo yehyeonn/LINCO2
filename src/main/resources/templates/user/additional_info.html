@@ -22,7 +22,7 @@
           </div>
           <div class="mb-3">
             <label for="tel" class="form-label">전화번호</label>
-            <input type="tel" class="form-control" id="tel" name="tel" pattern="\d{11}" title="11자리 숫자를 입력하세요" required>
+            <input type="tel" class="form-control" id="tel" name="tel" pattern="(\d{3})(\d{4})(\d{4})|(\d{3}-\d{4}-\d{4})" title="전화번호는 11자리 숫자 또는 010-1234-1234 형식이어야 합니다" required>
           </div>
           <button type="submit" class="btn btn-primary">제출</button>
         </form>
@@ -40,6 +40,17 @@
     });
     myModal.show();
   };
+
+  // 폼 제출 시 전화번호 형식화
+  document.getElementById('additionalInfoForm').addEventListener('submit', function(event) {
+    var telInput = document.getElementById('tel');
+    var telValue = telInput.value.replace(/-/g, ''); // 기존 하이픈 제거
+    if (/^\d{11}$/.test(telValue)) {
+      telInput.value = telValue.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    } else if (!/^(\d{3}-\d{4}-\d{4})$/.test(telInput.value)) {
+      event.preventDefault(); // 제출 중지
+    }
+  });
 </script>
 </body>
 </html>

@@ -100,7 +100,7 @@ public class IamportService {
             bw.flush();
         }
         int responseCode = conn.getResponseCode();
-        System.out.println("Response Code: " + responseCode);
+//        System.out.println("Response Code: " + responseCode);
 
         if (responseCode == 200) {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
@@ -109,7 +109,7 @@ public class IamportService {
                 while ((line = br.readLine()) != null) {
                     response.append(line);
                 }
-                System.out.println("Response: " + response.toString());
+//                System.out.println("Response: " + response.toString());
                 return true;
             }
         } else {
@@ -119,7 +119,7 @@ public class IamportService {
                 while ((line = br.readLine()) != null) {
                     errorResponse.append(line);
                 }
-                System.err.println("Error Response: " + errorResponse.toString());
+//                System.err.println("Error Response: " + errorResponse.toString());
                 return false;
             } finally {
                 conn.disconnect();

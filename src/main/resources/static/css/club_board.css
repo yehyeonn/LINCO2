@@ -4,14 +4,10 @@ body {
     color: #3A4D72;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-nav ul {
-    list-style-type: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
+
 .social-info{
     color: black;
     font-size: 25px;
@@ -33,11 +29,11 @@ header nav ul li a {
     text-decoration: none;
 }
 
-
 main {
     padding: 20px;
 }
-.container1 {
+
+.container-1 {
     width: 90%;
     max-width: 1200px;
     background-color: #fff;
@@ -88,14 +84,14 @@ main {
 
 
 .event-image {
-    width: 328px;
-    height: 150px;
+    width: 250px;
+    height: auto;
     object-fit: contain;
-    background-color: #EDEBDA;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
 }
 
 .event-details {
@@ -193,6 +189,36 @@ h2{
 }
 
 .details-header {
+    padding: 20px;
+}
+
+.details-header h1 {
+    font-size: 2.5em; /* 제목 크기 조정 */
+    margin-bottom: 20px; /* 아래 여백 추가 */
+    color: #3A4D72; /* 제목 텍스트 색상 */
+    gap: 10px; /* 제목과 버튼 사이의 간격 */
+    font-weight: bold;
+}
+
+.category-button {
+    text-align: start;
+    background-color: #73B9C9; /* 버튼 배경색 */
+    color: #EDEBDA; /* 버튼 텍스트 색상 */
+    padding: 5px 10px; /* 버튼 패딩 */
+    margin-left: 15px; /* 왼쪽 여백 */
+    border-radius: 5px; /* 버튼 모서리 둥글게 */
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+#club-intro{
+    font-size: 1.5em; /* 본문 텍스트 크기 */
+    font-weight: 500;
+    margin-top: 50px; /* 위 여백 추가 */
+    color: #333; /* 텍스트 색상 */
+}
+
+.details-header {
     flex: 1;
 }
 
@@ -248,10 +274,38 @@ h2{
     height: 40px;
 }
 
-.button-1, .button-2, .button-3, .button-4 {
+.button-1 {
+    position: relative;
+    right: 20px; /* 초기 값으로 변경 */
+    bottom: 10px; /* 초기 값으로 변경 */
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+    font-size: 18px;
+}
+
+.button-2 {
     position: relative;
     right: 20px; /* 초기 값으로 변경 */
     bottom: 20px; /* 초기 값으로 변경 */
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+    font-size: 18px;
+}
+
+.button-3 {
+    position: relative;
+    right: 20px; /* 초기 값으로 변경 */
+    bottom: 10px; /* 초기 값으로 변경 */
     border: none;
     box-shadow: none;
     width: 130px;
@@ -493,20 +547,26 @@ h2{
     text-align: end;
 }
 
-#btn {
-    background-color: #B3B49E;
+#btn, .btn-success {
+    background-color: #3A4D72;
     color: #EDEBDA;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 1rem;
     cursor: pointer;
     transition: all 0.3s;
 }
+
+#btn:hover, .btn-success:hover {
+    background-color: #D3374A;
+    color: #EDEBDA;
+    transform: scale(1.1);
+}
+
 #search {
     flex: 1;
     padding: 10px;
     border: 2px solid #B3B49E;
     border-radius: 5px;
     outline: none;
-
 }

@@ -58,6 +58,7 @@ public class ReservationController {
 
 
         List<Reservation> reservations = reservationService.findByVenueAndDate(venueId, selectedDate);
+        System.out.println(reservations);
 
         model.addAttribute("reservations", reservations);
 
@@ -81,7 +82,7 @@ public class ReservationController {
         session.setAttribute("reserveET", reservation.getReserve_end_time());
         session.setAttribute("merUid", reservation.getMerchantUid());
         session.setAttribute("impUid", reservation.getImpUid());
-        System.out.println("베뉴 정보가 들어올까요~?" + reservation.getVenue());
+//        System.out.println("베뉴 정보가 들어올까요~?" + reservation.getVenue());
 
         return ResponseEntity.ok("디비디비딥!");
     }

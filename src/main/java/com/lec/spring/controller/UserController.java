@@ -133,9 +133,9 @@ public class UserController {
         List<Reservation> userReservations = reservationService.findByUserId(user.getId());
         System.out.println(userSocializings);
 
-        userReservations.forEach(reservation -> {
-            System.out.println(reservation);
-        });
+//        userReservations.forEach(reservation -> {
+//            System.out.println(reservation);
+//        });
 
 
         // 마이페이지 클럽목록 기본이미지
@@ -161,7 +161,7 @@ public class UserController {
             User user,
             Model model) throws IOException {
         // 기본 이미지 경로 설정
-        String imgPath = "profile_img.jpg"; // 기본 이미지 경로
+        String imgPath = "profile_img.png"; // 기본 이미지 경로
 
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
@@ -222,7 +222,7 @@ public class UserController {
         int amount = (int) request.get("total_price");
         String reason = (String) request.get("reason");
 
-        System.out.println("impUid : " + impUid);
+//        System.out.println("impUid : " + impUid);
         Reservation reservation = reservationService.findByImpUid(impUid);
 
     // 여기까지는 됐는데 try-catch에서 실패 뜸 => cancelPayment 가 문제?
