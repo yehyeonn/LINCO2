@@ -58,7 +58,7 @@ public class ReservationController {
 
 
         List<Reservation> reservations = reservationService.findByVenueAndDate(venueId, selectedDate);
-
+        System.out.println(reservations);
         model.addAttribute("reservations", reservations);
 
         return "reservation/write";
