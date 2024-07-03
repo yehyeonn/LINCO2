@@ -94,7 +94,7 @@ public class BoardController {
             @RequestParam("boardType.id") int boardTypeId,
             @RequestParam("clubId") Optional<Long> clubId,
             @Valid Board board,
-            BindingResult boardResult,          // result -> boardResult
+            BindingResult boardResult,
             @Valid ClubUserList clubUserList,
             BindingResult clubUserListResult,
             Model model,
@@ -111,15 +111,11 @@ public class BoardController {
             model.addAttribute("result", result);
         // boardType 이 클럽홍보 일 경우
         } else if (boardTypeId == 3) {
-//            // 기본 이미지 경로 설정
-//            String imgPath = "upload/DefaultImg.jpg"; // 기본 이미지 경로
-
             if (clubUserListResult.hasErrors()) {
                 handleClubUserListErrors(clubUserListResult, clubUserList, redirectAttributes);
                 return "redirect:/board/write?boardType=" + boardTypeId;
             }
             Club club = clubService.getClubById(clubId.get());
-//            System.out.println("club의 정보 : " + club);
 
             board.setClub(club);
 
@@ -127,7 +123,6 @@ public class BoardController {
 
             model.addAttribute("result", result);
         }
-//        System.out.println("clubID : " + clubUserList);
         return "board/writeOk";
     }
 

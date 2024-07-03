@@ -20,11 +20,8 @@
                 <label>작성자:</label>
                 <select name="boardType.id" id="lang" class="select-right">
                     <option th:value="${2}" th:selected="${boardType == 2}">자유게시판</option>
-                    <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보
-                    </option>
-                    <option th:value="${1}" th:selected="${boardType == 1}" sec:authorize="hasAnyAuthority('ADMIN')">
-                        공지사항
-                    </option>
+                    <option th:value="${3}" th:selected="${boardType == 3}" th:unless="${userclubsSize} == 0">클럽홍보</option>
+                    <option th:value="${1}" th:selected="${boardType == 1}" sec:authorize="hasAnyAuthority('ADMIN')">공지사항</option>
                 </select>
                 <span class="form-control" th:text="${user.name}"></span>
                 <div><span class="text-danger" th:if="${error_user}" th:utext="${error_user}"></span></div>
