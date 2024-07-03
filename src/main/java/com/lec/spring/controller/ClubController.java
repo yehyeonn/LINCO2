@@ -29,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -227,7 +228,8 @@ public class ClubController {
                 .filter(user_id -> !user_id.equals(clubMaster.getUser_id())) // 클럽장 제외
                 .collect(Collectors.toList());
 
-//        System.out.println("userIds: " + userIds);
+
+        System.out.println("userIds: " + userIds);
 
         // 클럽장과 동일한 user_id를 가진 항목을 제외한 리스트 만들기
         List<ClubUserList> filteredClubMemberList = clubMemberList.stream()

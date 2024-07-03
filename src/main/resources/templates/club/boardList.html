@@ -115,12 +115,15 @@
 
         </div>
         <div class="footer-btn">
-            <button id="backBtn" class="btn btn-success">이전</button>
-
+            <form th:action="@{'/club/list'}" method="get">
+                <button class="btn btn-success" type="submit">이전</button>
+            </form>
             <a class="button">
                 <form th:action="@{'/club/board/write/'+${club.getId()}}" method="get">
-                    <button class="btn btn-success" type="submit">
+
+                    <button class="btn btn-success" type="submit" th:if="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}">
                         글쓰기
+<!--                        // TODO: 클럽 회원만 보이게 !-->
                     </button>
                 </form>
             </a>

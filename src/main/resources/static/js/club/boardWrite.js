@@ -23,3 +23,7 @@ $(function() {
 function deleteFiles(fileId) {
     $("#delFiles").append(`<input type="hidden" name="delfile" value="${fileId}">`);
 }
+
+$('#backBtn').click(function (){
+    history.back();
+})
