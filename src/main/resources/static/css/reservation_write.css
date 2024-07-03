@@ -9,7 +9,6 @@
 
 body {
     background-color: var(--background-color);
-    font-family: var(--font-family);
     margin: 0;
     padding: 0;
     display: flex;
@@ -50,14 +49,12 @@ body {
 .calendar {
     width: 80%;
     font-size: 20px;
-    font-family: var(--font-family);
 }
 
 .calendar table {
     caption-side: bottom;
     border-collapse: collapse;
     font-size: 20px;
-    font-family: var(--font-family);
 }
 
 .calendar tr {
@@ -124,7 +121,6 @@ td #sat {
     caption-side: bottom;
     border-collapse: collapse;
     font-size: 20px;
-    font-family: var(--font-family);
 }
 
 .time tr {
@@ -180,8 +176,6 @@ td #sat {
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #eee;
-
-    font-family: 'Helvetica Neue', Arial, sans-serif;
     font-size: 20px;
 }
 
@@ -247,7 +241,6 @@ td #sat {
     /*outline: 3px solid red;*/
     margin-bottom: 10px;
     font-size: 20px;
-    font-family: var(--font-family);
     color: black;
 }
 
