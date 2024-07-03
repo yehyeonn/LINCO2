@@ -12,6 +12,7 @@ import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -477,11 +478,20 @@ public class ClubController {
 
         Club club = clubService.getClubById(id);
         List<Attachment> imgList = clubService.findByClubId(id);
+        List<AttachmentLike> likedAttachments = attachmentLikeService.getUserLikes();
 
-//        System.out.println("clubId: " + id);
-//        System.out.println("imgList: " + imgList);
+
+        List<Long> likedAttachmentIds = new ArrayList<>();
+        for (AttachmentLike likedAttachment : likedAttachments) {
+            likedAttachmentIds.add(likedAttachment.getAttachment().getId());
+        }
+
+        System.out.println("likedAttachmentIds = " + likedAttachmentIds);
+
         model.addAttribute("club", club);
         model.addAttribute("imgList", imgList);
+        model.addAttribute("likedAttachmentIds", likedAttachmentIds);
+
 
         return "club/gallery";
     }

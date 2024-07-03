@@ -67,13 +67,6 @@ body {
 }
 
 
-footer {
-    background-color: #3A4D72;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
 .event-details {
     display: flex;
     justify-content: space-between;
@@ -198,7 +191,7 @@ footer {
     font-size: 18px;
 }
 
-/* 운동 버튼 */
+/* 메인 */
 .button-1 span {
     background: rgb(251, 33, 117);
     background: linear-gradient(0deg, rgba(251, 33, 117, 1) 0%, rgba(234, 76, 137, 1) 100%);
@@ -260,7 +253,7 @@ footer {
     transform: rotateX(-90deg);
 }
 
-/* 문화예술 */
+/* 게시판 */
 .button-2 span {
     background: rgb(0, 172, 238);
     background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%);
@@ -322,7 +315,7 @@ footer {
     transform: rotateX(-90deg);
 }
 
-/* 여행 */
+/* 사진첩 */
 .button-3 span {
     background: rgb(150, 0, 200);
     background: linear-gradient(0deg, rgba(234, 76, 231, 0.88) 0%, rgba(205, 76, 234, 0.88) 100%);
