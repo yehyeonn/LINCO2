@@ -42,6 +42,11 @@ public class SocializingController {
     @Value("${app.upload.path}")
     private String uploadDir;
 
+    @Value("${kakao.map.appkey}")
+    private String mapKey;
+
+    @Value("${kakao.map.libraries}")
+    private String mapLibraries;
 
     @Autowired
     private SocializingService socializingService;
@@ -126,6 +131,8 @@ public class SocializingController {
         model.addAttribute("merchantUid", merchantUid);
         model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
         model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
 
         return "socializing/write";
     }
@@ -215,7 +222,8 @@ public class SocializingController {
             // 폼 입력 값을 다시 보내기 위해 추가
             return "redirect:/socializing/write";
         }
-
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
         model.addAttribute("result", socializingService.write(socializing));
         userSocializingService.addUserToSocializing(userSocializing.getUser_id(), socializing.getId(), "MASTER");
         return "socializing/writeOk";
@@ -250,6 +258,9 @@ public class SocializingController {
         model.addAttribute("content", content);
         model.addAttribute("Master", socializingMaster);
         model.addAttribute("Listnum", membersid);
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
+
         return "/socializing/detail";
     }
 
@@ -258,6 +269,8 @@ public class SocializingController {
             , @RequestParam(name = "socializing_id", required = false, defaultValue = "") Long socializingId
             , Model model) {
         int result = userSocializingService.addUserToSocializing(userId, socializingId, "MEMBER");
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
         model.addAttribute("result", result);
         model.addAttribute("userSocializing", socializingId);
         return "socializing/detailOk";
@@ -270,6 +283,8 @@ public class SocializingController {
 //        System.out.println(socializing);
         model.addAttribute("updatesocializing", socializingService.selectById(id));
         model.addAttribute("updatescicalizing", socializingService.detail(id)); // venue 정보도 가져오는 거
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
 
         return "socializing/update";
     }
@@ -292,12 +307,13 @@ public class SocializingController {
             return "redirect:/socializing/update/" + socializing.getId();
         }
 
-
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
         model.addAttribute("result", socializingService.update(socializing));
         return "socializing/updateOk";
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public String deleteOk(Long id, Model model) {
         model.addAttribute("result", socializingService.deleteById(id));
         return "socializing/deleteOk";

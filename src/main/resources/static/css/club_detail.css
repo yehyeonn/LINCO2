@@ -490,8 +490,10 @@ h2{
 .btn-success {
     background-color: #3A4D72;
     color: #EDEBDA;
+    padding: 10px 20px;
     border-radius: 1rem;
     transition: all 0.3s;
+    border: none;
 }
 
 .btn-success:hover {
