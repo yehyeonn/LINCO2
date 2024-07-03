@@ -104,10 +104,19 @@
                 <tbody class="tbody">
                 <tr th:each="post : ${posts}">
                     <td th:text="${post.user.getName()}"></td>
-                    <td><a th:href="@{'/club/board/detail/' + ${post.getId()}}" th:text="${post.getTitle()}"></a></td>
+                    <td>
+                        <a th:href="@{'/club/board/detail/' + ${post.getId()}}"
+                           th:if="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}"
+                           th:text="${post.getTitle()}">
+                        </a>
+                        <span th:unless="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}"
+                              th:text="${post.getTitle()}">
+            </span>
+                    </td>
                     <td th:text="${#temporals.format(post.getRegdate(), 'yyyy-MM-dd')}"></td>
                 </tr>
                 </tbody>
+
             </table>
 
             <th:block th:insert="~{club/clubBoardPagination::pagination}"></th:block>
@@ -123,7 +132,7 @@
             </form>
 
             <a class="button custom-btn button-4">
-                <form th:action="@{'/club/board/write/'+${club.getId()}}" method="get">
+                <form th:action="@{'/club/board/write/'+${club.getId()}}" method="get" th:if="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}">
                     <button type="submit" class="write-btn">
                         <span>Go Write!</span><span>글작성</span>
                     </button>
