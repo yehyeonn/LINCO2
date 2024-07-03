@@ -167,8 +167,8 @@
             bt.id "bt_id",
             bt.name "bt_name"
             from BOARD b
-            LEFT join club c on b.club_id = c.id
-            join user u on b.user_id = u.id
+            LEFT join CLUB c on b.club_id = c.id
+            join USER u on b.user_id = u.id
             join BOARD_TYPE bt on b.board_type_id = bt.id
     </select>
     

@@ -81,7 +81,7 @@
             c.category "c_category",
             c.detail_category "c_detail_category"
         from ATTACHMENT att
-        join club c on att.club_id = c.id
+        join CLUB c on att.club_id = c.id
         where club_id = #{id}
     </select>
 

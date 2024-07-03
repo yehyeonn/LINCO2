@@ -7,33 +7,33 @@
     <!-- 클럽 생성 -->
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Club"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO club (name, category, detail_category, intro, content, representative_picture)
+        INSERT INTO CLUB (name, category, detail_category, intro, content, representative_picture)
         VALUES (#{name}, #{category}, #{detail_category}, #{intro}, #{content}, #{representative_picture})
     </insert>
 
     <!-- 특정 id 클럽 찾기 -->
     <select id="findById" parameterType="long" resultType="com.lec.spring.domain.Club">
         SELECT *
-        FROM club
+        FROM CLUB
         WHERE id = #{id}
     </select>
     <!-- 이름으로  클럽 찾기 -->
     <select id="findByName" parameterType="string" resultType="com.lec.spring.domain.Club">
         SELECT *
-        FROM club
+        FROM CLUB
         WHERE name = #{name}
     </select>
 
     <!-- 전체 클럽 목록 -->
     <select id="findAll" resultType="com.lec.spring.domain.Club">
         SELECT *
-        FROM club
+        FROM CLUB
         ORDER BY id DESC
     </select>
 
     <!-- 특정 id 클럽의 상세 내용 수정 -->
     <update id="update" parameterType="com.lec.spring.domain.Club">
-        UPDATE club
+        UPDATE CLUB
         SET intro = #{intro},
             content = #{content},
             representative_picture = #{representative_picture}
@@ -42,7 +42,7 @@
 
     <!-- 특정 id 클럽 삭제 -->
     <delete id="deleteById" parameterType="com.lec.spring.domain.Club">
-        DELETE FROM club WHERE id = #{id}
+        DELETE FROM CLUB WHERE id = #{id}
     </delete>
 
     <sql id="SELECT_CLUB">
@@ -68,7 +68,7 @@
 
     <!-- 전체 클럽의 개수 -->
     <select id="countAll" resultType="int">
-        SELECT COUNT(*) FROM club
+        SELECT COUNT(*) FROM CLUB
     </select>
 
     <select id="countSelect" resultType="int">
