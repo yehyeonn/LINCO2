@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/club_write.css}">
-    <title>클럽 글작성</title>
+    <title>LINCO</title>
+    <link rel="shortcut icon" th:href="@{/img/linco_ico.png}" type="image/png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
@@ -52,15 +53,17 @@
 
         <div class="button">
             <div class="left-buttons">
-                <button id="backBtn" class="btn btn-success">이전</button>
+                <button id="backBtn" class="custom-button button-2">
+                    <span>BACK!</span><span>이전</span>
+                </button>
 
-                <button type="button" class="btn" id="btnAdd">
-                    첨부파일 추가
+                <button type="button" class="custom-button button-2" id="btnAdd">
+                    <span>Add File!</span><span>첨부파일</span>
                 </button>
             </div>
 
-            <button type="submit" class="btn">
-                저장하기
+            <button type="submit" class="custom-button button-2">
+                <span>SAVE!</span><span>등록</span>
             </button>
         </div>
     </form>

@@ -146,7 +146,7 @@ img.img-thumbnail {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
-    margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 .comment button:hover {
@@ -410,4 +410,17 @@ tr td.text span {
     -webkit-transform: rotateX(-90deg);
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
+}
+
+
+#del-button {
+    background-color: #D3374A;
+    color: #EDEBDA;
+    transition: all 0.3s;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+#del-button:hover {
+    transform: scale(1.1);
 }
