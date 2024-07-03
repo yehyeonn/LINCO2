@@ -261,7 +261,7 @@ public class SocializingController {
         model.addAttribute("mapKey", mapKey);
         model.addAttribute("mapLibraries", mapLibraries);
 
-        return "/socializing/detail";
+        return "socializing/detail";
     }
 
     @PostMapping("/detail")
