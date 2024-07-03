@@ -10,10 +10,9 @@ import com.lec.spring.service.UserService;
 import com.lec.spring.service.*;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +24,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +84,7 @@ public class ClubController {
             RedirectAttributes redirectAttrs   // redirect 시 넘겨줄 값들을 담는 객체
     ) throws IOException {
         // 기본 이미지 경로 설정
-        String imgPath = "noimg.png"; // 기본 이미지 경로
+        String imgPath = "no_img.png"; // 기본 이미지 경로
 
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
@@ -105,7 +102,7 @@ public class ClubController {
 
         // 이미지 경로를 Socializing 객체에 설정
         club.setRepresentative_picture(imgPath);
-//        System.out.println("이미지 경sh로: " + imgPath); // 디버깅을 위한 로그 출력
+        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
 
 
         // 유효성 검사에서 에러가 발생한 경우
@@ -204,7 +201,7 @@ public class ClubController {
         return "/club/detail";
     }
 
-    @GetMapping("board/{id}")
+    @GetMapping("board/list/{id}")
     public String board(@PathVariable Long id
             , @RequestParam(name = "title", required = false, defaultValue = "") String title
             , Integer page
@@ -222,7 +219,7 @@ public class ClubController {
 
         // 클럽장 -> user_id, club_id, role, user
         ClubUserList clubMaster = clubService.findClubMaster(id);
-        System.out.println("clubMaster :" + clubMaster);
+//        System.out.println("clubMaster :" + clubMaster);
 
         // clubMemberList에서 user_id만 추출하여 리스트로 만들기 (클럽장 제외)
         List<Long> userIds = clubMemberList.stream()
@@ -250,7 +247,7 @@ public class ClubController {
         model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
-        return "/club/board";
+        return "club/boardList";
     }
 
     @GetMapping("board/detail/{id}")
@@ -398,9 +395,10 @@ public class ClubController {
     }
 
 
+
     @InitBinder("club")
     public void initBinder(WebDataBinder binder) {
-        System.out.println("ClubController.initBinder() 호출");
+//        System.out.println("ClubController.initBinder() 호출");
         binder.setValidator(new ClubValidator());
     }
 
@@ -409,9 +407,69 @@ public class ClubController {
         binder.setValidator(new BoardValidator());
     }
 
+
+
+
+
+
     // 클럽 글 작성
-    @GetMapping("/write")
-    private void clubWrite() {
+    @GetMapping("/board/write/{id}")
+    public String write(@PathVariable Long id,Model model) {
+        Club club = clubService.getClubById(id);
+        // 클럽장 -> user_id, club_id, role, user
+        ClubUserList clubMaster = clubService.findClubMaster(id);
+        System.out.println("clubMaster :" + clubMaster);
+
+        model.addAttribute("club", club);
+        model.addAttribute("clubMaster", clubMaster);
+        return "club/boardWrite";
+    }
+
+    @PostMapping("/board/write")
+    public String writeOk(
+            @RequestParam Map<String, MultipartFile> files,
+            @RequestParam(name = "clubid",required = false) Long clubid,
+            @RequestParam("boardType.id") int boardTypeId,
+            @Valid Board board,
+            BindingResult boardResult,
+            Model model,
+            RedirectAttributes redirectAttrs
+    ) throws IOException {
+
+        if (boardResult.hasErrors()) {
+            redirectAttrs.addFlashAttribute("title", board.getTitle());
+            redirectAttrs.addFlashAttribute("content", board.getContent());
+
+            List<FieldError> errList = boardResult.getFieldErrors();
+            for (FieldError err : errList) {
+                redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
+            }
+            return "redirect:/club/board/write/" + clubid;
+        }
+        System.out.println("클럽아이디 !!"+clubid);
+        // 기본 이미지 경로 설정
+        String imgPath = "no_img.png"; // 기본 이미지 경로
+        Club club1 = new Club();
+        club1.setId(clubid);
+        board.setClub(club1);
+        System.out.println("board.getBoardType(): " + board.getBoardType());
+        int result = boardService.write(board, files);
+        System.out.println("board : " +board.getClub().getId());
+        model.addAttribute("result", result);
+        model.addAttribute("clubid",clubid);
+//        System.out.println("boardService.detail(id): " + boardService.detail(id));
+//        model.addAttribute("board", boardService.detail(id));
+        return "club/boardWriteOk";
+    }
+
+
+    @PostMapping("/board/delete")
+    public String boardDeleteOk(Long id, Model model) {
+
+        Board board = boardService.findById(id);
+        model.addAttribute("board", board);
+        model.addAttribute("result", boardService.deleteById(id));
+        return "/club/boardDeleteOk";
     }
 
     // 클럽 사진첩 리스트
@@ -420,11 +478,20 @@ public class ClubController {
 
         Club club = clubService.getClubById(id);
         List<Attachment> imgList = clubService.findByClubId(id);
+        List<AttachmentLike> likedAttachments = attachmentLikeService.getUserLikes();
 
-//        System.out.println("clubId: " + id);
-//        System.out.println("imgList: " + imgList);
+
+        List<Long> likedAttachmentIds = new ArrayList<>();
+        for (AttachmentLike likedAttachment : likedAttachments) {
+            likedAttachmentIds.add(likedAttachment.getAttachment().getId());
+        }
+
+        System.out.println("likedAttachmentIds = " + likedAttachmentIds);
+
         model.addAttribute("club", club);
         model.addAttribute("imgList", imgList);
+        model.addAttribute("likedAttachmentIds", likedAttachmentIds);
+
 
         return "club/gallery";
     }

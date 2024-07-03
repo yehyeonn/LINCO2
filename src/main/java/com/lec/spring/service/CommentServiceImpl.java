@@ -56,8 +56,8 @@ public class CommentServiceImpl implements CommentService {
     public QryResult write(Long boardId, Long userId, String content) {
         User user = userRepository.findById(userId);
         Board board = boardRepository.findById(boardId);
-        System.out.println("boardId : " + board);
-        System.out.println("boardId : " + boardId);
+//        System.out.println("boardId : " + board);
+//        System.out.println("boardId : " + boardId);
 
         Comment comment = Comment.builder()
                 .user(user)

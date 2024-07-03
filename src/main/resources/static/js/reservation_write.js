@@ -71,7 +71,7 @@ function disableReservedTimes() {
 
 
             if (currentTime >= startTime && currentTime < endTime && Status === "PAYED") {
-            // if (currentTime >= startTime && currentTime < endTime) {
+                // if (currentTime >= startTime && currentTime < endTime) {
                 cell.classList.add('reserved');
                 isReserved = true;
                 break;

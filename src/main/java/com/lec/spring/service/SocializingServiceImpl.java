@@ -198,4 +198,5 @@ public class SocializingServiceImpl implements SocializingService {
         return socializingRepository.findAll();
     }
 
+
 }

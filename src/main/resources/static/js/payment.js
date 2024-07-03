@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 console.log('Validation data:', validationData);
                                 // 추가 로직을 여기에 추가할 수 있습니다.
                                 const merUid = paymentData.merchantUid;
-                                alert(merUid);
-                                alert(impUid)
+                                // alert(merUid);
+                                // alert(impUid)
                                 const venueId = paymentData.venue.id;
                                 window.location.href = `/socializing/write`;
                             })

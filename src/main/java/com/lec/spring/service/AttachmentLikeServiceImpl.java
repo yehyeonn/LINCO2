@@ -48,4 +48,11 @@ public class AttachmentLikeServiceImpl implements AttachmentLikeService {
         return attachmentLikeRepository.selectPostLikes(user, attachment);
     }
 
+    @Override
+    public List<AttachmentLike> getUserLikes() {
+        User user = U.getLoggedUser();
+        Long user_id = user.getId();
+        return attachmentLikeRepository.findByUserId(user_id);
+    }
+
 }
