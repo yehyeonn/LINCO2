@@ -199,7 +199,7 @@ public class ClubController {
         model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
-        return "/club/detail";
+        return "club/detail";
     }
 
     @GetMapping("/board/list/{id}")
@@ -317,13 +317,13 @@ public class ClubController {
         int result = clubService.addMemberToClub(user_id, club_id);
         model.addAttribute("result", result);
         model.addAttribute("club_id", club_id);
-        return "/club/joinOk";
+        return "club/joinOk";
     }
 
     @PostMapping("/delete")
     public String deleteOk(Long id, Model model) {
         model.addAttribute("result", clubService.deleteById(id));
-        return "/club/deleteOk";
+        return "club/deleteOk";
     }
 
 
@@ -333,7 +333,7 @@ public class ClubController {
 //        System.out.println("club_id: " + club_id);
         model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
-        return "/club/outOk";
+        return "club/outOk";
     }
 
     @PostMapping("/leave")
@@ -342,7 +342,7 @@ public class ClubController {
 //        System.out.println("club_id: " + club_id);
         model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
-        return "/club/leaveOk";
+        return "club/leaveOk";
     }
 
 
