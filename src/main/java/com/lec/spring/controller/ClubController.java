@@ -192,10 +192,12 @@ public class ClubController {
         // 멤버 수 -> 현재인원
         int memberCount = clubService.getClubMemberCount(id);
 //        System.out.println("memberCount: " + memberCount);
+        String content = club.getContent().replace("\n", "<br>");
 
         model.addAttribute("club", club);
         model.addAttribute("filteredClubMemberList", filteredClubMemberList);
         model.addAttribute("clubMaster", clubMaster);
+        model.addAttribute("content",content);
         model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
@@ -257,7 +259,7 @@ public class ClubController {
         Board board = boardService.detail(id);
         List<Board> clubBoards = clubService.getClubBoard(id);
 
-        String content = board.getContent().replace("\n", "<br>");
+//        String content = club.getContent().replace("\n", "<br>");
 
         List<Comment> comments = commentService.list(id).getList();
 
@@ -269,7 +271,6 @@ public class ClubController {
 //        System.out.println("club board 정보 : " + board);
         model.addAttribute("clubBoards", clubBoards);
         model.addAttribute("attachments", attachments);
-        model.addAttribute("content", content);
         model.addAttribute("cnt", cnt);
         model.addAttribute("comments", comments);
 //        model.addAttribute("content", content);
