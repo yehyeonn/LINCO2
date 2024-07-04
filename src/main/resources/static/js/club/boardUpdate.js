@@ -10,6 +10,7 @@ $(function (){
                 <button type="button" class="btn" onclick="$(this).parent().remove()">삭제</button>
             </div>
         `);
+        i++;
     })
 
     // 삭제

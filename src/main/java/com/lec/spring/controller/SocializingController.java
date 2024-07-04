@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -164,22 +165,51 @@ public class SocializingController {
             , Model model
             , RedirectAttributes redirectAttributes
     ) throws IOException {
-        // 기본 이미지 경로 설정
-        String imgPath = "upload/noimg.png"; // 기본 이미지 경로
+//         기본 이미지 경로 설정
+        String filename = "upload/noimg.png"; // 기본 이미지 경로
 
-        // 파일이 비어있지 않으면 업로드 처리
-        if (!file.isEmpty()) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = "upload/" + fileName;
+        //파일이 비어있지 않으면 업로드 처리
+        if(!file.isEmpty()){
+
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null || originalFilename.isEmpty()) return null;
+
+            String sourcename = StringUtils.cleanPath(file.getOriginalFilename());
+            filename = sourcename;
+
+            File files = new File(uploadDir, filename);
+            if (files.exists()){
+                int pos = filename.lastIndexOf(".");
+                if (pos > -1){
+                    String name = filename.substring(0, pos);
+                    String ext = filename.substring(pos + 1);
+
+                    filename = name + "_" + System.currentTimeMillis() + "." + ext;
+                }else {
+                    filename += "_" + System.currentTimeMillis();
+                }
+            }
+            //        디버깅용
+            System.out.println("filename : " + filename);
+
+            Path copyOfLocation = Paths.get(new File(uploadDir, filename).getAbsolutePath());
+            //         경로 디버깅용
+            System.out.println("copyOfLocation : " + copyOfLocation);
 
             try {
-                Path path = Paths.get(imgPath);
-                Files.createDirectories(path.getParent());
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(
+                        file.getInputStream(),
+                        copyOfLocation,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+            filename = "upload/"+filename;
         }
+
+
+
         if (socializing.getTotal_price() == null) {
             if(total_price != null) {
                 socializing.setTotal_price(total_price);
@@ -189,7 +219,7 @@ public class SocializingController {
         }
 
         // 이미지 경로를 Socializing 객체에 설정
-        socializing.setImg(imgPath);
+        socializing.setImg(filename);
 //        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
 
 

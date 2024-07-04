@@ -107,7 +107,7 @@
             </h2>
 
             <div class="social-list" th:each="member : ${members}" th:if="${#lists.contains(Listnum,logged_user.id)}">
-                <img th:src="@{'/upload/'+ ${member.getUser().getProfile_picture()}}">
+                <img th:src="@{'/'+${member.getUser().getProfile_picture()}}">
                 <span>[[${member.User.name}]]</span>
                 <span th:if="${logged_user.id == Master.user.getId()}">[[${member.User.tel}]]</span>
                 <div class="member-label">[[${member.role}]]</div>
