@@ -26,7 +26,7 @@ public class MvcConfiguration {
 
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            System.out.println("LocalMvcConfiguration.addResourceHandlers() 호출");
+//            System.out.println("LocalMvcConfiguration.addResourceHandlers() 호출");
 
             //  /upload/** URL 로 request 가 들어오면
             // upload/ 경로의 resource 가 동작케 함.

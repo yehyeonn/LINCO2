@@ -445,17 +445,4 @@ function validateForm() {
         localStorage.setItem("email", '');
         return;
     }
-
 }
-
-/*
-스토리지에 저장된 이름
-selectedDate
-startTime
-emdTime
-name
-email
-tell
-venue_id
-fullDate
-* */

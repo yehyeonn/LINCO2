@@ -15,7 +15,7 @@ public class SocializingValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Socializing socializing = (Socializing) target;
-        System.out.println("validate() 호출 : " + socializing);
+//        System.out.println("validate() 호출 : " + socializing);
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "socializing_title", "글 제목은 필수 입력입니다.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "detail_category", "카테고리 선택은 필수입니다.");

@@ -236,4 +236,3 @@ function exchangeToPosibleDay(num) {
     return result;  // cnt 를 넣어 현재 일이 무슨 요일인지 반환(일~토)
     // i 는 월의 첫 날(1일), cnt 는 첫행 첫 셀(빈 칸을 수도 있음 => 요일 확인 가능)
 };
-

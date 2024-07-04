@@ -27,17 +27,17 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     // 일반 로그인 용 생성자
     public PrincipalDetails(User user){
-        System.out.println("UserDetails(user) 생성: " + user);
+//        System.out.println("UserDetails(user) 생성: " + user);
         this.user = user;
     }
 
     // OAuth2 로그인 용 생성자
     public PrincipalDetails(User user,Map<String, Object> attributes){
-        System.out.println("""
-           UserDetails(user, oauth attributes) 생성:
-               user: %s
-               attributes: %s
-           """.formatted(user, attributes));
+//        System.out.println("""
+//           UserDetails(user, oauth attributes) 생성:
+//               user: %s
+//               attributes: %s
+//           """.formatted(user, attributes));
 
 
         this.user = user;
@@ -48,7 +48,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     // 현재 로그인한 사용자의 권한정보가 필요할때마다 호출된다. 혹은 필요할때마다 직접 호출해 사용할수도 있다
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("getAuthorities() 호출");
+//        System.out.println("getAuthorities() 호출");
 
         Collection<GrantedAuthority> collect = new ArrayList<>();
 

@@ -37,6 +37,7 @@ public class VenueController {
     @ResponseBody
     public ResponseEntity<?> responseEntity() {
         RestTemplate rt = new RestTemplate();
+//        String url = "http://openapi.seoul.go.kr:8088/476753474c73777338374b73494b4b/json/ListPublicReservationInstitution/1/520/";
         String url = "http://openapi.seoul.go.kr:8088/476753474c73777338374b73494b4b/json/ListPublicReservationInstitution/1/520/";
         ResponseEntity<PublicReservationDTO> response = rt.getForEntity(url, PublicReservationDTO.class);
 

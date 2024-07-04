@@ -38,14 +38,14 @@ public class U {
         String originalFilename = file.getOriginalFilename();
 
         if (originalFilename == null || originalFilename.isEmpty()){
-            System.out.println("\t 파일 없음");
+//            System.out.println("\t 파일 없음");
             return;
         }
-        System.out.println("""
-                Original File Name : %s,
-                ClearPath : %s,
-                File Size : %s,
-                MIME : %s
-                """.formatted(originalFilename, StringUtils.cleanPath(originalFilename), file.getSize() + "bytes", file.getContentType()));
+//        System.out.println("""
+//                Original File Name : %s,
+//                ClearPath : %s,
+//                File Size : %s,
+//                MIME : %s
+//                """.formatted(originalFilename, StringUtils.cleanPath(originalFilename), file.getSize() + "bytes", file.getContentType()));
     }
 }

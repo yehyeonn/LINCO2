@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomLoginSuccess extends SavedRequestAwareAuthenticationSuccessHandler {
     public CustomLoginSuccess(String defaultTargetUrl){
 
-        System.out.println("### CustomLoginSuccess() 호출?!!! ##");
+//        System.out.println("### CustomLoginSuccess() 호출?!!! ##");
 
         setDefaultTargetUrl(defaultTargetUrl);
     }
@@ -22,9 +22,9 @@ public class CustomLoginSuccess extends SavedRequestAwareAuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 
-        System.out.println("### 로그인 성공: onAuthenticationSuccess() 호출 ##");
+//        System.out.println("### 로그인 성공: onAuthenticationSuccess() 호출 ##");
 
-        System.out.println("접속IP: " + getClientIp(request));
+//        System.out.println("접속IP: " + getClientIp(request));
         PrincipalDetails userDetails = (PrincipalDetails)authentication.getPrincipal();
         System.out.println("username: " + userDetails.getUsername());
         System.out.println("password: " + userDetails.getPassword());
