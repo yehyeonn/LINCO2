@@ -90,18 +90,18 @@
 
             <div class="form-group">
                 <label for="title">클럽홍보 제목:</label>
-                <input type="text" class="form-control" id="clubTitle" placeholder="제목을 입력하세요" name="title"
+                <input type="text" class="form-control" id="clubTitle" placeholder="제목을 입력하세요" name="Title"
                        th:value="${clubUserList?.title}">
-                <div><span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span></div>
+                <div><span class="text-danger" th:if="${error_Title}" th:utext="${error_Title}"></span></div>
             </div>
         </div>
         <hr>
 
         <div class="form-group">
             <label for="content">클럽홍보 내용:</label>
-            <textarea class="form-control" rows="5" id="clubContent" placeholder="내용을 입력하세요" name="content"
+            <textarea class="form-control" rows="5" id="clubContent" placeholder="내용을 입력하세요" name="Content"
                       th:utext="${clubUserList?.content}"></textarea>
-            <div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
+            <div><span class="text-danger" th:if="${error_Content}" th:utext="${error_Content}"></span></div>
         </div>
 
         <div class="files">
