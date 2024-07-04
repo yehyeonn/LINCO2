@@ -68,7 +68,7 @@ public class ReservationController {
     @PostMapping("/savePayment")
     public ResponseEntity<String> savePayment(@RequestBody Reservation reservation) {
         // 로그에 데이터 출력
-        System.out.println("Received reservation: " + reservation);
+//        System.out.println("Received reservation: " + reservation);
 
         // 예약 정보를 데이터베이스에 저장하는 로직
         reservationService.write(reservation);

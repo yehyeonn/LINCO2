@@ -40,7 +40,7 @@ public class SocializingServiceImpl implements SocializingService {
         userRepository = sqlSession.getMapper(UserRepository.class);
         socializingRepository = sqlSession.getMapper(SocializingRepository.class);
 
-        System.out.println("SocializingService() 생성");
+//        System.out.println("SocializingService() 생성");
     }
 
     @Override
