@@ -14,6 +14,6 @@ $('#leaveBtn').click(function (){
 });
 
 $('#backBtn').click(function (){
-    history.back();
+    window.location.href= '/club/list';
 })
 
