@@ -22,7 +22,7 @@
     <div class="sidebar">
         <div class="profile">
             <div class="profile-pic">
-                <img id="profile-photo" th:src="@{'/' + ${user.profile_picture}}" alt="프로필 사진">
+                <img id="profile-photo" th:src="@{'/' +  ${User.profile_picture}}" alt="프로필 사진">
             </div>
             <div class="profile-name" th:text="${user.name}">닉네임</div>
         </div>
@@ -104,8 +104,8 @@
                 <div class="profile-edit">
                     <form id="profile-form" class="profile-edit-form mt-3" th:action="@{/user/update}" th:method="post" enctype="multipart/form-data">
                     <div class="profile-pic-edit">
-                        <img th:src="@{'/' + ${user.profile_picture}}" alt="프로필 사진" id="profile-photo-edit" class="rounded-circle">
-                    </div>
+                        <img th:src="@{'/' + ${User.profile_picture}}" alt="프로필 사진" id="profile-photo-edit" class="rounded-circle">
+                    </div><!--user.profile_picture-->
                     <div class="profile-edit-buttons">
                         <button class="btn btn-secondary" id="change-photo-btn">사진변경</button>
                         <input type="file" id="fileInput" name="files" accept="image/*" style="display:none;">
