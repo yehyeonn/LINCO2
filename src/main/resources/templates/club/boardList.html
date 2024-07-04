@@ -109,7 +109,7 @@
                            th:if="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}"
                            th:text="${post.getTitle()}">
                         </a>
-                        <span th:unless="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}"
+                        <span class="tbody-span" th:unless="${logged_user.id == clubMaster.user_id or #lists.contains(userIds, logged_user.id)}"
                               th:text="${post.getTitle()}">
             </span>
                     </td>
