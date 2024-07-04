@@ -553,7 +553,7 @@ public class ClubController {
 
         model.addAttribute("result", clubService.uploadImg(id, file));
         model.addAttribute("id", id);
-        return "club/galleryuploadOk";
+        return "club/galleryUploadOk";
     }
 
 }
