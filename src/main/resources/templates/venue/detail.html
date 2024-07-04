@@ -43,7 +43,8 @@
         </table>
         <!--//선택한 예약일시를 출력할 위치-->
         <div id="selected__">
-            <input id="selectedDate" name="selectedDate" value="" readonly="readonly" style="display: none;"> <!--style="display: none"-->
+            <input id="selectedDate" name="selectedDate" value="" readonly="readonly" style="display: none;">
+            <!--style="display: none"-->
             <!--//총 예약금액을 출력할 위치-->
             <input id="totalPrice" name="totalPrice" value="" readonly="readonly" style="display: none">
         </div>
@@ -56,13 +57,13 @@
                 <li>카테고리
                     <div th:text="${venue.venue_category}"></div>
                 </li>
-                <li>이용기간
+                <li class="time-date">이용기간
                     <div id="start_date" th:text="${venue.posible_start_date}"/>
                     ~
                     <div id="end_date" th:text="${venue.posible_end_date}"/>
                 </li>
                 <li>운영시간
-                    <div th:text="${venue.open_time}"/>
+                    <div id="time-str" th:text="${venue.open_time}"/>
                     ~
                     <div th:text="${venue.close_time}"/>
                 </li>

@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
         // 기본 이미지 설정
         if (user.getProfile_picture() == null || user.getProfile_picture().isEmpty()) {
-            String defaultProfileImage = "profile_img.png";
+            String defaultProfileImage = "upload/profile_img.png";
             user.setProfile_picture(defaultProfileImage);
         }
 
@@ -111,6 +111,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(User user) {
+
         return userRepository.update(user);
     }
 }

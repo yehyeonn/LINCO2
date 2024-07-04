@@ -1,3 +1,4 @@
+// 모달창으로 사진 열기
 function openModal(img) {
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("modalImage");
@@ -9,6 +10,7 @@ function openModal(img) {
     modal.style.display = "block";
 }
 
+// X 버튼으로 모달창 닫기
 function closeModal() {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
@@ -16,19 +18,21 @@ function closeModal() {
 
 $(document).ready(function () {
 
-    var likedattachmentIds = [];
-    var allAttachmentIds=[]
-
-
+    var likedAttachmentIds = [];    // 이미 좋아요를 누른 attachmentIds 를 담을 배열
+    var allAttachmentIds=[]         // 페이지에 모든 attachmentIds 를 담을 배열
+    
+    // 페이지에 로드된 좋아요를 누른 attachmentId를 받아 likedAttachmentIds에 push
     document.querySelectorAll('.likedAttachment .attachmentIds').forEach(function (element) {
-        likedattachmentIds.push(element.textContent.trim());
+        likedAttachmentIds.push(element.textContent.trim());
     });
 
+    // 페이지에 로드된 모든 attachmentId를 받아 allAttachmentIds push
     document.querySelectorAll('.imgs .like-btn').forEach(function (element) {
         allAttachmentIds.push(element.value);
     });
 
-    likedattachmentIds.forEach(function (id) {
+    // likedAttachmentIds 와 allAttachmentIds 비교, 같든 버튼은 좋아요 하트를 solid 로 변경
+    likedAttachmentIds.forEach(function (id) {
         if (allAttachmentIds.includes(id)) {  // Ensure id type matches
             let button = document.querySelector(`.like-btn[value='${id}']`);
             if (button) {
@@ -38,15 +42,7 @@ $(document).ready(function () {
         }
     });
 
-    // likedattachmentIds.forEach(element => {
-    //     console.log("attachmentId: " + element);
-    // });
-    //
-    // allAttachmentIds.forEach(element => {
-    //     console.log("allAttachmentIds: " + element);
-    // });
-
-
+    // 좋아요 버튼, 다시 누르면 좋아요 해제
     $('.like-btn').click(function () {
         var $this = $(this);
         var attachmentId = $this.val(); // 버튼의 value 속성에서 attachmentId를 가져옴
@@ -72,9 +68,7 @@ $(document).ready(function () {
                     $regularHeart.show();
                     $solidHeart.hide();
                 }
-
-                // 좋아요 수 업데이트
-                // $('#like-count-' + attachmentId).text(response.likeCount);
+                
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);

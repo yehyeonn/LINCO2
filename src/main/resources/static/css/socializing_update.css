@@ -138,7 +138,7 @@ textarea {
 .button-3 {
     position: relative;
     right: 20px; /* 초기 값으로 변경 */
-    bottom: 20px; /* 초기 값으로 변경 */
+    bottom: 10px; /* 초기 값으로 변경 */
     border: none;
     box-shadow: none;
     width: 130px;
@@ -208,5 +208,9 @@ textarea {
     -webkit-transform: rotateX(-90deg);
     -moz-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
+}
+
+#total_price, #limit_num {
+    text-align: end;
 }
 

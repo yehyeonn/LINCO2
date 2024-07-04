@@ -86,7 +86,7 @@
             <!-- 버튼 -->
             <div class="button">
                 <div class="left-buttons">
-                    <a class="custom-button button-2" th:href="@{/board/list(page=${session.page})}">
+                    <a class="custom-button button-2" th:href="@{/board/list(boardTypeId=${board.getBoardType().getId()},page=${session.page})}">
                         <span>LIST!</span><span>목록</span>
                     </a>
                     <a class="custom-button button-2" th:href="@{'/board/update/' + ${board.id}}"

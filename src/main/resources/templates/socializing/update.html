@@ -59,17 +59,17 @@
 
             <div class="form-group">
                 <label for="limit_num">인원: </label>
-                <input type="number" id="limit_num" name="limit_num" th:value="${updatesocializing.limit_num}" readonly/>
+                <input type="number" id="limit_num" name="limit_num" th:value="${updatesocializing.limit_num}" th:text="명" readonly/>
             </div>
 
             <div class="form-group">
                 <label for="total_price">가격: </label>
-                <input type="text" id="total_price" name="total_price" th:value="${updatesocializing.total_price + '원'}" readonly/>
+                <input type="text" id="total_price" name="total_price" th:value="${updatesocializing.total_price}" th:text="원" readonly/>
             </div>
 
             <div class="form-img">
                 <div class="form-group image-placeholder">
-                    <img id="previewImage" style="width: 250px; height: 250px; border-radius: 10px" th:src="@{'/' + ${updatesocializing.img}}" th:value="@{'/' + ${updatesocializing.img}}">
+                    <img id="previewImage" style="width: 250px; height: 250px; border-radius: 10px" th:src="@{'/' + ${updatesocializing.img}}" th:value="${updatesocializing.img}">
                 </div>
             </div>
 
@@ -93,17 +93,13 @@
             <hr>
 
             <div class="social-button-container">
-                    <a class="button-list" th:href="@{/socializing/list(page=${session.page})}">
-                        <button class="custom-button button-2">
+                    <a class="button-list custom-button button-3" th:href="@{/socializing/list(page=${session.page})}">
                             <span>LIST!</span><span>목록</span>
-                        </button>
                     </a>
 
                 <div class="right-button">
-                        <a class="button-back" onclick="history.back()">
-                            <button class="custom-button button-2">
+                        <a class="button-back custom-button button-3" onclick="history.back()">
                                 <span>BACK!</span><span>이전</span>
-                            </button>
                         </a>
 
                         <button type="submit" class="button-submit custom-button button-2">

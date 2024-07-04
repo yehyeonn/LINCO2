@@ -94,6 +94,7 @@ $(document).ready(function() {
     $('#delete-photo-btn').click(function(event) {
         event.preventDefault();
         $('#profile-photo-edit').attr('src', '/upload/profile_img.png'); // 기본 이미지 경로로 변경
+        $('#profile_picture').val("upload/profile_img.png");
     });
 
 // 사진 변경 버튼 클릭 시 파일 입력 필드 클릭
