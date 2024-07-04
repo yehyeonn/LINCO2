@@ -7,8 +7,8 @@ body {
     box-sizing: border-box;
 }
 
-.container1 {
-    width: 90%;
+.container-6 {
+    width: 100%;
     height: auto;
     max-width: 1200px;
     background-color: #fff;
@@ -52,19 +52,30 @@ body {
     margin: 5px 0;
 }
 
-.event-details button {
-    background-color: #3A4D72;
-    color: white;
+.details-buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.btn-primary {
+    border-radius: 1rem;
     border: none;
     padding: 10px 20px;
-    margin-right: 10px;
+    margin-right: 5px;
     cursor: pointer;
+    background-color: #3A4D72;
+    color: #EDEBDA;
+    transition: all 0.3s;
 }
 
-.event-details .delete-button {
+.btn-primary:hover {
     background-color: #D3374A;
+    transform: scale(1.1);
 }
-
 
 .event-details {
     display: flex;
@@ -537,5 +548,17 @@ body {
 }
 
 
+.btn-success {
+    background-color: #3A4D72;
+    color: #EDEBDA;
+    padding: 10px 20px;
+    border-radius: 1rem;
+    transition: all 0.3s;
+    border: none;
+}
 
-
+.btn-success:hover {
+    background-color: #D3374A;
+    color: #EDEBDA;
+    transform: scale(1.1);
+}

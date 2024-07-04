@@ -28,14 +28,14 @@ import java.util.Map;
 public class BoardServiceImpl implements BoardService{
 
     // 첨부파일 업로드
-    @Value("upload")
+    @Value("${app.upload.path}")
     private String uploadDir;
 
     // 페이징 갯수
     private int WRITE_PAGES=5;
 
     // 페이징 안의 페이지 갯수
-    private int PAGE_ROWS=10;
+    private int PAGE_ROWS=12;
 
     // 글 작성 관련 정보 가져오기
     private BoardRepository boardRepository;
@@ -233,9 +233,9 @@ public class BoardServiceImpl implements BoardService{
                 board.setFileList(attachments);
 //                System.out.println("BOARD File List : " + board.getFileList());
                 if (board.getFileList() != null && !board.getFileList().isEmpty()){
-                    board.setImagePath("/upload/" + board.getFileList().get(0).getFilename());
+                    board.setImagePath(uploadDir + "/" + board.getFileList().get(0).getFilename());
                 }else {
-                    board.setImagePath("/upload/DefaultImg.jpg");
+                    board.setImagePath(uploadDir + "/noimg.png");
                 }
             }
 

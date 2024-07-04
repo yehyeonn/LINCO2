@@ -1,5 +1,4 @@
 body {
-    font-family: Arial, sans-serif;
     background-color: #EDEBDA;
     color: #3A4D72;
     margin: 0;
@@ -7,34 +6,8 @@ body {
     box-sizing: border-box;
 }
 
-
-.social-info{
-    color: black;
-    font-size: 25px;
-}
-#social-cnt{
-    color: black;
-    font-size: 20px;
-}
-#social-price{
-    color: black;
-    font-size: 20px;
-}
-nav ul li {
-    margin: 0 10px;
-}
-
-header nav ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-main {
-    padding: 20px;
-}
-
-.container-1 {
-    width: 90%;
+.container-5 {
+    width: 100%;
     max-width: 1200px;
     background-color: #fff;
     margin: 150px auto 250px;
@@ -51,26 +24,6 @@ main {
     padding: 20px;
     border: 1px solid #B3B49E;
     margin-bottom: 20px;
-    border-radius: 10px;
-}
-
-.container2 {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.club-description {
-    width: 68%;
-    padding: 20px;
-    border: 1px solid #B3B49E;
-    border-radius: 10px;
-}
-
-.club-members {
-    width: 30%;
-    padding: 20px;
-    border: 1px solid #B3B49E;
     border-radius: 10px;
 }
 
@@ -101,15 +54,6 @@ main {
 
 .event-details p {
     margin: 5px 0;
-}
-
-.event-details button {
-    background-color: #3A4D72;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-right: 10px;
-    cursor: pointer;
 }
 
 h2{
@@ -162,20 +106,39 @@ h2{
 .details-buttons {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     position: absolute;
     right: 0;
     bottom: 0;
 }
 
-.btn-primary {
+.btn-edit, .btn-delete {
+    border-radius: 1rem;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 5px;
+    cursor: pointer;
     background-color: #3A4D72;
     color: #EDEBDA;
-    border-radius: 1rem;
     transition: all 0.3s;
 }
 
-.btn-primary:hover {
+.btn-edit:hover,
+.btn-delete:hover{
+    background-color: #D3374A;
+    transform: scale(1.1);
+}
+
+.btn-good {
+    background-color: #3A4D72;
+    color: #EDEBDA;
+    border-radius: 1rem;
+    padding: 10px 20px;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-good:hover {
     background-color: #D3374A;
     color: #EDEBDA;
     transform: scale(1.1);
@@ -596,4 +559,8 @@ h2{
     border: 2px solid #B3B49E;
     border-radius: 5px;
     outline: none;
+}
+
+.tbody-span {
+    color: #000000;
 }

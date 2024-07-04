@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -42,6 +43,11 @@ public class SocializingController {
     @Value("${app.upload.path}")
     private String uploadDir;
 
+    @Value("${kakao.map.appkey}")
+    private String mapKey;
+
+    @Value("${kakao.map.libraries}")
+    private String mapLibraries;
 
     @Autowired
     private SocializingService socializingService;
@@ -126,6 +132,8 @@ public class SocializingController {
         model.addAttribute("merchantUid", merchantUid);
         model.addAttribute("category", category);  // 카테고리 목록을 모델에 추가
         model.addAttribute("detail_category", detail_category);  // 소분류 목록을 모델에 추가
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
 
         return "socializing/write";
     }
@@ -157,22 +165,51 @@ public class SocializingController {
             , Model model
             , RedirectAttributes redirectAttributes
     ) throws IOException {
-        // 기본 이미지 경로 설정
-        String imgPath = "upload/noimg.png"; // 기본 이미지 경로
+//         기본 이미지 경로 설정
+        String filename = "upload/noimg.png"; // 기본 이미지 경로
 
-        // 파일이 비어있지 않으면 업로드 처리
-        if (!file.isEmpty()) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = "upload/" + fileName;
+        //파일이 비어있지 않으면 업로드 처리
+        if(!file.isEmpty()){
+
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null || originalFilename.isEmpty()) return null;
+
+            String sourcename = StringUtils.cleanPath(file.getOriginalFilename());
+            filename = sourcename;
+
+            File files = new File(uploadDir, filename);
+            if (files.exists()){
+                int pos = filename.lastIndexOf(".");
+                if (pos > -1){
+                    String name = filename.substring(0, pos);
+                    String ext = filename.substring(pos + 1);
+
+                    filename = name + "_" + System.currentTimeMillis() + "." + ext;
+                }else {
+                    filename += "_" + System.currentTimeMillis();
+                }
+            }
+            //        디버깅용
+            System.out.println("filename : " + filename);
+
+            Path copyOfLocation = Paths.get(new File(uploadDir, filename).getAbsolutePath());
+            //         경로 디버깅용
+            System.out.println("copyOfLocation : " + copyOfLocation);
 
             try {
-                Path path = Paths.get(imgPath);
-                Files.createDirectories(path.getParent());
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(
+                        file.getInputStream(),
+                        copyOfLocation,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+            filename = "upload/"+filename;
         }
+
+
+
         if (socializing.getTotal_price() == null) {
             if(total_price != null) {
                 socializing.setTotal_price(total_price);
@@ -182,7 +219,7 @@ public class SocializingController {
         }
 
         // 이미지 경로를 Socializing 객체에 설정
-        socializing.setImg(imgPath);
+        socializing.setImg(filename);
 //        System.out.println("이미지 경로: " + imgPath); // 디버깅을 위한 로그 출력
 
 
@@ -215,7 +252,8 @@ public class SocializingController {
             // 폼 입력 값을 다시 보내기 위해 추가
             return "redirect:/socializing/write";
         }
-
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
         model.addAttribute("result", socializingService.write(socializing));
         userSocializingService.addUserToSocializing(userSocializing.getUser_id(), socializing.getId(), "MASTER");
         return "socializing/writeOk";
@@ -250,7 +288,10 @@ public class SocializingController {
         model.addAttribute("content", content);
         model.addAttribute("Master", socializingMaster);
         model.addAttribute("Listnum", membersid);
-        return "/socializing/detail";
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
+
+        return "socializing/detail";
     }
 
     @PostMapping("/detail")
@@ -258,6 +299,8 @@ public class SocializingController {
             , @RequestParam(name = "socializing_id", required = false, defaultValue = "") Long socializingId
             , Model model) {
         int result = userSocializingService.addUserToSocializing(userId, socializingId, "MEMBER");
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
         model.addAttribute("result", result);
         model.addAttribute("userSocializing", socializingId);
         return "socializing/detailOk";
@@ -270,6 +313,8 @@ public class SocializingController {
 //        System.out.println(socializing);
         model.addAttribute("updatesocializing", socializingService.selectById(id));
         model.addAttribute("updatescicalizing", socializingService.detail(id)); // venue 정보도 가져오는 거
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
 
         return "socializing/update";
     }
@@ -292,12 +337,13 @@ public class SocializingController {
             return "redirect:/socializing/update/" + socializing.getId();
         }
 
-
+        model.addAttribute("mapKey", mapKey);
+        model.addAttribute("mapLibraries", mapLibraries);
         model.addAttribute("result", socializingService.update(socializing));
         return "socializing/updateOk";
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public String deleteOk(Long id, Model model) {
         model.addAttribute("result", socializingService.deleteById(id));
         return "socializing/deleteOk";

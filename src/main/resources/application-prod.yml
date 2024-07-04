@@ -97,3 +97,9 @@ imp:
   api:
     key: ${rds.impapikey}
     secretkey: ${rds.impapisecretkey}
+
+kakao:
+  map:
+    base-url: ${rds.mapbaseurl}
+    appkey: ${rds.mapappkey}
+    libraries: services

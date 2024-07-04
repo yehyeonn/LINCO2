@@ -20,7 +20,7 @@
         <th:block th:replace="~{common/header :: header-head}"></th:block>
         <link rel="stylesheet" href="/css/socializing_detail.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-        <script src="/js/socializing_detail.js" type="text/javascript"></script>
+        <script th:src="@{/js/socializing_detail.js}" type="text/javascript"></script>
         <link rel="stylesheet" href="/css/map.css">
         <script th:inline="javascript">
             const logged_id = [[${logged_user.id}]]
@@ -107,7 +107,7 @@
             </h2>
 
             <div class="social-list" th:each="member : ${members}" th:if="${#lists.contains(Listnum,logged_user.id)}">
-                <img th:src="@{'/upload/'+ ${member.getUser().getProfile_picture()}}">
+                <img th:src="@{'/'+${member.getUser().getProfile_picture()}}">
                 <span>[[${member.User.name}]]</span>
                 <span th:if="${logged_user.id == Master.user.getId()}">[[${member.User.tel}]]</span>
                 <div class="member-label">[[${member.role}]]</div>
@@ -123,9 +123,12 @@
             crossorigin="anonymous"></script>
     <th:block th:replace="~{common/footer :: footer-scripts}"></th:block>
 
-    <script type="text/javascript"
-            src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=cf0f44225c7ff5ce919c81354ed2c1b2&libraries=services"></script>
-    <script src="/js/socializing_write.js" type="text/javascript"></script>
+    <script th:inline="javascript">
+        var kakaoAppkey = [[${mapKey}]];
+        var kakaoLibraries = [[${mapLibraries}]];
+        var kakaoMapUrl = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + kakaoAppkey + '&libraries=' + kakaoLibraries;
+        document.write('<script type="text/javascript" src="' + kakaoMapUrl + '"><\/script>');
+    </script>
     </body>
     </th:block>
 </html>

@@ -85,7 +85,7 @@ public class ClubController {
             RedirectAttributes redirectAttrs   // redirect 시 넘겨줄 값들을 담는 객체
     ) throws IOException {
         // 기본 이미지 경로 설정
-        String imgPath = "no_img.png"; // 기본 이미지 경로
+        String imgPath = "noimg.png"; // 기본 이미지 경로
 
         // 파일이 비어있지 않으면 업로드 처리
         if (!file.isEmpty()) {
@@ -159,7 +159,7 @@ public class ClubController {
         return "club/list";
     }
 
-    @GetMapping("detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
         // 클릭한 클럽 객체 -> 대표사진, 클럽이름, 상세종목, 소개, 상세내용
         Club club = clubService.getClubById(id);
@@ -199,10 +199,10 @@ public class ClubController {
         model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
-        return "/club/detail";
+        return "club/detail";
     }
 
-    @GetMapping("board/list/{id}")
+    @GetMapping("/board/list/{id}")
     public String board(@PathVariable Long id
             , @RequestParam(name = "title", required = false, defaultValue = "") String title
             , Integer page
@@ -252,7 +252,7 @@ public class ClubController {
         return "club/boardList";
     }
 
-    @GetMapping("board/detail/{id}")
+    @GetMapping("/board/detail/{id}")
     public String boardDetail(@PathVariable Long id, Model model) {
         Board board = boardService.detail(id);
         List<Board> clubBoards = clubService.getClubBoard(id);
@@ -317,13 +317,13 @@ public class ClubController {
         int result = clubService.addMemberToClub(user_id, club_id);
         model.addAttribute("result", result);
         model.addAttribute("club_id", club_id);
-        return "/club/joinOk";
+        return "club/joinOk";
     }
 
     @PostMapping("/delete")
     public String deleteOk(Long id, Model model) {
         model.addAttribute("result", clubService.deleteById(id));
-        return "/club/deleteOk";
+        return "club/deleteOk";
     }
 
 
@@ -333,7 +333,7 @@ public class ClubController {
 //        System.out.println("club_id: " + club_id);
         model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
-        return "/club/outOk";
+        return "club/outOk";
     }
 
     @PostMapping("/leave")
@@ -342,7 +342,7 @@ public class ClubController {
 //        System.out.println("club_id: " + club_id);
         model.addAttribute("result", clubUserListService.deleteByClubIdAndUserId(user_id, club_id));
         model.addAttribute("club_id", club_id);
-        return "/club/leaveOk";
+        return "club/leaveOk";
     }
 
 
@@ -450,7 +450,7 @@ public class ClubController {
         }
         System.out.println("클럽아이디 !!"+clubid);
         // 기본 이미지 경로 설정
-        String imgPath = "no_img.png"; // 기본 이미지 경로
+        String imgPath = "noimg.png"; // 기본 이미지 경로
         Club club1 = new Club();
         club1.setId(clubid);
         board.setClub(club1);
@@ -537,9 +537,10 @@ public class ClubController {
     }
 
     @GetMapping("/galleryUpload")
-    public void galleryUpload(@RequestParam(name = "id", required = false, defaultValue = "") Long id, Model model) {
+    public String galleryUpload(@RequestParam(name = "id", required = false, defaultValue = "") Long id, Model model) {
 
         model.addAttribute("id", id);
+        return "club/galleryUpload";
     }
 
     @PostMapping("/galleryUpload")
@@ -552,7 +553,7 @@ public class ClubController {
 
         model.addAttribute("result", clubService.uploadImg(id, file));
         model.addAttribute("id", id);
-        return "club/galleryuploadOk";
+        return "club/galleryUploadOk";
     }
 
 }

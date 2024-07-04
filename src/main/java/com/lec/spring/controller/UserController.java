@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import retrofit2.Response;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -97,7 +98,7 @@ public class UserController {
         }
 
         // 에러 없었으면 회원 등록 진행
-        String page = "/user/registerOk";
+        String page = "user/registerOk";
         int cnt = userService.register(user);
         model.addAttribute("result", cnt);
         return page;
@@ -130,7 +131,8 @@ public class UserController {
             return "redirect:/user/login";
         }
 
-        User user = principalDetails.getUser();
+
+        User user = userService.findByUserId(principalDetails.getUser().getId());
         List<ClubUserList> userClubs = userService.getUserClubs(user.getId());
         List<UserSocializing> userSocializings = userSocializingService.findByUserSocializingId(user.getId());
         List<Reservation> userReservations = reservationService.findByUserId(user.getId());
@@ -164,25 +166,51 @@ public class UserController {
             User user,
             Model model) throws IOException {
         // 기본 이미지 경로 설정
-        String imgPath = "profile_img.png"; // 기본 이미지 경로
+        String filename = user.getProfile_picture(); // 기본 이미지 경로
 
         // 파일이 비어있지 않으면 업로드 처리
-        if (!file.isEmpty()) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            imgPath = fileName;
+        if(!file.isEmpty()){
+
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null || originalFilename.isEmpty()) return null;
+
+            String sourcename = StringUtils.cleanPath(file.getOriginalFilename());
+            filename = sourcename;
+
+            File files = new File(uploadDir, filename);
+            if (files.exists()){
+                int pos = filename.lastIndexOf(".");
+                if (pos > -1){
+                    String name = filename.substring(0, pos);
+                    String ext = filename.substring(pos + 1);
+
+                    filename = name + "_" + System.currentTimeMillis() + "." + ext;
+                }else {
+                    filename += "_" + System.currentTimeMillis();
+                }
+            }
+    //        디버깅용
+            System.out.println("filename : " + filename);
+
+            Path copyOfLocation = Paths.get(new File(uploadDir, filename).getAbsolutePath());
+    //         경로 디버깅용
+            System.out.println("copyOfLocation : " + copyOfLocation);
 
             try {
-                Path path = Paths.get("/upload/" + imgPath);
-                Files.createDirectories(path.getParent());
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(
+                        file.getInputStream(),
+                        copyOfLocation,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+            filename = "upload/"+filename;
         }
-
-        // 이미지 경로를 Socializing 객체에 설정
-        user.setProfile_picture(imgPath);
+        // 이미지 경로를 user 객체에 설정
+        user.setProfile_picture(filename);
         userService.update(user);
+
 
         // 업데이트된 유저 정보 가져오기
         User updateUser = userService.findByUserId(user.getId());
@@ -196,7 +224,7 @@ public class UserController {
         model.addAttribute("userClubs", userClubs);
         model.addAttribute("userReservations", userReservations);
         model.addAttribute("userSocializings", userSocializings);
-        model.addAttribute("User", updateUser);
+        model.addAttribute("user", updateUser);
 
         return "user/my_page";
     }

@@ -110,7 +110,7 @@ function selectDateOnCalendar(selectedDate) {
                 selectedCell = cell;
             }
 
-            var fullMonth = month < 10 ? '0' + month : month; // 한 자리 숫자인 경우 앞에 0을 붙임
+            var fullMonth = month < 10 ? '0' + month : month; // 한 자리 숫자인 경우 앞에 0을 붙임z
             var fullDay = day < 10 ? '0' + day : day;
             var fullDate = `${year}-${fullMonth}-${fullDay}`;
 

@@ -302,13 +302,12 @@ body {
 .club-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     margin-top: 20px;
 }
 
 .club-item {
-    width:calc(30% - 20px);
-    height: 20%;
+    width:calc(25% - 20px);
     margin: 10px;
     background-color: #f4f4f4;
     padding: 15px;
@@ -327,20 +326,20 @@ body {
 
 .club-img {
     width: 100%; /* 이미지 너비를 클럽 항목 너비에 맞춤 */
-    height: 100%; /* 이미지 높이를 자동으로 조정 */
-    border-radius: 8px; /* 이미지 모서리 둥글게 */
+    height: 150px; /* 이미지 높이를 자동으로 조정 */
+    border-radius: 10px; /* 이미지 모서리 둥글게 */
     margin-bottom: 15px;
 }
 
-
 .club-name {
     font-weight: bold; /* 클럽 이름을 굵게 */
-    font-size: 30px; /* 클럽 이름 폰트 크기 조정 */
+    font-size: 20px; /* 클럽 이름 폰트 크기 조정 */
+    color: #000000;
 }
 
 .club-category {
-    color: #555; /* 카테고리 텍스트 색상 조정 */
-    font-size: 20px;
+    color: #5F5F5F; /* 카테고리 텍스트 색상 조정 */
+    font-size: 16px;
 }
 
 .pagination-container {
