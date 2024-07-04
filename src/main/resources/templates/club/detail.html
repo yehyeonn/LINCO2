@@ -102,7 +102,7 @@
                 <ul>
                     <li class="club-master">
                         <div class="member-info">
-                            <img th:src="@{${clubMaster.getUser().getProfile_picture()}}">
+                            <img th:src="@{'/'+${clubMaster.getUser().getProfile_picture()}}">
                             <span>[[${clubMaster.user.getName()}]]</span>
                         </div>
                         <div class="club-master-label">Master</div>
