@@ -68,7 +68,7 @@
 
             <div class="button">
                 <div class="left-buttons">
-                    <a class="custom-button button-2" th:href="@{/club/board/{clubId}(clubId=${board.getClub().getId()}, page=${session.page})}">
+                    <a class="custom-button button-2" th:href="@{'/club/board/list/' + ${board.club.id}(page=${session.page})}">
                         <span>LIST!</span><span>목록</span>
                     </a>
 
@@ -86,7 +86,6 @@
             </div>
         </form>
     </div>
-    <script th:src="@{/js/club/boardUpdate.js}"></script>
 
     <footer th:replace="~{common/footer :: footer-body}"></footer>
 
