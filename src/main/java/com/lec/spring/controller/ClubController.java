@@ -257,7 +257,7 @@ public class ClubController {
         Board board = boardService.detail(id);
         List<Board> clubBoards = clubService.getClubBoard(id);
 
-//        String content = club.getContent().replace("\n", "<br>");
+        String content = board.getContent().replace("\n", "<br>");
 
         List<Comment> comments = commentService.list(id).getList();
 
@@ -269,6 +269,7 @@ public class ClubController {
 //        System.out.println("club board 정보 : " + board);
         model.addAttribute("clubBoards", clubBoards);
         model.addAttribute("attachments", attachments);
+        model.addAttribute("content", content);
         model.addAttribute("cnt", cnt);
         model.addAttribute("comments", comments);
 //        model.addAttribute("content", content);
