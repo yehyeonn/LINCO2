@@ -81,17 +81,20 @@ public class UserController {
 
         // 검증 에러가 있었다면 redirect 한다
         if (result.hasErrors()) {
-//            redirectAttrs.addFlashAttribute("username", user.getUsername());
-//            redirectAttrs.addFlashAttribute("name", user.getName());
-//            redirectAttrs.addFlashAttribute("email", user.getEmail());
-//
-//            List<FieldError> errList = result.getFieldErrors();
-//            for(FieldError err : errList) {
-//                redirectAttrs.addFlashAttribute("error", err.getCode());  // 가장 처음에 발견된 에러를 담아ㅣ 보낸다
-//                break;
-//            }
+            redirectAttrs.addFlashAttribute("username", user.getUsername());
+            redirectAttrs.addFlashAttribute("password", user.getPassword());
+            redirectAttrs.addFlashAttribute("name", user.getName());
+            redirectAttrs.addFlashAttribute("tel", user.getTel());
 
-            return "redirect:/user/register";
+            List<FieldError> errList = result.getFieldErrors();
+            for(FieldError err : errList) {
+                redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());  // 가장 처음에 발견된 에러를 담아ㅣ 보낸다
+                break;
+            }
+
+            redirectAttrs.addFlashAttribute("jsActive", true); // JavaScript를 실행할 플래그 설정
+
+            return "redirect:/user/login";
         }
 
         // 에러 없었으면 회원 등록 진행
@@ -101,13 +104,13 @@ public class UserController {
         return page;
     }
 
-//    @Autowired
-//    UserValidator userValidator;
-//
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder){
-//        binder.setValidator(userValidator);
-//    }
+    @Autowired
+    UserValidator userValidator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(userValidator);
+    }
 
     @GetMapping("/login")
     public void login(){}
