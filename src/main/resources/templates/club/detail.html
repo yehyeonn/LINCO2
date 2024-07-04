@@ -88,7 +88,7 @@
                     <span>소</span>
                     <span>개</span>
                 </h2>
-                <p th:utext="${club.content}"></p>
+                <p th:utext="${content}"></p>
             </section>
             <section class="club-members">
                 <h2>
@@ -102,7 +102,7 @@
                 <ul>
                     <li class="club-master">
                         <div class="member-info">
-                            <img th:src="@{${clubMaster.getUser().getProfile_picture()}}">
+                            <img th:src="@{'/'+${clubMaster.getUser().getProfile_picture()}}">
                             <span>[[${clubMaster.user.getName()}]]</span>
                         </div>
                         <div class="club-master-label">Master</div>
@@ -110,7 +110,7 @@
 
                     <li th:each="member : ${filteredClubMemberList}" class="member-item">
                         <div class="member-info">
-                            <img th:src="@{${member.getUser().getProfile_picture()}}">
+                            <img th:src="@{'/'+${member.getUser().getProfile_picture()}}">
                             <span>[[${member.user.getName()}]]</span>
                         </div>
 

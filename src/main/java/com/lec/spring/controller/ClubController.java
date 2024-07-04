@@ -192,10 +192,12 @@ public class ClubController {
         // 멤버 수 -> 현재인원
         int memberCount = clubService.getClubMemberCount(id);
 //        System.out.println("memberCount: " + memberCount);
+        String content = club.getContent().replace("\n", "<br>");
 
         model.addAttribute("club", club);
         model.addAttribute("filteredClubMemberList", filteredClubMemberList);
         model.addAttribute("clubMaster", clubMaster);
+        model.addAttribute("content",content);
         model.addAttribute("userIds", userIds);
         model.addAttribute("memberCount", memberCount);
 
