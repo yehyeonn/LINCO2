@@ -11,6 +11,7 @@ body {
     justify-content: center;
     flex-direction: column;
     /*height: 100vh;*/
+    font-weight: bold;
 }
 
 a {
@@ -235,3 +236,4 @@ a {
     border: none;
     cursor: pointer;
 }
+
