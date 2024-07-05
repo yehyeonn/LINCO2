@@ -66,7 +66,6 @@ $(document).ready(function () {
                 }
             });
         }
-
     }
         $('#submitbtn').click(function (event){
             if(!nameflag){
