@@ -1,6 +1,13 @@
+/*@font-face {*/
+/*    font-family: 'IM_Hyemin-Bold';*/
+/*    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff2');*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*}*/
+
 @font-face {
-    font-family: 'IM_Hyemin-Bold';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff2');
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -33,7 +40,7 @@
 
 .navbar {
     background-color: #3A4D72;
-    padding: 0.5rem;
+    padding: 1px;
 }
 
 .navbar-toggler {
@@ -109,7 +116,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background-color: #EDEBDA;
-    font-family: 'IM_Hyemin-Bold', sans-serif !important;
+    font-family: 'Pretendard-Regular', sans-serif !important;
     font-weight: bold;
 }
 
