@@ -107,7 +107,7 @@ public class UserController {
     @Autowired
     UserValidator userValidator;
 
-    @InitBinder
+    @InitBinder("User")
     public void initBinder(WebDataBinder binder){
         binder.setValidator(userValidator);
     }
@@ -277,9 +277,6 @@ public class UserController {
         }
     }
 }
-
-
-
 
 //    public ResponseEntity<String> cancel(@RequestBody Map<String, Object> payload) {
 //        try {
