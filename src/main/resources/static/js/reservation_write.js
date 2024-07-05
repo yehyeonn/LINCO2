@@ -158,12 +158,12 @@ $(document).on('click', '#calendar td', function () {
     $('.time td.selected').removeClass('selected');
 
     // URL 파라미터 업데이트
-    var url = `http://localhost:8080/reservation/write?venue_id=${venue_id}&selectedDate=${fullDate}`;
+    var url = `http://52.79.82.197:8080/reservation/write?venue_id=${venue_id}&selectedDate=${fullDate}`;
     history.replaceState({}, '', url);
 
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/reservation/write',
+        url: 'http://52.79.82.197:8080/reservation/write',
         data: {
             venue_id: venue_id,
             selectedDate: fullDate
