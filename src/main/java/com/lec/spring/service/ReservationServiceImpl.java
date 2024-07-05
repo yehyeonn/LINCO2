@@ -81,7 +81,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    @Scheduled(cron = "0 0 0 * * *")    public void updateExpiredReservationStatus() {
+    @Scheduled(cron = "0 0 0 * * *")
+    public void updateExpiredReservationStatus() {
         List<Reservation> expiredReservation = reservationRepository.findExpiredReservation();
 
         for (Reservation reservation : expiredReservation) {
