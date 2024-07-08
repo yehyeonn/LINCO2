@@ -516,9 +516,9 @@ public class ClubController {
         Long userId = data.get("userId");
         Long attachmentId = data.get("attachmentId");
 
-        System.out.println("galleryLike 지롱~");
-        System.out.println("userId: " + userId);
-        System.out.println("attachId: " + attachmentId);
+//        System.out.println("galleryLike 지롱~");
+//        System.out.println("userId: " + userId);
+//        System.out.println("attachId: " + attachmentId);
 
         User user = new User();
         user.setId(userId);

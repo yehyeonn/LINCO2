@@ -31,7 +31,7 @@ $(document).ready(function () {
         allAttachmentIds.push(element.value);
     });
 
-    // likedAttachmentIds 와 allAttachmentIds 비교, 같든 버튼은 좋아요 하트를 solid 로 변경
+    // likedAttachmentIds 와 allAttachmentIds 비교, 같은 버튼은 좋아요 하트를 solid 로 변경
     likedAttachmentIds.forEach(function (id) {
         if (allAttachmentIds.includes(id)) {  // Ensure id type matches
             let button = document.querySelector(`.like-btn[value='${id}']`);
