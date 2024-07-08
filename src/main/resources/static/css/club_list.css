@@ -116,12 +116,19 @@ form input[type="text"] {
 }
 
 p.club-name{
-    font-size: 25px;
-    font-weight: bolder;
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
 }
 
 p.club-category{
+    font-size: 25px;
+    color: #333;
+}
+
+p.club-detail-category {
     font-size: 20px;
+    color: #4075e2;
 }
 
 /* 클럽 생성 버튼 컨테이너 */
