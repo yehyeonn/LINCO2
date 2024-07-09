@@ -138,13 +138,13 @@ body {
 }
 
 #detail_category {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
-    color: #F79DC2;
+    color: #333;
 }
 
 #address {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     color: #4075e2;
 }
