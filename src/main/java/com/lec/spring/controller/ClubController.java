@@ -532,10 +532,10 @@ public class ClubController {
             newLike.setUser(user);
             newLike.setAttachment(attachment);
             attachmentLikeService.addPostLikes(newLike);
-            return ResponseEntity.ok("좋아요했지롱~");
+            return ResponseEntity.ok("좋아요");
         } else {
             attachmentLikeService.deletePostLikes(existingLike);
-            return ResponseEntity.ok("좋아요 취소했지롱~");
+            return ResponseEntity.ok("좋아요 취소");
         }
     }
 
