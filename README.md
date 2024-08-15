@@ -37,6 +37,8 @@ https://github.com/yehyeonn/LINCO2.git
 
 ## [화면영상](https://youtu.be/PTivSCbApKk?list=PLedGoSru7949vE2KofRZ2Vg4aINCrD_jQ)
 
+## [게시판 시연영상] (https://github.com/user-attachments/assets/94377ce7-9c8f-4570-ac60-50e15c9d744a)
+
 
 
 코리아IT아카데미 http://gangnam.koreaisacademy.com/
