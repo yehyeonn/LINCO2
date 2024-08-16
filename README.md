@@ -38,7 +38,7 @@ https://github.com/yehyeonn/LINCO2.git
 ## [화면영상](https://youtu.be/PTivSCbApKk?list=PLedGoSru7949vE2KofRZ2Vg4aINCrD_jQ)
 
 ## [게시판 시연영상]
-<a src="https://github.com/user-attachments/assets/afd90c32-4bee-410a-a989-2bcc4865d9ae" />
+![게시판 시연영상](https://github.com/LINCO2.upload.링코시연영상.gif)
 
 
 
